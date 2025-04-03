@@ -6,12 +6,12 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/03 14:27:23 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/03 22:26:54 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC = minishell.c
+SRC = minishell.c	ft_exit.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
@@ -26,7 +26,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_LIB)
 		@echo "Compiling Minishell..."
-		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
+		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -lreadline -o $(NAME)
 		@echo "Minishell successfully compiled.\n"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
