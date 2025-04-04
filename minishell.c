@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/03 22:27:34 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:52:47 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	initialize_all(t_all **all)
 	if(!((*all)->pipe))
 		ft_exit("", *all, 1);
 	ft_memset((*all)->pipe, 0, sizeof(t_pipe));
+	
+	(*all)->env = malloc(sizeof(t_env));
+	
 }
 
 int	main(int argc, char **argv, char **env)

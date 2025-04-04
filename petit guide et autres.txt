@@ -1,0 +1,20 @@
+makefile
+ajout libft
+ajout dossierS /src /include/ execution /parsing/ 
+parsing env en liste chainee
+initialization
+debut de main
+
+readline dans le main
+reflechir tokenisation/ parsing
+
+
+
+faire export en premier ou env
+puis echo cd ....env
+
+en premier soi redirection "< > " soit commande
+
+enregistrer le code error dans une structure pour pouvoir le resortir avec $? meme si code erreur succes
+
+echo coucou > outfile1 >outfile2>outfile3 : coucou ne sera que dans outfile3
