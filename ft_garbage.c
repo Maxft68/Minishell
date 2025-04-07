@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_garbage.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 22:02:45 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 21:49:40 by mdsiurds         ###   ########.fr       */
+/*   Created: 2025/04/07 21:45:54 by mdsiurds          #+#    #+#             */
+/*   Updated: 2025/04/07 22:00:54 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_array(char **array)
+void	*gc_malloc(t_all *all, size_t size)
 {
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array && array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	return ;
+	void *alloc;
+	alloc = malloc(size);
+	if (!alloc)
+		ft_exit("gc_malloc fail", all, 1);
+	ft_lstadd_front(&all->garbage, alloc);
+	return (alloc);
 }
 
-void	ft_exit(char *error, t_all *all, int error_code)
+void	free_garbage_collect(t_all *all)
 {
-	ft_putstr_fd(error, 2);
-	free_garbage_collect(all);
-	rl_clear_history();
-	exit(error_code);
+	t_garbage	*temp;
+	
+	if (!all->garbage)
+		return ;
+	temp = all->garbage;
+	while (temp->next)
+	{
+		temp = temp->next;
+		free(all->temp->pointer);
+		free(all->temp); // pas sur
+	}
+	free(all->temp->pointer);
+	free(all->temp); // pas sur
 }

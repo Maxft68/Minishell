@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 19:33:11 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:44:39 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 
 void	initialize_all(t_all **all)
 {
-	*all = malloc(sizeof(t_all));
+	*all = gc_malloc(*all, sizeof(t_all));
 	if (!(*all))
-		return ;
+		ft_exit("gc_malloc fail", all, 1);
 	ft_memset(*all, 0, sizeof(t_all));
-	(*all)->pipe = malloc(sizeof(t_pipe));
+	(*all)->pipe = gc_malloc(all, sizeof(t_pipe));
 	if (!((*all)->pipe))
-		ft_exit("", *all, 1);
+		ft_exit("gc_malloc fail", *all, 1);
 	ft_memset((*all)->pipe, 0, sizeof(t_pipe));
 	(*all)->env = NULL;
 	(*all)->token = NULL;

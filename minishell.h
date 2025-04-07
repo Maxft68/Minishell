@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 19:59:30 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:57:40 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ typedef struct s_all
 	t_pipe				*pipe;
 	t_env				*env;
 	t_token				*token;
+	t_garbage			*garbage;
 }						t_all;
 
-void					ft_exit(char *error, t_all *all, int error_code);
-void					do_node(char **read_array, t_all *all);
-void					ft_lstclear(t_token **token);
-void					free_array(char **array);
+void	ft_exit(char *error, t_all *all, int error_code);
+void	do_node(char **read_array, t_all *all);
+void	ft_lstclear(t_token **token);
+void	free_array(char **array);
+void	*gc_malloc(t_all *all, size_t size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 20:05:43 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:46:01 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void	print_node(t_token *token)
 	}
 }
 
-// static	t_token	*ft_lstadd_front(t_token **token, t_token *new)
-// {
-// 	t_token	*second;
+t_garbage	*ft_lstadd_front(t_garbage **garbage, t_garbage *new)
+{
+	t_garbage	*second;
 
-// 	if (!*token)
-// 	{
-// 		*token = new;
-// 		return (*token);
-// 	}
-// 	second = *token;
-// 	new->next = second;
-// 	*token = new;
-// 	return (*token);
-// }
+	if (!*garbage)
+	{
+		*garbage = new;
+		return (*garbage);
+	}
+	second = *garbage;
+	new->next = second;
+	*garbage = new;
+	return (*garbage);
+}
 
 static t_token	*ft_lstadd_back(t_token **token, t_token *new)
 {
@@ -52,16 +52,11 @@ static t_token	*ft_lstadd_back(t_token **token, t_token *new)
 	return (*token);
 }
 
-void *gc_malloc()
-{
-	
-}
-
-static t_token	*ft_lstnew(char *name)
+static t_token	*ft_lstnew(t_all *all, char *name)
 {
 	t_token	*new;
 
-	new = gc_malloc(sizeof(t_token));
+	new = gc_malloc(all, sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->name = name;
@@ -77,7 +72,7 @@ void	do_node(char **read_array, t_all *all)
 	i = 0;
 	while (read_array && read_array[i])
 	{
-		new_node = ft_lstnew(read_array[i]);
+		new_node = ft_lstnew(all, read_array[i]);
 		if (!new_node)
 			ft_exit("fail", all, 0);
 		ft_lstadd_back(&all->token, new_node);
