@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 19:15:22 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:59:30 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,44 +31,50 @@
 # include <termios.h>
 # include <unistd.h>
 
+typedef struct s_garbage
+{
+	char				*pointer;
+	struct s_garbage	*next;
+}						t_garbage;
+
 typedef struct s_pipe
 {
-	char			*infile; // a  revoir entierement
-	int				infile_fd;
-	char			*outfile;
-	int				outfile_fd;
-	char			**cmd1_args;
-	char			**cmd2_args;
-	char			*cmd1_path;
-	char			*cmd2_path;
-	int				pipe_fd[2];
-	int				pid1;
-	int				pid2;
-}					t_pipe;
+	char				*infile;   // a  revoir entierement
+	int					infile_fd;  // a  revoir entierement
+	char				*outfile;  // a  revoir entierement
+	int					outfile_fd; // a  revoir entierement
+	char				**cmd1_args;
+	char				**cmd2_args;
+	char				*cmd1_path;
+	char				*cmd2_path;
+	int					pipe_fd[2];
+	int					pid1;
+	int					pid2;
+}						t_pipe;
 
 typedef struct s_env
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 typedef struct s_token
 {
-	char			*name;
-	struct s_token	*next;
-}					t_token;
+	char				*name;
+	struct s_token		*next;
+}						t_token;
 
 typedef struct s_all
 {
-	t_pipe			*pipe;
-	t_env			*env;
-	t_token			*token;
-}					t_all;
+	t_pipe				*pipe;
+	t_env				*env;
+	t_token				*token;
+}						t_all;
 
-void	ft_exit(char *error, t_all *all, int error_code);
-void	do_node(char **read_array, t_all *all);
-void	ft_lstclear(t_token **token);
-void	free_array(char **array);
+void					ft_exit(char *error, t_all *all, int error_code);
+void					do_node(char **read_array, t_all *all);
+void					ft_lstclear(t_token **token);
+void					free_array(char **array);
 
 #endif
