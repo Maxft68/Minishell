@@ -6,13 +6,13 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 22:02:45 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/03 22:21:52 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:58:56 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_array(char **array)
+void	free_array(char **array)
 {
 	int	i;
 
@@ -29,17 +29,14 @@ static void	free_array(char **array)
 	return ;
 }
 
-static void	close_all_array(t_all *all)
+static void	garbage_collect(t_all *all)
 {
-	if (all->pipe->cmd1_args)
-		free_array(all->pipe->cmd1_args);
-	all->pipe->cmd1_args = NULL;
+	(void)all;
 }
 
 void	ft_exit(char *error, t_all *all, int error_code)
 {
 	ft_putstr_fd(error, 2);
-	close_all_array(all);
-
+	garbage_collect(all);
 	exit(error_code);
 }

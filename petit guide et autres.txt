@@ -18,3 +18,21 @@ en premier soi redirection "< > " soit commande
 enregistrer le code error dans une structure pour pouvoir le resortir avec $? meme si code erreur succes
 
 echo coucou > outfile1 >outfile2>outfile3 : coucou ne sera que dans outfile3
+
+
+"cat <in <in2 | cat >out"
+
+noeud 1
+command "cat" "arg1" "arg2" ...
+redir sign <
+		name in
+	sign <
+	name in2  
+noeud 2
+command cat 
+	redir
+	name out 
+	sign >
+
+
+si | present alors executer les built-in uniquement dans les enfants

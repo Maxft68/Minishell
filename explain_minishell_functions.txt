@@ -1,0 +1,434 @@
+Fichier d'explications de fonctions autoriser lors du projet Minishell de l'école 42 :
+
+READLINE :
+prototype : char *readline(const char *prompt);
+Utilisation : La fonction readline est utilisée pour lire une ligne de texte entrée par 
+			  l'utilisateur depuis l'entrée standard (stdin). Elle affiche une invite (prompt), attend que
+			  l'utilisateur saisisse une ligne de texte, puis retourne cette ligne sous
+			  forme de chaîne de caractères dynamique.
+Header : #include <readline/readline.h>
+		 #include <readline/history.h>  // (optionnel, si on veut utiliser l'historique des commandes)
+Retour : Retourne un pointeur vers une chaîne de caractères contenant l'entrée de l'utilisateur.
+		 La chaîne est allouée dynamiquement (avec malloc), donc il faut la libérer avec free après utilisation.
+		 Retourne NULL en cas d'erreur ou si l'entrée est EOF.
+Exemple : 
+	int main() {
+    char *input;
+
+    // Affiche une invite et attend l'entrée de l'utilisateur
+    input = readline("Entrez une commande : ");
+    if (input) {
+        printf("Vous avez entré : %s\n", input);
+        free(input); // Libérer la mémoire allouée par readline
+    } else {
+        printf("Erreur ou fin de l'entrée.\n");
+    }
+    return 0;
+}
+
+
+
+RL_CLEAR_HISTORY :
+prototype : void rl_clear_history(void);
+Utilisation : La fonction rl_clear_history est utilisée pour supprimer tout l'historique des
+			  commandes stocké par la bibliothèque GNU Readline. Cela peut être utile si l'on
+			  veut effacer l'historique pour des raisons de confidentialité ou pour réinitialiser l'état du programme.
+Header : #include <readline/readline.h>
+		 #include <readline/history.h>
+Retour : la fonction ne return rien (void)
+		 Après l'appel, l'historique des commandes est complètement vidé.
+
+
+
+RL_ON_NEW_LINE :
+prototype : void rl_on_new_line(void);
+Utilisation : indiquer que l'entrée de l'utilisateur est terminée et qu'une nouvelle ligne commence.
+			  Elle est souvent utilisée en conjonction avec d'autres fonctions comme rl_redisplay pour
+			  actualiser correctement l'affichage de la ligne de commande après une modification du tampon d'entrée
+Header : #include <readline/readline.h>
+Retour : la fonction ne return rien (void)
+	     Elle signale simplement à la bibliothèque Readline qu'une nouvelle ligne commence,
+		 ce qui est utile pour des mises à jour d'affichage correctes.
+
+
+
+RL_REPLACE_LINE :
+prototype: void rl_replace_line(const char *text, int clear_undo);
+Utilisation : La fonction rl_replace_line permet de remplacer complètement la ligne actuelle dans le tampon
+              d'entrée de Readline par un nouveau texte. Elle est utile lorsqu'on veut modifier dynamiquement
+			  l'entrée de l'utilisateur, par exemple pour fournir une correction automatique ou remplir la ligne
+			  avec une commande suggérée.
+Header : #include <readline/readline.h>
+Retour : Cette fonction ne retourne rien (void).
+	     Elle remplace simplement le contenu actuel de la ligne d'entrée par la chaîne text.
+
+
+
+RL_REDISPLAY : 
+prototype : void rl_redisplay(void);
+Utilisation : La fonction rl_redisplay est utilisée pour actualiser l'affichage de la ligne d'entrée en cours.
+			  Elle est particulièrement utile après une modification du tampon d'entrée via rl_replace_line,
+			  rl_insert_text ou d'autres fonctions de manipulation de la ligne.
+Header : #include <readline/readline.h>
+Retour : Cette fonction ne retourne rien (void).
+
+
+
+ADD_HISTORY :
+prototytpe : void add_history(const char *line);
+Utilisation : La fonction add_history est utilisée pour ajouter une ligne de commande à l'historique de Readline.
+			  Elle permet aux utilisateurs de rappeler facilement les commandes précédentes en utilisant les flèches haut/bas.
+			  Elle est particulièrement utile dans les interfaces en ligne de commande interactives (CLI).
+Header : #include <readline/readline.h>
+		 #include <readline/history.h>
+Retour : Cette fonction ne retourne rien (void).
+		 La ligne est stockée en mémoire dans l'historique.
+
+
+
+Printf : 
+Prototype : int printf(const char *format, ...);
+Utilisation : Utiliser pour afficher des donnée dans le terminal.
+Header : stdio.h
+format : Une chaine de caractere contenant des specificateurs de format.
+... : Les argument a afficher en fonction des specificateurs de format.
+Retour : Un nombre entier qui represente le nombre de caracters imprimee.
+Un nombre negatif si une erreur ce produit.
+Retour : Retourne le nombre de caractere imprimee.
+
+
+
+Malloc :
+Prototype : void*malloc(size_t size);
+Utilisation : Utiliser pour allouer une certaines quantité de mémoire pour pouvoir travailler dynamiquement.
+Size = taille de ce qu'on veut allouer.
+Retour = NULL si une erreur.
+
+
+
+Free :
+Prototype : voidfree(void *ptr);
+Utilisation = Utiliser pour libérer de la mémoir allouer dynamiquement pour éviter les fuites de mémoire.
+Ptr = Un Pointeur vers la zone memoire a libérer.
+
+
+
+Write :
+Prototype : ssize_twrite(int fd, const void *buf, size_t count) 
+Utilisation : Utiliser pour écrire dans un fichier, un pipe, ou sur la sortie standard/erreur.
+fd = descripteur de fichier pour indiquer ou écrire.
+buf = ce qu'on veut écrire.
+count = nombre de lettres a écrire dans le fd.
+Retour : Un nombre entier qui represente le nombre de caracters imprimee.
+		 Un nombre negatif si une erreur ce produit.
+
+
+
+Access :
+Prototype : int access(const char *pathname, int mode);
+Utilisation : La fonction access permet de vérifier si un fichier ou un répertoire
+			  existe et si un programme a les permissions nécessaires pour y accéder.
+			  Elle est souvent utilisée avant d'ouvrir un fichier ou d'exécuter une
+			  opération nécessitant des droits spécifiques.
+Header : #include <unistd.h>
+Retour : 0 si le fichier a toutes les autorisations.
+		 -1 en cas d'erreur.
+		 errno est indiquer pour indiquer l'erreur specifique.
+
+
+
+Open : Prototype : int	open(const char *pathname, int flags, mode_t mode);
+	   Usage : Ouvrir des fichiers en mode lecture, ecriture ou les deux.
+	   Exemple : int	fd = open("file.txt", O_RDONLY);
+
+
+
+Read : 
+Usage : Utiliser pour lire les donnees depuis un fichier ou un pipe. La fonction renvoie le nombre d'octets lus.
+Prototype : ssize_t	read(int fd, void *buf, size_t count);
+Exemple : char	buffer[100];
+	   	  ssize_t bytesRead = read(fd, buffer, 100);
+
+
+
+Close : 
+Usage : Ferme un descripteur de fichier apres l'avoir utiliser.
+Prototype : int	close(int fd);
+Exemple : close(fd);
+
+
+
+Fork : 
+Usage : Crée un nouveau processus en dupliquant le processus courant.
+		En gros, cela crée un nouveau processus (le fils), qui s'execute apres l'appel de fork simultanement.
+		Le retour differe dans le processus parent (PID du fils) et dans le fils(0).
+Prototype : pid_t fork(void);
+Exemple : pid_t pid = fork();
+Dans le processus parent fork retrourne le PID(identifiant de processus) du processus fils.
+Dans le processus fils : fork return 0.
+Si une erreur se produit fork renvoi -1.
+lors d un appel a fork, le processus fils recoit une copie de l'espace memoire du proccessus parent pour pouvoir travailler.
+Cependant, la reelle copie a uniquement lieu quand le fils cherche a faire une modification dynamique.
+
+
+Waitpid : Usage : Permet au processus parent d'attendre un processus fils particulier, avec des options pour controler l'attente.
+		  Prototype : pid_t waitpid(pid_t pid, int *status, int options);
+		  Exemple : waitpid(pid, &status, 0);
+		  pid > 0 : Attend la fin du processus dont le PID est pid.
+		  pid == 0 : Attend tout les proccessus fils du meme groupe de proccessus.
+		  pid == -1 : Attend n importe quel processus fils (equivalent a wait).
+		  pid < 1: Attend tout les proccessus fils dont le groupe de processus = |pid|.
+		  status = un pointeur vers un entier ou sera stocker le code de terminaison du proccessus.
+		  options : Specifie les options pour la fonction waitpid().
+		  			0 = Attendre la fin du proccessus fils.
+					WNOHANG : Si aucun proccessus fils n a terminer, waitpid retourn immediatement au lieu de bloquer.
+					WUNTRACED : Si un processus fils est arrete (pas terminer) la fonction retourne aussi son etat.
+		  Si le processus fils est terminer avec succes, return PID du fils.
+	      Sinon return -1 que errno comprend.
+
+
+SIGNAL :
+Prototype : void (*signal(int sig, void (*handler)(int)))(int);
+Utilisation : La fonction signal est utilisée pour définir un gestionnaire de signaux dans un programme C.
+			  Elle permet de spécifier une fonction à exécuter lorsqu'un signal particulier est reçu par le processus.
+			  Par exemple, elle peut être utilisée pour gérer des signaux comme SIGINT
+			  (interruption, souvent envoyé par Ctrl+C) ou SIGTERM (demande de terminaison).
+Header : #include <signal.h>
+Retour : Retourne l'adresse du gestionnaire de signaux précédent, ou SIG_ERR en cas d'erreur.
+		 Si le gestionnaire est correctement défini, la fonction retourne un pointeur vers le précédent gestionnaire.
+		 Si une erreur se produit, elle retourne SIG_ERR et errno est défini.
+Parametre : sig : Le signal à capturer. Il s'agit généralement d'un nombre entier correspondant à un signal standard comme SIGINT, SIGTERM, SIGKILL, etc.
+			handler : Un pointeur vers la fonction qui doit être appelée lorsqu'un signal spécifique est reçu. Cette fonction doit
+		    avoir un paramètre d'entier (int), représentant le signal reçu. Si handler est SIG_IGN, le signal sera ignoré,
+		    et si handler est SIG_DFL, le comportement par défaut du signal sera utilisé.
+
+
+
+SIGACTION :
+Prototype : int sigaction(int sig, const struct sigaction *act, struct sigaction *oldact);
+Utilisation : La fonction sigaction permet de définir un gestionnaire de signaux pour un signal spécifique,
+			  offrant plus de contrôle et de flexibilité par rapport à signal.
+			  Elle est utilisée pour intercepter les signaux envoyés à un processus et répondre de manière personnalisée.
+			  Elle permet aussi de spécifier des options supplémentaires pour la gestion des signaux,
+			  comme la possibilité de masquer temporairement un signal pendant son traitement.
+Header : #include <signal.h>
+Retour : Return 0 en cas de succes.
+		 Return -1 en cas d'erreur avec errno.
+Parametre : 
+sig : Le signal à capturer (par exemple, SIGINT, SIGTERM, SIGSEGV).
+act : Un pointeur vers une structure sigaction qui définit le gestionnaire de signaux et d'autres options.
+oldact : Un pointeur vers une structure sigaction où l'ancien gestionnaire de signaux sera stocké.
+		 Ce paramètre peut être NULL si l'ancien gestionnaire n'est pas nécessaire.
+
+
+
+SIGEMPTYSET :
+Prototype : int sigemptyset(sigset_t *set);
+Utilisation : La fonction sigemptyset est utilisée pour initialiser un ensemble de signaux (sigset_t) à un ensemble vide,
+			  c'est-à-dire qu'aucun signal n'est inclus dans l'ensemble.
+			  Cela est souvent utilisé pour préparer un masque de signaux avant de l'utiliser avec des fonctions
+			  comme sigaction ou sigprocmask, où un ensemble vide signifie qu'aucun signal n'est bloqué.
+Header : #include <signal.h>
+Retour : Return 0 en cas de succes.
+		 Return -1 en cas d'erreur avec errno.
+Parametre : set : Un pointeur vers un objet de type sigset_t, qui sera initialisé à un ensemble vide de signaux.
+
+
+
+SIGADDSET : 
+Prototype : int sigaddset(sigset_t *set, int signum);
+Utilisation : La fonction sigaddset est utilisée pour ajouter un signal spécifique à un ensemble de signaux (sigset_t).
+			  Cela est utile lorsqu'on souhaite bloquer, ignorer ou manipuler certains signaux avec des fonctions comme
+			  sigprocmask ou sigaction.
+Header : #include <signal.h>
+Retour : Retourne -1 en cas d'erreur.
+		 Retourne 0 en cas de succes.
+
+
+
+kill : 
+Prototype : int kill(pid_t pid, int sig);
+Utilisation : La fonction kill est utilisée pour envoyer un signal à un processus spécifique ou à un groupe de processus.
+			  Elle peut être utilisée pour terminer un processus (SIGTERM), l'arrêter (SIGSTOP), le relancer (SIGHUP),
+			  ou communiquer avec lui via des signaux personnalisés.
+Header : #include <signal.h>
+		 #include <unistd.h>
+Parametre : Un identifiant de processus (PID) pour envoyer un signal à un processus spécifique.
+			0 pour envoyer le signal à tous les processus du même groupe.
+			-1 pour envoyer le signal à tous les processus que l’utilisateur a le droit de manipuler.
+			Un numéro négatif -PID pour envoyer un signal à tous les processus d’un groupe donné.
+			sig : Le signal à envoyer (ex. SIGKILL, SIGTERM, SIGSTOP, SIGHUP, etc.).
+Retour : Retourne -1 en cas d'erreur.
+		 Retourne 0 en cas de succes.
+
+
+
+Exit : Usage : Permet de sortir d'un programme avec un code de retour
+	   Prototype : void exit(int status);
+	   Exemple : exit(0);
+
+
+
+GETCWD :
+Prototype : char *getcwd(char *buf, size_t size);
+Utilisation : La fonction getcwd est utilisée pour obtenir le répertoire de travail actuel du processus.
+			  Elle est souvent utilisée pour afficher le chemin absolu du répertoire où le programme est exécuté,
+			  ou pour stocker temporairement cette information avant de changer de répertoire.
+Header : #include <unistd.h>
+		 #include <stdio.h>
+Parametre : buf : Un pointeur vers un tableau de caractères où sera stocké le chemin du répertoire courant. 
+			Peut être NULL pour que la fonction alloue dynamiquement un buffer.
+			size : La taille du buffer en octets. Si buf est NULL, cette valeur détermine la taille de l'allocation dynamique.
+Retour : Retourne un pointeur vers buf contenant le chemin absolu du répertoire courant en cas de succès.
+		 Retourne NULL en cas d'erreur et définit errno.
+
+
+
+CHDIR :
+Prototype : int chdir(const char *path);
+Utilisation : La fonction chdir est utilisée pour changer le répertoire de travail courant du processus appelant.
+			  Elle est souvent utilisée avant d’accéder à des fichiers ou d’exécuter des commandes qui nécessitent
+			  un chemin relatif spécifique.
+Header : #include <unistd.h>
+Parametre : path : Le chemin absolu ou relatif du répertoire dans lequel le processus doit se déplacer.
+Retour : Retourne -1 en cas d'erreur.
+		 Retourne 0 en cas de succes.
+
+
+
+STAT : 
+Prototype : int stat(const char *path, struct stat *buf);
+		    int lstat(const char *path, struct stat *buf);
+Utilisation : La fonction stat est utilisée pour obtenir des informations sur un fichier ou un répertoire, comme sa taille,
+			  ses permissions, son propriétaire, et ses dates de modification.
+		 	  La version lstat fonctionne comme stat, mais elle ne suit pas les liens symboliques
+			  (elle renvoie des informations sur le lien lui-même).
+Header : #include <sys/stat.h>
+		 #include <unistd.h>
+Parametre : path : Le chemin du fichier ou répertoire dont on veut obtenir les informations.
+			buf : Un pointeur vers une structure struct stat qui sera remplie avec les informations du fichier.
+Retour : Retourne -1 en cas d'erreur.
+		 Retourne 0 en cas de succes.
+
+
+Unlink : Usage : Supprime un fichier en le retirant du systeme de fichiers
+		 Prototype : int unlink(const char *pathname);
+		 Exemple : unlink("file.txt");
+		 si unlink reussit, return 0, sinon return -1 et errno le capte.
+		 Cela desasocie le fichoer de de son nom dans le systeme de fichier mais la suppression ce fera apres que tout 
+		 les proccessus utilisant ce fichiers sont fermer.
+
+
+
+Execve : Usage : Remplace le processus courant par un autre programme. En gros, execute un programme en remplacant le
+					processus courant. C'est souvent utiliser pour lancer un progranne avec des variables d'environnement.
+		 Prototype : int execve(const char *pathname, char *const argv[], char *const envp[]);
+		 Exemple : execve("/bin/ls", args, env);
+		 La fonction execve est une des plus importantes du systeme Unix/Linux
+		 elle remplace un programme en cours d'execution par un autre programme.
+		 pathname : correspond au chemin absolu ou relatif du programme a executer.
+		 argv : un tableau de chaine de caractere qui represente les arguments du programme a executer
+		 le premier element est souvent le nom du programme a executer et le dernier est NULL.
+		 Exemple : pour executer ls -l, argv serait ["ls", "-l", NULL]
+		 envp = un tableau de chaine de caractere representant l environnement du programme a executer, chaques 
+		 chaines doivent etre sous la forme clé=valeur : ["PATH=/usr/bin", "HOME=/home/user", NULL]
+		 si elle echoue la fonction renvoie -1 qui sera transmissible via errno.
+		 Les descripteurs de fichier ouverts dans le programme parent seront transmis dans le programme fils, a moins
+		 d'etre fermer avant.
+		 les variables d'environnement seront transise via le tableau envp.
+		 On combine souvent cette fonction avec fork, fork va cree un processus fils, et execve va permettre d'associer ce
+		 processus fils a un executable, exemple, on veux executer ls dans un programme : 
+		 on fait un pid_t	pid = fork(); //cree un processus fils.
+		 					if (pid == 0)
+		 						execve("/bin/ls", argv, envp)   //associe au processus fils l'executable ls.
+							else
+								wait(NULL);  //attend que le processus fils soit terminer.
+
+
+
+
+Dup : Usage : Crée une copie d'un descripteur de fichier.
+	  Prototype : int dup(int oldfd);
+	  Exemple : int new_fd = duf(oldfd);
+	  Si une erreur surivient elle return -1 et errno peut indiquer l'erreur.
+	  ATTENTION, les deux fd pointent au meme endroit, donc la modification d'un entraine la modification de l'autre.
+	  prend le plus petit fd de libre.
+
+
+
+Dup2 : Usage : Utiliser pour rediriger un descripteur de fichier vers un autre. Par Exemple rediriger
+				la sortie standard (stdout) vers un fichier.
+	   Prototype : int	dup2(int oldfd, int newfd);
+	   Exemple : dup2(fd, STDOUT_FILENO);
+	   Dup2 est comme dup sauf que on peut préciser quel fd on veut utiliser pour la redirection.
+	   dans notre exemple, si fd était déja ouvert, il sera fermé pour pouvoir dupliquer la sortie standard.
+
+
+
+
+Pipe : Usage : Crée un pipe(un canal de communication unidirectionnel entre deux processus).
+				Crée un canal entre deux processus pour permettre la communication.
+	   Prototype : int pipe(int pipefd[2]);
+	   Exemple : int pipefd[2];
+	   			 pipe(pipefd);
+	   Pipe est essentiel car il permet de cree une communication entre deux processus par un mecanisme de tuyau(pipe).
+	   pipefd[2] est un tableau de deux descripteur de fichiers.
+	   pipefd[0] = descripteur pour lire a partir du pipe.
+	   pipefd[1] = descripteur pour ecrire dans le pipe.
+	   Si pipe reussit, il return 0 et rempli le tableau pipefd[] avec les deux descripteur de fichiers.
+	   En car d erreur pipe return -1, avec son erreur errno associer.
+	   pipe est unidirectionnel donc les donnees peuvent circuler uniquement d un sens a la fois.
+	   Pipe fonctionne entre deux processus, c'est pour ca que souvent fork est utiliser avec pour pouvoir cree deux processus simultane.
+	   Exemple concret pour le projet :
+	   si tu veux executer des commandes avec un pipe dans un shell, comme par exemple ls | grep txt, cela 
+	   implique la creation de deuc proccessus avec un pipe entre eux :
+	   1. Le processus fils 1 executera ls et ecrira dans le pipe.
+	   2. le proccessus fils 2 executera grep txt et lira les donnees du pipe.
+	   Ce type de mecanisme est realiser en creant un pipe entre les deux processus et en redirigeant les flux entree/sortie.
+
+
+
+strerror : Usage : Renvoi une chaine de caractere d'écrivant l'erreur associé a un code erreur errno.
+		   Prototype : char *strerror(int errnum);
+		   Exemple : printf("Erreur : %s\n", strerror(errno));
+
+
+
+
+Perror : Usage : Affiche un message d'erreur basé sur la variable errno, en gros affiche un message d'erreur
+					avec une description textuelle en cas d'échec.
+		 Prototype : void perror(const char *s);
+		 Exemple : perror("Erreur lors de l'ouverture du fichier");
+		 la variable errno est une variable globale qui contient le dernier code erreur défini par une fonction systeme.
+		 donc dans notre cas, perror("Erreur lors de l'ouverture du fichier");
+		 					  cela va afficher : Erreur lors de l'ouverture du fichier: No such file or directory
+
+
+
+
+ISATTY :
+Prototype : int isatty(int fd);
+Utilisation : La fonction isatty permet de vérifier si un descripteur de fichier (fd) correspond à un
+			  terminal (TTY). Elle est utile pour détecter si un programme interagit avec un utilisateur
+			  en ligne de commande ou s'il est redirigé vers un fichier ou un pipe.
+Header : #include <unistd.h>
+Parametre : fd : Un descripteur de fichier (exemples courants : STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO).
+Retour : Retourne 1 si fd est associé à un terminal.
+		 Retourne 0 sinon (ex. redirection vers un fichier ou un pipe).
+
+
+
+GETENV : 
+Prototype : char *getenv(const char *name);
+Utilisation : La fonction getenv permet d'obtenir la valeur d'une variable d'environnement à partir du tableau
+			  d'environnement du processus. Elle est couramment utilisée pour récupérer des informations de configuration,
+			  telles que les variables de chemin (PATH), de configuration du système, ou d'authentification.
+Header : #include <stdlib.h>
+Parametre : name : Le nom de la variable d'environnement à récupérer,
+			sous forme de chaîne de caractères (par exemple "HOME", "PATH", etc.).
+Retour : Retourne un pointeur vers une chaîne de caractères contenant la valeur de la variable d'environnement spécifiée.
+		 Retourne NULL si la variable d'environnement n'est pas définie.
+
+
+
+
