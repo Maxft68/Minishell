@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 17:56:15 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:33:11 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int argc, char **argv, char **env)
 		do_node(read_array, all);
 		// do_everything
 		// free all structure
-		rl_clear_history();
 		ft_lstclear(&all->token);
 		free_array(read_array);
 		free(read);
