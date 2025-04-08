@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 02:35:27 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 02:52:10 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (1);
 	initialize_all(&all);
+	do_env(all, env);
 	while (1)
 	{
 		read = readline("WriteOnMe ");

@@ -1,11 +1,10 @@
-makefile
-ajout libft
+
 ajout dossierS /src /include/ execution /parsing/ 
 parsing env en liste chainee
-initialization
+
 debut de main
 
-readline dans le main
+
 reflechir tokenisation/ parsing
 
 

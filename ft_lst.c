@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 01:48:39 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 03:23:31 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	do_node(char **read_array, t_all *all)
 		ft_lstadd_back(&all->token, new_node);
 		i++;
 	}
-	print_node(all->token);
+	print_node(all->token); // a degager
 	return ;
 }
 
