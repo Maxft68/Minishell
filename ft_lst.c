@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/07 21:46:01 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 01:48:39 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,44 @@ void	print_node(t_token *token)
 	}
 }
 
-t_garbage	*ft_lstadd_front(t_garbage **garbage, t_garbage *new)
+void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
 {
 	t_garbage	*second;
 
-	if (!*garbage)
+	if (!(*garbage))
 	{
 		*garbage = new;
-		return (*garbage);
+		return ;
 	}
 	second = *garbage;
 	new->next = second;
 	*garbage = new;
-	return (*garbage);
+	return ;
 }
 
-static t_token	*ft_lstadd_back(t_token **token, t_token *new)
+static void	ft_lstadd_back(t_token **token, t_token *new)
 {
 	t_token	*current;
 
 	if (!*token)
 	{
 		*token = new;
-		return (*token);
+		return ;
 	}
 	current = *token;
 	while (current->next)
 		current = current->next;
 	current->next = new;
-	return (*token);
+	return  ;
 }
 
 static t_token	*ft_lstnew(t_all *all, char *name)
 {
 	t_token	*new;
 
-	new = gc_malloc(all, sizeof(t_token));
+	new = malloc(sizeof(t_token));
 	if (!new)
-		return (NULL);
+			ft_exit("malloc error", all, 1);
 	new->name = name;
 	new->next = NULL;
 	return (new);
@@ -90,6 +90,7 @@ void	ft_lstclear(t_token **token)
 	{
 		temp = (*token)->next;
 		free(*token);
+		*token = NULL;
 		*token = temp;
 	}
 }
