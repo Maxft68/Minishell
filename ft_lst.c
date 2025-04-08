@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 06:00:44 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 06:11:14 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 {
 	t_env	*new;
 
-	new = malloc(sizeof(t_env));
+	new = gc_malloc(all, sizeof(t_env));
 	if (!new)
-			ft_exit("malloc error", all, 1);
+		ft_exit("malloc error", all, 1);
 	new->name = name;
 	new->value = value;
 	new->next = NULL;
