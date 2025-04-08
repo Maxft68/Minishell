@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 04:05:21 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 05:49:48 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_data
 {
 	int		len_name;
 	int		len_value;
+	char	*name;
+	char	*value;
 }				t_data;
 
 typedef struct s_all
@@ -88,5 +90,8 @@ void		free_array(char **array);
 void		*gc_malloc(t_all *all, size_t size);
 void		free_garbage_collect(t_all *all);
 void		do_env(t_all *all, char **env);
+void		print_node_env(t_env *env);
+t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
+void		ft_lstadd_back_env(t_env **env, t_env *new);
 
 #endif

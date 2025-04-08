@@ -6,16 +6,16 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/07 22:36:26 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/08 05:32:24 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC = minishell.c	ft_exit.c	ft_lst.c	ft_garbage.c
+SRC = minishell.c	ft_exit.c	ft_lst.c	ft_garbage.c do_env.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\

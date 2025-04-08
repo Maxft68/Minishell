@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 03:23:31 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 06:00:44 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ void	print_node(t_token *token)
 		token = token->next;
 	}
 }
+void	print_node_env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s=", env->name);
+		printf("%s\n", env->value);
+		env = env->next;
+	}
+}
+
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
 {
@@ -52,6 +62,22 @@ static void	ft_lstadd_back(t_token **token, t_token *new)
 	return  ;
 }
 
+void	ft_lstadd_back_env(t_env **env, t_env *new)
+{
+	t_env	*current;
+
+	if (!*env)
+	{
+		*env = new;
+		return ;
+	}
+	current = *env;
+	while (current->next)
+		current = current->next;
+	current->next = new;
+	return  ;
+}
+
 static t_token	*ft_lstnew(t_all *all, char *name)
 {
 	t_token	*new;
@@ -60,6 +86,19 @@ static t_token	*ft_lstnew(t_all *all, char *name)
 	if (!new)
 			ft_exit("malloc error", all, 1);
 	new->name = name;
+	new->next = NULL;
+	return (new);
+}
+
+t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
+{
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+			ft_exit("malloc error", all, 1);
+	new->name = name;
+	new->value = value;
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 02:52:10 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/08 05:11:59 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,13 @@ void	initialize_all(t_all **all)
 	if (!((*all)->pipe))
 		ft_exit("gc_malloc fail", *all, 1);
 	ft_memset((*all)->pipe, 0, sizeof(t_pipe));
+	(*all)->data = gc_malloc(*all, sizeof(t_data));
+	if (!((*all)->data))
+		ft_exit("gc_malloc fail", *all, 1);
+	ft_memset((*all)->data, 0, sizeof(t_data));
 	(*all)->env = NULL;
 	(*all)->token = NULL;
 }
-
-// void free_all(t_all *all)
-// {
-//     if (!all)
-//         return;
-//     free_garbage_collect(all);
-//     free(all);
-// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -68,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&all->token);
 		// do_everything
 	}
-	ft_exit("FINISH", all, 0);// a remplacer par le signal CTRL + C ??
+	ft_exit("FINISH\n", all, 0);// a remplacer par le signal CTRL + C ??
 	(void)argv;
 	(void)env;
 }
