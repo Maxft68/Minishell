@@ -35,3 +35,15 @@ command cat
 
 
 si | present alors executer les built-in uniquement dans les enfants
+
+
+echo hello world from minishell
+
+Tu dois tous les stocker dans t_cmd->argv, comme ceci :
+
+argv[0] = "echo";
+argv[1] = "hello";
+argv[2] = "world";
+argv[3] = "from";
+argv[4] = "minishell";
+argv[5] = NULL;
