@@ -2,7 +2,7 @@
 ajout dossierS /src /include/ execution /parsing/ 
 parsing env en liste chainee
 
-debut de main
+lancer des cmd simples pour commencer
 
 
 reflechir tokenisation/ parsing
@@ -47,3 +47,17 @@ argv[2] = "world";
 argv[3] = "from";
 argv[4] = "minishell";
 argv[5] = NULL;
+
+cat < input.txt > output.txt
+
+➡️ Une seule commande, avec :
+
+    argv = ["cat", NULL]
+
+    redir 1 = < input.txt
+
+    redir 2 = > output.txt
+
+Si current token = | et (le précédent est | ou c’est le premier ou le dernier
+ token) → erreur.
+
