@@ -70,3 +70,5 @@ Si current token = | et (le précédent est | ou c’est le premier ou le dernie
 
 🎯 Ton lexer doit savoir lire une chaîne entière entre " " ou ' ' comme un seul mot.
 
+<infile.txt cat >outfile.txt | cat >outfile2.txt, 
+le pipe ne recoit rien car redirection out avant
