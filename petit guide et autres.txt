@@ -18,6 +18,7 @@ en premier soi redirection "< > " soit commande
 enregistrer le code error dans une structure pour pouvoir le resortir avec $? meme si code erreur succes
 
 echo coucou > outfile1 >outfile2>outfile3 : coucou ne sera que dans outfile3
+idem pour infile
 
 
 "cat <in <in2 | cat >out"
@@ -61,4 +62,8 @@ cat < input.txt > output.txt
 
 Si current token = | et (le précédent est | ou c’est le premier ou le dernier
  token) → erreur.
+
+ 🔥 Les guillemets désactivent le rôle spécial des opérateurs (>, <, |, etc.).
+
+🎯 Ton lexer doit savoir lire une chaîne entière entre " " ou ' ' comme un seul mot.
 
