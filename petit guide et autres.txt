@@ -7,6 +7,7 @@ lancer des cmd simples pour commencer
 
 reflechir tokenisation/ parsing
 
+!! creer des branches AVANT dajouter des nouveautes !!
 
 
 faire export en premier ou env
