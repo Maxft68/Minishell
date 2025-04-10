@@ -17,9 +17,12 @@ en premier soi redirection "< > " soit commande
 
 enregistrer le code error dans une structure pour pouvoir le resortir avec $? meme si code erreur succes
 
-echo coucou > outfile1 >outfile2>outfile3 : coucou ne sera que dans outfile3
-idem pour infile
+echo coucou > outfile1 >outfile2 > outfile3 : coucou ne sera que dans outfile3 
+mais outfile 1 et 2 seront creer
+idem pour les infile, mais si infile1 echoue alors tout sarrete 
+et ne va meme pas voir infile2
 
+cat <in1 >out1 >out2 <in2 = in2 ira dans out2
 
 "cat <in <in2 | cat >out"
 
