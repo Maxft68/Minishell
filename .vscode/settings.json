@@ -1,9 +1,0 @@
-{
-	"makefile.launchConfigurations": [
-		{
-			"cwd": "/home/mdsiurds/C/Stud/Minishell",
-			"binaryPath": "/home/mdsiurds/C/Stud/Minishell/minishell",
-			"binaryArgs": []
-		}
-	]
-}
