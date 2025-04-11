@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/11 17:06:52 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:37:56 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ typedef enum s_tok_def
 	
 }						t_tok_def;
 
-typedef struct s_token
+typedef struct s_token //
 {
 	char				*name;
 	struct s_token		*next;
 }						t_token;
 
-typedef struct s_data
+typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
 	int		len_name;
 	int		len_value;
