@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 05:49:48 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:06:52 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,20 @@ typedef struct s_env
 	char				*value;
 	struct s_env		*next;
 }						t_env;
+
+typedef enum s_tok_def
+{
+	WORD,
+	D_QUOTE,
+	S_QUOTE,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HERDOC,
+	CMD
+	
+}						t_tok_def;
 
 typedef struct s_token
 {

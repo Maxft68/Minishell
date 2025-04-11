@@ -6,12 +6,13 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/08 05:32:24 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/11 15:26:47 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC = minishell.c	ft_exit.c	ft_lst.c	ft_garbage.c do_env.c
+SRC = minishell.c	ft_exit.c	ft_lst.c	ft_garbage.c do_env.c \
+split_lexer.c
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc

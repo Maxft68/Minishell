@@ -78,3 +78,8 @@ tache du jour :
 - savoir si on est entre quote ou non !
 - pouvoir afficher l'env quand demander.
 - modifier le split pour en faire un bon split_token
+
+parsing lexer(decoupe et categorise) a faire par max pour lexec
+COMPRENDRE COMMENT GERER PLUSIEURS PIPES
+
+
