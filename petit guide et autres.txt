@@ -1,6 +1,5 @@
 
 ajout dossierS /src /include/ execution /parsing/ 
-parsing env en liste chainee
 
 lancer des cmd simples pour commencer
 
@@ -72,3 +71,10 @@ Si current token = | et (le précédent est | ou c’est le premier ou le dernie
 
 <infile.txt cat >outfile.txt | cat >outfile2.txt, 
 le pipe ne recoit rien car redirection out avant
+
+
+tache du jour :
+- gerer les expands
+- savoir si on est entre quote ou non !
+- pouvoir afficher l'env quand demander.
+- modifier le split pour en faire un bon split_token
