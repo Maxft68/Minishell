@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/11 10:20:24 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:06:29 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_lstadd_back_env(t_env **env, t_env *new)
 	while (current->next)
 		current = current->next;
 	current->next = new;
-	return  ;
+	return ;
 }
 
 static t_token	*ft_lstnew(t_all *all, char *name)
@@ -94,7 +94,7 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 {
 	t_env	*new;
 
-	new = gc_malloc(all, sizeof(t_env));
+	new = malloc(sizeof(t_env));
 	if (!new)
 		ft_exit("malloc error", all, 1);
 	new->name = name;

@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/11 14:11:31 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:59:30 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	initialize_all(t_all **all)
 {
-	*all = malloc(sizeof(t_all));
+	*all = malloc(sizeof(t_all)); //ne pas mettre gc_malloc
 	if (!(*all))
 		ft_exit("malloc fail", *all, 1);
 	ft_memset(*all, 0, sizeof(t_all));
@@ -36,6 +36,7 @@ void	initialize_all(t_all **all)
 	ft_memset((*all)->data, 0, sizeof(t_data));
 	(*all)->env = NULL;
 	(*all)->token = NULL;
+	//initialize_all_two
 }
 
 int	main(int argc, char **argv, char **env)
@@ -56,6 +57,10 @@ int	main(int argc, char **argv, char **env)
 			free(read);						// a remplacer par le signal CTRL + C
 			break ;							// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
+		if (ft_strncmp(read, "env", 3) == 0)
+		{
+			print_node_env(all->env);
+		}
 		add_history(read);
 		read_array = ft_split(read, ' ');	// a modifier par une vrai fonction qui parse tout les cas possible
 		do_node(read_array, all);
@@ -66,5 +71,4 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_exit("FINISH\n", all, 0);// a remplacer par le signal CTRL + C ??
 	(void)argv;
-	(void)env;
 }
