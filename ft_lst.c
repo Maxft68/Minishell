@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/12 15:06:29 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:49:37 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static t_token	*ft_lstnew(t_all *all, char *name)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(t_token));
+	new = gc_malloc(all, sizeof(t_token));
 	if (!new)
 			ft_exit("malloc error", all, 1);
 	new->name = name;
