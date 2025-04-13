@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/12 15:58:36 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:46:49 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,42 @@ void	do_env(t_all *all, char **env)
 		all->data->len_value = 0;
 		while (env[i][j++] != '=')
 			all->data->len_name++;
-		j++;
 		all->data->name = malloc(sizeof(char) * (all->data->len_name + 1));
+		if (!all->data->name)
+			ft_exit("malloc fail", all, 1);
 		while (env[i][j++])
 			all->data->len_value++;
 		all->data->value = malloc(sizeof(char) * (all->data->len_value + 1));
+		if (!all->data->value)
+			ft_exit("malloc fail", all, 1);
 		split_env(all, env[i]);
 		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data->name,
 				all->data->value));
 		i++;
+	}
+}
+void	print_node_env(t_env *env)
+{
+	if (!env)
+		return ;
+	while (env)
+	{
+		printf("%s=", env->name);
+		printf("%s\n", env->value);
+		env = env->next;
+	}
+}
+
+void	clear_env(t_env **env)
+{
+	t_env *temp;
+	
+	if (!env || !*env)
+		return ;
+	while (*env)
+	{
+		temp = (*env)->next;
+		free(*env);
+		*env = temp;
 	}
 }

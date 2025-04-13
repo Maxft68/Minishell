@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/12 21:50:18 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:13:02 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	initialize_all(t_all **all)
 	ft_memset((*all)->data, 0, sizeof(t_data));
 	(*all)->env = NULL;
 	(*all)->token = NULL;
+	(*all)->garbage = NULL;
 	//initialize_all_two
 }
 
@@ -51,9 +52,7 @@ int	main(int argc, char **argv, char **env)
 	do_env(all, env);
 	while (1)
 	{
-		printf("hello\n");
 		read = readline("WriteOnMe ");
-		printf("hello3\n");
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{									// a remplacer par le signal CTRL + C
 			free(read);						// a remplacer par le signal CTRL + C
@@ -68,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 		do_node(read_array, all);
 		free_array(read_array);
 		free(read);
-		//ft_lstclear(&all->token);
+		ft_lstclear(&all->token);
 		// do_everything
 	}
 	ft_exit("FINISH\n", all, 0);// a remplacer par le signal CTRL + C ??

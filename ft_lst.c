@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/12 21:49:37 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:03:22 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	print_node(t_token *token)
 		token = token->next;
 	}
 }
-void	print_node_env(t_env *env)
-{
-	while (env)
-	{
-		printf("%s=", env->name);
-		printf("%s\n", env->value);
-		env = env->next;
-	}
-}
-
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
 {
@@ -81,6 +71,7 @@ void	ft_lstadd_back_env(t_env **env, t_env *new)
 static t_token	*ft_lstnew(t_all *all, char *name)
 {
 	t_token	*new;
+	new = NULL;
 
 	new = gc_malloc(all, sizeof(t_token));
 	if (!new)

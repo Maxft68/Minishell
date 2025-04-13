@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/11 17:37:56 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:38:55 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void		*gc_malloc(t_all *all, size_t size);
 void		free_garbage_collect(t_all *all);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
+void		clear_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
 
