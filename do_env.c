@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/13 16:46:49 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:49:52 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,15 @@ void	print_node_env(t_env *env)
 
 void	clear_env(t_env **env)
 {
-	t_env *temp;
-	
+	t_env	*temp;
+
 	if (!env || !*env)
 		return ;
 	while (*env)
 	{
 		temp = (*env)->next;
+		free((*env)->name);
+		free((*env)->value);
 		free(*env);
 		*env = temp;
 	}
