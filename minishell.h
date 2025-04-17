@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/13 16:38:55 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:22:29 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 
 typedef struct s_all
 {
-	t_pipe				*pipe;
+	t_pipe				pipe;
 	t_env				*env;
 	t_token				*token;
 	t_garbage			*garbage;
-	t_data				*data;
+	t_tok_def			tok_def;
+	t_data				data;
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);
@@ -102,7 +103,7 @@ void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
 void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 void		*gc_malloc(t_all *all, size_t size);
-void		free_garbage_collect(t_all *all);
+void		free_garbage_collect(t_garbage **garbage);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
 void		clear_env(t_env **env);
