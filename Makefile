@@ -6,18 +6,22 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/17 16:12:19 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/17 19:05:35 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC = minishell.c ft_exit.c ft_lst.c ft_garbage.c $(BUILT_IN_DIR)/env/do_env.c \
+SRC =	minishell.c \
+		ft_exit.c \
+		ft_lst.c \
+		ft_garbage.c \
+		built_in/env/do_env.c 
+		
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
-
-CFLAGS = -Wall -Wextra -Werror -g3
-BUILT_IN_DIR = ./built-in/
+INCLUDES = -I./mandatory
+CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES)
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\
@@ -33,9 +37,11 @@ $(NAME): $(OBJ) $(LIBFT_LIB)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
-
+	
+	
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/built_in
+	@mkdir -p $(OBJ_DIR)/built_in/env
 
 $(LIBFT_LIB): 
 	@echo	"Compiling libft..."

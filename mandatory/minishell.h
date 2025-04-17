@@ -6,15 +6,15 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 10:42:36 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:38:56 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./libft/libft/libft.h"
-# include "./libft/printf/ft_printf.h"
+# include "../libft/libft/libft.h"
+# include "../libft/printf/ft_printf.h"
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>

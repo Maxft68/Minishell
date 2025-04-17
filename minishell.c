@@ -6,12 +6,12 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 17:53:00 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 20:42:17 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//coucou regis
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*read;
