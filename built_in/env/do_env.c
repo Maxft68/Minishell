@@ -6,11 +6,11 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 10:42:36 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:27:10 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
 void	split_env(t_all *all, char *env)
 {
