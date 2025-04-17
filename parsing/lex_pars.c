@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/16 23:17:28 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:50:29 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    skip_whitespace(t_lexer *lexr)
 {
-    while (isspace(lexr->c))
+    while ((lexr->c > 9 && lexr->c < 14) || lexr->c == 32)
         advance_char(lexr);
 }
 
@@ -26,11 +26,12 @@ t_token *create_alnum_token(t_lexer *lexr)
     token_type  type;
     t_token     *tokn;
 
+    start = lexr->position;
     while (isalnum(lexr->c) || lexr->c == '/' || lexr->c == '-')
             advance_char(lexr);
     len = lexr->position - start;
     str = (char*)malloc(len + 1);
-    strncpy(str, lexr->input + start, len);
+    ft_strlcpy(str, lexr->input + start, len + 1);
     str[len] = '\0';
     if (lexr->first_token)
     {
@@ -56,7 +57,7 @@ t_token *create_string_token(t_lexer*lexr, char quote)
     }
     len = lexr->position - start;
     str = (char*)malloc(len + 1);
-    strncpy(str, lexr->input + start, len);
+    ft_strlcpy(str, lexr->input + start, len + 1);
     str[len] = '\0';
 
     if (lexr->c == quote) {

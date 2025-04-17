@@ -7,7 +7,7 @@ t_token   *create_token(token_type type, const char *str)
     
     tokn = (t_token*)malloc(sizeof(t_token));
     tokn->type = type;
-    tokn->str = strdup(str);
+    tokn->str = ft_strdup(str);
     return  (tokn);
 }
 

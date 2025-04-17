@@ -6,13 +6,14 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 23:08:50 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/16 23:15:59 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:05:31 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEX_PARS_H
 # define LEX_PARS_H
 
+//# include "../libft/libft/libft.h"
 # include <stdlib.h>
 # include <string.h>
 # include <stdbool.h>
@@ -32,11 +33,13 @@ typedef enum
     ILLEGAL,
 }       token_type;
 
-typedef struct s_token
+typedef struct  s_token
 {
-    token_type  type;
-    char        *str;
-}       t_token;
+    token_type      type;
+    char            *str;
+    int             index;
+    struct s_token  *next;
+}               t_token;
 
 typedef struct s_lexer
 {
@@ -52,6 +55,9 @@ t_lexer *create_lexer(const char *input);
 void    free_lexer(t_lexer *lexr);
 t_token *next_token(t_lexer *lexr);
 void    advance_char(t_lexer *lexr);
+char	*ft_strdup(const char *s);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlen(const char *s);
 
 
 #endif
