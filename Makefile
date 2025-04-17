@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/11 15:26:47 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/17 12:27:11 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ fclean: clean
 re: fclean all
 
 
-valgrind: $(NAME)
+valgrind: fclean $(NAME)
 	@echo "Running Valgrind with $(NAME)..."
 	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
