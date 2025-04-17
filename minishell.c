@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 12:51:48 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:07:16 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
+	//signal(SIGQUIT, SIG_IGN);
+	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	//signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		read = readline("WriteOnMe ");
 		if (!read)
-			ft_exit("FINISH propre\n", &all, 0);
+			ft_exit("exit avec ctrl + D\n", &all, 0);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{	
 			free(read);							// a remplacer par le signal CTRL + C
@@ -39,7 +39,8 @@ int	main(int argc, char **argv, char **env)
 		{
 			print_node_env(all.env);
 		}
-		add_history(read);
+		if (read && read[0] != '\0')
+			add_history(read);
 		read_array = ft_split(read, ' ');	// a modifier par une vrai fonction qui parse tout les cas possible
 		do_node(read_array, &all);
 		free(read);
