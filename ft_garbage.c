@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:45:54 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/08 01:53:37 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:26:42 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,31 @@ void	*gc_malloc(t_all *all, size_t size)
 	if (!alloc)
 		ft_exit("malloc fail", all, 1);
 	new = ft_lstnew(all, alloc);
+	if (!new)
+	{
+		free(alloc);
+		ft_exit("malloc fail", all, 1);
+	}
 	ft_lstadd_front(&(all->garbage), new);
 	return (alloc);
 }
 
-void	free_garbage_collect(t_all *all)
+void	free_garbage_collect(t_garbage **garbage_head)
 {
+	t_garbage	*garbage;
 	t_garbage	*temp;
 	
-	if (!all->garbage)
+	if (!garbage_head || !(*garbage_head))
 		return ;
-	while (all->garbage)
+	garbage = *garbage_head;
+	while (garbage)
 	{
-		temp = all->garbage->next;
-		if (all->garbage)
-		{
-			if (all->garbage->pointer != NULL)
-				free(all->garbage->pointer);
-			free(all->garbage);
-		}
-		all->garbage = temp;
+		temp = garbage->next;
+		if (garbage->pointer != NULL)
+			free(garbage->pointer);
+		free(garbage);
+		garbage = NULL;
+		garbage = temp;
 	}
+	*garbage_head = NULL;
 }

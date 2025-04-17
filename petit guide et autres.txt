@@ -21,7 +21,7 @@ mais outfile 1 et 2 seront creer
 idem pour les infile, mais si infile1 echoue alors tout sarrete 
 et ne va meme pas voir infile2
 
-cat <in1 >out1 >out2 <in2 = in2 ira dans out2
+cat <in1 >out1 >out2 <in2 = in2 ira dans out2 et out1 supprimer
 
 "cat <in <in2 | cat >out"
 
@@ -78,3 +78,21 @@ tache du jour :
 - savoir si on est entre quote ou non !
 - pouvoir afficher l'env quand demander.
 - modifier le split pour en faire un bon split_token
+
+parsing lexer(decoupe et categorise) a faire par max pour lexec
+COMPRENDRE COMMENT GERER PLUSIEURS PIPES
+
+
+	si 2 commandes dans un seul pipe -> error
+    Si une redirection est présente sans fichier → erreur ( < ou > )
+
+    Si | est en début ou fin → erreur
+
+    Si une commande est vide (ex : | |) → erreur
+
+
+	pour lexer enlever les redirections et le mot suivant la redirection qui peut etre coller
+	et potentillement directement le coller dans execve
+
+
+

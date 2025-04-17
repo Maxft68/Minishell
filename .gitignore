@@ -5,3 +5,5 @@ minishell
 *.a
 *.
 .vscode
+out*
+in*

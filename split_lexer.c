@@ -1,42 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   split_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 17:55:27 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 11:18:27 by mdsiurds         ###   ########.fr       */
+/*   Created: 2025/04/11 15:15:20 by mdsiurds          #+#    #+#             */
+/*   Updated: 2025/04/11 15:15:38 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_array(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array && array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
-	return ;
-}
-
-void	ft_exit(char *error, t_all *all, int error_code)
-{
-	if (error)
-		ft_putstr_fd(error, 2);
-	
-	free_env(&all->env);
-	free_garbage_collect(&all->garbage);
-	rl_clear_history();
-	exit(error_code);
-}
