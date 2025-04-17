@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 10:25:27 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:55:01 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	main(int argc, char **argv, char **env)
 		if (!read)
 			ft_exit("FINISH propre\n", &all, 0);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
-		{									// a remplacer par le signal CTRL + C
+		{		
+			free(read);							// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		if (ft_strncmp(read, "env", 3) == 0)

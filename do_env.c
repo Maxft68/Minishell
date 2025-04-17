@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/13 18:04:33 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:42:36 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_node_env(t_env *env)
 	}
 }
 
-void	clear_env(t_env **env)
+void	free_env(t_env **env)
 {
 	t_env	*temp;
 

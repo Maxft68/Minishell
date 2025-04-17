@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:55:27 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/13 18:10:41 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:51:02 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	ft_exit(char *error, t_all *all, int error_code)
 {
 	if (error)
 		ft_putstr_fd(error, 2);
-	clear_env(&all->env);
+	free_env(&all->env);
 	free_garbage_collect(&all->garbage);
+	free(all);
 	rl_clear_history();
 	exit(error_code);
 }
