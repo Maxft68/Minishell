@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/18 12:52:05 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/18 16:04:45 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,12 @@ SRC =	minishell.c \
 		ft_exit.c \
 		ft_lst.c \
 		ft_garbage.c \
-		built_in/cd/do_cd.c \
-		built_in/echo/do_echo.c \
 		built_in/env/do_env.c \
-		built_in/exit/do_exit.c \
-		built_in/exit/do_export.c \
-		built_in/pwd/do_pwd.c \
-		built_in/unset/do_unset.c \
+		#built_in/cd/do_cd.c \
+		#built_in/exit/do_exit.c \
+		#built_in/exit/do_export.c \
+		#built_in/pwd/do_pwd.c \
+		#built_in/unset/do_unset.c \
 		
 		
 		
