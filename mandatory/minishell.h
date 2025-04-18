@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 18:38:56 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:06:26 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
+
 
 #endif
