@@ -42,9 +42,23 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+int	ft_isprint(int c)
+{
+	if (c < 32 || c > 126)
+		return (0);
+	return (16384);
+}
+
+int	ft_isalnum(int c)
+{
+	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (8);
+	return (0);
+}
+
 int main()
 {
-    const char *input = "echo cat >out  'salut ça |  va    cat test";
+    const char *input = "cat file.txt | tr '[:lower:]' '[:upper:]' > output.txt";
     t_lexer *lexr = create_lexer(input);
 
     t_token *tokn;
