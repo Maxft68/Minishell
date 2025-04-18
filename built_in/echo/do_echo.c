@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:43:35 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 22:10:28 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:39:34 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ void	do_echo(char *str, int fd)
 	i = 0;
 	if (!str)
 		ft_putchar_fd('\n', fd);
-	while (str[i])
+	while (str && str[i])
 	{
-		if (i == 0 && str[i] == '-' && str[i + 1] == 'n')
+		if (i == 0 && str[i] == '-' && str[i + 1] == 'n' && argument_n == 0) // le -n forcement au debut
 		{
 			i += 2;
 			argument_n = 1;
-			while (str[i] == 'n')
+			while (str && str[i] == 'n')
+			{
 				i++;
+				if (str && str[i] != 'n' && str[i] != ' ')
+					i = 0;
+			}
 		}
 		ft_putchar_fd(str[i], fd);
 		i++;
@@ -52,7 +56,8 @@ void	do_echo(char *str, int fd)
 
 int main()
 {
-	char *str = "-nnnnnntnnn -n       -n coucou marc"; "-nnnnnntnnn -n       -n coucou marc" 
-	ca doit renvoyer "-nnnnnntnnn -n       -n coucou marc"
+	char *str = "-nnnnnnnnn n       -n coucou          marc"; 
+	//ca doit renvoyer "-nnnnnntnnn -n       -n coucou marc" // fonctionnelle a condition
+	// de recevoir les arguments sans espaces
 	do_echo(str, 1);
 }
