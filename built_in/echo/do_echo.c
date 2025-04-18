@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:43:35 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 13:34:47 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:56:46 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	do_echo(char *str, int fd)
 
 int main()
 {
-	char *str = "-nnnnynnnn n -n     coucou marc"; 
+	char *str = "-nnnnynnnn n -n coucou marc"; 
 	//ca doit renvoyer "-nnnnnntnnn -n       -n coucou marc" // fonctionnelle a condition
 	// de recevoir les arguments sans espaces
 	do_echo(str, 1);
