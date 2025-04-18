@@ -58,7 +58,7 @@ int	ft_isalnum(int c)
 
 int main()
 {
-    const char *input = "echo \"Appending text\" >> output.txt";
+    const char *input = "cat file.txt | tr '[:lower:]' '[:upper:]' > output.txt";
     t_lexer *lexr = create_lexer(input);
 
     t_token *tokn;
