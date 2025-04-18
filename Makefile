@@ -6,22 +6,35 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/17 12:27:11 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/18 16:45:20 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC = minishell.c	ft_exit.c	ft_lst.c	ft_garbage.c do_env.c \
-split_lexer.c
+SRC =	mandatory/minishell.c \
+		utils/ft_exit.c \
+		utils/ft_lst.c \
+		utils/ft_garbage.c \
+		built_in/env/do_env.c \
+		pipe/pipe.c
+#		built_in/cd/do_cd.c \
+		built_in/exit/do_exit.c \
+		built_in/exit/do_export.c \
+		built_in/pwd/do_pwd.c \
+		built_in/unset/do_unset.c \
+
+
+
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 
+INCLUDES = -I./mandatory
+CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES)
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\
---trace-children=yes --suppressions=valgrind.supp --gen-suppressions=all\
---track-fds=yes
+--trace-children=yes --suppressions=config_valgrind/valgrind.supp \
+--gen-suppressions=all --track-fds=yes
 
 all: $(NAME)
 
@@ -32,9 +45,14 @@ $(NAME): $(OBJ) $(LIBFT_LIB)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
-
+	
+	
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/built_in
+	@mkdir -p $(OBJ_DIR)/built_in/env
+	@mkdir -p $(OBJ_DIR)/utils
+	@mkdir -p $(OBJ_DIR)/mandatory
+	@mkdir -p $(OBJ_DIR)/parsing
 
 $(LIBFT_LIB): 
 	@echo	"Compiling libft..."

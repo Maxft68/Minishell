@@ -6,15 +6,15 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 10:42:36 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:42:26 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./libft/libft/libft.h"
-# include "./libft/printf/ft_printf.h"
+# include "../libft/libft/libft.h"
+# include "../libft/printf/ft_printf.h"
 # include <curses.h>
 # include <dirent.h>
 # include <fcntl.h>
@@ -109,5 +109,7 @@ void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
+void		exec_cmd(t_all *all, char **env);
+
 
 #endif
