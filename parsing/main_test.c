@@ -44,7 +44,7 @@ size_t	ft_strlen(const char *s)
 
 int main()
 {
-    const char *input = "echo cat >out  'salut ça |  va    cat test";
+    const char *input = "echo \'1       3\'";
     t_lexer *lexr = create_lexer(input);
 
     t_token *tokn;
