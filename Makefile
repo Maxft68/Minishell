@@ -6,25 +6,24 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/18 16:04:45 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/18 16:22:48 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRC =	minishell.c \
-		ft_exit.c \
-		ft_lst.c \
-		ft_garbage.c \
-		built_in/env/do_env.c \
-		#built_in/cd/do_cd.c \
-		#built_in/exit/do_exit.c \
-		#built_in/exit/do_export.c \
-		#built_in/pwd/do_pwd.c \
-		#built_in/unset/do_unset.c \
-		
-		
-		
-		
+		utils/ft_exit.c \
+		utils/ft_lst.c \
+		utils/ft_garbage.c \
+		built_in/env/do_env.c
+#		built_in/cd/do_cd.c \
+		built_in/exit/do_exit.c \
+		built_in/exit/do_export.c \
+		built_in/pwd/do_pwd.c \
+		built_in/unset/do_unset.c \
+
+
+
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
@@ -50,6 +49,7 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/built_in
 	@mkdir -p $(OBJ_DIR)/built_in/env
+	@mkdir -p $(OBJ_DIR)/utils
 
 $(LIBFT_LIB): 
 	@echo	"Compiling libft..."
