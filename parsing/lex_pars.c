@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/17 16:50:29 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/18 15:32:58 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void    skip_whitespace(t_lexer *lexr)
         advance_char(lexr);
 }
 
-t_token *create_alnum_token(t_lexer *lexr)
+t_token *create_word_token(t_lexer *lexr)
 {
     int         start;
     int         len;
@@ -27,7 +27,7 @@ t_token *create_alnum_token(t_lexer *lexr)
     t_token     *tokn;
 
     start = lexr->position;
-    while (isalnum(lexr->c) || lexr->c == '/' || lexr->c == '-')
+    while (ft_isprint(lexr->c) && lexr->c != ' ')// || lexr->c == '/' || lexr->c == '-')
             advance_char(lexr);
     len = lexr->position - start;
     str = (char*)malloc(len + 1);
@@ -92,9 +92,9 @@ t_token *next_token(t_lexer *lexr)
         return (create_operator_token(lexr, VARIABLE, "$"));
     else if (lexr->c == '\'' || lexr->c == '\"')
         return (create_string_token(lexr, lexr->c));
-    else if (isalpha(lexr->c) || lexr->c == '/' \
+    else if (ft_isprint(lexr->c) || lexr->c == '/' \
             || lexr->c == '-' || lexr->c == '_')
-        return (create_alnum_token(lexr));
+        return (create_word_token(lexr));
     else
         return (create_token(ILLEGAL, ""));
 }
