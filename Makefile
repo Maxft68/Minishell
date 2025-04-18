@@ -6,16 +6,17 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/18 16:22:48 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/04/18 16:37:57 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC =	minishell.c \
+SRC =	mandatory/minishell.c \
 		utils/ft_exit.c \
 		utils/ft_lst.c \
 		utils/ft_garbage.c \
-		built_in/env/do_env.c
+		built_in/env/do_env.c \
+		pipe/pipe.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/exit/do_export.c \
@@ -32,8 +33,8 @@ CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES)
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\
---trace-children=yes --suppressions=valgrind.supp --gen-suppressions=all\
---track-fds=yes
+--trace-children=yes --suppressions=config_valgrind/valgrind.supp \
+--gen-suppressions=all --track-fds=yes
 
 all: $(NAME)
 
@@ -50,6 +51,8 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/built_in
 	@mkdir -p $(OBJ_DIR)/built_in/env
 	@mkdir -p $(OBJ_DIR)/utils
+	@mkdir -p $(OBJ_DIR)/mandatory
+	@mkdir -p $(OBJ_DIR)/parsing
 
 $(LIBFT_LIB): 
 	@echo	"Compiling libft..."
