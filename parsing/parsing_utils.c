@@ -1,5 +1,5 @@
 // #include "lex_pars.h"
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 
 void   create_token(token_type type, const char *str, t_all *all)
