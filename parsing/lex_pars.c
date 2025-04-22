@@ -6,11 +6,12 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/18 17:09:12 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/22 16:12:44 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lex_pars.h"
+// #include "lex_pars.h"
+#include "minishell.h"
 
 void    skip_whitespace(t_lexer *lexr)
 {
@@ -18,7 +19,7 @@ void    skip_whitespace(t_lexer *lexr)
         advance_char(lexr);
 }
 
-t_token *create_word_token(t_lexer *lexr)
+t_token *create_word_token(t_all *all)
 {
     int         start;
     int         len;
@@ -26,75 +27,77 @@ t_token *create_word_token(t_lexer *lexr)
     token_type  type;
     t_token     *tokn;
 
-    start = lexr->position;
-    while (ft_isprint(lexr->c) && lexr->c != ' ')// || lexr->c == '/' || lexr->c == '-')
-            advance_char(lexr);
-    len = lexr->position - start;
+    start = all->lexer->position;
+    while (ft_isprint(all->lexer->c) && all->lexer->c != ' ')
+            advance_char(all->lexer);
+    len = all->lexer->position - start;
     str = (char*)malloc(len + 1);
-    ft_strlcpy(str, lexr->input + start, len + 1);
+    ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
-    if (lexr->first_token)
+    if (all->lexer->first_token)
     {
         type = COMMAND;
-        lexr->first_token = false;
+        all->lexer->first_token = false;
     }
     else
         type = ARG;
-    tokn = create_token(type, str);
+    tokn = create_token(type, str, all);
     return (tokn);
     
 }
 
 
-t_token *create_string_token(t_lexer*lexr, char quote)
+t_token *create_string_token(char quote, t_all *all)
 {
     int     len;
     char    *str;
-    advance_char(lexr);
-    int start = lexr->position;
-    while (lexr->c != '\0' && lexr->c != quote) {
-        advance_char(lexr);
+    advance_char(all->lexer);
+    int start = all->lexer->position;
+    while (all->lexer->c != '\0' && all->lexer->c != quote) {
+        advance_char(all->lexer);
     }
-    len = lexr->position - start;
+    len = all->lexer->position - start;
     str = (char*)malloc(len + 1);
-    ft_strlcpy(str, lexr->input + start, len + 1);
+    ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
 
-    if (lexr->c == quote) {
-        advance_char(lexr);
-    }
+    if (all->lexer->c == quote)
+        advance_char(all->lexer);
 
-    return create_token(STRING, str);
+    return create_token(STRING, str, all);
 }
 
-t_token *create_operator_token(t_lexer *lexr, token_type type, const char *str)
+t_token *create_operator_token(token_type type, const char *str, t_all *all)
 {
-    advance_char(lexr);
+    advance_char(all->lexer);
     if (type == APPEND_OUT || type == HEREDOC)
-        advance_char(lexr);
-    return (create_token(type, str));
+        advance_char(all->lexer);
+    return (create_token(type, str, all));
 }
 
-t_token *next_token(t_lexer *lexr)
+t_token *next_token(t_all *all)
 {
-    skip_whitespace(lexr);
-    if (lexr->c == '|')
-        return (create_operator_token(lexr, PIPE, "|"));
-    else if (lexr->c == '>' && lexr->input[lexr->position + 1] != '>')
-        return (create_operator_token(lexr, REDIRECT_OUT, ">"));
-    else if (lexr->c == '>' && lexr->input[lexr->position + 1] == '>')
-        return (create_operator_token(lexr, APPEND_OUT, ">>"));
-    else if (lexr->c == '<' && lexr->input[lexr->position + 1] != '<')
-        return (create_operator_token(lexr, REDIRECT_IN, "<"));
-    else if (lexr->c == '<' && lexr->input[lexr->position + 1] == '<')
-        return (create_operator_token(lexr, HEREDOC, "<<"));
-    else if (lexr->c == '$')
-        return (create_operator_token(lexr, VARIABLE, "$"));
-    else if (lexr->c == '\'' || lexr->c == '\"')
-        return (create_string_token(lexr, lexr->c));
-    else if (ft_isprint(lexr->c) || lexr->c == '/' \
-            || lexr->c == '-' || lexr->c == '_')
-        return (create_word_token(lexr));
+    char c;
+    
+    c = all->lexer->c;
+    skip_whitespace(all->lexer);
+    if (c == '|')
+        return (create_operator_token(PIPE, "|", all));
+    else if (c == '>' && all->lexer->input[all->lexer->position + 1] != '>')
+        return (create_operator_token(REDIRECT_OUT, ">" ,all));
+    else if (c == '>' && all->lexer->input[all->lexer->position + 1] == '>')
+        return (create_operator_token(APPEND_OUT, ">>", all));
+    else if (c == '<' && all->lexer->input[all->lexer->position + 1] != '<')
+        return (create_operator_token(REDIRECT_IN, "<", all));
+    else if (c == '<' && all->lexer->input[all->lexer->position + 1] == '<')
+        return (create_operator_token(HEREDOC, "<<", all));
+    else if (c == '$')
+        return (create_operator_token(VARIABLE, "$", all));
+    else if (c == '\'' || c == '\"')
+        return (create_string_token(c, all));
+    else if (ft_isprint(c) || c == '/' \
+            || c == '-' || c == '_')
+        return (create_word_token(all));
     else
-        return (create_token(ILLEGAL, ""));
+        return (create_token(ILLEGAL, "", all));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 16:45:37 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:38:22 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*read;
-	char	**read_array;
+	// char	**read_array;
+	// t_lexer	*lexr;
 	t_all	all;
 
 	if (argc != 1)
@@ -41,10 +42,13 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (read && read[0] != '\0')
 			add_history(read);
-		read_array = ft_split(read, ' ');	// a modifier par une vrai fonction qui parse tout les cas possible
-		do_node(read_array, &all);
+		// read_array = ft_split(read, ' ');	// a modifier par une vrai fonction qui parse tout les cas possible
+		// do_node(read_array, &all);
+		create_lexer(read, &all);
+		while (all.lexer->c)
+			next_token(&all);
 		free(read);
-		free_array(read_array);
+		// free_array(read_array);
 		//ft_lstclear(&all.token);
 		// do_everything
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 16:42:26 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:13:57 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,49 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
-typedef enum s_tok_def
+typedef struct s_lexer
 {
-	WORD,
-	D_QUOTE,
-	S_QUOTE,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	HERDOC,
-	CMD
-	
-}						t_tok_def;
+    const char  *input;
+    int         position;
+    char        c;
+    bool        first_token;
+}       t_lexer;
 
-typedef struct s_token //
+// typedef enum s_tok_def
+// {
+// 	WORD,
+// 	D_QUOTE,
+// 	S_QUOTE,
+// 	PIPE,
+// 	REDIR_IN,
+// 	REDIR_OUT,
+// 	REDIR_APPEND,
+// 	HERDOC,
+// 	CMD
+	
+// }						t_tok_def;
+
+typedef enum
 {
-	char				*name;
-	struct s_token		*next;
-}						t_token;
+    COMMAND,
+    ARG,
+    PIPE,
+    REDIRECT_OUT,
+    REDIRECT_IN,
+    APPEND_OUT,
+    HEREDOC,
+    VARIABLE,
+    STRING,
+    ILLEGAL,
+}       token_type;
+
+typedef struct  s_token
+{
+    token_type      type;
+    char            *str;
+    int             index;
+    struct s_token  *next;
+}  					t_token;
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -91,9 +115,9 @@ typedef struct s_all
 {
 	t_pipe				pipe;
 	t_env				*env;
+	t_lexer				*lexer;
 	t_token				*token;
 	t_garbage			*garbage;
-	t_tok_def			tok_def;
 	t_data				data;
 }						t_all;
 
@@ -110,6 +134,15 @@ void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
 void		exec_cmd(t_all *all, char **env);
+/* ********Fonctions lexing parsing************ */
+void		create_lexer(const char *input, t_all *all);
+t_token		*create_token(token_type type, const char *str, t_all *all);
+void		advance_char(t_lexer *lexr);
+t_token		*next_token(t_lexer *lexr);
+void		skip_whitespace(t_lexer *lexr);
+t_token		*create_word_token(t_all *all);
+t_token 	*create_string_token(char quote, t_all *all);
+t_token		*create_operator_token(token_type type, const char *str, t_all *all);
 
 
 #endif
