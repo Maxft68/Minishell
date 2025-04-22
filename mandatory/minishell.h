@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 16:42:26 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:56:57 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,16 @@ typedef struct s_garbage
 
 typedef struct s_pipe
 {
-	char				*infile;   // a  revoir entierement
-	int					infile_fd;  // a  revoir entierement
-	char				*outfile;  // a  revoir entierement
-	int					outfile_fd; // a  revoir entierement
-	char				**cmd1_args;
-	char				**cmd2_args;
-	char				*cmd1_path;
-	char				*cmd2_path;
-	int					pipe_fd[2];
-	int					pid1;
-	int					pid2;
+	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
+	char ***cmd_path; // [numero de pipe]"/bin/ls"
+	char ***infile;   // NULL si pas de redirection [pipe][infile][characteres]
+	int					nb_infile;
+	char ***outfile; // [numero de pipe]NULL si pas de redirection
+	int *pipe_in;    // 1 si doit lire d’un pipe // 0 si doit lire d'un infile ?
+	int *pipe_out;   // 1 si doit écrire dans un pipe
+	int *append;     // 1 si ">>" (ajoute a la fin) // 0 si ">" (efface le fichier)  Initialiser à -1	Pour détecter les erreurs facilement
+	int pipe;        // index du pipe
+	int					nb_pipe;
 }						t_pipe;
 
 typedef struct s_env
@@ -70,22 +69,28 @@ typedef enum s_tok_def
 	REDIR_APPEND,
 	HERDOC,
 	CMD
-	
+
 }						t_tok_def;
 
 typedef struct s_token //
 {
-	char				*name;
-	struct s_token		*next;
+	char *name;
+	struct s_token *next;
 }						t_token;
+
+typedef struct s_env_export
+{
+	char				**env;
+	int					nb_line_env; // donc +1 pour malloc
+}						t_env_export;
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
-	int		len_name;
-	int		len_value;
-	char	*name;
-	char	*value;
-}				t_data;
+	int len_name;
+	int len_value;
+	char *name;
+	char *value;
+}						t_data;
 
 typedef struct s_all
 {
@@ -95,21 +100,22 @@ typedef struct s_all
 	t_garbage			*garbage;
 	t_tok_def			tok_def;
 	t_data				data;
+	t_env_export		env_export;
 }						t_all;
 
-void		ft_exit(char *error, t_all *all, int error_code);
-void		do_node(char **read_array, t_all *all);
-void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
-void		ft_lstclear(t_token **token);
-void		free_array(char **array);
-void		*gc_malloc(t_all *all, size_t size);
-void		free_garbage_collect(t_garbage **garbage);
-void		do_env(t_all *all, char **env);
-void		print_node_env(t_env *env);
-void		free_env(t_env **env);
-t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
-void		ft_lstadd_back_env(t_env **env, t_env *new);
-void		exec_cmd(t_all *all, char **env);
-
+void					ft_exit(char *error, t_all *all, int error_code);
+void					do_node(char **read_array, t_all *all);
+void					ft_lstadd_front(t_garbage **garbage, t_garbage *new);
+void					ft_lstclear(t_token **token);
+void					free_array(char **array);
+void					*gc_malloc(t_all *all, size_t size);
+void					free_garbage_collect(t_garbage **garbage);
+void					do_env(t_all *all, char **env);
+void					print_node_env(t_env *env);
+void					free_env(t_env **env);
+t_env					*ft_lstnew_env(t_all *all, char *name, char *value);
+void					ft_lstadd_back_env(t_env **env, t_env *new);
+//void					exec_cmd(t_all *all, char **env, char **cmd);
+void					do_char_env(t_all *all);
 
 #endif

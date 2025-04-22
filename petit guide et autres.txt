@@ -98,5 +98,7 @@ else if (has_next_pipe)
     dup2(next_pipe_write, 1);
 
 
+ft_exit("Cannot allocate memory", all, 12); quand malloc echoue
 
+!! max doit faire env_malloc !!
 
