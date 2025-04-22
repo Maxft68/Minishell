@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 17:33:22 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:36:48 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	do_env(t_all *all, char **env)
 				all->data.value));
 		i++;
 	}
+	all->env_export.nb_line_env = i;
 	do_char_env(all);
 }
 
@@ -104,14 +105,14 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 			ft_exit("Cannot allocate memory", all, 12);
 		i = 0;
 		j = 0;
-		while (s1 || s1[i])
+		while (s1 && s1[i])
 		{
 			s1s2[i] = s1[i];
 			i++;
 		}
 		s1s2[i] = '=';
 		i++;
-		while (s2 || s2[j])
+		while (s2 && s2[j])
 		{
 			s1s2[i++] = s2[j];
 			j++;
@@ -129,19 +130,24 @@ void	do_char_env(t_all *all)
 	
 	i = 0;
 	j = 0;
-	env = malloc(sizeof(char *) * (all->env_export.nb_line_env + 1));
 	if (!all || !all->env)
-		return ;
+		ft_exit("pourquoi pas ??", all, 1);
+	env = malloc(sizeof(char *) * (all->env_export.nb_line_env + 1));
+	if (!env)
+		ft_exit("Cannot allocate memory", all, 12);
+
 	while(all->env)
 	{
 		env[j] = strjoin_env(all, all->env->name, all->env->value);
 		
 		all->env = all->env->next;
+		j++;
 	}
 	env[j] = NULL;
 	j = 0;
 	while(env[j])
 	{
-		printf("%s", env[j++]);
+		printf("%s\n", env[j]);
+		j++;
 	}
 }
