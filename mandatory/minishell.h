@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 16:13:57 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/22 19:43:27 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct  s_token
 {
     token_type      type;
     char            *str;
-    int             index;
+    // int             index;
     struct s_token  *next;
 }  					t_token;
 
@@ -136,13 +136,16 @@ void		ft_lstadd_back_env(t_env **env, t_env *new);
 void		exec_cmd(t_all *all, char **env);
 /* ********Fonctions lexing parsing************ */
 void		create_lexer(const char *input, t_all *all);
-t_token		*create_token(token_type type, const char *str, t_all *all);
+void		create_token(token_type type, const char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
-t_token		*next_token(t_lexer *lexr);
+void		next_token(t_all *all);
 void		skip_whitespace(t_lexer *lexr);
-t_token		*create_word_token(t_all *all);
-t_token 	*create_string_token(char quote, t_all *all);
-t_token		*create_operator_token(token_type type, const char *str, t_all *all);
+void		create_word_token(t_all *all);
+void 		create_string_token(char quote, t_all *all);
+void		create_operator_token(token_type type, const char *str, t_all *all);
+void		ft_tknadd_back(t_token **lst, t_token *tkn);
+t_token		*ft_tknlast(t_token *lst);
+void		print_node(t_token *token);
 
 
 #endif

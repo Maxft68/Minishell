@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:38:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 16:42:12 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:08:41 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cmd(t_all *all, char **env)
-{
+// void	exec_cmd(t_all *all, char **env)
+// {
 	
-}
+// }

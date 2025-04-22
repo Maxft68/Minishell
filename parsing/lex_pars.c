@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/22 16:12:44 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/22 20:53:02 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,20 @@ void    skip_whitespace(t_lexer *lexr)
         advance_char(lexr);
 }
 
-t_token *create_word_token(t_all *all)
+void create_word_token(t_all *all)
 {
     int         start;
     int         len;
     char        *str;
     token_type  type;
-    t_token     *tokn;
 
     start = all->lexer->position;
     while (ft_isprint(all->lexer->c) && all->lexer->c != ' ')
             advance_char(all->lexer);
     len = all->lexer->position - start;
-    str = (char*)malloc(len + 1);
+    str = (char*)gc_malloc(all, len + 1);
+    if (!str)
+        ft_exit("Cannot allocate memory", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
     if (all->lexer->first_token)
@@ -41,13 +42,12 @@ t_token *create_word_token(t_all *all)
     }
     else
         type = ARG;
-    tokn = create_token(type, str, all);
-    return (tokn);
+    create_token(type, str, all);
     
 }
 
 
-t_token *create_string_token(char quote, t_all *all)
+void create_string_token(char quote, t_all *all)
 {
     int     len;
     char    *str;
@@ -58,46 +58,49 @@ t_token *create_string_token(char quote, t_all *all)
     }
     len = all->lexer->position - start;
     str = (char*)malloc(len + 1);
+    if (!str)
+        ft_exit("Cannot allocate memory", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
 
     if (all->lexer->c == quote)
         advance_char(all->lexer);
 
-    return create_token(STRING, str, all);
+    create_token(STRING, str, all);
 }
 
-t_token *create_operator_token(token_type type, const char *str, t_all *all)
+void create_operator_token(token_type type, const char *str, t_all *all)
 {
     advance_char(all->lexer);
     if (type == APPEND_OUT || type == HEREDOC)
         advance_char(all->lexer);
-    return (create_token(type, str, all));
+    create_token(type, str, all);
 }
 
-t_token *next_token(t_all *all)
+void next_token(t_all *all)
 {
     char c;
     
-    c = all->lexer->c;
     skip_whitespace(all->lexer);
+    c = all->lexer->c;
+    //printf("Current char: %c (%d)\n", c, c);//print de test
     if (c == '|')
-        return (create_operator_token(PIPE, "|", all));
+        create_operator_token(PIPE, "|", all);
     else if (c == '>' && all->lexer->input[all->lexer->position + 1] != '>')
-        return (create_operator_token(REDIRECT_OUT, ">" ,all));
+        create_operator_token(REDIRECT_OUT, ">" ,all);
     else if (c == '>' && all->lexer->input[all->lexer->position + 1] == '>')
-        return (create_operator_token(APPEND_OUT, ">>", all));
+        create_operator_token(APPEND_OUT, ">>", all);
     else if (c == '<' && all->lexer->input[all->lexer->position + 1] != '<')
-        return (create_operator_token(REDIRECT_IN, "<", all));
+        create_operator_token(REDIRECT_IN, "<", all);
     else if (c == '<' && all->lexer->input[all->lexer->position + 1] == '<')
-        return (create_operator_token(HEREDOC, "<<", all));
+        create_operator_token(HEREDOC, "<<", all);
     else if (c == '$')
-        return (create_operator_token(VARIABLE, "$", all));
-    else if (c == '\'' || c == '\"')
-        return (create_string_token(c, all));
+        create_operator_token(VARIABLE, "$", all);
+    else if (c == 34 || c == 39)//(c == '\'' || c == '\"')
+        create_string_token(c, all);
     else if (ft_isprint(c) || c == '/' \
             || c == '-' || c == '_')
-        return (create_word_token(all));
+        create_word_token(all);
     else
-        return (create_token(ILLEGAL, "", all));
+        create_token(ILLEGAL, "", all);
 }
