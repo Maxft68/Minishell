@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 22:06:56 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:51:06 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (1);
 	ft_memset(&all, 0, sizeof(t_all));
-	do_env(&all, env);
+	do_env(&all, env);	
 	//signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	//signal(SIGINT, SIG_IGN);
@@ -48,6 +48,8 @@ int	main(int argc, char **argv, char **env)
 		//ft_lstclear(&all.token);
 		// do_everything
 	}
+	// do_char_env(&all);
+	// print_char_env(&all);
 	(void)argv;
 }
 
