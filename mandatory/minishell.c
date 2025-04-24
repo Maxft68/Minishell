@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/24 12:51:06 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:11:01 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char **env)
 		free_array(read_array);
 		//ft_lstclear(&all.token);
 		// do_everything
+		exec_cmd(&all);
 	}
 	// do_char_env(&all);
 	// print_char_env(&all);
