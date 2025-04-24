@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 20:59:32 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/24 17:45:04 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv, char **env)
 		while (all.lexer->c)
 			next_token(&all);
 		print_node(all.token);
+		list_to_tab(&all);
 		free(read);
 		ft_lstclear(&all.token);
 		// do_everything

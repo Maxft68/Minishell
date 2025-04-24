@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 19:43:27 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/24 20:08:13 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ typedef struct s_garbage
 
 typedef struct s_pipe
 {
-	char				*infile;   // a  revoir entierement
-	int					infile_fd;  // a  revoir entierement
-	char				*outfile;  // a  revoir entierement
-	int					outfile_fd; // a  revoir entierement
-	char				**cmd1_args;
-	char				**cmd2_args;
-	char				*cmd1_path;
-	char				*cmd2_path;
-	int					pipe_fd[2];
-	int					pid1;
-	int					pid2;
-}						t_pipe;
+	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
+	char **cmd_path; // [numero de pipe]"/bin/ls"
+	char ***infile;   // NULL si pas de redirection [pipe][infile][characteres]
+	//int					nb_infile;
+	char ***outfile; // [numero de pipe]NULL si pas de redirection
+	//int					nb_outfile;
+	int *pipe_in;    // 1 si doit lire d’un pipe // 0 si doit lire d'un infile ?
+	int *pipe_out;   // 1 si doit écrire dans un pipe																							{0, 1, 1, 0, 1, 1} pipe0 = echo >out >>out1 >>out2 >out3 >>out4 >>out5 | >out6 >out7 >>out8 >out21 >>out22 | cat  | >out9
+	int **append;     // 1 si ">>" (ajoute a la fin) // 0 si ">" (efface le fichier)  Initialiser à -1	Pour détecter les erreurs facilement	{0, 0, 1, 0, 1} pipe1
+	int pipe;        // numero du pipe	 																										{-1} pipe2
+	int					nb_pipe;																									//			{0} pipe3
+}							t_pipe;
 
 typedef struct s_env
 {
@@ -85,13 +85,14 @@ typedef enum
 {
     COMMAND,
     ARG,
+    SQ_STRING,
+	DQ_STRING,
     PIPE,
     REDIRECT_OUT,
     REDIRECT_IN,
     APPEND_OUT,
     HEREDOC,
     VARIABLE,
-    STRING,
     ILLEGAL,
 }       token_type;
 
@@ -140,6 +141,7 @@ void		create_token(token_type type, const char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);
 void		skip_whitespace(t_lexer *lexr);
+int			new_tkn_char(char c);
 void		create_word_token(t_all *all);
 void 		create_string_token(char quote, t_all *all);
 void		create_operator_token(token_type type, const char *str, t_all *all);

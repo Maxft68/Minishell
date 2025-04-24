@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/22 20:53:02 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:02:06 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void create_word_token(t_all *all)
     token_type  type;
 
     start = all->lexer->position;
-    while (ft_isprint(all->lexer->c) && all->lexer->c != ' ')
+    while (ft_isprint(all->lexer->c) && !new_tkn_char(all->lexer->c))
             advance_char(all->lexer);
     len = all->lexer->position - start;
     str = (char*)gc_malloc(all, len + 1);
@@ -49,8 +49,14 @@ void create_word_token(t_all *all)
 
 void create_string_token(char quote, t_all *all)
 {
-    int     len;
-    char    *str;
+    int         len;
+    char        *str;
+    token_type  type;
+    
+    if (quote == '"')
+        type = DQ_STRING;
+    else
+        type = SQ_STRING;
     advance_char(all->lexer);
     int start = all->lexer->position;
     while (all->lexer->c != '\0' && all->lexer->c != quote) {
@@ -66,7 +72,7 @@ void create_string_token(char quote, t_all *all)
     if (all->lexer->c == quote)
         advance_char(all->lexer);
 
-    create_token(STRING, str, all);
+    create_token(type, str, all);
 }
 
 void create_operator_token(token_type type, const char *str, t_all *all)
@@ -74,6 +80,8 @@ void create_operator_token(token_type type, const char *str, t_all *all)
     advance_char(all->lexer);
     if (type == APPEND_OUT || type == HEREDOC)
         advance_char(all->lexer);
+    if (type == PIPE)
+        all->lexer->first_token = true;
     create_token(type, str, all);
 }
 
@@ -98,8 +106,7 @@ void next_token(t_all *all)
         create_operator_token(VARIABLE, "$", all);
     else if (c == 34 || c == 39)//(c == '\'' || c == '\"')
         create_string_token(c, all);
-    else if (ft_isprint(c) || c == '/' \
-            || c == '-' || c == '_')
+    else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')
         create_word_token(all);
     else
         create_token(ILLEGAL, "", all);

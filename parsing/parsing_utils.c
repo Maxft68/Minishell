@@ -76,3 +76,12 @@ t_token	*ft_tknlast(t_token *lst)
 		tmp = tmp->next;
 	return (tmp);
 }
+
+int new_tkn_char(char c)
+{
+    if (c == '<' || c == '>' || c == '$' || c == '|')
+        return (1);
+    if (c == '\'' || c == '"' || c == ' ')
+        return (1);
+    return (0);
+}
