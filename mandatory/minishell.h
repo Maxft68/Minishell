@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/24 14:46:47 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:13:03 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ typedef struct s_pipe
 {
 	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
 	char **cmd_path; // [numero de pipe]"/bin/ls"
-	char ***infile;   // NULL si pas de redirection [pipe][infile][characteres]
+	char **infile;   // NULL si pas de redirection [pipe][infile]
 	//int					nb_infile;
-	char ***outfile; // [numero de pipe]NULL si pas de redirection
+	char **outfile; // [numero de pipe]NULL si pas de redirection
 	//int					nb_outfile;
 	int *pipe_in;    // 1 si doit lire d’un pipe // 0 si doit lire d'un infile ?
 	int *pipe_out;   // 1 si doit écrire dans un pipe																							{0, 1, 1, 0, 1, 1} pipe0 = echo >out >>out1 >>out2 >out3 >>out4 >>out5 | >out6 >out7 >>out8 >out21 >>out22 | cat  | >out9
 	int **append;     // 1 si ">>" (ajoute a la fin) // 0 si ">" (efface le fichier)  Initialiser à -1	Pour détecter les erreurs facilement	{0, 0, 1, 0, 1} pipe1
 	int pipe;        // numero du pipe	 																										{-1} pipe2
-	int					nb_pipe;																									//			{0} pipe3
+	int					nb_pipe;
+																										//			{0} pipe3
 }						t_pipe;
 
 typedef struct s_env
@@ -86,10 +87,11 @@ typedef struct s_env_export
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
-	int len_name;
-	int len_value;
-	char *name;
-	char *value;
+	int			len_name;
+	int			len_value;
+	char		*name;
+	char		*value;
+	int			code_exit;
 }						t_data;
 
 typedef struct s_all
