@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 12:13:03 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:55:47 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_pipe
 	int **append;     // 1 si ">>" (ajoute a la fin) // 0 si ">" (efface le fichier)  Initialiser à -1	Pour détecter les erreurs facilement	{0, 0, 1, 0, 1} pipe1
 	int pipe;        // numero du pipe	 																										{-1} pipe2
 	int					nb_pipe;
+	int					*nb_args
 																										//			{0} pipe3
 }						t_pipe;
 
@@ -59,6 +60,13 @@ typedef struct s_env
 	char				*value;
 	struct s_env		*next;
 }						t_env;
+
+typedef struct s_export
+{
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}						t_export;
 
 typedef enum s_tok_def
 {
@@ -83,6 +91,7 @@ typedef struct s_token //
 typedef struct s_env_export
 {
 	int					nb_line_env; // donc +1 pour malloc
+	int					nb_line_export;
 }						t_env_export;
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
@@ -103,6 +112,7 @@ typedef struct s_all
 	t_tok_def			tok_def;
 	t_data				data;
 	t_env_export		env_export;
+	t_export			*export;
 }						t_all;
 
 void					ft_exit(char *error, t_all *all, int error_code);

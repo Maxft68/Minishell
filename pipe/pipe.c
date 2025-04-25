@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:38:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 13:17:36 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:13:56 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	exec_cmd(t_all *all)
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
 		return ;
 	}
-		
 	cmd = all->pipe.cmd_args[pipe];
 	if (ft_strchr(all->pipe.cmd_args[pipe][0], '/'))
 		all->pipe.cmd_path[pipe] = all->pipe.cmd_args[pipe][0];
@@ -57,7 +56,6 @@ void	exec_cmd(t_all *all)
 			// exit(1); a modif
 		}
 		search_good_path(path_to_search, all);
-		
 	}
 	path = NULL;
 	path = all->pipe.cmd_path[pipe];
@@ -76,15 +74,15 @@ void	search_good_path(char **paths, t_all *all)
 	i = 0;
 	while (*paths && paths[i])
 	{
-		all->pipe.cmd_path = ft_strjoin3(paths[i], "/", pipex->cmd1_args[0]);
-		if (access(pipex->cmd1_path, X_OK) == 0)
+		all->pipe.cmd_path = ft_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0]);
+		if (access(all->pipe.cmd_path, X_OK) == 0)
 		{
 			free_array(paths);
 			return ;
 		}
 		i++;
 	}
-	ft_putstr_fd(all->pipe.cmd_args[pipe][0], 2); // ?? 
+	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
 	ft_putstr_fd(": command not found\n", 2); // ?? 
 	free_array(paths);
 	free_array(all->pipe.cmd_path);

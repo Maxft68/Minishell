@@ -107,4 +107,6 @@ CD unset et si (export si argument ??) dans le PARENT !!!
 si 0 pipe export sans arguments env echo et pwd a exec dans un enfant
 		le reste export avec argument cd exit et unset a faire dans le PARENT
 
-si pipe tout built in dans enfant aucune exception !! 
+si pipe tout built in dans enfant aucune exception !!
+
+selon le sujet de correction apres UNSET PATH aucune commande ne doit fonctionner ??
