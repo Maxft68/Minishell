@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 19:03:26 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/25 14:51:07 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void	print_node(t_token *token)
 {
-	while (token)
+	//printf("what the fuck\n");
+	if (!token)
+		printf("no token\n");
+	if (!token->type)
+		printf("not tkn type\n");
+	if (!token->str)
+		printf("no token str\n");
+	while (token && token->type && token->str)
 	{
 		printf("Type: %u, str: %s\n", token->type, token->str);
 		token = token->next;

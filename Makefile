@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/22 19:05:02 by rbier            ###   ########.fr        #
+#    Updated: 2025/04/25 12:24:12 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC =	mandatory/minishell.c \
 		built_in/env/do_env.c \
 		pipe/pipe.c\
 		parsing/lex_pars.c\
-		parsing/parsing_utils.c
+		parsing/parsing_utils.c\
+		parsing/list_to_tab.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/exit/do_export.c \

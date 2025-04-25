@@ -6,6 +6,7 @@ void   create_token(token_type type, const char *str, t_all *all)
 {
     t_token   *tokn;
     
+    tokn = NULL;
     tokn = (t_token*)gc_malloc(all, sizeof(t_token));
     if (!tokn)
         ft_exit("Cannot allocate memory", all, 12);

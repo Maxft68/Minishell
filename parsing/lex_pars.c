@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/24 16:02:06 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/25 15:06:27 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void create_string_token(char quote, t_all *all)
         advance_char(all->lexer);
     }
     len = all->lexer->position - start;
+    str = NULL;
     str = (char*)malloc(len + 1);
     if (!str)
         ft_exit("Cannot allocate memory", all, 12);

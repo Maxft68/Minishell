@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/24 20:08:13 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/25 13:23:36 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_lexer
 
 typedef enum
 {
+	WTF,
     COMMAND,
     ARG,
     SQ_STRING,
@@ -147,7 +148,8 @@ void 		create_string_token(char quote, t_all *all);
 void		create_operator_token(token_type type, const char *str, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
-void		print_node(t_token *token);
+void		print_node(t_token *token);//-------------------------debug
+void    	list_to_tab(t_all *all);
 
 
 #endif
