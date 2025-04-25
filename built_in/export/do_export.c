@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:46:16 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 18:53:01 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:00:12 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	do_export(all)
 
 }
 
-void	print_export(t_env *env)
+void	print_export(t_export *env)
 {
 	
 	if (!env)
