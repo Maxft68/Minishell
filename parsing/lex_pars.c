@@ -6,12 +6,12 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/26 16:07:17 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/26 16:14:11 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "lex_pars.h"
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 void    skip_whitespace(t_lexer *lexr)
 {

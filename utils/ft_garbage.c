@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_garbage.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:45:54 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 12:26:42 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:13:48 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 static t_garbage	*ft_lstnew(t_all *all, void *alloc)
 {
