@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/26 16:03:38 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:10:49 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
+char		*gc_strdup(const char *s, t_all *all);
 
 
 #endif

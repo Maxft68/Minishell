@@ -1,4 +1,4 @@
-// #include "lex_pars.h"
+
 #include "../mandatory/minishell.h"
 
 
@@ -10,8 +10,10 @@ void   create_token(token_type type, const char *str, t_all *all)
     tokn = (t_token*)gc_malloc(all, sizeof(t_token));
     if (!tokn)
         ft_exit("Cannot allocate memory", all, 12);
+    tokn->str = NULL;
+    tokn->next = NULL;
     tokn->type = type;
-    tokn->str = ft_strdup(str);
+    tokn->str = gc_strdup(str, all);
     // return  (tokn);
     ft_tknadd_back(&all->token, tokn);
 }

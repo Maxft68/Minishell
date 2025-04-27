@@ -6,11 +6,10 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/26 16:14:11 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/27 15:40:55 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lex_pars.h"
 #include "../mandatory/minishell.h"
 
 void    skip_whitespace(t_lexer *lexr)
@@ -30,6 +29,7 @@ void create_word_token(t_all *all)
     while (ft_isprint(all->lexer->c) && !new_tkn_char(all->lexer->c))
             advance_char(all->lexer);
     len = all->lexer->position - start;
+    str = NULL;
     str = (char*)gc_malloc(all, len + 1);
     if (!str)
         ft_exit("Cannot allocate memory", all, 12);
