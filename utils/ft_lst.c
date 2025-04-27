@@ -6,11 +6,11 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 14:51:07 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/27 16:56:39 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 void	print_node(t_token *token)
 {
