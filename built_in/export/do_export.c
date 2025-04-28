@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:46:16 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/28 13:52:47 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:58:42 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*gc_env_export(t_all *all, size_t size)
 	return (alloc);
 }
 
-void	ft_lstadd_front_env(t_garbage_env **garbage_env, t_garbage_env *new)
+void	ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new)
 {
 	t_garbage_env	*second;
 
@@ -101,3 +101,14 @@ void	free_garbage_env(t_garbage_env **garbage_env_head)
 	}
 	*garbage_env_head = NULL;
 }
+
+
+
+
+[pipe0][type"<"][str infile2]
+redir[0][0][0]
+		[1][0]
+		[2][0]
+redir[1][0][0]
+		[1][0]
+		
