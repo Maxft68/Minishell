@@ -12,9 +12,9 @@ void   create_token(token_type type, const char *str, t_all *all)
         ft_exit("Cannot allocate memory", all, 12);
     tokn->str = NULL;
     tokn->next = NULL;
+    // tokn->prev = NULL;
     tokn->type = type;
     tokn->str = gc_strdup(str, all);
-    // return  (tokn);
     ft_tknadd_back(&all->token, tokn);
 }
 
@@ -65,6 +65,7 @@ void	ft_tknadd_back(t_token **lst, t_token *tkn)
 	{
 		tmp = ft_tknlast(*lst);
 		tmp->next = tkn;
+        // tkn->prev = tmp;
 	}
 }
 

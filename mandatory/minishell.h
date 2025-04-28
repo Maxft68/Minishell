@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/27 16:10:49 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/27 17:28:42 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct  s_token
     char            *str;
     // int             index;
     struct s_token  *next;
+	// struct s_token	*prev;
 }  					t_token;
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
