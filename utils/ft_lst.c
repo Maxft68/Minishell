@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/22 17:40:11 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:34:00 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 
 	new = malloc(sizeof(t_env));
 	if (!new)
-		ft_exit("malloc error", all, 1);
+		ft_exit("Cannot allocate memory", all, 12);
 	new->name = name;
 	new->value = value;
 	new->next = NULL;
@@ -104,7 +104,7 @@ void	do_node(char **read_array, t_all *all)
 	{
 		new_node = ft_lstnew(all, read_array[i]);
 		if (!new_node)
-			ft_exit("fail", all, 0);
+			ft_exit("Cannot allocate memory", all, 12);
 		ft_lstadd_back(&all->token, new_node);
 		i++;
 	}

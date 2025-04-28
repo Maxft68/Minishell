@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 18:55:47 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:45:42 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ typedef struct s_garbage
 	char				*pointer;
 	struct s_garbage	*next;
 }						t_garbage;
+
+typedef struct s_garbage_env
+{
+	char				*pointer;
+	struct s_garbage_env	*next;
+}						t_garbage_env;
 
 typedef struct s_pipe
 {
@@ -68,6 +74,12 @@ typedef struct s_export
 	struct s_env		*next;
 }						t_export;
 
+typedef struct s_env_export
+{
+	int					nb_line_env; // donc +1 pour malloc
+	int					nb_line_export;
+}						t_env_export;
+
 typedef enum s_tok_def
 {
 	WORD,
@@ -88,11 +100,6 @@ typedef struct s_token //
 	struct s_token *next;
 }						t_token;
 
-typedef struct s_env_export
-{
-	int					nb_line_env; // donc +1 pour malloc
-	int					nb_line_export;
-}						t_env_export;
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -109,6 +116,7 @@ typedef struct s_all
 	t_env				*env;
 	t_token				*token;
 	t_garbage			*garbage;
+	t_garbage_env		*garbage_env;
 	t_tok_def			tok_def;
 	t_data				data;
 	t_env_export		env_export;
@@ -129,5 +137,11 @@ t_env					*ft_lstnew_env(t_all *all, char *name, char *value);
 void					ft_lstadd_back_env(t_env **env, t_env *new);
 void					exec_cmd(t_all *all);
 char					**do_char_env(t_all *all);
+void					*gc_env_export(t_all *all, size_t size);
+void					ft_lstadd_front_env(t_garbage_env **garbage_env, t_garbage_env *new);
+t_garbage_env			*ft_lstnew(t_all *all, void *alloc);
+void					free_garbage_env(t_garbage_env **garbage_env_head);
+
+
 
 #endif
