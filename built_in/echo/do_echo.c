@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:43:35 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 13:56:46 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:12:54 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,5 @@ int main()
 	// de recevoir les arguments sans espaces
 	do_echo(str, 1);
 }
+
+// -n -n -n -nnnnnn doit fonctionner comme un simple -n

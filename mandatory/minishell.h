@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/28 13:45:42 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:51:39 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void					exec_cmd(t_all *all);
 char					**do_char_env(t_all *all);
 void					*gc_env_export(t_all *all, size_t size);
 void					ft_lstadd_front_env(t_garbage_env **garbage_env, t_garbage_env *new);
-t_garbage_env			*ft_lstnew(t_all *all, void *alloc);
 void					free_garbage_env(t_garbage_env **garbage_env_head);
 
 
