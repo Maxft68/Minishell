@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 16:12:39 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 17:40:17 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ char		**do_char_env(t_all *all);
 void		*gc_env_export(t_all *all, size_t size);
 void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
 void		free_garbage_env(t_garbage_env **garbage_env_head);
-void		search_good_path(char **paths, t_all *all);
+char		*search_good_path(char **paths, t_all *all);
 char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 16:04:44 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 17:28:52 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	main(int argc, char **argv, char **env)
 		//printf("not coucou\n");
 		list_to_tab(&all);
 		free(read);
+		exec_cmd(&all);
 		free_garbage_collect(&all.garbage);
 		// ft_lstclear(&all.token);
 		// do_everything
-		exec_cmd(&all);
 	}
 	(void)argv;
 }
