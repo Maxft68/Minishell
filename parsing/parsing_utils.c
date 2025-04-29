@@ -2,7 +2,7 @@
 #include "../mandatory/minishell.h"
 
 
-void   create_token(token_type type, const char *str, t_all *all)
+void   create_token(token_type type, char *str, t_all *all)
 {
     t_token   *tokn;
     
@@ -15,6 +15,8 @@ void   create_token(token_type type, const char *str, t_all *all)
     // tokn->prev = NULL;
     tokn->type = type;
     tokn->str = gc_strdup(str, all);
+    if (!tokn->str)
+        ft_exit("Cannot allocate memory", all, 12);
     ft_tknadd_back(&all->token, tokn);
 }
 

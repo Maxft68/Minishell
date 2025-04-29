@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/27 17:28:42 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:13:33 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,14 +139,14 @@ void		ft_lstadd_back_env(t_env **env, t_env *new);
 void		exec_cmd(t_all *all, char **env);
 /* ********Fonctions lexing parsing************ */
 void		create_lexer(const char *input, t_all *all);
-void		create_token(token_type type, const char *str, t_all *all);
+void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);
 void		skip_whitespace(t_lexer *lexr);
 int			new_tkn_char(char c);
 void		create_word_token(t_all *all);
 void 		create_string_token(char quote, t_all *all);
-void		create_operator_token(token_type type, const char *str, t_all *all);
+void		create_operator_token(token_type type, char *str, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug

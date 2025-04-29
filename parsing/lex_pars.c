@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:19:52 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/27 15:40:55 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:13:18 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void create_string_token(char quote, t_all *all)
     }
     len = all->lexer->position - start;
     str = NULL;
-    str = (char*)malloc(len + 1);
+    str = malloc(sizeof(char)*(len + 1));
     if (!str)
         ft_exit("Cannot allocate memory", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
@@ -76,7 +76,7 @@ void create_string_token(char quote, t_all *all)
     create_token(type, str, all);
 }
 
-void create_operator_token(token_type type, const char *str, t_all *all)
+void create_operator_token(token_type type, char *str, t_all *all)
 {
     advance_char(all->lexer);
     if (type == APPEND_OUT || type == HEREDOC)

@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/26 16:03:01 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 13:05:12 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 			ft_exit("exit avec ctrl + D\n", &all, 0);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{	
-			free(read);							// a remplacer par le signal CTRL + C
+			// free(read);							// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		if (ft_strncmp(read, "env", 3) == 0)
@@ -48,7 +48,8 @@ int	main(int argc, char **argv, char **env)
 		//printf("not coucou\n");
 		list_to_tab(&all);
 		free(read);
-		ft_lstclear(&all.token);
+		free_garbage_collect(&all.garbage);
+		// ft_lstclear(&all.token);
 		// do_everything
 	}
 	(void)argv;

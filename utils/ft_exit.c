@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 17:55:27 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/17 11:18:27 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:56:44 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_array(char **array)
-{
-	int	i;
+// void	free_array(char **array)
+// {
+// 	int	i;
 
-	if (!array)
-		return ;
-	i = 0;
-	while (array && array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
-	return ;
-}
+// 	if (!array)
+// 		return ;
+// 	i = 0;
+// 	while (array && array[i])
+// 	{
+// 		free(array[i]);
+// 		array[i] = NULL;
+// 		i++;
+// 	}
+// 	free(array);
+// 	array = NULL;
+// 	return ;
+// }
 
 void	ft_exit(char *error, t_all *all, int error_code)
 {
