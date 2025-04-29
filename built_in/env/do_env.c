@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 02:48:53 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/18 16:08:24 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:33:23 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ void	do_env(t_all *all, char **env)
 				all->data.value));
 		i++;
 	}
+	all->env_export.nb_line_env = i;
 }
+
 void	print_node_env(t_env *env)
 {
 	if (!env)
@@ -88,4 +90,63 @@ void	free_env(t_env **env)
 		free(*env);
 		*env = temp;
 	}
+}
+
+char	*strjoin_env(t_all *all, char *s1, char *s2)
+{
+	{
+		int		i;
+		int		j;
+		char	*s1s2;
+		
+		//s1s2 = gc_malloc(all, sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+		s1s2 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+		if (!s1s2)
+			ft_exit("Cannot allocate memory", all, 12);
+		i = 0;
+		j = 0;
+		while (s1 && s1[i])
+		{
+			s1s2[i] = s1[i];
+			i++;
+		}
+		s1s2[i] = '=';
+		i++;
+		while (s2 && s2[j])
+		{
+			s1s2[i] = s2[j];
+			i++;
+			j++;
+		}
+		s1s2[i] = '\0';
+		//free(s1); //ne pas free ici
+		//free(s2); //ne pas free ici
+		return (s1s2);
+	}
+}
+
+char	**do_char_env(t_all *all)
+{
+	char **env;
+	t_env	*current;
+	int j;
+
+	j = 0;
+	current = all->env;
+	if (!all || !all->env)
+		ft_exit("pourquoi pas ??", all, 1);
+	//env = gc_malloc(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
+	env = malloc(sizeof(char *) * (all->env_export.nb_line_env + 1));
+	if (!env)
+		ft_exit("Cannot allocate memory", all, 12);
+	while(current)
+	{
+		if (!current->name || !current->value)
+			ft_exit("Invalid environment variable", all, 1);
+		env[j] = strjoin_env(all, current->name, current->value);
+		current = current->next;
+		j++;
+	}
+	env[j] = NULL;
+	return (env);
 }

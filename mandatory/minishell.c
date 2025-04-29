@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 13:05:12 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 16:04:44 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 		free_garbage_collect(&all.garbage);
 		// ft_lstclear(&all.token);
 		// do_everything
+		exec_cmd(&all);
 	}
 	(void)argv;
 }

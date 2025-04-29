@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 13:13:33 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/29 16:12:39 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ typedef struct s_garbage
 	char				*pointer;
 	struct s_garbage	*next;
 }						t_garbage;
+
+typedef struct s_garbage_env
+{
+	char				*pointer;
+	struct s_garbage_env	*next;
+}						t_garbage_env;
 
 typedef struct s_pipe
 {
@@ -114,6 +120,21 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char	*value;
 }				t_data;
 
+
+typedef struct s_export
+{
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}						t_export;
+
+typedef struct	s_env_export
+{
+	int					nb_line_env; // donc +1 pour malloc
+	int					nb_line_export;
+			
+}				t_env_export;
+
 typedef struct s_all
 {
 	t_pipe				pipe;
@@ -121,7 +142,10 @@ typedef struct s_all
 	t_lexer				*lexer;
 	t_token				*token;
 	t_garbage			*garbage;
+	t_garbage_env		*garbage_env;
 	t_data				data;
+	t_env_export		env_export;
+	t_export			*export;
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);
@@ -136,7 +160,6 @@ void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
-void		exec_cmd(t_all *all, char **env);
 /* ********Fonctions lexing parsing************ */
 void		create_lexer(const char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
@@ -152,6 +175,14 @@ t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
 char		*gc_strdup(const char *s, t_all *all);
+/* **********Fonctions exec***************************** */
+void		exec_cmd(t_all *all);
+char		**do_char_env(t_all *all);
+void		*gc_env_export(t_all *all, size_t size);
+void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
+void		free_garbage_env(t_garbage_env **garbage_env_head);
+void		search_good_path(char **paths, t_all *all);
+char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 
 
 #endif
