@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:38:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 13:38:01 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:48:24 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
+	if (!all)
+		ft_exit("", all, 1);
 	char **env = do_char_env(all);
 	char **cmd = NULL;
 	// cmd = malloc(sizeof(char *) * 3);

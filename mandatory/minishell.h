@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 12:35:37 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:07:14 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_garbage_env
 typedef struct s_pipe
 {
 	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
+	char ***str; //????
 	char **cmd_path; // [numero de pipe]"/bin/ls"
 	char ***infile;   // NULL si pas de redirection [pipe][infile]
 	int **pipe_in;    // 1 si doit lire d’un pipe // 0 si doit lire d'un infile ?
