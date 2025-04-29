@@ -102,7 +102,6 @@ ft_exit("Cannot allocate memory", all, 12); quand malloc echoue
 
 !! max doit faire env_malloc !!
 
-CD unset et si (export si argument ??) dans le PARENT !!!
 
 si 0 pipe export sans arguments env echo et pwd a exec dans un enfant
 		le reste export avec argument cd exit et unset a faire dans le PARENT

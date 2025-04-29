@@ -6,11 +6,27 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:38:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/25 16:13:56 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:38:01 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all)
+{
+	char	*s4;
+	char	*s5;
+
+	s4 = ft_strjoin(s1, s2);
+	if (!s4)
+		ft_exit("Cannot allocate memory", all, 12);
+	s5 = ft_strjoin(s4, s3);
+	if (!s5)
+		ft_exit("Cannot allocate memory", all, 12);
+	free(s4);
+	return (s5);
+}
+
 
 void	exec_cmd(t_all *all)
 {
@@ -74,12 +90,9 @@ void	search_good_path(char **paths, t_all *all)
 	i = 0;
 	while (*paths && paths[i])
 	{
-		all->pipe.cmd_path = ft_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0]);
-		if (access(all->pipe.cmd_path, X_OK) == 0)
-		{
-			free_array(paths);
+		all->pipe.cmd_path[all->pipe.pipe] = ft_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0], all);
+		if (access(all->pipe.cmd_path[all->pipe.pipe], X_OK) == 0)
 			return ;
-		}
 		i++;
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
