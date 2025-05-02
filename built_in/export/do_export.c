@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   do_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:46:16 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/28 15:58:42 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:48:27 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_export(all)
+void	do_export(t_all *all)
 {
 	
 
 }
 
-void	print_export(t_export *env)
+void	print_export(t_export *export)
 {
 	
-	if (!env)
+	if (!export)
 		return ;
-	while (env)
+	while (export)
 	{
 		printf ("declare -x ");
-		printf ("%s=", env->name);
-		printf ("\"%s\"\n", env->value);
-		env = env->next;
+		printf ("%s=", export->name);
+		printf ("\"%s\"\n", export->value);
+		export = export->next;
 	}
 }
 
@@ -37,9 +37,9 @@ void	sort_tab(t_all *all)
 	
 }
 
-void	*gc_env_export(t_all *all, size_t size)
+void	*gc_malloc_env(t_all *all, size_t size)
 {
-	t_garbage	*new;
+	t_garbage_env	*new;
 	void		*alloc;
 
 	alloc = malloc(size);

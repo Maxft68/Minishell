@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 14:07:14 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:48:20 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value);
 void	ft_lstadd_back_env(t_env **env, t_env *new);
 void	exec_cmd(t_all *all);
 char	**do_char_env(t_all *all);
-void	*gc_env_export(t_all *all, size_t size);
+void	*gc_malloc_env(t_all *all, size_t size);
 void	ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
 void	free_garbage_env(t_garbage_env **garbage_env_head);
 void	search_good_path(char **paths, t_all *all);
