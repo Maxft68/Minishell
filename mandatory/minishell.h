@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 18:01:18 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:09:24 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ typedef struct s_garbage_env
 	struct s_garbage_env	*next;
 }						t_garbage_env;
 
-typedef struct s_garbage_env
-{
-	char				*pointer;
-	struct s_garbage_env	*next;
-}						t_garbage_env;
 
 typedef struct s_pipe
 {
@@ -63,21 +58,6 @@ typedef struct s_pipe
 	int pipe;        // numero du pipe	 																										{-1} pipe2
 	int					nb_pipe;																									//			{0} pipe3
 }							t_pipe;
-	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
-	char ***str; //????
-	char **cmd_path; // [numero de pipe]"/bin/ls"
-	char ***infile;   // NULL si pas de redirection [pipe][infile]
-	int **pipe_in;    // 1 si doit lire d’un pipe // 0 si doit lire d'un infile ?
-	//int					nb_infile;
-	char ***outfile; // [numero de pipe]NULL si pas de redirection
-	//int					nb_outfile;
-	int **pipe_out;   // 1 si doit écrire dans un pipe																							{0, 1, 1, 0, 1, 1} pipe0 = echo >out >>out1 >>out2 >out3 >>out4 >>out5 | >out6 >out7 >>out8 >out21 >>out22 | cat  | >out9
-	int **append;     // 1 si ">>" (ajoute a la fin) // 0 si ">" (efface le fichier)  Initialiser à -1	Pour détecter les erreurs facilement	{0, 0, 1, 0, 1} pipe1
-	int pipe;        // numero du pipe	 																										{-1} pipe2
-	int					nb_pipe;
-	int					*nb_args;
-																										//			{0} pipe3
-}						t_pipe;
 
 typedef struct s_env
 {
