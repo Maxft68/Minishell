@@ -1,6 +1,6 @@
 
-
-#include "../mandatory/minishell.h"
+#include "minishell.h"
+// #include "../mandatory/minishell.h"
 
 void    skip_whitespace(t_lexer *lexr)
 {

@@ -1,6 +1,6 @@
 #include "../mandatory/minishell.h"
 
-char	*gc_strdup(const char *s, t_all *all)
+char	*gc_strdup(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;

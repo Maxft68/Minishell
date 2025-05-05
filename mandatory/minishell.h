@@ -151,7 +151,7 @@ void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
 /* ********Fonctions lexing parsing************ */
-void		create_lexer(const char *input, t_all *all);
+void		create_lexer(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);
@@ -164,7 +164,7 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
-char		*gc_strdup(const char *s, t_all *all);
+char		*gc_strdup(char *s, t_all *all);
 /* **********Fonctions exec***************************** */
 void		exec_cmd(t_all *all);
 char		**do_char_env(t_all *all);

@@ -26,7 +26,7 @@ void   create_token(token_type type, char *str, t_all *all)
 //     free(tokn);
 // }
 
-void    create_lexer(const char *input, t_all *all)
+void    create_lexer(char *input, t_all *all)
 {
     // t_lexer *lexr;
 
