@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 17:29:14 by rbier            ###   ########.fr       */
+/*   Updated: 2025/05/05 17:47:29 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **env)
 	t_all	all;
 
 	if (argc != 1)
-		return (1);
+		return (1); 
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
 	//signal(SIGQUIT, SIG_IGN);
