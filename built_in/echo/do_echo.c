@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:43:35 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/29 16:40:38 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:30:01 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	do_echo(char ***args, int pipe, int fd)
 	}
 	while (args[pipe][j])
 	{
-		if (j > 1)
-			ft_putchar_fd(' ', fd);
 		int i = 0;
 		while (args[pipe][j][i])
 		{
@@ -93,22 +91,25 @@ void	do_echo(char ***args, int pipe, int fd)
 			i++;
 		}
 		j++;
-	}
-	if (argument_n == 0)
+		if (j > 1 && args[pipe][j] != NULL)
+			ft_putchar_fd(' ', fd);
+		}
+		if (argument_n == 0)
 		ft_putchar_fd('\n', fd);
-}
-
-
-// gerer le -nnnnnnnnnnnnnnn
-
-int main()
+	}
+	
+	
+	// gerer le -nnnnnnnnnnnnnnn
+	
+	#include <stdio.h>
+	int main()
 {
 	char ***args = malloc(2 * sizeof(char **));
 	args[0] = malloc(5 * sizeof(char *));
 	args[0][0] = "echo";
-	args[0][1] = "-nnnnnnnnnnnn";
-	args[0][2] = "-nnnnnnnnn   ij";
-	args[0][3] = "-u     World!";
+	args[0][1] = "";
+	args[0][2] = "HELLO";
+	args[0][3] = "-n";
 	args[0][4] = NULL;
 	
 	args[1] = NULL;
@@ -119,4 +120,4 @@ int main()
 	do_echo(args, pipe, fd);
 }
 
-// -n -n -n -nnnnnn doit fonctionner comme un simple -n
+//-n -n -n -nnnnnn doit fonctionner comme un simple -n
