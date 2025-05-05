@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/05 17:55:04 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/05 21:07:55 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ SRC =	mandatory/minishell.c \
 		pipe/pipe.c\
 		parsing/lex_pars.c\
 		parsing/parsing_utils.c\
-		parsing/list_to_tab.c
+		parsing/list_to_tab.c\
+		built_in/is_built_in.c\
+		built_in/echo/do_echo.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/exit/do_export.c \
@@ -53,10 +55,10 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/built_in
 	@mkdir -p $(OBJ_DIR)/built_in/env
+	@mkdir -p $(OBJ_DIR)/built_in/echo
 	@mkdir -p $(OBJ_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/mandatory
 	@mkdir -p $(OBJ_DIR)/parsing
-	@mkdir -p $(OBJ_DIR)/pipe
 	@mkdir -p $(OBJ_DIR)/pipe
 	
 

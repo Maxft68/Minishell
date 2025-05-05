@@ -1,6 +1,6 @@
 #include "../mandatory/minishell.h"
 
-char	*gc_strdup(const char *s, t_all *all)
+char	*gc_strdup(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;
@@ -48,6 +48,7 @@ void    alloc_tab_star_star_star(t_all *all)
     t_token *tmp;
 
     i = 0;
+	//all->token = NULL;
     tmp = all->token;
     while (tmp)
     {
@@ -83,11 +84,11 @@ void    list_to_tab(t_all *all)
         if (tmp && tmp->type > 0)//&& tmp->type < 5)// && tmp->prev->type < 6)
         {
             // printf("%s %d %d\n", tmp->str, i , j);
-            //all->pipe.cmd_args[i][j] = NULL;
+            all->pipe.cmd_args[i][j] = NULL;
             all->pipe.cmd_args[i][j] = gc_strdup(tmp->str, all);
             printf("pipe: %d tab %d str %s\n", i, j, tmp->str);
             j++;
         }
-       tmp = tmp->next;
+        tmp = tmp->next;
     }
 }

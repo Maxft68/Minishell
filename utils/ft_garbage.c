@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:45:54 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 18:06:48 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:49:44 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	{
 		temp = garbage->next;
 		if (garbage->pointer != NULL)
+		{
 			free(garbage->pointer);
+			garbage->pointer = NULL;
+		}
 		free(garbage);
 		garbage = NULL;
 		garbage = temp;

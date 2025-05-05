@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:19:33 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 18:09:24 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:12:30 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,11 @@ void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 void		*gc_malloc(t_all *all, size_t size);
 void		free_garbage_collect(t_garbage **garbage);
-void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
-/* ********Fonctions lexing parsing************ */
+/* **********Lexing parsing************ */
 void		create_lexer(const char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
@@ -176,15 +175,18 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
-char		*gc_strdup(const char *s, t_all *all);
-/* **********Fonctions exec***************************** */
+char		*gc_strdup(char *s, t_all *all);
+/* **********Exec functions***************************** */
 void		exec_cmd(t_all *all);
-char		**do_char_env(t_all *all);
 void		*gc_env_export(t_all *all, size_t size);
 void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
 void		free_garbage_env(t_garbage_env **garbage_env_head);
 char		*search_good_path(char **paths, t_all *all);
 char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
-
+char		**do_char_env(t_all *all);
+/* **********Built_in functions***************************** */
+int			is_built_in(t_all *all);
+void		do_echo(char ***args, int pipe);
+void		do_env(t_all *all, char **env);
 
 #endif

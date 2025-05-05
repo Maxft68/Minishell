@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 17:55:49 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:00:17 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,16 @@ int	main(int argc, char **argv, char **env)
 		while (all.lexer->c)
 			next_token(&all);
 		//printf("coucou\n");
-		print_node(all.token);
+		//print_node(all.token);
 		//printf("not coucou\n");
-		list_to_tab(&all);
+		//list_to_tab(&all);
 		free(read);
-		exec_cmd(&all); 
+		if (!is_built_in(&all))
+			exec_cmd(&all); 
+		ft_lstclear(&all.token);
 		free_garbage_collect(&all.garbage);
-		// ft_lstclear(&all.token);
 		// do_everything
-		exec_cmd(&all);
+		//exec_cmd(&all);
 	}
 	// do_char_env(&all);
 	// print_char_env(&all);

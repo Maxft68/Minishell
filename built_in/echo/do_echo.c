@@ -6,11 +6,11 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:43:35 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 13:49:16 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:15:33 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
+#include "minishell.h"
 
 # include <limits.h> 
 # include <stddef.h>
@@ -55,7 +55,7 @@ void	ft_putchar_fd(char c, int fd)
 // 		ft_putchar_fd('\n', fd);
 // }
 
-void	do_echo(char ***args, int pipe, int fd)
+void	do_echo(char ***args, int pipe)
 {
 	int	j;
 	int	argument_n;
@@ -65,7 +65,7 @@ void	do_echo(char ***args, int pipe, int fd)
 
 	if (!args[pipe] || !args[pipe][j])
 	{
-		ft_putchar_fd('\n', fd);
+		ft_putchar('\n');
 		return;
 	}
 
@@ -87,37 +87,37 @@ void	do_echo(char ***args, int pipe, int fd)
 		int i = 0;
 		while (args[pipe][j][i])
 		{
-			ft_putchar_fd(args[pipe][j][i], fd);
+			ft_putchar(args[pipe][j][i]);
 			i++;
 		}
 		j++;
 		if (j > 1 && args[pipe][j] != NULL)
-			ft_putchar_fd(' ', fd);
+			ft_putchar(' ');
 		}
 		if (argument_n == 0)
-		ft_putchar_fd('\n', fd);
+		ft_putchar('\n');
 	}
 	
 	
 	// gerer le -nnnnnnnnnnnnnnn
 	
-	#include <stdio.h>
-	int main()
-{
-	char ***args = malloc(2 * sizeof(char **));
-	args[0] = malloc(5 * sizeof(char *));
-	args[0][0] = "echo";
-	args[0][1] = "";
-	args[0][2] = "HELLO";
-	args[0][3] = "-n";
-	args[0][4] = NULL;
+// 	#include <stdio.h>
+// 	int main()
+// {
+// 	char ***args = malloc(2 * sizeof(char **));
+// 	args[0] = malloc(5 * sizeof(char *));
+// 	args[0][0] = "echo";
+// 	args[0][1] = "";
+// 	args[0][2] = "HELLO";
+// 	args[0][3] = "-n";
+// 	args[0][4] = NULL;
 	
-	args[1] = NULL;
-	int pipe = 0;
-	int fd = 1;
-	//ca doit renvoyer "-nnnnnntnnn   -n       -n coucou marc" // fonctionnelle a condition
-	// de recevoir les arguments sans espaces
-	do_echo(args, pipe, fd);
-}
+// 	args[1] = NULL;
+// 	int pipe = 0;
+// 	int fd = 1;
+// 	//ca doit renvoyer "-nnnnnntnnn   -n       -n coucou marc" // fonctionnelle a condition
+// 	// de recevoir les arguments sans espaces
+// 	do_echo(args, pipe, fd);
+// }
 
 //-n -n -n -nnnnnn doit fonctionner comme un simple -n
