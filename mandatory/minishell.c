@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 16:26:06 by rbier            ###   ########.fr       */
+/*   Updated: 2025/05/05 17:29:14 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **env)
 		//printf("not coucou\n");
 		list_to_tab(&all);
 		free(read);
-		exec_cmd(&all);
+		exec_cmd(&all); 
 		free_garbage_collect(&all.garbage);
 		// ft_lstclear(&all.token);
 		// do_everything
