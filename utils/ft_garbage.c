@@ -6,11 +6,11 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 21:45:54 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/28 13:49:24 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:06:48 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 static t_garbage	*ft_lstnew(t_all *all, void *alloc)
 {

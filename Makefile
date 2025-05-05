@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/04/22 11:45:44 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/05 17:55:04 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,10 @@ SRC =	mandatory/minishell.c \
 		utils/ft_lst.c \
 		utils/ft_garbage.c \
 		built_in/env/do_env.c \
-		pipe/pipe.c
+		pipe/pipe.c\
+		parsing/lex_pars.c\
+		parsing/parsing_utils.c\
+		parsing/list_to_tab.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/exit/do_export.c \
@@ -29,7 +32,7 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
 INCLUDES = -I./mandatory
-CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES)
+CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES) #-fsanitize=address
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\
@@ -54,6 +57,8 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/mandatory
 	@mkdir -p $(OBJ_DIR)/parsing
 	@mkdir -p $(OBJ_DIR)/pipe
+	@mkdir -p $(OBJ_DIR)/pipe
+	
 
 $(LIBFT_LIB): 
 	@echo	"Compiling libft..."

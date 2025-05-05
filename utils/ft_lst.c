@@ -6,17 +6,24 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:03:59 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/28 13:34:00 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:07:46 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 void	print_node(t_token *token)
 {
-	while (token)
+	//printf("what the fuck\n");
+	if (!token)
+		printf("no token\n");
+	if (!token->type)
+		printf("not tkn type\n");
+	if (!token->str)
+		printf("no token str\n");
+	while (token && token->type && token->str)
 	{
-		printf("Token: %s\n", token->name);
+		printf("Type: %u, str: %s\n", token->type, token->str);
 		token = token->next;
 	}
 }
@@ -36,21 +43,21 @@ void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
 	return ;
 }
 
-static void	ft_lstadd_back(t_token **token, t_token *new)
-{
-	t_token	*current;
+// static void	ft_lstadd_back(t_token **token, t_token *new)
+// {
+// 	t_token	*current;
 
-	if (!*token)
-	{
-		*token = new;
-		return ;
-	}
-	current = *token;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-	return ;
-}
+// 	if (!*token)
+// 	{
+// 		*token = new;
+// 		return ;
+// 	}
+// 	current = *token;
+// 	while (current->next)
+// 		current = current->next;
+// 	current->next = new;
+// 	return ;
+// }
 
 void	ft_lstadd_back_env(t_env **env, t_env *new)
 {
@@ -68,18 +75,18 @@ void	ft_lstadd_back_env(t_env **env, t_env *new)
 	return ;
 }
 
-static t_token	*ft_lstnew(t_all *all, char *name)
-{
-	t_token	*new;
+// static t_token	*ft_lstnew(t_all *all, char *name)
+// {
+// 	t_token	*new;
 
-	new = NULL;
-	new = gc_malloc(all, sizeof(t_token));
-	if (!new)
-		ft_exit("Cannot allocate memory", all, 12);
-	new->name = name;
-	new->next = NULL;
-	return (new);
-}
+// 	new = NULL;
+// 	new = gc_malloc(all, sizeof(t_token));
+// 	if (!new)
+// 		ft_exit("malloc error", all, 1);
+// 	new->name = name;
+// 	new->next = NULL;
+// 	return (new);
+// }
 
 t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 {
@@ -94,23 +101,23 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 	return (new);
 }
 
-void	do_node(char **read_array, t_all *all)
-{
-	int		i;
-	t_token	*new_node;
+// void	do_node(char **read_array, t_all *all)
+// {
+// 	int		i;
+// 	t_token	*new_node;
 
-	i = 0;
-	while (read_array && read_array[i])
-	{
-		new_node = ft_lstnew(all, read_array[i]);
-		if (!new_node)
-			ft_exit("Cannot allocate memory", all, 12);
-		ft_lstadd_back(&all->token, new_node);
-		i++;
-	}
-	// print_node(all->token); // a degager
-	return ;
-}
+// 	i = 0;
+// 	while (read_array && read_array[i])
+// 	{
+// 		new_node = ft_lstnew(all, read_array[i]);
+// 		if (!new_node)
+// 			ft_exit("fail", all, 0);
+// 		ft_lstadd_back(&all->token, new_node);
+// 		i++;
+// 	}
+// 	// print_node(all->token); // a degager
+// 	return ;
+// }
 
 void	ft_lstclear(t_token **token)
 {

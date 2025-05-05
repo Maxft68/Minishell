@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 23:08:50 by rbier             #+#    #+#             */
-/*   Updated: 2025/04/17 16:05:31 by rbier            ###   ########.fr       */
+/*   Updated: 2025/04/18 17:09:22 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void    advance_char(t_lexer *lexr);
 char	*ft_strdup(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
+int	ft_isprint(int c);
+int	ft_isalnum(int c);
 
 
 #endif

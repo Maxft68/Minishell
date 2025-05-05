@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/04/24 15:11:01 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:55:49 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*read;
-	char	**read_array;
 	t_all	all;
 
 	if (argc != 1)
-		return (1);
+		return (1); 
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);	
 	//signal(SIGQUIT, SIG_IGN);
@@ -32,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 			ft_exit("exit avec ctrl + D\n", &all, 0);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{	
-			free(read);							// a remplacer par le signal CTRL + C
+			// free(read);							// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		if (ft_strncmp(read, "env", 3) == 0)
@@ -41,11 +40,17 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (read && read[0] != '\0')
 			add_history(read);
-		read_array = ft_split(read, ' ');	// a modifier par une vrai fonction qui parse tout les cas possible
-		do_node(read_array, &all);
+		create_lexer(read, &all);
+		while (all.lexer->c)
+			next_token(&all);
+		//printf("coucou\n");
+		print_node(all.token);
+		//printf("not coucou\n");
+		list_to_tab(&all);
 		free(read);
-		free_array(read_array);
-		//ft_lstclear(&all.token);
+		exec_cmd(&all); 
+		free_garbage_collect(&all.garbage);
+		// ft_lstclear(&all.token);
 		// do_everything
 		exec_cmd(&all);
 	}
