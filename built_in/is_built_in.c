@@ -2,8 +2,11 @@
 
 int	is_built_in(t_all *all)
 {
-	if (!all->pipe.cmd_args)
+	if (!all->pipe.cmd_args | !all->pipe.cmd_args[all->pipe.nb_pipe] || !all->pipe.cmd_args[all->pipe.nb_pipe][0])
+	{
+		printf("REGIS POURQUOI JAI PAS DARGS\n");
 		return(0);
+	}
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "echo", 4) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][4] == '\0')
 		return(do_echo(all->pipe.cmd_args, all->pipe.nb_pipe), 1);

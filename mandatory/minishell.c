@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 22:00:17 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:27:07 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 		//printf("coucou\n");
 		//print_node(all.token);
 		//printf("not coucou\n");
-		//list_to_tab(&all);
+		list_to_tab(&all);
 		free(read);
 		if (!is_built_in(&all))
 			exec_cmd(&all); 
