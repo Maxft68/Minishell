@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 		read = gc_strdup(read_copy, &all);
 		free(read_copy);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
-		{								// a remplacer par le signal CTRL + C
+		{					// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		if (ft_strncmp(read, "env", 3) == 0)
