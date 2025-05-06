@@ -36,20 +36,13 @@ int	main(int argc, char **argv, char **env)
 		create_lexer(read, &all);
 		while (all.lexer->c)
 		next_token(&all);
-		//printf("coucou\n");
 		print_node(all.token);
-		//printf("not coucou\n");
 		list_to_tab(&all);
-		//free(read); // read est maintenant dans gcmalloc
-		if (!is_built_in(&all))
-			exec_cmd(&all); 
+		//free(read); read est maintenant dans gcmalloc
+		exec_part(&all);
 		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);
-		// do_everything
-		//exec_cmd(&all);
 	}
-	// do_char_env(&all);
-	// print_char_env(&all);
 	(void)argv;
 }
 

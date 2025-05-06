@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/05 21:07:55 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/06 14:39:34 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC =	mandatory/minishell.c \
 		utils/ft_garbage.c \
 		built_in/env/do_env.c \
 		pipe/pipe.c\
+		pipe/exec_part.c\
 		parsing/lex_pars.c\
 		parsing/parsing_utils.c\
 		parsing/list_to_tab.c\

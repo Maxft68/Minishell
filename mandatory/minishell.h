@@ -174,6 +174,7 @@ void		free_garbage_env(t_garbage_env **garbage_env_head);
 char		*search_good_path(char **paths, t_all *all);
 char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 char		**do_char_env(t_all *all);
+void		exec_part(t_all *all);
 /* **********Built_in functions***************************** */
 int			is_built_in(t_all *all);
 void		do_echo(char ***args, int pipe);
