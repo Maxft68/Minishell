@@ -26,6 +26,8 @@ void	ft_exit(char *error, t_all *all, int error_code)
 		ft_putstr_fd(error, 2);
 	free_env(&all->env);
 	free_garbage_collect(&all->garbage);
+	if (all->token != NULL)//->str || &all->token->type)
+		ft_lstclear(&all->token);
 	rl_clear_history();
 	
 	exit(error_code);

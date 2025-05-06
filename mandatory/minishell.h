@@ -152,7 +152,7 @@ void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
 /* **********Lexing parsing************ */
-void		create_lexer(const char *input, t_all *all);
+void		create_lexer(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);

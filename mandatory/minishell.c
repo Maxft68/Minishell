@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **env)
 		list_to_tab(&all);
 		//free(read); read est maintenant dans gcmalloc
 		exec_part(&all);
-		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
+		// ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);
 	}
 	(void)argv;
