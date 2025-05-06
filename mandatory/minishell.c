@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 		print_node(all.token);
 		list_to_tab(&all);
 		exec_part(&all);
-		// ft_lstclear(&all.token); // a rajouter dans ft_exit ?
+		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);
 	}
 	(void)argv;

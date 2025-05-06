@@ -88,8 +88,7 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		int		i;
 		int		j;
 		char	*s1s2;
-		
-		//s1s2 = gc_malloc(all, sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+
 		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2));
 		if (!s1s2)
 			ft_exit("Cannot allocate memory", all, 12);
@@ -118,13 +117,13 @@ char	**do_char_env(t_all *all)
 	char **env;
 	t_env	*current;
 	int j;
-
+	printf("prems Number of environment variables: %d\n", all->env_export.nb_line_env);
 	j = 0;
 	current = all->env;
 	if (!all || !all->env)
 		ft_exit("pourquoi pas ??", all, 1);
-	//env = gc_malloc(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
-	env = gc_malloc_env(all, (all->env_export.nb_line_env + 1));
+	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
+	printf("Number of environment variables: %d\n", all->env_export.nb_line_env);
 	if (!env)
 		ft_exit("Cannot allocate memory", all, 12);
 	while(current)

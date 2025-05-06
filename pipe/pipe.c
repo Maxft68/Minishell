@@ -20,6 +20,8 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
+	printf("exec prems Number of environment variables: %d\n", all->env_export.nb_line_env);
+
 	char **env = do_char_env(all);
 	char **cmd = NULL;
 	// cmd = malloc(sizeof(char *) * 3);
@@ -69,8 +71,6 @@ void	exec_cmd(t_all *all)
 		printf("-=-=-=-execve fail-=-=--\n");
 	
 	//pipe++;
-	free_array(env);
-	//free_array(cmd);
 }
 /* 
 void	search_good_path(char **paths, t_all *all)
@@ -101,6 +101,7 @@ char	*search_good_path(char **paths, t_all *all)
 		tmp = ft_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0], all);
 		if (access(tmp, X_OK) == 0)
 			return (tmp);
+		free(tmp); // chemin non trouvee donc soit env inexistant soit cmd invalide
 		i++;
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
