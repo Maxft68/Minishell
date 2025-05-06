@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 			continue;
 		create_lexer(read, &all);
 		while (all.lexer->c)
-		next_token(&all);
+			next_token(&all);
 		print_node(all.token);
 		list_to_tab(&all);
 		//free(read); read est maintenant dans gcmalloc
