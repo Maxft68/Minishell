@@ -3,6 +3,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	char	*read_copy;
 	char	*read;
 	t_all	all;
 
@@ -15,12 +16,13 @@ int	main(int argc, char **argv, char **env)
 	//signal(SIGINT, SIG_IGN);
 	while (1)
 	{
-		read = readline("WriteOnMe ");
-		if (!read)
+		read_copy = readline("WriteOnMe ");
+		if (!read_copy)
 			ft_exit("exit avec ctrl + D\n", &all, 0);
+		read = gc_strdup(read_copy, &all);
+		free(read_copy);
 		if (ft_strncmp(read, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
-		{	
-			// free(read);							// a remplacer par le signal CTRL + C
+		{								// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		if (ft_strncmp(read, "env", 3) == 0)
@@ -33,12 +35,12 @@ int	main(int argc, char **argv, char **env)
 			continue;
 		create_lexer(read, &all);
 		while (all.lexer->c)
-			next_token(&all);
+		next_token(&all);
 		//printf("coucou\n");
 		print_node(all.token);
 		//printf("not coucou\n");
 		list_to_tab(&all);
-		free(read);
+		//free(read); // read est maintenant dans gcmalloc
 		if (!is_built_in(&all))
 			exec_cmd(&all); 
 		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
