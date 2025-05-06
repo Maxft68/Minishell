@@ -37,7 +37,7 @@ void	exec_cmd(t_all *all)
 	pipe = all->pipe.pipe;
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[pipe])
 	{
-		free_array(env);
+		//free_array(env); dans gc malloc env export
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
 		return ;
 	}
@@ -66,7 +66,7 @@ void	exec_cmd(t_all *all)
 	path = all->pipe.cmd_path[pipe]; */
 	
 	if (execve(path, cmd, env) == -1)
-		printf("execve fail");
+		printf("-=-=-=-execve fail-=-=--\n");
 	
 	//pipe++;
 	free_array(env);

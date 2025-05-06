@@ -38,14 +38,14 @@ void	do_env(t_all *all, char **env)
 		all->data.len_value = 0;
 		while (env[i][j++] != '=')
 			all->data.len_name++;
-		all->data.name = malloc(sizeof(char) * (all->data.len_name + 1));
+		all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
 		if (!all->data.name)
-			ft_exit("malloc fail", all, 1);
+			ft_exit("Cannot allocate memory", all, 12);
 		while (env[i][j++])
 			all->data.len_value++;
-		all->data.value = malloc(sizeof(char) * (all->data.len_value + 1));
+		all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
 		if (!all->data.value)
-			ft_exit("malloc fail", all, 1);
+			ft_exit("Cannot allocate memory", all, 12);
 		split_env(all, env[i]);
 		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
@@ -90,7 +90,7 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		char	*s1s2;
 		
 		//s1s2 = gc_malloc(all, sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
-		s1s2 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2));
 		if (!s1s2)
 			ft_exit("Cannot allocate memory", all, 12);
 		i = 0;
@@ -124,7 +124,7 @@ char	**do_char_env(t_all *all)
 	if (!all || !all->env)
 		ft_exit("pourquoi pas ??", all, 1);
 	//env = gc_malloc(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
-	env = malloc(sizeof(char *) * (all->env_export.nb_line_env + 1));
+	env = gc_malloc_env(all, (all->env_export.nb_line_env + 1));
 	if (!env)
 		ft_exit("Cannot allocate memory", all, 12);
 	while(current)
