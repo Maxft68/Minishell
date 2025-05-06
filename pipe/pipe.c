@@ -69,8 +69,6 @@ void	exec_cmd(t_all *all)
 	
 	if (execve(path, cmd, env) == -1)
 		printf("-=-=-=-execve fail-=-=--\n");
-	
-	//pipe++;
 }
 /* 
 void	search_good_path(char **paths, t_all *all)
