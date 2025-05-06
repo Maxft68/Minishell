@@ -34,8 +34,8 @@ void    alloc_tab_star_star(t_all *all)
             all->pipe.cmd_args[i][j] = NULL;
             if (tmp->type == PIPE)
             {
-            i++;
-            j = 0;
+            	i++;
+            	j = 0;
             }
         }
         tmp = tmp->next;

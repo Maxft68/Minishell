@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:17:04 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/05/05 22:27:07 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:13:47 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,19 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (read && read[0] != '\0')
 			add_history(read);
+		else						//Quand il ny a que des espaces dans read
+			continue;
 		create_lexer(read, &all);
 		while (all.lexer->c)
 			next_token(&all);
 		//printf("coucou\n");
-		//print_node(all.token);
+		print_node(all.token);
 		//printf("not coucou\n");
 		list_to_tab(&all);
 		free(read);
 		if (!is_built_in(&all))
 			exec_cmd(&all); 
-		ft_lstclear(&all.token);
+		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);
 		// do_everything
 		//exec_cmd(&all);
