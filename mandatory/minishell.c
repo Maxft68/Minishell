@@ -25,10 +25,6 @@ int	main(int argc, char **argv, char **env)
 		{					// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
-		if (ft_strncmp(read, "env", 3) == 0)
-		{
-			print_node_env(all.env);
-		}
 		if (read && read[0] != '\0')
 			add_history(read);
 		else						//Quand il ny a que des espaces dans read

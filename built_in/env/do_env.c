@@ -109,8 +109,6 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 			j++;
 		}
 		s1s2[i] = '\0';
-		//free(s1); //ne pas free ici
-		//free(s2); //ne pas free ici
 		return (s1s2);
 	}
 }
