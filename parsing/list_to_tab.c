@@ -50,6 +50,7 @@ void    alloc_tab_star_star_star(t_all *all)
     i = 0;
 	//all->token = NULL;
     tmp = all->token;
+    ft_memset(&(*tmp), 0, sizeof(t_token));
     while (tmp)
     {
         if (tmp->type == PIPE)

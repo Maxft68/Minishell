@@ -13,7 +13,7 @@ void	print_node(t_token *token)
 		printf("no token str\n");
 	while (token && token->type && token->str)
 	{
-		printf("Type: %u, str: %s\n", token->type, token->str);
+		printf("Type: %u, str: %s, pipe: %d\n", token->type, token->str, token->pipe);
 		token = token->next;
 	}
 }

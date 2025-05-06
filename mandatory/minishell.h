@@ -64,20 +64,6 @@ typedef struct s_lexer
     bool        first_token;
 }       t_lexer;
 
-// typedef enum s_tok_def
-// {
-// 	WORD,
-// 	D_QUOTE,
-// 	S_QUOTE,
-// 	PIPE,
-// 	REDIR_IN,
-// 	REDIR_OUT,
-// 	REDIR_APPEND,
-// 	HERDOC,
-// 	CMD
-	
-// }						t_tok_def;
-
 typedef enum
 {
 	WTF,
@@ -98,7 +84,7 @@ typedef struct  s_token
 {
     token_type      type;
     char            *str;
-    // int             index;
+    int             pipe;
     struct s_token  *next;
 	// struct s_token	*prev;
 }  					t_token;

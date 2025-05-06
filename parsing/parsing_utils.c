@@ -12,7 +12,7 @@ void   create_token(token_type type, char *str, t_all *all)
         ft_exit("Cannot allocate memory", all, 12);
     tokn->str = NULL;
     tokn->next = NULL;
-    // tokn->prev = NULL;
+    tokn->pipe = all->pipe.nb_pipe;
     tokn->type = type;
     tokn->str = ft_strdup(str);
     if (!tokn->str)

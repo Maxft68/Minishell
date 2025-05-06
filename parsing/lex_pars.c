@@ -72,7 +72,10 @@ void create_operator_token(token_type type, char *str, t_all *all)
     if (type == APPEND_OUT || type == HEREDOC)
         advance_char(all->lexer);
     if (type == PIPE)
+    {
+        all->pipe.nb_pipe += 1;
         all->lexer->first_token = true;
+    }
     create_token(type, str, all);
 }
 
