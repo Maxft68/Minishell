@@ -84,7 +84,7 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 
 	new = malloc(sizeof(t_env));
 	if (!new)
-		ft_exit("malloc error", all, 1);
+		ft_exit("Cannot allocate memory", all, 12);
 	new->name = name;
 	new->value = value;
 	new->next = NULL;
@@ -113,9 +113,10 @@ void	ft_lstclear(t_token **token)
 {
 	t_token	*temp;
 
-	while (*token)
+	while (*token && token)
 	{
 		temp = (*token)->next;
+		free((*token)->str);
 		free(*token);
 		*token = NULL;
 		*token = temp;

@@ -65,7 +65,8 @@ void	exec_cmd(t_all *all)
 	/* path = NULL;
 	path = all->pipe.cmd_path[pipe]; */
 	
-	execve(path, cmd, env);
+	if (execve(path, cmd, env) == -1)
+		printf("execve fail");
 	
 	//pipe++;
 	free_array(env);
