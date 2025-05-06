@@ -27,14 +27,13 @@ int	main(int argc, char **argv, char **env)
 		}									// a remplacer par le signal CTRL + C
 		if (read && read[0] != '\0')
 			add_history(read);
-		else						//Quand il ny a que des espaces dans read
+		else						//Quand il ny a que des espaces dans read ??
 			continue;
 		create_lexer(read, &all);
 		while (all.lexer->c)
 			next_token(&all);
 		print_node(all.token);
 		list_to_tab(&all);
-		//free(read); read est maintenant dans gcmalloc
 		exec_part(&all);
 		// ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);

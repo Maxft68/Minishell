@@ -81,7 +81,7 @@ void	do_echo(char ***args, int pipe)
 			i++;
 		}
 		j++;
-		if (j > 1 && args[pipe][j] != NULL)
+		if (j > 1 && args[pipe][j] != NULL && args[pipe][j - 1][0] != '\0')
 			ft_putchar(' ');
 		}
 		if (argument_n == 0)

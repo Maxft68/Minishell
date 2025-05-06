@@ -57,7 +57,7 @@ void    alloc_tab_star_star_star(t_all *all)
             i++;
         tmp = tmp->next;
     }
-    all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 2)));
+    all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 2))); //si 1pipe = 2 parties
     if (!all->pipe.cmd_args)
         ft_exit("Cannot allocate memory", all, 12);
     all->pipe.cmd_args[i + 1] = NULL;

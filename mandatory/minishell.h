@@ -56,6 +56,13 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+typedef struct s_export
+{
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}						t_export;
+
 typedef struct s_lexer
 {
     const char  *input;
@@ -99,12 +106,6 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 }						t_data;
 
 
-typedef struct s_export
-{
-	char				*name;
-	char				*value;
-	struct s_env		*next;
-}						t_export;
 
 typedef struct	s_env_export
 {
@@ -129,13 +130,17 @@ typedef struct s_all
 void		ft_exit(char *error, t_all *all, int error_code);
 void		do_node(char **read_array, t_all *all);
 void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
+void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
 void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 void		*gc_malloc(t_all *all, size_t size);
+void		*gc_malloc_env(t_all *all, size_t size);
 void		free_garbage_collect(t_garbage **garbage);
+void		free_garbage_env(t_garbage_env **garbage_env_head);
 void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
+t_garbage_env	*ft_lstnew(t_all *all, void *alloc);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
 /* **********Lexing parsing************ */
 void		create_lexer(char *input, t_all *all);
@@ -154,9 +159,6 @@ void    	list_to_tab(t_all *all);
 char		*gc_strdup(char *s, t_all *all);
 /* **********Exec functions***************************** */
 void		exec_cmd(t_all *all);
-void		*gc_env_export(t_all *all, size_t size);
-void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
-void		free_garbage_env(t_garbage_env **garbage_env_head);
 char		*search_good_path(char **paths, t_all *all);
 char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 char		**do_char_env(t_all *all);

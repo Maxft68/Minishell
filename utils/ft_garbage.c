@@ -2,7 +2,7 @@
 
 #include "../mandatory/minishell.h"
 
-static t_garbage	*ft_lstnew(t_all *all, void *alloc)
+static t_garbage	*ft_lstnew_gc(t_all *all, void *alloc)
 {
 	t_garbage	*new;
 
@@ -22,7 +22,7 @@ void	*gc_malloc(t_all *all, size_t size)
 	alloc = malloc(size);
 	if (!alloc)
 		ft_exit("Cannot allocate memory", all, 12);
-	new = ft_lstnew(all, alloc);
+	new = ft_lstnew_gc(all, alloc);
 	if (!new)
 	{
 		free(alloc);

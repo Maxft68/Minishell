@@ -24,7 +24,8 @@ void	ft_exit(char *error, t_all *all, int error_code)
 {
 	if (error)
 		ft_putstr_fd(error, 2);
-	free_env(&all->env);
+	
+	free_garbage_env(&all->garbage_env);
 	free_garbage_collect(&all->garbage);
 	if (all->token != NULL)//->str || &all->token->type)
 		ft_lstclear(&all->token);
