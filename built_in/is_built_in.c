@@ -30,7 +30,7 @@ int	is_built_in(t_all *all)
 	// 	do_cd(all->pipe.cmd_args, all->pipe.nb_pipe);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "env", 3) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
-		return(print_node_env(all->env), printf("BIENSUR QUE JE RETURN1---------------------===========-----------------=========---------"), 1);
+		return(print_node_env(all->env), 1);
 	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "exit", 4) == 0
 	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][4] == '\0')
 	// 	do_exit(all->pipe.cmd_args, all->pipe.nb_pipe);
