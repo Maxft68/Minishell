@@ -6,7 +6,10 @@ void	do_export(t_all *all)
 {
 	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
-	print_export(all->export);
+	{
+		copy_list(all);
+		print_export(all->export);
+	}
 }
 
 void	copy_list(t_all *all)
@@ -25,6 +28,7 @@ void	copy_list(t_all *all)
 			ft_exit("Cannot allocate memory\n", all, 12);
 		curr->value = gc_strdup(current->value, all);
 		curr->name = gc_strdup(current->name, all);
+		curr->next = NULL;
 		ft_lstadd_back_export(&all->export, curr);
 		current = current->next;
 	}

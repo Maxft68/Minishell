@@ -55,7 +55,7 @@ typedef struct s_export
 	char				*name;
 	//int					equal; pour savoir si afficher le = ou non ?
 	char				*value;
-	struct s_env		*next;
+	struct s_export		*next;
 }						t_export;
 
 typedef struct s_lexer
@@ -166,5 +166,7 @@ void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 void		do_export(t_all *all);
-
+void		print_export(t_export *export);
+void		ft_lstadd_back_export(t_export **export, t_export *new);
+void		copy_list(t_all *all);
 #endif
