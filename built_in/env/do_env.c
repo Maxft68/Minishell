@@ -89,7 +89,7 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		int		j;
 		char	*s1s2;
 
-		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2));
+		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
 		if (!s1s2)
 			ft_exit("Cannot allocate memory", all, 12);
 		i = 0;

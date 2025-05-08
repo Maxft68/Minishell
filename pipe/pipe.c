@@ -28,13 +28,13 @@ void	exec_cmd(t_all *all)
 	}
 	cmd = all->pipe.cmd_args[pipe];
 	if (ft_strchr(all->pipe.cmd_args[pipe][0], '/'))
-		all->pipe.cmd_path[pipe] = all->pipe.cmd_args[pipe][0];
+		path = all->pipe.cmd_args[pipe][0];
 	else
 	{
 		int i = 0;
 		while (env && env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
-		if (!env[i])
+		if (!env[i]) //quand env nexiste plus
 		{
 			// ft_putstr_fd(args1, 2);
 			// ft_putstr_fd(": command not found\n", 2);   a modifier
