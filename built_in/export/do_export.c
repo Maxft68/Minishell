@@ -2,12 +2,12 @@
 
 #include "minishell.h"
 
-void	do_export(t_all *all)
-{
-	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
-	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
-	print_export(all->env);
-}
+// void	do_export(t_all *all)
+// {
+// 	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
+// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
+// 	print_export(all->env);
+// }
 
 void	print_export(t_env *env)
 {
