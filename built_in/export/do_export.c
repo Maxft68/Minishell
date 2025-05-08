@@ -2,11 +2,12 @@
 
 #include "minishell.h"
 
-// void	do_export(t_all *all)
-// {
-	
-
-// }
+void	do_export(t_all *all)
+{
+	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
+	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
+	print_export(all->env);
+}
 
 void	print_export(t_env *env)
 {
@@ -22,9 +23,12 @@ void	print_export(t_env *env)
 	}
 }
 
-// void	sort_tab(t_all *all)
+// void	sort_list(t_all *all)
 // {
-	
+// ajouter un variable dans l'env
+	//comparer name
+	// verifier si la variable existe
+	//copie de list list export
 // }
 
 void	*gc_malloc_env(t_all *all, size_t size)

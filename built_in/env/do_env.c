@@ -60,9 +60,12 @@ void	print_node_env(t_env *env)
 		return ;
 	while (env)
 	{
-		printf("%s=", env->name);
-		printf("%s\n", env->value);
-		env = env->next;
+		if (env->value)
+		{
+			printf("%s=", env->name); //comment faire si "bla="  et na pas de value ? ajouter une variable "is="" ?? 
+			printf("%s\n", env->value);
+			env = env->next;
+		}
 	}
 }
 
@@ -75,8 +78,10 @@ void	free_env(t_env **env)
 	while (*env)
 	{
 		temp = (*env)->next;
-		free((*env)->name);
-		free((*env)->value);
+		if ((*env)->name)
+			free((*env)->name);
+		if ((*env)->value)
+			free((*env)->value);
 		free(*env);
 		*env = temp;
 	}
@@ -89,7 +94,7 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		int		j;
 		char	*s1s2;
 
-		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2));
+		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
 		if (!s1s2)
 			ft_exit("Cannot allocate memory", all, 12);
 		i = 0;
@@ -117,13 +122,11 @@ char	**do_char_env(t_all *all)
 	char **env;
 	t_env	*current;
 	int j;
-	printf("prems Number of environment variables: %d\n", all->env_export.nb_line_env);
 	j = 0;
 	current = all->env;
 	if (!all || !all->env)
 		ft_exit("pourquoi pas ??", all, 1);
 	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
-	printf("Number of environment variables: %d\n", all->env_export.nb_line_env);
 	if (!env)
 		ft_exit("Cannot allocate memory", all, 12);
 	while(current)
