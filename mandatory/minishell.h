@@ -45,6 +45,7 @@ typedef struct s_pipe
 typedef struct s_env
 {
 	char				*name;
+	//int					equal; pour savoir si afficher le = ou non ?
 	char				*value;
 	struct s_env		*next;
 }						t_env;

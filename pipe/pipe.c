@@ -11,14 +11,11 @@ void	exec_cmd(t_all *all)
 	char *path;
 	char **path_to_search = NULL;
 	int	pipe;
-	
 	// cmd[0] = "/bin/ls";
 	// cmd[1] = "-la";
 	// cmd[2] = NULL;
 	
 	// path = "/bin/ls";
-
-	
 	pipe = all->pipe.pipe;
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[pipe])
 	{

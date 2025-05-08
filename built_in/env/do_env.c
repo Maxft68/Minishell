@@ -60,9 +60,12 @@ void	print_node_env(t_env *env)
 		return ;
 	while (env)
 	{
-		printf("%s=", env->name);
-		printf("%s\n", env->value);
-		env = env->next;
+		if (env->value)
+		{
+			printf("%s=", env->name); //comment faire si "bla="  et na pas de value ? ajouter une variable "is="" ?? 
+			printf("%s\n", env->value);
+			env = env->next;
+		}
 	}
 }
 
@@ -75,8 +78,10 @@ void	free_env(t_env **env)
 	while (*env)
 	{
 		temp = (*env)->next;
-		free((*env)->name);
-		free((*env)->value);
+		if ((*env)->name)
+			free((*env)->name);
+		if ((*env)->value)
+			free((*env)->value);
 		free(*env);
 		*env = temp;
 	}
