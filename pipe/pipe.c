@@ -2,21 +2,6 @@
 
 #include "../mandatory/minishell.h"
 
-char	*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all)
-{
-	char	*s4;
-	char	*s5;
-
-	s4 = ft_strjoin(s1, s2);
-	if (!s4)
-		ft_exit("Cannot allocate memory", all, 12);
-	s5 = ft_strjoin(s4, s3);
-	if (!s5)
-		ft_exit("Cannot allocate memory", all, 12);
-	free(s4);
-	return (s5);
-}
-
 
 void	exec_cmd(t_all *all)
 {
@@ -94,7 +79,7 @@ char	*search_good_path(char **paths, t_all *all)
 	i = 0;
 	while (*paths && paths[i])
 	{
-		tmp = ft_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0], all);
+		tmp = gc_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0], all);
 		if (access(tmp, X_OK) == 0)
 			return (tmp);
 		free(tmp); // chemin non trouvee donc soit env inexistant soit cmd invalide

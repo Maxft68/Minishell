@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/08 12:14:20 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/08 12:38:44 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC =	mandatory/minishell.c \
 		built_in/is_built_in.c\
 		built_in/echo/do_echo.c\
 		built_in/export/do_export.c\
-		utils/gc_split.c
+		utils/gc_split.c\
+		utils/gc_strjoin.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/pwd/do_pwd.c \

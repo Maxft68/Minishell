@@ -126,17 +126,18 @@ void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
 void		ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new);
 void		ft_lstclear(t_token **token);
 void		free_array(char **array);
-void		*gc_malloc(t_all *all, size_t size);
-void		*gc_malloc_env(t_all *all, size_t size);
-char		**gc_split(t_all *all, char *s, char c);
-void		free_garbage_collect(t_garbage **garbage);
-void		free_garbage_env(t_garbage_env **garbage_env_head);
-void		print_node_env(t_env *env);
-void		free_env(t_env **env);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 t_garbage_env	*ft_lstnew(t_all *all, void *alloc);
 void		ft_lstadd_back_env(t_env **env, t_env *new);
-/* **********Lexing parsing************ */
+/* **********Garbage************************************************** */
+void		*gc_malloc(t_all *all, size_t size);
+void		*gc_malloc_env(t_all *all, size_t size);
+char		**gc_split(t_all *all, char *s, char c);
+char		*gc_strjoin(t_all *all, char *s1, char *s2);
+char		*gc_strjoin3(char *s1, char *s2, char *s3, t_all *all);
+void		free_garbage_collect(t_garbage **garbage);
+void		free_garbage_env(t_garbage_env **garbage_env_head);
+/* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
@@ -151,15 +152,16 @@ t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
 char		*gc_strdup(char *s, t_all *all);
-/* **********Exec functions***************************** */
+/* **********Exec functions************************************************** */
 void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
-char		*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 char		**do_char_env(t_all *all);
 void		exec_part(t_all *all);
-/* **********Built_in functions***************************** */
+/* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
 void		do_echo(char ***args, int pipe);
 void		do_env(t_all *all, char **env);
+void		print_node_env(t_env *env);
+void		free_env(t_env **env);
 
 #endif
