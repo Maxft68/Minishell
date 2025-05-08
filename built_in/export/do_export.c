@@ -38,12 +38,12 @@ void	*gc_malloc_env(t_all *all, size_t size)
 
 	alloc = malloc(size);
 	if (!alloc)
-		ft_exit("Cannot allocate memory", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	new = ft_lstnew(all, alloc);
 	if (!new)
 	{
 		free(alloc);
-		ft_exit("Cannot allocate memory", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	}
 	ft_lstadd_front_gc_env(&(all->garbage_env), new);
 	return (alloc);
@@ -70,7 +70,7 @@ t_garbage_env	*ft_lstnew(t_all *all, void *alloc)
 
 	new = malloc(sizeof(t_garbage_env));
 	if (!new)
-		ft_exit("Cannot allocate memory", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	new->pointer = alloc;
 	new->next = NULL;
 	return (new);
