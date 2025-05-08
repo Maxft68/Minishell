@@ -55,7 +55,7 @@ void	exec_cmd(t_all *all)
 			// ft_putstr_fd(": command not found\n", 2);   a modifier
 			// exit(127);
 		}
-		path_to_search = ft_split(env[i] + 5, ':');
+		path_to_search = gc_split(all, env[i] + 5, ':');
 		if (!path_to_search)
 		{
 			// exit(1); a modif

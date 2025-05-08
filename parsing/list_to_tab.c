@@ -92,4 +92,5 @@ void    list_to_tab(t_all *all)
         }
         tmp = tmp->next;
     }
+	printf("\n");
 }
