@@ -69,15 +69,17 @@ void create_string_token(char quote, t_all *all)
 void create_operator_token(token_type type, char *str, t_all *all)
 {
     advance_char(all->lexer);
-    if (all->lexer->c == '|')
-        ft_exit("Syntax error\n", all, 1);
     if (type == APPEND_OUT || type == HEREDOC)
         advance_char(all->lexer);
     if (type == PIPE)
     {
+        if (all->lexer->c == '|' || all->lexer->input[all->lexer->position + 1] == '|')
+            ft_exit("Syntax error\n", all, 1);
         all->pipe.nb_pipe += 1;
         all->lexer->first_token = true;
     }
+    if (type == VARIABLE && all->lexer->c == '$')
+        ft_exit("Syntax error\n", all, 1);
     create_token(type, str, all);
 }
 

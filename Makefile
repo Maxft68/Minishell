@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/08 12:38:44 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/08 19:46:28 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,6 @@ re: fclean all
 
 valgrind: fclean $(NAME)
 	@echo "Running Valgrind with $(NAME)..."
-	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
+	valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re valgrind
