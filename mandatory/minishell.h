@@ -128,7 +128,7 @@ void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 void		*gc_malloc(t_all *all, size_t size);
 void		*gc_malloc_env(t_all *all, size_t size);
-char		**gc_split(char *s, char c);
+char		**gc_split(t_all *all, char *s, char c);
 void		free_garbage_collect(t_garbage **garbage);
 void		free_garbage_env(t_garbage_env **garbage_env_head);
 void		print_node_env(t_env *env);

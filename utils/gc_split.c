@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	words_count(char const *s, char c)
+static int	words_count(char *s, char c)
 {
 	int	i;
 	int	nb;
@@ -23,28 +23,28 @@ static int	words_count(char const *s, char c)
 	return (nb);
 }
 
-static char	*str_c_dup(char const *s, int start, int end)
+static char	*str_c_dup(t_all *all, char *s, int start, int end)
 {
 	char	*alloc;
 
-	alloc = malloc((end - start + 2) * sizeof(char));
+	alloc = gc_malloc(all, (end - start + 2) * sizeof(char));
 	if (!alloc)
-		return (NULL);
+		ft_exit("Cannot allocate memory", all, 12);
 	ft_strlcpy(alloc, s + start, end - start + 2);
 	return (alloc);
 }
 
-static void	ft_free_all(char **array, int a)
-{
-	while (a >= 0)
-	{
-		free(array[a]);
-		a--;
-	}
-	free(array);
-}
+// static void	ft_free_all(char **array, int a)
+// {
+// 	while (a >= 0)
+// 	{
+// 		free(array[a]);
+// 		a--;
+// 	}
+// 	free(array);
+// }
 
-static char	**ft_inter_split(char **array, char const *s, char c)
+static char	**ft_inter_split(t_all *all, char **array, char *s, char c)
 {
 	int	i;
 	int	a;
@@ -59,26 +59,23 @@ static char	**ft_inter_split(char **array, char const *s, char c)
 		start = i;
 		while (s[i] != c && s[i] != 0)
 			i++;
-		array[a] = str_c_dup(s, start, i - 1);
+		array[a] = str_c_dup(all, s, start, i - 1);
 		if (array[a] == NULL)
-		{
-			ft_free_all(array, a);
-			return (NULL);
-		}
+			ft_exit("Cannot allocate memory", all, 12);
 		a++;
 	}
 	array[a] = NULL;
 	return (array);
 }
 
-char	**gc_split(char const *s, char c)
+char	**gc_split(t_all *all, char *s, char c)
 {
 	char	**array;
 
 	if (!s)
 		return (NULL);
-	array = malloc((words_count(s, c) + 1) * sizeof(char *));
+	array = gc_malloc(all, (words_count(s, c) + 1) * sizeof(char *));
 	if (!array)
-		return (NULL);
-	return (ft_inter_split(array, s, c));
+		ft_exit("Cannot allocate memory", all, 12);
+	return (ft_inter_split(all, array, s, c));
 }
