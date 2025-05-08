@@ -36,7 +36,7 @@ int	is_built_in(t_all *all)
 	// 	do_exit(all->pipe.cmd_args, all->pipe.nb_pipe);
 	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
 	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0')
-	// 	do_export(all->pipe.cmd_args, all->pipe.nb_pipe);
+		//do_export(all->pipe.cmd_args, all->pipe.nb_pipe);
 	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "pwd", 3) == 0
 	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
 	// 	do_pwd(all->pipe.cmd_args, all->pipe.nb_pipe);
