@@ -2,27 +2,64 @@
 
 #include "minishell.h"
 
-// void	do_export(t_all *all)
-// {
-// 	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
-// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
-// 	print_export(all->env);
-// }
-
-void	print_export(t_env *env)
+void	do_export(t_all *all)
 {
-	
-	if (!env)
+	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
+	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
+	print_export(all->export);
+}
+
+void	copy_list(t_all *all)
+{
+	t_env	*current;
+	t_export *curr;
+
+	if (!(all)->env)
 		return ;
-	while (env)
+
+	current = all->env;
+	while (current)
 	{
-		printf ("declare -x ");
-		printf ("%s=", env->name);
-		printf ("\"%s\"\n", env->value);
-		env = env->next;
+		curr = gc_malloc_env(all, sizeof(t_export));
+		if (!curr)
+			ft_exit("Cannot allocate memory\n", all, 12);
+		curr->value = gc_strdup(current->value, all);
+		curr->name = gc_strdup(current->name, all);
+		ft_lstadd_back_export(&all->export, curr);
+		current = current->next;
 	}
 }
 
+void	ft_lstadd_back_export(t_export **export, t_export *new)
+{
+	t_export	*current;
+
+	if (!*export)
+	{
+		*export = new;
+		return ;
+	}
+	current = *export;
+	while (current->next)
+		current = current->next;
+	current->next = new;
+	return ;
+}
+
+void	print_export(t_export *export)
+{
+	if (!export)
+		return ;
+	while (export)
+	{
+		printf ("declare -x ");
+		printf ("%s=", export->name);
+		printf ("\"%s\"\n", export->value);
+		export = export->next;
+	}
+}
+
+	
 // void	sort_list(t_all *all)
 // {
 // ajouter un variable dans l'env
