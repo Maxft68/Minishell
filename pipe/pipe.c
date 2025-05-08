@@ -20,8 +20,6 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
-	printf("exec prems Number of environment variables: %d\n", all->env_export.nb_line_env);
-
 	char **env = do_char_env(all);
 	char **cmd = NULL;
 	// cmd = malloc(sizeof(char *) * 3);

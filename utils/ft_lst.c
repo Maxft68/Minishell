@@ -2,6 +2,34 @@
 
 #include "../mandatory/minishell.h"
 
+const char *get_token_type_name(token_type type)
+{
+    if (type == COMMAND)
+        return "COMMAND";
+    if (type == ARG)
+        return "ARG";
+    if (type == SQ_STRING)
+        return "SQ_STRING";
+    if (type == DQ_STRING)
+        return "DQ_STRING";
+    if (type == PIPE)
+        return "PIPE";
+    if (type == REDIRECT_OUT)
+        return "REDIRECT_OUT";
+    if (type == REDIRECT_IN)
+        return "REDIRECT_IN";
+    if (type == APPEND_OUT)
+        return "APPEND_OUT";
+    if (type == HEREDOC)
+        return "HEREDOC";
+    if (type == VARIABLE)
+        return "VARIABLE";
+    if (type == ILLEGAL)
+        return "ILLEGAL";
+    return "UNKNOWN";
+}
+
+
 void	print_node(t_token *token)
 {
 	//printf("what the fuck\n");
@@ -13,7 +41,7 @@ void	print_node(t_token *token)
 		printf("no token str\n");
 	while (token && token->type && token->str)
 	{
-		printf("Type: %u, str: %s, pipe: %d\n", token->type, token->str, token->pipe);
+		printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
 		token = token->next;
 	}
 }
