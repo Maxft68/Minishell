@@ -46,6 +46,8 @@ void	exec_cmd(t_all *all)
 			// exit(1); a modif
 		}
 		path = search_good_path(path_to_search, all);
+		if (!path)
+			return; // et donner le code erreur 127 ? 
 	}
 	/* path = NULL;
 	path = all->pipe.cmd_path[pipe]; */
@@ -82,11 +84,12 @@ char	*search_good_path(char **paths, t_all *all)
 		tmp = gc_strjoin3(paths[i], "/", all->pipe.cmd_args[all->pipe.pipe][0], all);
 		if (access(tmp, X_OK) == 0)
 			return (tmp);
-		free(tmp); // chemin non trouvee donc soit env inexistant soit cmd invalide
+		//free(tmp); // chemin non trouvee donc soit env inexistant soit cmd invalide
 		i++;
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
-	ft_putstr_fd(": command not found\n", 2); // ?? 
+	ft_putstr_fd(": command not found\n", 2); // ??
+	//
 	// puis continue les pipes suivant ??
 	return (NULL);
 }
