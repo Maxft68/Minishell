@@ -8,7 +8,7 @@
 // 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
 // 	print_export(all->env);
 // }
-
+// 16.51
 void	print_export(t_env *env)
 {
 	
