@@ -22,7 +22,7 @@ void create_word_token(t_all *all)
     str = NULL;
     str = (char*)gc_malloc(all, len + 1);
     if (!str)
-        ft_exit("Cannot allocate memory", all, 12);
+        ft_exit("Cannot allocate memory\n", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
     if (all->lexer->first_token)
@@ -56,7 +56,7 @@ void create_string_token(char quote, t_all *all)
     str = NULL;
     str = malloc(sizeof(char)*(len + 1));
     if (!str)
-        ft_exit("Cannot allocate memory", all, 12);
+        ft_exit("Cannot allocate memory\n", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
 

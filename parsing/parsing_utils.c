@@ -9,14 +9,14 @@ void   create_token(token_type type, char *str, t_all *all)
     tokn = NULL;
     tokn = (t_token*)malloc(sizeof(t_token));
     if (!tokn)
-        ft_exit("Cannot allocate memory", all, 12);
+        ft_exit("Cannot allocate memory\n", all, 12);
     tokn->str = NULL;
     tokn->next = NULL;
     tokn->pipe = all->pipe.nb_pipe;
     tokn->type = type;
     tokn->str = ft_strdup(str);
     if (!tokn->str)
-        ft_exit("Cannot allocate memory", all, 12);
+        ft_exit("Cannot allocate memory\n", all, 12);
     ft_tknadd_back(&all->token, tokn);
 }
 
@@ -32,7 +32,7 @@ void    create_lexer(char *input, t_all *all)
 
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     if (!all->lexer)
-        ft_exit("Cannot allocate memory", all, 12);
+        ft_exit("Cannot allocate memory\n", all, 12);
     all->lexer->input = input;
     all->lexer->position = 0;
     all->lexer->c = input[0];
