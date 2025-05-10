@@ -6,6 +6,8 @@ void   create_token(token_type type, char *str, t_all *all)
 {
     t_token   *tokn;
     
+    if (type == ILLEGAL)
+        ft_exit("Syntax error\n", all, 1);
     tokn = NULL;
     tokn = (t_token*)malloc(sizeof(t_token));
     if (!tokn)
@@ -18,40 +20,6 @@ void   create_token(token_type type, char *str, t_all *all)
     if (!tokn->str)
         ft_exit("Cannot allocate memory\n", all, 12);
     ft_tknadd_back(&all->token, tokn);
-}
-
-// void    free_token(t_token *tokn)
-// {
-//     free(tokn->str);
-//     free(tokn);
-// }
-
-void    create_lexer(char *input, t_all *all)
-{
-    // t_lexer *lexr;
-
-    all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
-    if (!all->lexer)
-        ft_exit("Cannot allocate memory\n", all, 12);
-    all->lexer->input = input;
-    all->lexer->position = 0;
-    all->lexer->c = input[0];
-    all->lexer->first_token = true;
-    // return (lexr);
-}
-
-// void    free_lexer(t_lexer *lexr)
-// {
-//     free(lexr);
-// }
-
-void    advance_char(t_lexer *lexr)
-{
-    lexr->position++;
-    if (lexr->input[lexr->position] != '\0')
-        lexr->c = lexr->input[lexr->position];
-    else
-        lexr->c = '\0';
 }
 
 void	ft_tknadd_back(t_token **lst, t_token *tkn)
@@ -83,11 +51,15 @@ t_token	*ft_tknlast(t_token *lst)
 	return (tmp);
 }
 
-int new_tkn_char(char c)
-{
-    if (c == '<' || c == '>' || c == '$' || c == '|')
-        return (1);
-    if (c == '\'' || c == '"' || c == ' ')
-        return (1);
-    return (0);
-}
+// void    free_token(t_token *tokn)
+// {
+//     free(tokn->str);
+//     free(tokn);
+// }
+
+
+
+// void    free_lexer(t_lexer *lexr)
+// {
+//     free(lexr);
+// }

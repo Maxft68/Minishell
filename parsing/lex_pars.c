@@ -2,12 +2,6 @@
 #include "minishell.h"
 // #include "../mandatory/minishell.h"
 
-void    skip_whitespace(t_lexer *lexr)
-{
-    while ((lexr->c > 9 && lexr->c < 14) || lexr->c == 32)
-        advance_char(lexr);
-}
-
 void create_word_token(t_all *all)
 {
     int         start;
@@ -73,7 +67,10 @@ void create_operator_token(token_type type, char *str, t_all *all)
         advance_char(all->lexer);
     if (type == PIPE)
     {
-        if (all->lexer->c == '|' || all->lexer->input[all->lexer->position + 1] == '|')
+        if (all->lexer->c == '|' || all->lexer->position == 1 || \
+            (all->lexer->input[all->lexer->position] && \
+            all->lexer->input[all->lexer->position] == '|') || \
+            all->lexer->c == '\0')
             ft_exit("Syntax error\n", all, 1);
         all->pipe.nb_pipe += 1;
         all->lexer->first_token = true;

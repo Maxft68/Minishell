@@ -82,7 +82,7 @@ void    list_to_tab(t_all *all)
             i++;
             j = 0;
         }
-        if (tmp && tmp->type > 0)//&& tmp->type < 5)// && tmp->prev->type < 6)
+        if (tmp && tmp->type > 0 && tmp->type != 5)// && tmp->prev->type < 6)
         {
             // printf("%s %d %d\n", tmp->str, i , j);
             all->pipe.cmd_args[i][j] = NULL;

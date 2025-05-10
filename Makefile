@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/08 19:46:28 by rbier            ###   ########.fr        #
+#    Updated: 2025/05/10 18:20:25 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC =	mandatory/minishell.c \
 		pipe/pipe.c\
 		pipe/exec_part.c\
 		parsing/lex_pars.c\
+		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
 		parsing/list_to_tab.c\
 		built_in/is_built_in.c\
@@ -86,6 +87,6 @@ re: fclean all
 
 valgrind: fclean $(NAME)
 	@echo "Running Valgrind with $(NAME)..."
-	valgrind $(VALGRIND_FLAGS) ./$(NAME)
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
 .PHONY: all clean fclean re valgrind
