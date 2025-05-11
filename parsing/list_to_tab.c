@@ -28,15 +28,12 @@ void    alloc_tab_star_star(t_all *all)
             j++;
         if (tmp->type == PIPE || tmp->next == NULL)
         {
-            all->pipe.cmd_args[i] = gc_malloc(all, (sizeof(char*) * (j + 1)));
+            all->pipe.cmd_args[i] = gc_malloc(all, (sizeof(char*) * (j /*+ 1*/)));//<----------------------WTF
             if (!all->pipe.cmd_args[i])
                 ft_exit("Cannot allocate memory\n", all, 12);
             all->pipe.cmd_args[i][j] = NULL;
-            if (tmp->type == PIPE)
-            {
-            	i++;
-            	j = 0;
-            }
+            i++;
+            j = 0;
         }
         tmp = tmp->next;
     }
