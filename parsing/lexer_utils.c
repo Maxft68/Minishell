@@ -9,6 +9,7 @@ void    create_lexer(char *input, t_all *all)
     all->lexer->position = 0;
     all->lexer->c = input[0];
     all->lexer->first_token = true;
+    skip_whitespace(all->lexer);
 }
 
 int new_tkn_char(char c)
