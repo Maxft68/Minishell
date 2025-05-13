@@ -8,10 +8,37 @@ void	do_export(t_all *all)
 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
 	{
 		copy_list(all);
+		sort_list(all);
 		print_export(all->export);
 	}
 }
 
+void	sort_list(t_all *all)
+{
+	t_export *current = all->export;
+	t_export *next = NULL; // ??
+	t_export *sorted = NULL;
+
+	while(current)
+	{
+		next = current->next;
+		if (ft_strcmp(current->name, sorted->name) < 0)
+		{
+			current->next = sorted;
+			sorted = current;
+		}
+		else
+			
+	}
+}
+
+// void	sort_list(t_all *all)
+// {
+// ajouter un variable dans l'env
+	//comparer name
+	// verifier si la variable existe
+	//copie de list list export
+// }
 void	copy_list(t_all *all)
 {
 	t_env	*current;
@@ -64,13 +91,6 @@ void	print_export(t_export *export)
 }
 
 	
-// void	sort_list(t_all *all)
-// {
-// ajouter un variable dans l'env
-	//comparer name
-	// verifier si la variable existe
-	//copie de list list export
-// }
 
 void	*gc_malloc_env(t_all *all, size_t size)
 {
