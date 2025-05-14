@@ -48,12 +48,14 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (1); 
 	ft_memset(&all, 0, sizeof(t_all));
-	do_env(&all, env);	
+	do_env(&all, env);
+	// signals_swing();
 	//signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	//signal(SIGINT, SIG_IGN);
 	while (1)
 	{
+		// signals_swing();
 		create_lexer(readline("WriteOnMe "), &all);
 		if (ft_strncmp(all.lexer->input, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{					// a remplacer par le signal CTRL + C

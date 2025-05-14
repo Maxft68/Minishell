@@ -158,6 +158,8 @@ void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
 char		**do_char_env(t_all *all);
 void		exec_part(t_all *all);
+/* **********Signal functions************************************************ */
+void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
 void		do_echo(char ***args, int pipe);
