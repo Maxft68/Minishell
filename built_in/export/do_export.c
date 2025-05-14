@@ -13,22 +13,44 @@ void	do_export(t_all *all)
 	}
 }
 
+void	swap_node(t_export *a, t_export *b)
+{
+	char *temp_name;
+	char *temp_value;
+	// char *temp_equal;
+
+	temp_name = a->name;
+	a->name = b->name;
+	b->name = temp_name;
+
+	temp_value = a->value;
+	a->value = b->value;
+	b->value = temp_value;
+
+	// temp_equal = a->equal;
+	// a->equal = b->equal;
+	// b->equal = temp_equal;
+}
+
 void	sort_list(t_all *all)
 {
+	if (!all->export)
+		return ;
 	t_export *current = all->export;
-	t_export *next = NULL; // ??
-	t_export *sorted = NULL;
+	int swapped = 1;
 
-	while(current)
+	while(swapped == 1)
 	{
-		next = current->next;
-		if (ft_strcmp(current->name, sorted->name) < 0)
+		swapped = 0;
+		while (current && current->next)
 		{
-			current->next = sorted;
-			sorted = current;
+			if (ft_strcmp(current->name, current->next->name) > 0)
+			{
+				swap_node(current, current->next);
+				swapped = 1;
+			}
+			current = current->next;
 		}
-		else
-			
 	}
 }
 
