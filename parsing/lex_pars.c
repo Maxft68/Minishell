@@ -48,15 +48,13 @@ void create_string_token(char quote, t_all *all)
     }
     len = all->lexer->position - start;
     str = NULL;
-    str = malloc(sizeof(char)*(len + 1));
+    str = (char*)gc_malloc(all, len + 1);
     if (!str)
         ft_exit("Cannot allocate memory\n", all, 12);
     ft_strlcpy(str, all->lexer->input + start, len + 1);
     str[len] = '\0';
-
     if (all->lexer->c == quote)
         advance_char(all->lexer);
-
     create_token(type, str, all);
 }
 

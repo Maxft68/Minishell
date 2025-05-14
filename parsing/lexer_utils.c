@@ -5,9 +5,10 @@ void    create_lexer(char *input, t_all *all)
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     if (!all->lexer)
         ft_exit("Cannot allocate memory\n", all, 12);
-    all->lexer->input = input;
+    all->lexer->input = gc_strdup(input, all);
+    free(input);
     all->lexer->position = 0;
-    all->lexer->c = input[0];
+    all->lexer->c = all->lexer->input[0];
     all->lexer->first_token = true;
     skip_whitespace(all->lexer);
 }
