@@ -44,7 +44,7 @@ void	sort_list(t_all *all)
 		swapped = 0;
 		while (current && current->next)
 		{
-			if (ft_strcmp(current->name, current->next->name) > 0)
+			if (ft_strncmp(current->name, current->next->name, 100) > 0)
 			{
 				swap_node(current, current->next);
 				swapped = 1;

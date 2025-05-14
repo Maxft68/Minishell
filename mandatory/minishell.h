@@ -169,4 +169,7 @@ void		do_export(t_all *all);
 void		print_export(t_export *export);
 void		ft_lstadd_back_export(t_export **export, t_export *new);
 void		copy_list(t_all *all);
+void		swap_node(t_export *a, t_export *b);
+void		sort_list(t_all *all);
+
 #endif
