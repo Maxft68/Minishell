@@ -9,14 +9,14 @@ void   create_token(token_type type, char *str, t_all *all)
     if (type == ILLEGAL)
         ft_exit("Syntax error\n", all, 1);
     tokn = NULL;
-    tokn = (t_token*)malloc(sizeof(t_token));
+    tokn = (t_token*)gc_malloc(all, sizeof(t_token));
     if (!tokn)
         ft_exit("Cannot allocate memory\n", all, 12);
     tokn->str = NULL;
     tokn->next = NULL;
     tokn->pipe = all->pipe.nb_pipe;
     tokn->type = type;
-    tokn->str = ft_strdup(str);
+    tokn->str = gc_strdup(str, all);
     if (!tokn->str)
         ft_exit("Cannot allocate memory\n", all, 12);
     ft_tknadd_back(&all->token, tokn);
@@ -50,16 +50,3 @@ t_token	*ft_tknlast(t_token *lst)
 		tmp = tmp->next;
 	return (tmp);
 }
-
-// void    free_token(t_token *tokn)
-// {
-//     free(tokn->str);
-//     free(tokn);
-// }
-
-
-
-// void    free_lexer(t_lexer *lexr)
-// {
-//     free(lexr);
-// }
