@@ -2,6 +2,8 @@
 
 void    create_lexer(char *input, t_all *all)
 {
+    if (input && input[0] != '\0')
+			add_history(input);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     if (!all->lexer)
         ft_exit("Cannot allocate memory\n", all, 12);

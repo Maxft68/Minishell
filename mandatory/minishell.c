@@ -61,16 +61,20 @@ int	main(int argc, char **argv, char **env)
 		{					// a remplacer par le signal CTRL + C
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
-		if (all.lexer->input && all.lexer->c != '\0')
-			add_history(all.lexer->input);
-		else						//Quand il ny a que des espaces dans read ??
+		// if (all.lexer->input && all.lexer->c != '\0')
+		// 	add_history(all.lexer->input);
+		if (!all.lexer->input)						//Quand il ny a que des espaces dans read ??
 			continue;
 		while (all.lexer->c)
 			next_token(&all);
+		if (all.token)
+		{
 		print_node(all.token);
 		list_to_tab(&all);
 		exec_part(&all);
+		}
 		free_garbage_collect(&all.garbage);
+		ft_lstclear(&all.token);
 	}
 	(void)argv;
 }
