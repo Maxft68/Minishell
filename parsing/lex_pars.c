@@ -102,7 +102,7 @@ void next_token(t_all *all)
     else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')
         create_word_token(all);
     else if (c == '\0')
-        ft_exit("exit avec ctrl + D\n", all, 0);
+        ft_exit("lexer->c = char null\n", all, 0);
     else
         create_token(ILLEGAL, "", all);
 }
