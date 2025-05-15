@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+int gc_count(t_all *all)
+{
+	int count = 0;
+	t_garbage *tmp = all->garbage;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return count;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*read_copy;
@@ -34,8 +46,10 @@ int	main(int argc, char **argv, char **env)
 		print_node(all.token);
 		list_to_tab(&all);
 		exec_part(&all);
+		//printf("Nb d'allocations enregistrées dans le GC : %d\n", gc_count(&all));//
 		ft_lstclear(&all.token); // a rajouter dans ft_exit ?
 		free_garbage_collect(&all.garbage);
+
 	}
 	(void)argv;
 }

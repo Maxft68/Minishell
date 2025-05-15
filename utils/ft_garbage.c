@@ -7,6 +7,7 @@ static t_garbage	*ft_lstnew_gc(t_all *all, void *alloc)
 	t_garbage	*new;
 
 	new = malloc(sizeof(t_garbage));
+	//printf("[GC] Ajout de ptr dans lst_new: %p\n", new);
 	if (!new)
 		ft_exit("Cannot allocate memory\n", all, 12);
 	new->pointer = alloc;
@@ -18,8 +19,9 @@ void	*gc_malloc(t_all *all, size_t size)
 {
 	t_garbage	*new;
 	void		*alloc;
-
+	//alloc = malloc(size);
 	alloc = malloc(size);
+	//printf("[GC] Ajout de ptr dans gc: %p\n", alloc);
 	if (!alloc)
 		ft_exit("Cannot allocate memory\n", all, 12);
 	new = ft_lstnew_gc(all, alloc);
@@ -40,12 +42,13 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	if (!garbage_head || !(*garbage_head))
 		return ;
 	garbage = *garbage_head;
-	printf("---------------------COUCOU JE FREEEE ---------------------");
+	//printf("---------------------COUCOU JE FREEEE ---------------------");
 	while (garbage)
 	{
 		temp = garbage->next;
 		if (garbage->pointer != NULL)
 		{
+			//printf("free %p\n", garbage->pointer);
 			free(garbage->pointer);
 			garbage->pointer = NULL;
 		}

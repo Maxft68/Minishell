@@ -24,7 +24,8 @@ void	do_export(t_all *all)
 	{
 		copy_list(all);
 		sort_list(all);
-		//print_export(all->export);
+		print_export(all->export);
+		all->export = 0;
 	}
 }
 
@@ -64,7 +65,6 @@ void	sort_list(t_all *all)
 			current = current->next;
 		}
 	}
-	print_export(all->export);
 }
 
 void	copy_list(t_all *all)
