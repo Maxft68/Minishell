@@ -114,7 +114,7 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 
 	new = gc_malloc_env(all, sizeof(t_env));
 	if (!new)
-		ft_exit("Cannot allocate memory", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	new->name = name;
 	new->value = value;
 	new->next = NULL;
