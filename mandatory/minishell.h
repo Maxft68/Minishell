@@ -171,5 +171,6 @@ void		ft_lstadd_back_export(t_export **export, t_export *new);
 void		copy_list(t_all *all);
 void		swap_node(t_export *a, t_export *b);
 void		sort_list(t_all *all);
+int			ft_strcmp(char *s1, char *s2);
 
 #endif

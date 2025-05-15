@@ -2,6 +2,21 @@
 
 #include "minishell.h"
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while(s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
 void	do_export(t_all *all)
 {
 	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
@@ -9,7 +24,7 @@ void	do_export(t_all *all)
 	{
 		copy_list(all);
 		sort_list(all);
-		print_export(all->export);
+		//print_export(all->export);
 	}
 }
 
@@ -17,7 +32,6 @@ void	swap_node(t_export *a, t_export *b)
 {
 	char *temp_name;
 	char *temp_value;
-	// char *temp_equal;
 
 	temp_name = a->name;
 	a->name = b->name;
@@ -26,25 +40,23 @@ void	swap_node(t_export *a, t_export *b)
 	temp_value = a->value;
 	a->value = b->value;
 	b->value = temp_value;
-
-	// temp_equal = a->equal;
-	// a->equal = b->equal;
-	// b->equal = temp_equal;
 }
+
 
 void	sort_list(t_all *all)
 {
 	if (!all->export)
 		return ;
-	t_export *current = all->export;
 	int swapped = 1;
 
 	while(swapped == 1)
 	{
 		swapped = 0;
+		t_export *current = all->export;
 		while (current && current->next)
 		{
-			if (ft_strncmp(current->name, current->next->name, 100) > 0)
+			if (current->name && current->next &&
+				ft_strcmp(current->name, current->next->name) > 0) // verifier lol lola lolb
 			{
 				swap_node(current, current->next);
 				swapped = 1;
@@ -52,15 +64,9 @@ void	sort_list(t_all *all)
 			current = current->next;
 		}
 	}
+	print_export(all->export);
 }
 
-// void	sort_list(t_all *all)
-// {
-// ajouter un variable dans l'env
-	//comparer name
-	// verifier si la variable existe
-	//copie de list list export
-// }
 void	copy_list(t_all *all)
 {
 	t_env	*current;
@@ -72,7 +78,7 @@ void	copy_list(t_all *all)
 	current = all->env;
 	while (current)
 	{
-		curr = gc_malloc_env(all, sizeof(t_export));
+		curr = gc_malloc(all, sizeof(t_export));
 		if (!curr)
 			ft_exit("Cannot allocate memory\n", all, 12);
 		curr->value = gc_strdup(current->value, all);
@@ -81,6 +87,7 @@ void	copy_list(t_all *all)
 		ft_lstadd_back_export(&all->export, curr);
 		current = current->next;
 	}
+
 }
 
 void	ft_lstadd_back_export(t_export **export, t_export *new)
@@ -105,14 +112,21 @@ void	print_export(t_export *export)
 		return ;
 	while (export)
 	{
-		printf ("declare -x ");
-		printf ("%s=", export->name);
-		printf ("\"%s\"\n", export->value);
+		if (export->value)
+		{
+			printf ("declare -x ");
+			printf ("%s=", export->name);
+			printf ("\"%s\"\n", export->value);
+		}
+		else
+		{
+			printf ("declare -x ");
+			printf ("%s\n", export->name);
+		}
 		export = export->next;
 	}
 }
 
-	
 
 void	*gc_malloc_env(t_all *all, size_t size)
 {
@@ -178,5 +192,4 @@ void	free_garbage_env(t_garbage_env **garbage_env_head)
 	}
 	*garbage_env_head = NULL;
 }
-
 

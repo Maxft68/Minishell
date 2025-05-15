@@ -40,6 +40,7 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	if (!garbage_head || !(*garbage_head))
 		return ;
 	garbage = *garbage_head;
+	printf("---------------------COUCOU JE FREEEE ---------------------");
 	while (garbage)
 	{
 		temp = garbage->next;
