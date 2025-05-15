@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 			next_token(&all);
 		if (all.token)
 		{
-		print_node(all.token);
+		// print_node(all.token);    <---------------------------------------------------------printf
 		list_to_tab(&all);
 		exec_part(&all);
 		}
