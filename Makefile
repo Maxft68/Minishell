@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/14 15:53:58 by rbier            ###   ########.fr        #
+#    Updated: 2025/05/15 17:14:48 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
 INCLUDES = -I./mandatory
-CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES) #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g3 #-fsanitize=address
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\

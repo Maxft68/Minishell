@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 15:54:09 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/02/18 18:15:22 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/08 19:59:31 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = ./libft/ft_bzero.c ./libft/ft_isalnum.c ./libft/ft_isalpha.c ./libft/ft_is
 	
 OBJ = $(SRC:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 AR = ar rcs
 
 all: $(NAME)

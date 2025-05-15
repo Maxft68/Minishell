@@ -53,8 +53,9 @@ typedef struct s_env
 typedef struct s_export
 {
 	char				*name;
+	//int					equal; pour savoir si afficher le = ou non ?
 	char				*value;
-	struct s_env		*next;
+	struct s_export		*next;
 }						t_export;
 
 typedef struct s_lexer
@@ -138,6 +139,7 @@ char		*gc_strjoin(t_all *all, char *s1, char *s2);
 char		*gc_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 void		free_garbage_collect(t_garbage **garbage);
 void		free_garbage_env(t_garbage_env **garbage_env_head);
+char		*gc_strdup(char *s, t_all *all);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
@@ -152,7 +154,6 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
-char		*gc_strdup(char *s, t_all *all);
 /* **********Exec functions************************************************** */
 void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
@@ -166,5 +167,12 @@ void		do_echo(char ***args, int pipe);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
 void		free_env(t_env **env);
+void		do_export(t_all *all);
+void		print_export(t_export *export);
+void		ft_lstadd_back_export(t_export **export, t_export *new);
+void		copy_list(t_all *all);
+void		swap_node(t_export *a, t_export *b);
+void		sort_list(t_all *all);
+int			ft_strcmp(char *s1, char *s2);
 
 #endif

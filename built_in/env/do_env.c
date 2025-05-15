@@ -62,10 +62,10 @@ void	print_node_env(t_env *env)
 	{
 		if (env->value)
 		{
-			printf("%s=", env->name); //comment faire si "bla="  et na pas de value ? ajouter une variable "is="" ?? 
+			printf("%s=", env->name);
 			printf("%s\n", env->value);
-			env = env->next;
 		}
+		env = env->next;
 	}
 }
 

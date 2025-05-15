@@ -7,6 +7,7 @@ static t_garbage	*ft_lstnew_gc(t_all *all, void *alloc)
 	t_garbage	*new;
 
 	new = malloc(sizeof(t_garbage));
+	//printf("[GC] Ajout de ptr dans lst_new: %p\n", new);
 	if (!new)
 		ft_exit("Cannot allocate memory\n", all, 12);
 	new->pointer = alloc;
@@ -18,8 +19,9 @@ void	*gc_malloc(t_all *all, size_t size)
 {
 	t_garbage	*new;
 	void		*alloc;
-
+	//alloc = malloc(size);
 	alloc = malloc(size);
+	//printf("[GC] Ajout de ptr dans gc: %p\n", alloc);
 	if (!alloc)
 		ft_exit("Cannot allocate memory\n", all, 12);
 	new = ft_lstnew_gc(all, alloc);
