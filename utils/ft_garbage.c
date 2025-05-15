@@ -34,23 +34,41 @@ void	*gc_malloc(t_all *all, size_t size)
 
 void	free_garbage_collect(t_garbage **garbage_head)
 {
-	t_garbage	*garbage;
 	t_garbage	*temp;
 
-	if (!garbage_head || !(*garbage_head))
-		return ;
-	garbage = *garbage_head;
-	while (garbage)
+	while (*garbage_head && garbage_head)
 	{
-		temp = garbage->next;
-		if (garbage->pointer != NULL)
+		temp = (*garbage_head)->next;
+		if ((*garbage_head)->pointer)
 		{
-			free(garbage->pointer);
-			garbage->pointer = NULL;
+			free((*garbage_head)->pointer);
+			(*garbage_head)->pointer = NULL;
 		}
-		free(garbage);
-		garbage = NULL;
-		garbage = temp;
+		free(*garbage_head);
+		*garbage_head = NULL;
+		*garbage_head = temp;
 	}
-	*garbage_head = NULL;
 }
+
+// void	free_garbage_collect(t_garbage **garbage_head)
+// {
+// 	t_garbage	*garbage;
+// 	t_garbage	*temp;
+
+// 	if (!garbage_head || !(*garbage_head))
+// 		return ;
+// 	garbage = *garbage_head;
+// 	while (garbage)
+// 	{
+// 		temp = garbage->next;
+// 		if (garbage->pointer != NULL)
+// 		{
+// 			free(garbage->pointer);
+// 			garbage->pointer = NULL;
+// 		}
+// 		free(garbage);
+// 		garbage = NULL;
+// 		garbage = temp;
+// 	}
+// 	*garbage_head = NULL;
+// }

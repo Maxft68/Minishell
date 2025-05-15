@@ -23,13 +23,13 @@
 
 typedef struct s_garbage
 {
-	char				*pointer;
+	void				*pointer;
 	struct s_garbage	*next;
 }						t_garbage;
 
 typedef struct s_garbage_env
 {
-	char				*pointer;
+	void				*pointer;
 	struct s_garbage_env	*next;
 }						t_garbage_env;
 

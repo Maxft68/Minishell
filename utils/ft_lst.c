@@ -152,7 +152,7 @@ void	ft_lstclear(t_token **token)
 			(*token)->str = NULL;
 		}
 		free(*token);
-		*token = NULL;
+		// *token = NULL;
 		*token = temp;
 	}
 }

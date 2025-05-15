@@ -62,7 +62,6 @@ int	main(int argc, char **argv, char **env)
 			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		}									// a remplacer par le signal CTRL + C
 		// if (all.lexer->input && all.lexer->c != '\0')
-		// 	add_history(all.lexer->input);
 		if (!all.lexer->input)						//Quand il ny a que des espaces dans read ??
 			continue;
 		while (all.lexer->c)
