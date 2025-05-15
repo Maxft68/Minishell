@@ -17,16 +17,51 @@ int	ft_strcmp(char *s1, char *s2)
 	return((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
+char	*gc_strdup_env(char *s, t_all *all)
+{
+	char	*alloc;
+	size_t	l;
+
+	l = ft_strlen(s);
+	alloc = gc_malloc_env(all, (l + 1) * sizeof(char));
+	if (!alloc)
+        ft_exit("Cannot allocate memory\n", all, 12);
+    ft_strlcpy(alloc, s, l + 1);
+	return (alloc);
+}
+
+void	do_add_env(t_all *all)
+{
+	int i;
+	i = 1;
+	char *s;
+	char *value;
+	char *name;
+	s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1], all);
+	if (ft_strchr(s, '=')) // si il y a un =
+	{
+		
+	}
+	
+
+}
+
+
 void	do_export(t_all *all)
 {
-	if((ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
-	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'))
+	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
+	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0' &&
+	!all->pipe.cmd_args[all->pipe.nb_pipe][1])
 	{
+		all->export = NULL;  // Réinitialiser la liste export avant de la remplir
 		copy_list(all);
 		sort_list(all);
 		print_export(all->export);
-		all->export = 0;
 	}
+	else if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
+	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0' &&
+	all->pipe.cmd_args[all->pipe.nb_pipe][1])
+		do_add_env(all);
 }
 
 void	swap_node(t_export *a, t_export *b)
@@ -79,8 +114,6 @@ void	copy_list(t_all *all)
 	while (current)
 	{
 		curr = gc_malloc(all, sizeof(t_export));
-		if (!curr)
-			ft_exit("Cannot allocate memory\n", all, 12);
 		curr->value = gc_strdup(current->value, all);
 		curr->name = gc_strdup(current->name, all);
 		curr->next = NULL;

@@ -111,3 +111,7 @@ si pipe tout built in dans enfant aucune exception !!
 selon le sujet de correction apres UNSET PATH aucune commande ne doit fonctionner ??
 
 env affiche que les variables avec valeurs, et export NAME=""
+
+name de lenv ne peut que commencer par '_'ou des lettres 
++= fais un APPEND dans valeur
+= reinitialise
