@@ -146,9 +146,13 @@ void	ft_lstclear(t_token **token)
 	while (*token && token)
 	{
 		temp = (*token)->next;
-		free((*token)->str);
+		if ((*token)->str)
+		{
+			free((*token)->str);
+			(*token)->str = NULL;
+		}
 		free(*token);
-		*token = NULL;
+		// *token = NULL;
 		*token = temp;
 	}
 }

@@ -25,7 +25,7 @@ void    alloc_tab_star_star(t_all *all)
     j = 0;
     while (tmp)
     {
-        if (tmp && tmp->type > 0)// && tmp->type < 5)// && tmp->prev->type < 6)
+        if (tmp && tmp->type > 0 && tmp->type != 5)
             j++;
         if (tmp->type == PIPE || tmp->next == NULL)
         {
@@ -33,11 +33,8 @@ void    alloc_tab_star_star(t_all *all)
             if (!all->pipe.cmd_args[i])
                 ft_exit("Cannot allocate memory\n", all, 12);
             all->pipe.cmd_args[i][j] = NULL;
-            if (tmp->type == PIPE)
-            {
-            	i++;
-            	j = 0;
-            }
+            i++;
+            j = 0;
         }
         tmp = tmp->next;
     }
@@ -49,9 +46,7 @@ void    alloc_tab_star_star_star(t_all *all)
     t_token *tmp;
 
     i = 0;
-	//all->token = NULL;
     tmp = all->token;
-    //ft_memset(&(*tmp), 0, sizeof(t_token));
     while (tmp)
     {
         if (tmp->type == PIPE)
@@ -83,7 +78,7 @@ void    list_to_tab(t_all *all)
             i++;
             j = 0;
         }
-        if (tmp && tmp->type > 0)//&& tmp->type < 5)// && tmp->prev->type < 6)
+        if (tmp && tmp->type > 0 && tmp->type != 5)
         {
             // printf("%s %d %d\n", tmp->str, i , j);
             all->pipe.cmd_args[i][j] = NULL;

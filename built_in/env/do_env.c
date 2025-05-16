@@ -140,3 +140,4 @@ char	**do_char_env(t_all *all)
 	env[j] = NULL;
 	return (env);
 }
+

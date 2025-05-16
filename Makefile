@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/08 20:21:49 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/15 17:14:48 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,15 @@ SRC =	mandatory/minishell.c \
 		pipe/pipe.c\
 		pipe/exec_part.c\
 		parsing/lex_pars.c\
+		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
 		parsing/list_to_tab.c\
 		built_in/is_built_in.c\
 		built_in/echo/do_echo.c\
 		built_in/export/do_export.c\
 		utils/gc_split.c\
-		utils/gc_strjoin.c		
+		utils/gc_strjoin.c\
+		signals/signals.c
 #		built_in/cd/do_cd.c \
 		built_in/exit/do_exit.c \
 		built_in/pwd/do_pwd.c \
@@ -64,6 +66,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/mandatory
 	@mkdir -p $(OBJ_DIR)/parsing
 	@mkdir -p $(OBJ_DIR)/pipe
+	@mkdir -p $(OBJ_DIR)/signals
 	
 
 $(LIBFT_LIB): 
@@ -88,4 +91,4 @@ valgrind: fclean $(NAME)
 	@echo "Running Valgrind with $(NAME)..."
 	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
-.PHONY: all clean fclean re  valgrind
+.PHONY: all clean fclean re valgrind
