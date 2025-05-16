@@ -67,7 +67,6 @@ search_and_destroy_node_env(t_all *all, char *name, char *value)
 		current = current->next;
 	}
 }
-//eeeeeeeeeerrrrrrriiiiiiiiiiiikkkkkkkkkkkkkkaaaaaaa;
 
 void	do_add_env(t_all *all)
 {
