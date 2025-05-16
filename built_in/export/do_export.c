@@ -21,31 +21,71 @@ char	*gc_strdup_env(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;
-
+	if (!s)
+		return (NULL);
 	l = ft_strlen(s);
 	alloc = gc_malloc_env(all, (l + 1) * sizeof(char));
 	if (!alloc)
-        ft_exit("Cannot allocate memory\n", all, 12);
-    ft_strlcpy(alloc, s, l + 1);
+		ft_exit("Cannot allocate memory\n", all, 12);
+	ft_strlcpy(alloc, s, l + 1);
 	return (alloc);
 }
+
+char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
+{
+	char	*alloc;
+
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (gc_strdup_env("", all));
+	if (len > (ft_strlen(s) - start))
+		len = (ft_strlen(s) - start);
+	alloc = gc_malloc_env(all, (len + 1) * sizeof(char));
+	if (!alloc)
+		ft_exit("Cannot allocate memory\n", all, 12);
+	ft_strlcpy(alloc, &s[start], len + 1);
+	return (alloc);
+}
+
 
 void	do_add_env(t_all *all)
 {
 	int i;
-	i = 1;
+	i = 0;
 	char *s;
 	char *value;
 	char *name;
 	s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1], all);
 	if (ft_strchr(s, '=')) // si il y a un =
 	{
-		
+		while(s[i] && s[i] != '=')
+			i++;
+		if (s[i] == '=')
+		{
+			name = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
+			value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+		}
+		else
+		{
+			name = gc_strdup_env(s, all);
+			value = NULL;
+		}
 	}
-	
-
+	if(name)
+		printf("name = %s\n", name);
+	if (value)
+		printf("value = %s\n", value);
+	if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
+	{								//puis ajouter encore si le premier carac nest pas non plus '_'
+		printf("minishell ??: export: `%s': not a valid identifier\n", name); // A VERIFIER
+		free(name);
+		if (value)
+			free(value);
+		return ;
+	}
+	//add_to_lst_env maintenant !
 }
-
 
 void	do_export(t_all *all)
 {
