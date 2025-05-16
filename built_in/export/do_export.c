@@ -56,6 +56,9 @@ void	do_add_env(t_all *all)
 	char *s;
 	char *value;
 	char *name;
+
+	value = NULL;
+	name = NULL;
 	s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1], all);
 	if (ft_strchr(s, '=')) // si il y a un =
 	{
