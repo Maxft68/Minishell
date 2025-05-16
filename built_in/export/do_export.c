@@ -74,11 +74,13 @@ void	do_add_env(t_all *all)
 	{
 		while(s[i] && s[i] != '=')
 			i++;
-		if (s[i] == '=' && i > 0 && s[i - 1] && s[i - 1] != ' ') // si le = nest pas le premier caractere
+		if (s[i] == '=' && i > 0 && s[i - 1] && s[i - 1] != ' ') // si = nest pas le premier caractere
 		{
 			name = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
 			if (s[i + 1])
 				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+			else
+				value = gc_strdup_env("", all); // si pas de valeur apres le =de
 		}
 	}
 	else
@@ -97,10 +99,10 @@ void	do_add_env(t_all *all)
 			printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
 	}
 	x++;
+	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
 	do_add_env(all);
 	return ;
 	}
-	//add_to_lst_env maintenant !
 }
 
 void	do_export(t_all *all)
