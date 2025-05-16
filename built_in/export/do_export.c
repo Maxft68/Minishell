@@ -80,9 +80,9 @@ void	do_add_env(t_all *all)
 	{								//puis ajouter encore si le premier carac nest pas non plus '_'
 		printf("minishell ??: export: `%s': not a valid identifier\n", name); // A VERIFIER
 		free(name);
-		if (value)
-			free(value);
-		return ;
+	if (value)
+		free(value);
+	return ;
 	}
 	//add_to_lst_env maintenant !
 }
