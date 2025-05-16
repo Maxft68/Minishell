@@ -56,10 +56,20 @@ void	do_add_env(t_all *all)
 	char *s;
 	char *value;
 	char *name;
+	static int x = 0;
 
 	value = NULL;
 	name = NULL;
-	s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1], all);
+	if (all->pipe.cmd_args[all->pipe.nb_pipe][1 + x])
+	{
+		printf("args%d\n", x);
+		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1 + x], all);
+	}
+	else
+	{
+		x = 0;
+		return ; // si plus dargs
+	}
 	if (ft_strchr(s, '=')) // si il y a un =
 	{
 		while(s[i] && s[i] != '=')
@@ -70,11 +80,6 @@ void	do_add_env(t_all *all)
 			if (s[i + 1])
 				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
 		}
-		// else
-		// {
-		// 	name = gc_strdup_env(s, all);
-		// 	value = NULL;
-		// }
 	}
 	else
 	{
@@ -91,6 +96,8 @@ void	do_add_env(t_all *all)
 		{								//puis ajouter encore si le premier carac nest pas non plus '_'
 			printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
 	}
+	x++;
+	do_add_env(all);
 	return ;
 	}
 	//add_to_lst_env maintenant !
