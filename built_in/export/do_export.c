@@ -64,27 +64,33 @@ void	do_add_env(t_all *all)
 	{
 		while(s[i] && s[i] != '=')
 			i++;
-		if (s[i] == '=')
+		if (s[i] == '=' && i > 0 && s[i - 1] && s[i - 1] != ' ') // si le = nest pas le premier caractere
 		{
 			name = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
-			value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+			if (s[i + 1])
+				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
 		}
-		else
-		{
-			name = gc_strdup_env(s, all);
-			value = NULL;
-		}
+		// else
+		// {
+		// 	name = gc_strdup_env(s, all);
+		// 	value = NULL;
+		// }
+	}
+	else
+	{
+		name = gc_strdup_env(s, all);
+		value = NULL;
 	}
 	if(name)
 		printf("name = %s\n", name);
 	if (value)
 		printf("value = %s\n", value);
-	if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
-	{								//puis ajouter encore si le premier carac nest pas non plus '_'
-		printf("minishell ??: export: `%s': not a valid identifier\n", name); // A VERIFIER
-		free(name);
-	if (value)
-		free(value);
+	if (name && name[0])
+	{
+		if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
+		{								//puis ajouter encore si le premier carac nest pas non plus '_'
+			printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
+	}
 	return ;
 	}
 	//add_to_lst_env maintenant !
