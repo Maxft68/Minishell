@@ -48,24 +48,23 @@ char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
 	return (alloc);
 }
 
-search_and_destroy_node_env(t_all *all, char *name, char *value)
+int	search_and_replace_env(t_all *all, char *name, char *value)
 {
 	t_env	*current;
-	t_env	*prev;
 
-	if (!all->env || !name)
-		return ;
+	if (!all->env || !name ||value)
+		return (1);
 	current = all->env;
-	prev = NULL;
 	while (current)
 	{
 		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
 		{
-			current->value = value;
+			current->value = gc_strdup_env(value, all);
+			return(0);
 		}
-		prev = current;
 		current = current->next;
 	}
+	return (1);
 }
 
 void	do_add_env(t_all *all)
@@ -109,9 +108,12 @@ void	do_add_env(t_all *all)
 	}
 	if(name) //if(name && value)
 	{
-		search_and_destroy_node_env(all, name);
-		//chercher si name existe deja dans la liste env
-		printf("name = %s\n", name);
+		if (search_and_replace_env(all, name, value) == 0)
+		{
+			printf("name = %s\n", name);
+			return ;
+		}
+		printf("name = %s\n", name);//chercher si name existe deja dans la liste env
 	}
 	if (value)
 		printf("value = %s\n", value);
