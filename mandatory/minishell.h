@@ -115,6 +115,7 @@ typedef struct s_all
 	t_env				*env;
 	t_lexer				*lexer;
 	t_token				*token;
+	t_token				*rdir_tkn;
 	t_garbage			*garbage;
 	t_garbage_env		*garbage_env;
 	t_data				data;
