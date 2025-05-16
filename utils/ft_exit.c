@@ -27,6 +27,7 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	
 	free_garbage_env(&all->garbage_env);
 	free_garbage_collect(&all->garbage);
+	ft_lstclear(&all->token);
 	rl_clear_history();
 	
 	exit(error_code);

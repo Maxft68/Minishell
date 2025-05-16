@@ -19,6 +19,7 @@ void   create_token(token_type type, char *str, t_all *all)
     tokn->type = type;
     tokn->str = ft_strdup(str);
     // tokn->str = gc_strdup(str, all);
+	// printf("token created: ->type: %u  str: %s\n", tokn->type, tokn->str);
     if (!tokn->str)
         ft_exit("Cannot allocate memory\n", all, 12);
     ft_tknadd_back(&all->token, tokn);
