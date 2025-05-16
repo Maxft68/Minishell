@@ -48,6 +48,26 @@ char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
 	return (alloc);
 }
 
+search_and_destroy_node_env(t_all *all, char *name, char *value)
+{
+	t_env	*current;
+	t_env	*prev;
+
+	if (!all->env || !name)
+		return ;
+	current = all->env;
+	prev = NULL;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
+		{
+			current->value = value;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+//eeeeeeeeeerrrrrrriiiiiiiiiiiikkkkkkkkkkkkkkaaaaaaa;
 
 void	do_add_env(t_all *all)
 {
@@ -88,8 +108,12 @@ void	do_add_env(t_all *all)
 		name = gc_strdup_env(s, all);
 		value = NULL;
 	}
-	if(name)
+	if(name) //if(name && value)
+	{
+		search_and_destroy_node_env(all, name);
+		//chercher si name existe deja dans la liste env
 		printf("name = %s\n", name);
+	}
 	if (value)
 		printf("value = %s\n", value);
 	if (name && name[0])
@@ -97,8 +121,10 @@ void	do_add_env(t_all *all)
 		if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
 		{								//puis ajouter encore si le premier carac nest pas non plus '_'
 			printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
-	}
+		}
 	x++;
+	//if name pas encore dans lst_env alors addback sinon supprimer noeud dabord.
+	//si += concatener dans value si name existe deja
 	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
 	do_add_env(all);
 	return ;
