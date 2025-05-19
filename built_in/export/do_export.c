@@ -51,21 +51,43 @@ char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
 int	search_and_replace_env(t_all *all, char *name, char *value)
 {
 	t_env	*current;
-
-	if (!all->env || !name ||value)
+	//printf("ca rentre la ?\n");
+	if (!all->env || !name)
 		return (1);
 	current = all->env;
 	while (current)
 	{
 		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
 		{
-			current->value = gc_strdup_env(value, all);
+			//printf("ca rentre pas la ?\n");
+			if (value)
+				current->value = gc_strdup_env(value, all);
 			return(0);
 		}
 		current = current->next;
 	}
 	return (1);
 }
+
+int	is_alpha_str(char *str)
+{
+	int i;
+
+	if (!str || !str[0])
+		return (1); // si chaine vide
+	i = 0;
+	if (ft_isalpha(str[i]) == 0 && str[i] != '_') // si le premier caractere nest pas une lettre ou _
+		return (1);
+	i++;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == 0 || str[i] != '_') // si le caractere nest pas alphanumerique ou _
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 
 void	do_add_env(t_all *all)
 {
@@ -80,7 +102,7 @@ void	do_add_env(t_all *all)
 	name = NULL;
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1 + x])
 	{
-		printf("args%d\n", x);
+		//printf("args%d\n", x);
 		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1 + x], all);
 	}
 	else
@@ -95,6 +117,11 @@ void	do_add_env(t_all *all)
 		if (s[i] == '=' && i > 0 && s[i - 1] && s[i - 1] != ' ') // si = nest pas le premier caractere
 		{
 			name = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
+			if (is_alpha_str(name)) // si le nom nest pas valide
+			{
+				printf("minishell: export: << %s >>: not a valid identifier\n", name);
+				name = NULL;
+			}
 			if (s[i + 1])
 				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
 			else
@@ -106,27 +133,26 @@ void	do_add_env(t_all *all)
 		name = gc_strdup_env(s, all);
 		value = NULL;
 	}
-	if(name) //if(name && value)
+	if(name) // et value ?
 	{
 		if (search_and_replace_env(all, name, value) == 0)
 		{
-			printf("name = %s\n", name);
-			return ;
+			//printf("name remplacer = %s\n", name);
 		}
-		printf("name = %s\n", name);//chercher si name existe deja dans la liste env
+		else
+			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
+		//printf("name pas remplace = %s\n", name);//chercher si name existe deja dans la liste env
 	}
-	if (value)
-		printf("value = %s\n", value);
-	if (name && name[0])
+	//if (value)
+		//printf("value = %s\n", value);
+	if (name && name[0]) // toujours utile ??
 	{
-		if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
-		{								//puis ajouter encore si le premier carac nest pas non plus '_'
-			printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
-		}
+		// if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
+		// {								//puis ajouter encore si le premier carac nest pas non plus '_'
+		// 	printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
+		// }
 	x++;
-	//if name pas encore dans lst_env alors addback sinon supprimer noeud dabord.
 	//si += concatener dans value si name existe deja
-	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
 	do_add_env(all);
 	return ;
 	}
