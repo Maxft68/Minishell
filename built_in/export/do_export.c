@@ -48,7 +48,7 @@ char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
 	return (alloc);
 }
 
-int	search_and_replace_env(t_all *all, char *name, char *value)
+int	search_env(t_all *all, char *name)
 {
 	t_env	*current;
 	//printf("ca rentre la ?\n");
@@ -60,14 +60,58 @@ int	search_and_replace_env(t_all *all, char *name, char *value)
 		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
 		{
 			//printf("ca rentre pas la ?\n");
-			if (value)
-				current->value = gc_strdup_env(value, all);
 			return(0);
 		}
 		current = current->next;
 	}
 	return (1);
 }
+
+void	replace_env(t_all *all, char *name, char *value)
+{
+	t_env	*current;
+	//printf("ca rentre la ?\n");
+	if (!all->env || !name)
+	return ;
+	current = all->env;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
+		{
+			//printf("ca rentre pas la ?\n");
+			if (value)
+				current->value = gc_strdup_env(value, all);
+			else
+				current->value = gc_strdup_env("", all); // si pas de valeur, mettre une chaine vide
+			return;
+		}
+		current = current->next;
+	}
+}
+
+void	add_env(t_all *all, char *name, char *value)
+{
+	t_env	*current;
+	//printf("ca rentre la ?\n");
+	if (!all->env || !name)
+	return ;
+	current = all->env;
+	while (current)
+	{
+		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
+		{
+			//printf("ca rentre pas la ?\n");
+			if (value)
+				current->value = gc_strjoin(all, current->value, value);
+			else
+				current->value = gc_strdup_env("", all); // si pas de valeur, mettre une chaine vide
+			return;
+		}
+		current = current->next;
+	}
+}
+
+//si au remplacement il y a un = alors remettre strdup"" sinon laisser lancienne valeur
 
 int	is_alpha_str(char *str)
 {
@@ -81,7 +125,8 @@ int	is_alpha_str(char *str)
 	i++;
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 0 || str[i] != '_') // si le caractere nest pas alphanumerique ou _
+		printf("i = %d\n", i);
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_') // si le caractere nest pas alphanumerique ou _
 			return (1);
 		i++;
 	}
@@ -97,25 +142,26 @@ void	do_add_env(t_all *all)
 	char *value;
 	char *name;
 	static int x = 0;
+	int egal = 0;
 
 	value = NULL;
 	name = NULL;
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1 + x])
-	{
-		//printf("args%d\n", x);
 		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1 + x], all);
-	}
 	else
 	{
 		x = 0;
 		return ; // si plus dargs
 	}
+
 	if (ft_strchr(s, '=')) // si il y a un =
 	{
 		while(s[i] && s[i] != '=')
 			i++;
+	
 		if (s[i] == '=' && i > 0 && s[i - 1] && s[i - 1] != ' ') // si = nest pas le premier caractere
 		{
+			egal = 1;
 			name = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
 			if (is_alpha_str(name)) // si le nom nest pas valide
 			{
@@ -126,6 +172,10 @@ void	do_add_env(t_all *all)
 				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
 			else
 				value = gc_strdup_env("", all); // si pas de valeur apres le =de
+			if (i > 0 && s[i-1] == '+' && search_env(all, name) == 0)
+			{
+				add_env(all, name, value); // si += concatener dans value si name existe deja
+			}
 		}
 	}
 	else
@@ -135,27 +185,15 @@ void	do_add_env(t_all *all)
 	}
 	if(name) // et value ?
 	{
-		if (search_and_replace_env(all, name, value) == 0)
-		{
-			//printf("name remplacer = %s\n", name);
-		}
-		else
+		if (egal == 1 && search_env(all, name) == 0)
+			replace_env(all, name, value);//je remplace quqnd je trouve la valeur
+		else if (search_env(all, name) == 1) // sinon jajoute
 			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
-		//printf("name pas remplace = %s\n", name);//chercher si name existe deja dans la liste env
 	}
-	//if (value)
-		//printf("value = %s\n", value);
-	if (name && name[0]) // toujours utile ??
-	{
-		// if (ft_isalpha(name[0]) == 0)	//si le premier caractere nest pas une lettre
-		// {								//puis ajouter encore si le premier carac nest pas non plus '_'
-		// 	printf("minishell: export: << %s >>: not a valid identifier\n", name); // A VERIFIER
-		// }
 	x++;
 	//si += concatener dans value si name existe deja
 	do_add_env(all);
 	return ;
-	}
 }
 
 void	do_export(t_all *all)
