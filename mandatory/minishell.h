@@ -98,6 +98,10 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char		*name;
 	char		*value;
 	int			code_exit;
+	int			egal;
+	char		*val;
+	char		*n;
+	int			add;
 }						t_data;
 
 
@@ -117,7 +121,7 @@ typedef struct s_all
 	t_token				*token;
 	t_token				*rdir_tkn;
 	t_garbage			*garbage;
-	t_garb_env		*garbage_env;
+	t_garb_env			*garbage_env;
 	t_data				data;
 	t_env_export		env_export;
 	t_export			*export;
@@ -175,6 +179,8 @@ void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);
 void		free_env(t_env **env);
 void		do_export(t_all *all);
+void		do_add_env_next(t_all *all, char *s);
+void		do_add_env(t_all *all);
 void		print_export(t_export *export);
 void		ft_lstadd_back_export(t_export **export, t_export *new);
 void		copy_list(t_all *all);
@@ -183,5 +189,7 @@ int			search_env(t_all *all, char *name);
 void		replace_env(t_all *all, char *name, char *value);
 int			is_alpha_str(char *str);
 void		sort_list(t_all *all);
+void		add_value_env(t_all *all, char *s);
+void		print_and_null(t_all *all, char *s);
 
 #endif

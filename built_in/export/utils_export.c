@@ -56,8 +56,9 @@ int	is_alpha_str(char *str)
 	if (!str || !str[0])
 		return (1); // si chaine vide
 	i = 0;
-	if (ft_isalpha(str[i]) == 0 && str[i] != '_')
-		return (1);
+	if (ft_isalpha(str[i]) == 1 || str[i] == '_')
+		return (0);
+	
 	i++;
 	while (str[i])
 	{

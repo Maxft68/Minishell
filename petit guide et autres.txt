@@ -123,3 +123,13 @@ $USER
 STOP
 
 la variable user ne doit pas etre expand car ""
+
+SHLVL ne peut pas depasser 1000
+
+
+export a b= c=c d+=d c +=  =999 c+=7
+
+a
+b=""
+c="c7"
+d="d"
