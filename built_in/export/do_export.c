@@ -2,93 +2,6 @@
 
 #include "minishell.h"
 
-int	ft_strcmp(char *s1, char *s2) // a verifier encore pour lol lola lolb 
-{
-	int i;
-	i = 0;
-	if (!s1 || !s2)
-		return (-1);
-	while(s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char	*gc_strdup_env(char *s, t_all *all)
-{
-	char	*alloc;
-	size_t	l;
-	if (!s)
-		return (NULL);
-	l = ft_strlen(s);
-	alloc = gc_malloc_env(all, (l + 1) * sizeof(char));
-	if (!alloc)
-		ft_exit("Cannot allocate memory\n", all, 12);
-	ft_strlcpy(alloc, s, l + 1);
-	return (alloc);
-}
-
-char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
-{
-	char	*alloc;
-
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (gc_strdup_env("", all));
-	if (len > (ft_strlen(s) - start))
-		len = (ft_strlen(s) - start);
-	alloc = gc_malloc_env(all, (len + 1) * sizeof(char));
-	if (!alloc)
-		ft_exit("Cannot allocate memory\n", all, 12);
-	ft_strlcpy(alloc, &s[start], len + 1);
-	return (alloc);
-}
-
-int	search_env(t_all *all, char *name)
-{
-	t_env	*current;
-	//printf("ca rentre la ?\n");
-	if (!all->env || !name)
-		return (1);
-	current = all->env;
-	while (current)
-	{
-		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
-		{
-			//printf("ca rentre pas la ?\n");
-			return(0);
-		}
-		current = current->next;
-	}
-	return (1);
-}
-
-void	replace_env(t_all *all, char *name, char *value)
-{
-	t_env	*current;
-	//printf("ca rentre la ?\n");
-	if (!all->env || !name)
-	return ;
-	current = all->env;
-	while (current)
-	{
-		if (ft_strcmp(current->name, name) == 0) // si le nom correspond
-		{
-			//printf("ca rentre pas la ?\n");
-			if (value)
-				current->value = gc_strdup_env(value, all);
-			else
-				current->value = gc_strdup_env("", all); // si pas de valeur, mettre une chaine vide
-			return;
-		}
-		current = current->next;
-	}
-}
-
 void	add_env(t_all *all, char *name, char *value)
 {
 	t_env	*current;
@@ -111,28 +24,6 @@ void	add_env(t_all *all, char *name, char *value)
 	}
 }
 
-//si au remplacement il y a un = alors remettre strdup"" sinon laisser lancienne valeur
-
-int	is_alpha_str(char *str)
-{
-	int i;
-
-	if (!str || !str[0])
-		return (1); // si chaine vide
-	i = 0;
-	if (ft_isalpha(str[i]) == 0 && str[i] != '_') // si le premier caractere nest pas une lettre ou _
-		return (1);
-	i++;
-	while (str[i])
-	{
-		printf("i = %d\n", i);
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_') // si le caractere nest pas alphanumerique ou _
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	add_value_env(t_all *all, char *s) //  +=
 {
 	int i;
@@ -146,7 +37,6 @@ void	add_value_env(t_all *all, char *s) //  +=
 	name = NULL;
 	while(s[i] && s[i] != '=')
 		i++;
-	//printf("coucou >>%c\n", s[i]);
 	if (s[i] == '=' && i > 0 && s[i - 1] == '+') // si = nest pas le premier caractere
 	{
 		egal = 1;
@@ -154,7 +44,7 @@ void	add_value_env(t_all *all, char *s) //  +=
 		//printf("name = << %s >>\n", name);
 		if (is_alpha_str(name)) // si le nom nest pas valide
 		{
-			printf("minishell: export: << %s >>: not a valid identifier dans += \n", s);
+			printf("minishell: export: << %s >>: not a valid identifier\n", s);
 			name = NULL;
 		}
 		if (s[i + 1] && name)
@@ -171,9 +61,6 @@ void	add_value_env(t_all *all, char *s) //  +=
 	}
 	return ;
 }
-
-
-//si la variable existe on append sinon on creer juste
 
 void	do_add_env(t_all *all)
 {
@@ -259,141 +146,11 @@ void	do_export(t_all *all)
 		do_add_env(all);
 }
 
-void	swap_node(t_export *a, t_export *b)
+t_garb_env	*ft_lstnew(t_all *all, void *alloc)
 {
-	char *temp_name;
-	char *temp_value;
+	t_garb_env	*new;
 
-	temp_name = a->name;
-	a->name = b->name;
-	b->name = temp_name;
-
-	temp_value = a->value;
-	a->value = b->value;
-	b->value = temp_value;
-}
-
-
-void	sort_list(t_all *all)
-{
-	if (!all->export)
-		return ;
-	int swapped = 1;
-
-	while(swapped == 1)
-	{
-		swapped = 0;
-		t_export *current = all->export;
-		while (current && current->next)
-		{
-			if (current->name && current->next &&
-				ft_strcmp(current->name, current->next->name) > 0) // verifier lol lola lolb
-			{
-				swap_node(current, current->next);
-				swapped = 1;
-			}
-			current = current->next;
-		}
-	}
-}
-
-void	copy_list(t_all *all)
-{
-	t_env	*current;
-	t_export *curr;
-
-	if (!(all)->env)
-		return ;
-
-	current = all->env;
-	while (current)
-	{
-		curr = gc_malloc(all, sizeof(t_export));
-		curr->value = gc_strdup(current->value, all);
-		curr->name = gc_strdup(current->name, all);
-		curr->next = NULL;
-		ft_lstadd_back_export(&all->export, curr);
-		current = current->next;
-	}
-
-}
-
-void	ft_lstadd_back_export(t_export **export, t_export *new)
-{
-	t_export	*current;
-
-	if (!*export)
-	{
-		*export = new;
-		return ;
-	}
-	current = *export;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-	return ;
-}
-
-void	print_export(t_export *export)
-{
-	if (!export)
-		return ;
-	while (export)
-	{
-		if (export->value)
-		{
-			printf ("declare -x ");
-			printf ("%s=", export->name);
-			printf ("\"%s\"\n", export->value);
-		}
-		else
-		{
-			printf ("declare -x ");
-			printf ("%s\n", export->name);
-		}
-		export = export->next;
-	}
-}
-
-
-void	*gc_malloc_env(t_all *all, size_t size)
-{
-	t_garbage_env	*new;
-	void		*alloc;
-
-	alloc = malloc(size);
-	if (!alloc)
-		ft_exit("Cannot allocate memory\n", all, 12);
-	new = ft_lstnew(all, alloc);
-	if (!new)
-	{
-		free(alloc);
-		ft_exit("Cannot allocate memory\n", all, 12);
-	}
-	ft_lstadd_front_gc_env(&(all->garbage_env), new);
-	return (alloc);
-}
-
-void	ft_lstadd_front_gc_env(t_garbage_env **garbage_env, t_garbage_env *new)
-{
-	t_garbage_env	*second;
-
-	if (!(*garbage_env))
-	{
-		*garbage_env = new;
-		return ;
-	}
-	second = *garbage_env;
-	new->next = second;
-	*garbage_env = new;
-	return ;
-}
-
-t_garbage_env	*ft_lstnew(t_all *all, void *alloc)
-{
-	t_garbage_env	*new;
-
-	new = malloc(sizeof(t_garbage_env));
+	new = malloc(sizeof(t_garb_env));
 	if (!new)
 		ft_exit("Cannot allocate memory\n", all, 12);
 	new->pointer = alloc;
@@ -401,23 +158,4 @@ t_garbage_env	*ft_lstnew(t_all *all, void *alloc)
 	return (new);
 }
 
-void	free_garbage_env(t_garbage_env **garbage_env_head)
-{
-	t_garbage_env	*garbage_env;
-	t_garbage_env	*temp;
-
-	if (!garbage_env_head || !(*garbage_env_head))
-		return ;
-	garbage_env = *garbage_env_head;
-	while (garbage_env)
-	{
-		temp = garbage_env->next;
-		if (garbage_env->pointer != NULL)
-			free(garbage_env->pointer);
-		free(garbage_env);
-		garbage_env = NULL;
-		garbage_env = temp;
-	}
-	*garbage_env_head = NULL;
-}
 
