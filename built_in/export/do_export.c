@@ -102,7 +102,7 @@ void	add_env(t_all *all, char *name, char *value)
 		{
 			//printf("ca rentre pas la ?\n");
 			if (value)
-				current->value = gc_strjoin(all, current->value, value);
+				current->value = gc_strjoin_env(all, current->value, value); //creer strjoin_env
 			else
 				current->value = gc_strdup_env("", all); // si pas de valeur, mettre une chaine vide
 			return;
@@ -133,6 +133,47 @@ int	is_alpha_str(char *str)
 	return (0);
 }
 
+void	add_value_env(t_all *all, char *s) //  +=
+{
+	int i;
+
+	i = 0;
+	char *value;
+	char *name;
+	int egal = 0;
+
+	value = NULL;
+	name = NULL;
+	while(s[i] && s[i] != '=')
+		i++;
+	//printf("coucou >>%c\n", s[i]);
+	if (s[i] == '=' && i > 0 && s[i - 1] == '+') // si = nest pas le premier caractere
+	{
+		egal = 1;
+		name = gc_strdup_env(gc_substr_env(s, 0, i - 1, all), all);
+		//printf("name = << %s >>\n", name);
+		if (is_alpha_str(name)) // si le nom nest pas valide
+		{
+			printf("minishell: export: << %s >>: not a valid identifier dans += \n", s);
+			name = NULL;
+		}
+		if (s[i + 1] && name)
+			value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+		else
+			value = gc_strdup_env("", all); // si pas de valeur apres le =de
+	}
+	if(name) // et value ?
+	{
+		if (egal == 1 && search_env(all, name) == 0)
+			add_env(all, name, value);//je remplace quqnd je trouve la valeur
+		else if (search_env(all, name) == 1) // sinon jajoute
+			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
+	}
+	return ;
+}
+
+
+//si la variable existe on append sinon on creer juste
 
 void	do_add_env(t_all *all)
 {
@@ -143,18 +184,23 @@ void	do_add_env(t_all *all)
 	char *name;
 	static int x = 0;
 	int egal = 0;
+	int add = 0;
 
 	value = NULL;
 	name = NULL;
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1 + x])
 		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1 + x], all);
-	else
+	else // si plus dargs
 	{
 		x = 0;
 		return ; // si plus dargs
 	}
-
-	if (ft_strchr(s, '=')) // si il y a un =
+	if (ft_strnstr(s, "+=", ft_strlen(s)))
+	{
+		add_value_env(all, s);
+		add = 1;
+	}
+	else if (ft_strchr(s, '=')) // si il y a un =
 	{
 		while(s[i] && s[i] != '=')
 			i++;
@@ -168,22 +214,23 @@ void	do_add_env(t_all *all)
 				printf("minishell: export: << %s >>: not a valid identifier\n", name);
 				name = NULL;
 			}
-			if (s[i + 1])
+			if (s[i + 1] && name)
 				value = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
 			else
 				value = gc_strdup_env("", all); // si pas de valeur apres le =de
-			if (i > 0 && s[i-1] == '+' && search_env(all, name) == 0)
-			{
-				add_env(all, name, value); // si += concatener dans value si name existe deja
-			}
 		}
 	}
-	else
+	else //si pas de =
 	{
 		name = gc_strdup_env(s, all);
+		if (is_alpha_str(name)) // si le nom nest pas valide
+			{
+				printf("minishell: export: << %s >>: not a valid identifier\n", name);
+				name = NULL;
+			}
 		value = NULL;
 	}
-	if(name) // et value ?
+	if(name && add == 0) // et value ?
 	{
 		if (egal == 1 && search_env(all, name) == 0)
 			replace_env(all, name, value);//je remplace quqnd je trouve la valeur
@@ -191,7 +238,6 @@ void	do_add_env(t_all *all)
 			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
 	}
 	x++;
-	//si += concatener dans value si name existe deja
 	do_add_env(all);
 	return ;
 }

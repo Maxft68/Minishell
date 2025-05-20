@@ -115,3 +115,11 @@ env affiche que les variables avec valeurs, et export NAME=""
 name de lenv ne peut que commencer par '_'ou des lettres 
 += fais un APPEND dans valeur
 = reinitialise
+
+
+
+HERDOC: CAT << STOP""
+$USER
+STOP
+
+la variable user ne doit pas etre expand car ""

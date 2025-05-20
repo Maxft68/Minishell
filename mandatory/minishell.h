@@ -140,6 +140,7 @@ char		*gc_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 void		free_garbage_collect(t_garbage **garbage);
 void		free_garbage_env(t_garbage_env **garbage_env_head);
 char		*gc_strdup(char *s, t_all *all);
+char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
