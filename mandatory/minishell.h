@@ -115,6 +115,7 @@ typedef struct s_all
 	t_env				*env;
 	t_lexer				*lexer;
 	t_token				*token;
+	t_token				*rdir_tkn;
 	t_garbage			*garbage;
 	t_garbage_env		*garbage_env;
 	t_data				data;
@@ -143,11 +144,12 @@ char		*gc_strdup(char *s, t_all *all);
 char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
+void    	pars_to_exec(t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);
 void		skip_whitespace(t_lexer *lexr);
-int			new_tkn_char(char c);
+int			new_tkn_char(t_all *all);
 void		create_word_token(t_all *all);
 void 		create_string_token(char quote, t_all *all);
 void		create_operator_token(token_type type, char *str, t_all *all);

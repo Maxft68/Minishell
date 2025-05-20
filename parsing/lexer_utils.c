@@ -15,11 +15,15 @@ void    create_lexer(char *input, t_all *all)
     skip_whitespace(all->lexer);
 }
 
-int new_tkn_char(char c)
+int new_tkn_char(t_all *all)
 {
-    if (c == '<' || c == '>' || c == '$' || c == '|')
+    char    c;
+
+    c = all->lexer->c;
+    if (c == '<' || c == '>' || c == '$' || c == '|' || c == ' ')
         return (1);
-    if (c == '\'' || c == '"' || c == ' ')
+    if ((c == '\'' && all->lexer->input[all->lexer->position - 1] == ' ') \
+        || (c == '"' && all->lexer->input[all->lexer->position - 1] == ' '))
         return (1);
     return (0);
 }

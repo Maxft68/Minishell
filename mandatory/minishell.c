@@ -63,16 +63,11 @@ int	main(int argc, char **argv, char **env)
 		// if (all.lexer->input && all.lexer->c != '\0')
 		if (!all.lexer->input)						//Quand il ny a que des espaces dans read ??
 			continue;
-		while (all.lexer->c)
-			next_token(&all);
-		if (all.token)
-		{
-		// print_node(all.token);    <---------------------------------------------------------printf
-		list_to_tab(&all);
-		exec_part(&all);
-		}
+		pars_to_exec(&all);
+		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
 		free_garbage_collect(&all.garbage);
 		ft_lstclear(&all.token);
+		//ft_lstclear(&all.rdir_tkn);
 	}
 	(void)argv;
 }
