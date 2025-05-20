@@ -146,14 +146,12 @@ void		create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
-void		next_token(t_all *all);
+char    	*ad_char(char *str, t_all *all);
 void		skip_whitespace(t_lexer *lexr);
 int			new_tkn_char(t_all *all);
-void		create_word_token(t_all *all);
-void 		create_string_token(char quote, t_all *all);
-void		create_operator_token(token_type type, char *str, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
+void    	create_redir_lst(t_all *all);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
 /* **********Exec functions************************************************** */
