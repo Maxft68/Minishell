@@ -148,7 +148,7 @@ void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);
 void		skip_whitespace(t_lexer *lexr);
-int			new_tkn_char(char c);
+int			new_tkn_char(t_all *all);
 void		create_word_token(t_all *all);
 void 		create_string_token(char quote, t_all *all);
 void		create_operator_token(token_type type, char *str, t_all *all);

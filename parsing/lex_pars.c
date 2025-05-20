@@ -9,7 +9,7 @@ void create_word_token(t_all *all)
     token_type  type;
 
     start = all->lexer->position;
-    while (ft_isprint(all->lexer->c) && !new_tkn_char(all->lexer->c))
+    while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
             advance_char(all->lexer);
     len = all->lexer->position - start;
     str = NULL;
@@ -96,12 +96,13 @@ void next_token(t_all *all)
         create_operator_token(HEREDOC, "<<", all);
     else if (c == '$')
         create_operator_token(VARIABLE, "$", all);
-    else if (c == 34 || c == 39)//(c == '\'' || c == '\"')
+    // else if ((c == 34 && (all->lexer->input[all->lexer->position -1] != ' ')) \
+    //         || (c == 39 && (all->lexer->input[all->lexer->position -1] != ' ')))
+    else if (c == 34 || c == 39)
         create_string_token(c, all);
     else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')
         create_word_token(all);
     else if (c == '\0')
-        // ft_exit("lexer->c = char null\n", all, 0);
         return ;
     else
         create_token(ILLEGAL, "", all);
