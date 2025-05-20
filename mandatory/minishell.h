@@ -143,6 +143,7 @@ void		free_garbage_env(t_garbage_env **garbage_env_head);
 char		*gc_strdup(char *s, t_all *all);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
+void    	pars_to_exec(t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		next_token(t_all *all);

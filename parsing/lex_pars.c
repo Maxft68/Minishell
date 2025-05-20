@@ -1,6 +1,5 @@
 
-#include "minishell.h"
-// #include "../mandatory/minishell.h"
+#include "../mandatory/minishell.h"
 
 void create_word_token(t_all *all)
 {
@@ -106,4 +105,16 @@ void next_token(t_all *all)
         return ;
     else
         create_token(ILLEGAL, "", all);
+}
+
+void    pars_to_exec(t_all *all)
+{
+    while (all->lexer->c)
+        next_token(all);
+    if (all->token)
+    {
+		print_node(all->token);    //<---------------------------------------------------------printf
+        list_to_tab(all);
+        exec_part(all);
+    }
 }
