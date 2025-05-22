@@ -191,5 +191,8 @@ int			is_alpha_str(char *str);
 void		sort_list(t_all *all);
 void		add_value_env(t_all *all, char *s);
 void		print_and_null(t_all *all, char *s);
+void		do_unset(t_all *all);
+void		do_pwd(t_all *all);
+void		do_cd(t_all *all);
 
 #endif

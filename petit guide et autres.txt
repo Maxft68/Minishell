@@ -135,3 +135,14 @@ a
 b=""
 c="c7"
 d="d"
+
+
+mdsiurds@k1r4p4:~/TEST$ unset OLDPWD
+mdsiurds@k1r4p4:~/TEST$ cd -
+bash: cd: OLDPWD not set
+
+mdsiurds@k1r4p4:~/C$ unset OLDPWD
+mdsiurds@k1r4p4:~/C$ cd ..     //commande aui ne necessite pas le oldpw va le recreer dans une variable cachee
+mdsiurds@k1r4p4:~$ cd -
+/home/mdsiurds/C
+mdsiurds@k1r4p4:~/C$ 

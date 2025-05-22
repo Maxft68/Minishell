@@ -42,18 +42,23 @@ void	print_export(t_export *export)
 		return ;
 	while (export)
 	{
-		if (export->value)
-		{
-			printf("declare -x ");
-			printf("%s=", export->name);
-			printf("\"%s\"\n", export->value);
-		}
+		if (!export->name)
+			export = export->next;
 		else
 		{
-			printf("declare -x ");
-			printf("%s\n", export->name);
+			if (export->value)
+			{
+				printf("declare -x ");
+				printf("%s=", export->name);
+				printf("\"%s\"\n", export->value);
+			}
+			else
+			{
+				printf("declare -x ");
+				printf("%s\n", export->name);
+			}
+			export = export->next;
 		}
-		export = export->next;
 	}
 }
 
