@@ -73,7 +73,7 @@ void	export_arg(t_all *all, char *s)
 	else
 	{
 		all->data.n = gc_strdup_env(s, all);
-		if (is_alpha_str(all->data.n)) // si le nom nest pas valide
+		if (is_alpha_str(all->data.n) == 0) // si le nom nest pas valide
 			print_and_null(all, all->data.n);
 	}
 	if (all->data.n && all->data.add == 0)

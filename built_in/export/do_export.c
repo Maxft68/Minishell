@@ -42,7 +42,7 @@ void	add_value_env(t_all *all, char *s)
 	{
 		all->data.egal = 1;
 		all->data.n = gc_strdup_env(gc_substr_env(s, 0, i - 1, all), all);
-		if (is_alpha_str(all->data.n))
+		if (is_alpha_str(all->data.n) == 0)
 			print_and_null(all, s);
 		if (s[i + 1] && all->data.n)
 			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s)
@@ -81,7 +81,7 @@ void	do_add_env_next(t_all *all, char *s)
 	{
 		all->data.egal = 1;
 		all->data.n = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
-		if (is_alpha_str(all->data.n))
+		if (is_alpha_str(all->data.n) == 0)
 			print_and_null(all, all->data.n);
 		if (s[i + 1] && all->data.n)
 			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s)

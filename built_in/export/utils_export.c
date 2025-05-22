@@ -52,22 +52,22 @@ The first carac need to be alpha or '_' the next could be numeric too
 int	is_alpha_str(char *str)
 {
 	int i;
-
-	if (!str || !str[0])
-		return (1); // si chaine vide
 	i = 0;
-	if (ft_isalpha(str[i]) == 1 || str[i] == '_')
+	if (!str || !str[0])
+		return (0); // si chaine vide
+	if (str[i] == '_')
+		i++;
+	else if (ft_isalpha(str[i]) == 1)
+		i++;
+	else if (ft_isalpha(str[i]) != 1)
 		return (0);
-	
-	i++;
 	while (str[i])
 	{
-		printf("i = %d\n", i);
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
 			return (1);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 static	void	swap_node(t_export *a, t_export *b)

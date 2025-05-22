@@ -129,6 +129,8 @@ SHLVL ne peut pas depasser 1000
 
 export a b= c=c d+=d c +=  =999 c+=7
 
+WriteOnMe: export: `+=': not a valid identifier
+WriteOnMe: export: `=999' not a valid identifier
 a
 b=""
 c="c7"
