@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/21 00:20:32 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/05/22 16:40:50 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,11 @@ SRC =	mandatory/minishell.c \
 		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
 		parsing/list_to_tab.c\
+		built_in/cd/do_cd.c \
+		built_in/pwd/do_pwd.c \
 		built_in/is_built_in.c\
 		built_in/echo/do_echo.c\
+		built_in/unset/do_unset.c \
 		built_in/export/do_export.c\
 		built_in/export/utils_export.c\
 		built_in/export/utils2_export.c\
@@ -33,10 +36,7 @@ SRC =	mandatory/minishell.c \
 		utils/gc_strjoin.c\
 		utils/ft_strcmp.c\
 		signals/signals.c
-#		built_in/cd/do_cd.c \
-		built_in/exit/do_exit.c \
-		built_in/pwd/do_pwd.c \
-		built_in/unset/do_unset.c \
+#		built_in/exit/do_exit.c \
 
 
 
@@ -65,8 +65,11 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/built_in
 	@mkdir -p $(OBJ_DIR)/built_in/env
+	@mkdir -p $(OBJ_DIR)/built_in/cd
 	@mkdir -p $(OBJ_DIR)/built_in/echo
 	@mkdir -p $(OBJ_DIR)/built_in/export
+	@mkdir -p $(OBJ_DIR)/built_in/unset
+	@mkdir -p $(OBJ_DIR)/built_in/pwd
 	@mkdir -p $(OBJ_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/mandatory
 	@mkdir -p $(OBJ_DIR)/parsing

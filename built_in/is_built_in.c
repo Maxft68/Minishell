@@ -25,9 +25,9 @@ int	is_built_in(t_all *all)
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "echo", 4) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][4] == '\0')
 		return(do_echo(all->pipe.cmd_args, all->pipe.nb_pipe), 0);
-	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "cd", 2) == 0
-	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][2] == '\0')
-	// 	do_cd(all->pipe.cmd_args, all->pipe.nb_pipe);
+	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "cd", 2) == 0
+		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][2] == '\0')
+		return(do_cd(all), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "env", 3) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
 		return(print_node_env(all->env), 0);
@@ -37,11 +37,19 @@ int	is_built_in(t_all *all)
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0')
 		return(do_export(all), 0);
-	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "pwd", 3) == 0
-	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
-	// 	do_pwd(all->pipe.cmd_args, all->pipe.nb_pipe);
-	// if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "unset", 5) == 0
-	// 	&& all->pipe.cmd_args[all->pipe.nb_pipe][0][5] == '\0')
-	// 	do_unset(all->pipe.cmd_args, all->pipe.nb_pipe);
+	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "pwd", 3) == 0
+		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
+		return(do_pwd(all), 0);
+	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "unset", 5) == 0
+		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][5] == '\0')
+		return(do_unset(all), 0);
 	return (1);
 }
+
+
+
+// j = i
+// j =
+
+// /home/mdsiurds/C/Minishell2 == 11carac avant le /
+// /home/mdsiu   = 11carac imprimer
