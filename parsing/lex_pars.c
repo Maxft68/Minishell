@@ -1,63 +1,23 @@
 
 #include "../mandatory/minishell.h"
 
-void create_word_token(t_all *all)
-{
-    int         start;
-    int         len;
-    char        *str;
-    token_type  type;
-
-    start = all->lexer->position;
-    while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
-            advance_char(all->lexer);
-    len = all->lexer->position - start;
-    str = NULL;
-    str = (char*)gc_malloc(all, len + 1);
-    if (!str)
-        ft_exit("Cannot allocate memory\n", all, 12);
-    ft_strlcpy(str, all->lexer->input + start, len + 1);
-    str[len] = '\0';
-    if (all->lexer->first_token)
-    {
-        type = COMMAND;
-        all->lexer->first_token = false;
-    }
-    else
-        type = ARG;
-    create_token(type, str, all);
-    
-}
-
 // void create_word_token(t_all *all)
 // {
+//     int         start;
+//     int         len;
 //     char        *str;
-//     // int         s_quote;
-//     // int         d_quote;
 //     token_type  type;
 
-
-//     // s_quote = 0;
-//     // d_quote = 0;
+//     start = all->lexer->position;
+//     while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
+//             advance_char(all->lexer);
+//     len = all->lexer->position - start;
 //     str = NULL;
-//     // str = (char*)gc_malloc(all, 1);
-//     str = pick_char(str, all);
-//     // while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
-//     // {
-//     //     if (all->lexer->c == 34 && d_quote == 0 && s_quote == 0)
-//     //         d_quote = 1;
-//     //     else if (all->lexer->c == 34 && d_quote == 1 && s_quote == 0)
-//     //         d_quote = 0;
-//     //     else if (all->lexer->c == 39 && s_quote == 0 && d_quote == 0)
-//     //         s_quote = 1;
-//     //     else if (all->lexer->c == 39 && s_quote == 1 && d_quote == 0)
-//     //        s_quote = 0;
-//     //     else
-//     //         ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 2));
-//     //     advance_char(all->lexer);
-//     // }
-//     // if (s_quote == 1 || d_quote == 1)
-//     //     ft_exit("Syntax error", all, 2);
+//     str = (char*)gc_malloc(all, len + 1);
+//     if (!str)
+//         ft_exit("Cannot allocate memory\n", all, 12);
+//     ft_strlcpy(str, all->lexer->input + start, len + 1);
+//     str[len] = '\0';
 //     if (all->lexer->first_token)
 //     {
 //         type = COMMAND;
@@ -66,7 +26,47 @@ void create_word_token(t_all *all)
 //     else
 //         type = ARG;
 //     create_token(type, str, all);
+    
 // }
+
+void create_word_token(t_all *all)
+{
+    char        *str;
+    // int         s_quote;
+    // int         d_quote;
+    token_type  type;
+
+
+    // s_quote = 0;
+    // d_quote = 0;
+    str = NULL;
+    // str = (char*)gc_malloc(all, 1);
+    str = pick_char(str, all);
+    // while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
+    // {
+    //     if (all->lexer->c == 34 && d_quote == 0 && s_quote == 0)
+    //         d_quote = 1;
+    //     else if (all->lexer->c == 34 && d_quote == 1 && s_quote == 0)
+    //         d_quote = 0;
+    //     else if (all->lexer->c == 39 && s_quote == 0 && d_quote == 0)
+    //         s_quote = 1;
+    //     else if (all->lexer->c == 39 && s_quote == 1 && d_quote == 0)
+    //        s_quote = 0;
+    //     else
+    //         ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 2));
+    //     advance_char(all->lexer);
+    // }
+    // if (s_quote == 1 || d_quote == 1)
+    //     ft_exit("Syntax error", all, 2);
+    if (all->lexer->first_token)
+    {
+        type = COMMAND;
+        all->lexer->first_token = false;
+    }
+    else
+        type = ARG;
+    create_token(type, str, all);
+}
 
 
 

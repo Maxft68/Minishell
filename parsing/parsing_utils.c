@@ -34,11 +34,12 @@ t_token	*ft_tknlast(t_token *lst)
 }
 char	*pick_char(char *str, t_all *all)
 {
-	// size_t	i;
+	size_t	i;
+	// char	*temp;
 
-	// i = 0;
-    // str = (char*)gc_malloc(all, sizeof(char) * 1);
-	// str[0] = '\0';
+	i = 0;
+    str = (char*)gc_malloc(all, (sizeof(char) * 100));
+	str[0] = '\0';
     while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
     {
         if (all->lexer->c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
@@ -50,10 +51,14 @@ char	*pick_char(char *str, t_all *all)
         else if (all->lexer->c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
            all->lexer->s_quote = false;
         else
-			if (!str[0])
-				ft_strlcpy(str, all->lexer->input, 2);
-			else
-            	ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 1));
+		{
+			str[i++] = all->lexer->c;
+			str[i] = '\0';
+		}
+			// if (!str[0])
+			// 	ft_strlcpy(str, all->lexer->input, 2);
+			// else
+            	// ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 2));
             // ft_strlcat(str, all->lexer->input + all->lexer->position, i + 2); <----------------------pourquoi ça marche pas?
         advance_char(all->lexer);
 		// i++;
