@@ -80,11 +80,12 @@ void create_string_token(char quote, t_all *all)
         type = DQ_STRING;
     else
         type = SQ_STRING;
+    // str = NULL;
+    // str = pick_char(str, all);
     advance_char(all->lexer);
     int start = all->lexer->position;
-    while (all->lexer->c != '\0' && all->lexer->c != quote) {
+    while (all->lexer->c != '\0' && all->lexer->c != quote)
         advance_char(all->lexer);
-    }
     len = all->lexer->position - start;
     str = NULL;
     str = (char*)gc_malloc(all, len + 1);
