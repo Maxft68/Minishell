@@ -111,3 +111,27 @@ si pipe tout built in dans enfant aucune exception !!
 selon le sujet de correction apres UNSET PATH aucune commande ne doit fonctionner ??
 
 env affiche que les variables avec valeurs, et export NAME=""
+
+name de lenv ne peut que commencer par '_'ou des lettres 
++= fais un APPEND dans valeur
+= reinitialise
+
+
+
+HERDOC: CAT << STOP""
+$USER
+STOP
+
+la variable user ne doit pas etre expand car ""
+
+SHLVL ne peut pas depasser 1000
+
+
+export a b= c=c d+=d c +=  =999 c+=7
+
+WriteOnMe: export: `+=': not a valid identifier
+WriteOnMe: export: `=999' not a valid identifier
+a
+b=""
+c="c7"
+d="d"

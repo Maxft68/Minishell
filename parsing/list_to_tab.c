@@ -4,7 +4,8 @@ char	*gc_strdup(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;
-
+	if (!s)
+		return (NULL);
 	l = ft_strlen(s);
 	alloc = gc_malloc(all, (l + 1) * sizeof(char));
 	if (!alloc)

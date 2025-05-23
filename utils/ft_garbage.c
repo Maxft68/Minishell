@@ -17,7 +17,7 @@ static t_garbage	*ft_lstnew_gc(t_all *all, void *alloc)
 
 void	*gc_malloc(t_all *all, size_t size)
 {
-	t_garbage	*new;
+	static t_garbage	*new;
 	void		*alloc;
 	//alloc = malloc(size);
 	alloc = malloc(size);

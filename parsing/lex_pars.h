@@ -51,5 +51,4 @@ size_t	ft_strlen(const char *s);
 int	ft_isprint(int c);
 int	ft_isalnum(int c);
 
-
 #endif

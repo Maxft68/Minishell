@@ -70,4 +70,5 @@ int	main(int argc, char **argv, char **env)
 		//ft_lstclear(&all.rdir_tkn);
 	}
 	(void)argv;
-}
+} 
+
