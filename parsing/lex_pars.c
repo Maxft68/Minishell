@@ -69,7 +69,6 @@ void create_word_token(t_all *all)
 }
 
 
-
 void create_string_token(char quote, t_all *all)
 {
     int         len;
