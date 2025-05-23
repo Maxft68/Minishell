@@ -35,11 +35,8 @@ t_token	*ft_tknlast(t_token *lst)
 char	*pick_char(char *str, t_all *all)
 {
 	size_t	i;
-	// char	*temp;
 
 	i = 0;
-    str = (char*)gc_malloc(all, (sizeof(char) * 100));
-	str[0] = '\0';
     while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
     {
         if (all->lexer->c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
@@ -52,22 +49,15 @@ char	*pick_char(char *str, t_all *all)
            all->lexer->s_quote = false;
         else
 		{
-			str[i++] = all->lexer->c;
-			str[i] = '\0';
+			i = ft_strlen(str);
+			str = (char*)gc_realloc(all, str, i + 2);
+			str[i] = all->lexer->c;
+			str[i + 1] = '\0';
 		}
-			// if (!str[0])
-			// 	ft_strlcpy(str, all->lexer->input, 2);
-			// else
-            	// ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 2));
-            // ft_strlcat(str, all->lexer->input + all->lexer->position, i + 2); <----------------------pourquoi ça marche pas?
         advance_char(all->lexer);
-		// i++;
     }
 	if (all->lexer->s_quote || all->lexer->d_quote)
-	{
-		// free(str);
         ft_exit("Syntax error", all, 2);
-	}
 	return (str);
 }
 

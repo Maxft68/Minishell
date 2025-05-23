@@ -52,16 +52,33 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	}
 }
 
-char	*gc_realloc(t_all *all, char *old, int big)
-{
-	int size;
-	char *new;
+// char	*gc_realloc(t_all *all, char *old, int big)
+// {
+// 	int size;
+// 	char *new;
 
-	if (!old)
-		new = gc_malloc(all, sizeof(char) * (1 + big));
-	size = ft_strlen(old);
-	new = gc_malloc(all, (size + 1 + big));
-	ft_strlcpy(new, old, size);
+// 	if (!old)
+// 	{
+// 		new = gc_malloc(all, sizeof(char) * (1 + big));
+// 		return (new);
+// 	}
+// 	size = ft_strlen(old);
+// 	new = gc_malloc(all, (size + 1 + big));
+// 	ft_strlcpy(new, old, size);
+// 	return (new);
+// }
+
+void	*gc_realloc(t_all *all, void *ptr, size_t size)
+{
+	void	*new;
+
+	if (ptr == NULL)
+	{
+		ptr = gc_malloc(all, size);
+		return (ptr);
+	}
+	new = gc_malloc(all, size);
+	ft_memcpy(new, ptr, ft_strlen(ptr));
 	return (new);
 }
 
