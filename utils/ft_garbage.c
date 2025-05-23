@@ -52,6 +52,17 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	}
 }
 
+char	*gc_realloc(t_all *all, char *old, int big)
+{
+	int size;
+	char *new;
+
+	size = ft_strlen(old);
+	new = gc_malloc(all, (size + 1 + big));
+	ft_strlcpy(new, old, size);
+	return (new);
+}
+
 // void	free_garbage_collect(t_garbage **garbage_head)
 // {
 // 	t_garbage	*garbage;

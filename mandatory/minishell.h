@@ -104,6 +104,8 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char		*val;
 	char		*n;
 	int			add;
+	char		*pwd;
+	char		*oldpwd;
 }						t_data;
 
 
@@ -152,6 +154,7 @@ char		*gc_strdup_env(char *s, t_all *all);
 char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
+char		*gc_realloc(t_all *all, char *old, int big);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
@@ -191,5 +194,8 @@ int			is_alpha_str(char *str);
 void		sort_list(t_all *all);
 void		add_value_env(t_all *all, char *s);
 void		print_and_null(t_all *all, char *s);
+void		do_unset(t_all *all);
+void		do_pwd(t_all *all);
+void		do_cd(t_all *all);
 
 #endif

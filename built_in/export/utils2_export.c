@@ -11,9 +11,9 @@ void	copy_list(t_all *all)
 	current = all->env;
 	while (current)
 	{
-		curr = gc_malloc(all, sizeof(t_export));
-		curr->value = gc_strdup(current->value, all);
-		curr->name = gc_strdup(current->name, all);
+		curr = gc_malloc_env(all, sizeof(t_export));
+		curr->value = gc_strdup_env(current->value, all);
+		curr->name = gc_strdup_env(current->name, all);
 		curr->next = NULL;
 		ft_lstadd_back_export(&all->export, curr);
 		current = current->next;
@@ -42,18 +42,23 @@ void	print_export(t_export *export)
 		return ;
 	while (export)
 	{
-		if (export->value)
-		{
-			printf("declare -x ");
-			printf("%s=", export->name);
-			printf("\"%s\"\n", export->value);
-		}
+		if (!export->name)
+			export = export->next;
 		else
 		{
-			printf("declare -x ");
-			printf("%s\n", export->name);
+			if (export->value)
+			{
+				printf("declare -x ");
+				printf("%s=", export->name);
+				printf("\"%s\"\n", export->value);
+			}
+			else
+			{
+				printf("declare -x ");
+				printf("%s\n", export->name);
+			}
+			export = export->next;
 		}
-		export = export->next;
 	}
 }
 
@@ -80,7 +85,7 @@ void	export_arg(t_all *all, char *s)
 	{
 		if (all->data.egal == 1 && search_env(all, all->data.n) == 0)
 			replace_env(all, all->data.n, all->data.val);
-		else if (search_env(all, all->data.n) == 1)
+		else if (search_env(all, all->data.n) == 1) //si le node nexiste pas deja
 			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.n,
 					all->data.val));
 	}
@@ -103,3 +108,46 @@ void	do_add_env(t_all *all)
 		x++;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+																			//OLDPW
+
+
+
+
+
+
+																			//PWD
+
+
+
