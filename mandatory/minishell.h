@@ -63,6 +63,8 @@ typedef struct s_lexer
     const char  *input;
     int         position;
     char        c;
+	bool		s_quote;
+	bool		d_quote;
     bool        first_token;
 }       t_lexer;
 
@@ -144,9 +146,9 @@ char		*gc_strdup(char *s, t_all *all);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
+char		*pick_char(char *str, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
-char    	*ad_char(char *str, t_all *all);
 void		skip_whitespace(t_lexer *lexr);
 int			new_tkn_char(t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);

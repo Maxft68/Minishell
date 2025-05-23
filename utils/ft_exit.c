@@ -1,6 +1,5 @@
 
-
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 void	free_array(char **array)
 {

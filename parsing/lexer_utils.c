@@ -11,6 +11,8 @@ void    create_lexer(char *input, t_all *all)
     free(input);
     all->lexer->position = 0;
     all->lexer->c = all->lexer->input[0];
+    all->lexer->s_quote = false;
+    all->lexer->d_quote = false;
     all->lexer->first_token = true;
     skip_whitespace(all->lexer);
 }

@@ -1,5 +1,6 @@
 
 #include "../mandatory/minishell.h"
+#include <stddef.h>
 
 
 
@@ -25,14 +26,45 @@ t_token	*ft_tknlast(t_token *lst)
 	t_token	*tmp;
 	
 	if (lst == NULL)
-	return (NULL);
+		return (NULL);
 	tmp = lst;
 	while (tmp->next != NULL)
-	tmp = tmp->next;
+		tmp = tmp->next;
 	return (tmp);
 }
+char	*pick_char(char *str, t_all *all)
+{
+	// size_t	i;
 
-
+	// i = 0;
+    // str = (char*)gc_malloc(all, sizeof(char) * 1);
+	// str[0] = '\0';
+    while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
+    {
+        if (all->lexer->c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
+            all->lexer->d_quote = true;
+        else if (all->lexer->c == 34 && all->lexer->d_quote && !all->lexer->s_quote)
+            all->lexer->d_quote = false;
+        else if (all->lexer->c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
+            all->lexer->s_quote = true;
+        else if (all->lexer->c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
+           all->lexer->s_quote = false;
+        else
+			if (!str[0])
+				ft_strlcpy(str, all->lexer->input, 2);
+			else
+            	ft_strlcat(str, all->lexer->input + all->lexer->position, (ft_strlen(str) + 1));
+            // ft_strlcat(str, all->lexer->input + all->lexer->position, i + 2); <----------------------pourquoi ça marche pas?
+        advance_char(all->lexer);
+		// i++;
+    }
+	if (all->lexer->s_quote || all->lexer->d_quote)
+	{
+		// free(str);
+        ft_exit("Syntax error", all, 2);
+	}
+	return (str);
+}
 
 void   create_token(token_type type, char *str, t_all *all)
 {
