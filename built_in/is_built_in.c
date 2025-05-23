@@ -27,7 +27,7 @@ int	is_built_in(t_all *all)
 		return(do_echo(all->pipe.cmd_args, all->pipe.nb_pipe), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "cd", 2) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][2] == '\0')
-		return(0);//return(do_cd(all), 0);
+		return(do_cd(all), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "env", 3) == 0
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][3] == '\0')
 		return(print_node_env(all->env), 0);
@@ -45,3 +45,11 @@ int	is_built_in(t_all *all)
 		return(do_unset(all), 0);
 	return (1);
 }
+
+
+
+// j = i
+// j =
+
+// /home/mdsiurds/C/Minishell2 == 11carac avant le /
+// /home/mdsiu   = 11carac imprimer

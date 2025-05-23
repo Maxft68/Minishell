@@ -102,6 +102,8 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char		*val;
 	char		*n;
 	int			add;
+	char		*pwd;
+	char		*oldpwd;
 }						t_data;
 
 
