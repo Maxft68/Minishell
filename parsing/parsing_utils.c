@@ -32,28 +32,34 @@ t_token	*ft_tknlast(t_token *lst)
 		tmp = tmp->next;
 	return (tmp);
 }
-char	*pick_char(char *str, t_all *all)
+char	*ad_char(t_all *all, char* str)
 {
 	size_t	i;
 
-	i = 0;
+	i = ft_strlen(str);
+	str = (char*)gc_realloc(all, str, i + 2);
+	str[i] = all->lexer->c;
+	str[i + 1] = '\0';
+	return (str);
+}
+
+char	*pick_char(char *str, t_all *all)
+{
+	char	c;
+
     while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
     {
-        if (all->lexer->c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
+		c = all->lexer->c;
+        if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
             all->lexer->d_quote = true;
-        else if (all->lexer->c == 34 && all->lexer->d_quote && !all->lexer->s_quote)
+        else if (c == 34 && all->lexer->d_quote && !all->lexer->s_quote)
             all->lexer->d_quote = false;
-        else if (all->lexer->c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
+        else if (c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
             all->lexer->s_quote = true;
-        else if (all->lexer->c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
+        else if (c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
            all->lexer->s_quote = false;
         else
-		{
-			i = ft_strlen(str);
-			str = (char*)gc_realloc(all, str, i + 2);
-			str[i] = all->lexer->c;
-			str[i + 1] = '\0';
-		}
+			str = ad_char(all, str);
         advance_char(all->lexer);
     }
 	if (all->lexer->s_quote || all->lexer->d_quote)
