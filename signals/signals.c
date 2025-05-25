@@ -6,7 +6,7 @@ void    sig_handler(int signal)
 
     if (signal == SIGINT)
     {
-        write(2, "\nWriteToMe\r", 12);
+        write(2, "\nWriteToMe\r", 11);
         // create_lexer(readline("\nWriteOnMe "), &all);
         // break;
         // ft_exit("\nFINISH\n", &all, 0);
