@@ -2,9 +2,14 @@
 
 void    sig_handler(int signal)
 {
+    // t_all   all;
+
     if (signal == SIGINT)
     {
-        write(1, "^C", 2);
+        write(2, "\nWriteToMe\r", 12);
+        // create_lexer(readline("\nWriteOnMe "), &all);
+        // break;
+        // ft_exit("\nFINISH\n", &all, 0);
     }
 }
 

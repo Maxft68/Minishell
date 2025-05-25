@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 	//signal(SIGINT, SIG_IGN);
 	while (1)
 	{
-		// signals_swing();
+		signals_swing();
 		create_lexer(readline("WriteOnMe "), &all);
 		if (ft_strncmp(all.lexer->input, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		{					// a remplacer par le signal CTRL + C

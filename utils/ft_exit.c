@@ -24,9 +24,12 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	if (error)
 		ft_putstr_fd(error, 2);
 	
-	free_garbage_env(&all->garbage_env);
-	free_garbage_collect(&all->garbage);
-	ft_lstclear(&all->token);
+	if (all->garbage_env)
+		free_garbage_env(&all->garbage_env);
+	if (all->garbage)
+		free_garbage_collect(&all->garbage);
+	if (all->token)
+		ft_lstclear(&all->token);
 	rl_clear_history();
 	
 	exit(error_code);
