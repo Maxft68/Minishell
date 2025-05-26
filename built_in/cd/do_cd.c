@@ -85,9 +85,7 @@ void	do_cd_double_dot(t_all *all)
 	char no_pwd[4096];
 	char *pwd;
 	char *new;
-	char *cd;
 
-	cd = ft_strdup("..");
 	printf("je suis la1\n");
 	if (!search_env(all, "PWD")) 							//quand pwd existe
 	{
@@ -96,27 +94,21 @@ void	do_cd_double_dot(t_all *all)
 		printf("value de PWD=%s\n", pwd);
 		new = replace_until_the_last(all, pwd, '/'); //modifie le pwd
 		printf("new value =%s\n", new);
-		chdir(cd);
+		chdir(new);
 		replace_env(all, "PWD", new); //change la value de pwd
-		printf("new value 2e fois =%s\n", new);
 		if (search_env(all, "OLDPWD"))					 //quand oldpwd existe
-		{
-			printf("ici ???\n");
 			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "OLDPWD", s));
-		}
 		else
-		{
-			printf(" ou la ???\n");
 			replace_env(all, "OLDPWD", pwd);
-		}
 		copy_list(all);
 		sort_list(all);
 	}
-	else if (getcwd(s,sizeof(no_pwd))) //s = "/home/mdsiurds"
+	else if (getcwd(no_pwd, sizeof(no_pwd))) //s = "/home/mdsiurds"
 	{
 		printf("je suis meme la3\n");
+		printf("new =%s\n", new);
 		new = replace_until_the_last(all, no_pwd, '/'); //new devient /home
-
+		printf("new =%s\n", new);
 		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "PWD", new));
 		if (search_env(all, "OLDPWD"))
 			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "OLDPWD", no_pwd));
