@@ -3,10 +3,10 @@
 void    create_lexer(char *input, t_all *all)
 {
     if (input && input[0] != '\0')
-			add_history(input);
+		add_history(input);
+    if (!input)
+        ft_exit("exit\n", all, 0);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
-    if (!all->lexer)
-        ft_exit("Cannot allocate memory\n", all, 12);
     all->lexer->input = gc_strdup(input, all);
     free(input);
     all->lexer->position = 0;

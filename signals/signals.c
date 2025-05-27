@@ -13,11 +13,9 @@ void    sig_handler(int signal)
     }
     if (signal == SIGQUIT)
     {
-        rl_replace_line("", 1);
-        rl_redisplay();
+        rl_replace_line("WriteToMe   ", 12);
+        // rl_redisplay();
     }
-    // if (signal == SIGUSR1)
-    //     ft_exit("FINISH\n", &all, 0);
 }
 
 void    signals_swing(void)

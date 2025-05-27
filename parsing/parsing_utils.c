@@ -63,7 +63,7 @@ char	*pick_char(char *str, t_all *all)
         advance_char(all->lexer);
     }
 	if (all->lexer->s_quote || all->lexer->d_quote)
-        ft_exit("Syntax error", all, 2);
+        ft_exit("quotes Syntax error\n", all, 2);
 	return (str);
 }
 

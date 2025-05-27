@@ -48,7 +48,6 @@ int	main(int argc, char **argv, char **env)
 		return (1); 
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
-	// signals_swing();
 	//signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	//signal(SIGINT, SIG_IGN);
@@ -56,12 +55,13 @@ int	main(int argc, char **argv, char **env)
 	{
 		signals_swing();
 		create_lexer(readline("WriteOnMe "), &all);
-		if (ft_strncmp(all.lexer->input, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
-		{					// a remplacer par le signal CTRL + C
-			ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
-		}									// a remplacer par le signal CTRL + C
-		// if (all.lexer->input && all.lexer->c != '\0')
-		if (!all.lexer->input)						//Quand il ny a que des espaces dans read ??
+
+		// if (ft_strncmp(all.lexer->input, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
+		// {					// a remplacer par le signal CTRL + C
+		// 	ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
+		// }									// a remplacer par le signal CTRL + C
+
+		if (!all.lexer->input)
 			continue;
 		pars_to_exec(&all);
 		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
