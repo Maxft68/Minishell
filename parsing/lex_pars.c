@@ -48,13 +48,15 @@ char *handle_expand(char *str, t_all *all)
 	if (str[i] == '$')
 	{
 		i++;
-		while(str[i] && ft_isalnum(str[i]) == 1)
+		//while(str[i] && ft_isalnum(str[i]) == 1)
+		while(ft_isalnum(str[i]) == 1)
 		{
 			expand[e] = str[i];
 			printf("ICI2\n");
 			i++;
 			e++;
 		}
+		expand[e] = '\0';
 		printf("expand=%s\n", expand);
 		if (find_the_value(all, expand))
 		{
@@ -78,6 +80,11 @@ char *handle_expand(char *str, t_all *all)
 			new[j] = '\0';
 			printf("new laa=%s\n", new);
 			printf("ICI5n\n");
+		}
+		else
+		{
+			new[j] = '\0';
+			return(gc_strdup(new, all));
 		}
 	return (gc_strdup(new, all));
 	}
