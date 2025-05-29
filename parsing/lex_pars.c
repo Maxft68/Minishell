@@ -25,33 +25,42 @@ void create_word_token(t_all *all)
     create_token(type, str, all);
 }
 
-void create_string_token(char quote, t_all *all)
+char *handle_expand(char *str, t_all *all)
 {
-    int         len;
-    char        *str;
-    token_type  type;
+    char *expand;
     
-    if (quote == '"')
-        type = DQ_STRING;
-    else
-        type = SQ_STRING;
-    // str = NULL;
-    // str = pick_char(str, all);
-    advance_char(all->lexer);
-    int start = all->lexer->position;
-    while (all->lexer->c != '\0' && all->lexer->c != quote)
-        advance_char(all->lexer);
-    len = all->lexer->position - start;
-    str = NULL;
-    str = (char*)gc_malloc(all, len + 1);
-    if (!str)
-        ft_exit("Cannot allocate memory\n", all, 12);
-    ft_strlcpy(str, all->lexer->input + start, len + 1);
-    str[len] = '\0';
-    if (all->lexer->c == quote)
-        advance_char(all->lexer);
-    create_token(type, str, all);
+
+    expand = (ft_strrchr(str, '$') + 1);
+
+
 }
+// void create_string_token(char quote, t_all *all)
+// {
+//     int         len;
+//     char        *str;
+//     token_type  type;
+    
+//     if (quote == '"')
+//         type = DQ_STRING;
+//     else
+//         type = SQ_STRING;
+//     // str = NULL;
+//     // str = pick_char(str, all);
+//     advance_char(all->lexer);
+//     int start = all->lexer->position;
+//     while (all->lexer->c != '\0' && all->lexer->c != quote)
+//         advance_char(all->lexer);
+//     len = all->lexer->position - start;
+//     str = NULL;
+//     str = (char*)gc_malloc(all, len + 1);
+//     if (!str)
+//         ft_exit("Cannot allocate memory\n", all, 12);
+//     ft_strlcpy(str, all->lexer->input + start, len + 1);
+//     str[len] = '\0';
+//     if (all->lexer->c == quote)
+//         advance_char(all->lexer);
+//     create_token(type, str, all);
+// }
 
 void create_operator_token(token_type type, char *str, t_all *all)
 {
@@ -68,8 +77,8 @@ void create_operator_token(token_type type, char *str, t_all *all)
         all->pipe.nb_pipe += 1;
         all->lexer->first_token = true;
     }
-    if (type == VARIABLE && all->lexer->c == '$')
-        ft_exit("Syntax error\n", all, 1);
+    // if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
+    //     ft_exit("Syntax error\n", all, 1);
     create_token(type, str, all);
 }
 
@@ -90,8 +99,8 @@ void next_token(t_all *all)
         create_operator_token(REDIRECT_IN, "<", all);
     else if (c == '<' && all->lexer->input[all->lexer->position + 1] == '<')
         create_operator_token(HEREDOC, "<<", all);
-    else if (c == '$')
-        create_operator_token(VARIABLE, "$", all);
+    // else if (c == '$')
+    //     create_operator_token(VARIABLE, "$", all);
     /* else if ((c == 34 && (all->lexer->input[all->lexer->position -1] != ' ')) \
              || (c == 39 && (all->lexer->input[all->lexer->position -1] != ' ')))*/
     // else if (c == 34 || c == 39)

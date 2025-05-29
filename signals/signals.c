@@ -26,5 +26,4 @@ void    signals_swing(void)
     ft_bzero(&act, sizeof(act));
     act.sa_handler =  &sig_handler;
     sigaction(SIGINT, &act, NULL);   
-    sigaction(SIGQUIT, &act, NULL);
 }
