@@ -22,18 +22,68 @@ void create_word_token(t_all *all)
     }
     str = NULL;
     str = pick_char(str, all);
-    create_token(type, str, all);
+	char *new = gc_strdup(handle_expand(str, all), all);
+	printf("Out= %s\n",new);
+    create_token(type, new, all);
 }
 
 char *handle_expand(char *str, t_all *all)
 {
-    char *expand;
-    
+	printf("str=%s\n", str);
+    char new[4096];
+	char expand[4096];
+	char *expanded;
+	int i = 0;
+	int e = 0;
+	int j = 0;
+	int x = 0;
 
-    expand = (ft_strrchr(str, '$') + 1);
-
-
+	while (str[i] && str[i] != '$')
+	{
+		new[j] = str[i];
+		j++;
+		i++;
+		printf("ICI1\n");
+	}
+	if (str[i] == '$')
+	{
+		i++;
+		while(str[i] && ft_isalnum(str[i]) == 1)
+		{
+			expand[e] = str[i];
+			printf("ICI2\n");
+			i++;
+			e++;
+		}
+		printf("expand=%s\n", expand);
+		if (find_the_value(all, expand))
+		{
+			expanded = find_the_value(all, expand);
+			printf("expanded=%s\n", expanded);
+			while(expanded[x])
+			{
+				new[j] = expanded[x];
+				j++;
+				x++;
+				printf("ICI3\n");
+			}
+			printf("new ici=%s\n", new);
+			while(str[i])
+			{
+				new[j] = str[i];
+				j++;
+				i++;
+				printf("ICI4\n");
+			}
+			new[j] = '\0';
+			printf("new laa=%s\n", new);
+			printf("ICI5n\n");
+		}
+	return (gc_strdup(new, all));
+	}
+	return(str);
 }
+
 // void create_string_token(char quote, t_all *all)
 // {
 //     int         len;

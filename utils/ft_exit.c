@@ -34,3 +34,5 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	
 	exit(error_code);
 }
+
+//echo cou$USER,illes
