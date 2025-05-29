@@ -7,6 +7,7 @@ void	do_pwd(t_all *all)
 
 	if (getcwd(s,sizeof(s)))
 		printf("%s\n", s);
+	else if ()
 	// code erreur TOUJOURS A 0
 	(void) all;
 }
