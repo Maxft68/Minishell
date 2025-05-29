@@ -1,10 +1,31 @@
 
 #include "../mandatory/minishell.h"
 
+char *handle_expand(char *str, t_all *all)
+{
+    char    *xpd_start;
+    char    *to_expand;
+    int     i;
+
+    i = 0;
+    xpd_start = ft_strrchr(str, '$');
+    if (xpd_start == NULL)
+        return (str);
+    xpd_start++;
+    while (xpd_start && (ft_isalnum(xpd_start[i]) || xpd_start[i] == '_'))
+        i++;
+    to_expand = NULL;
+    to_expand = (char*)gc_realloc(all, xpd_start, (sizeof(char) * (i + 1)));
+    to_expand[i] = '\0';
+    printf("to_expand:%s\n", to_expand);
+    return (to_expand);
+}
+
 void create_word_token(t_all *all)
 {
-    char        *str;
     token_type  type;
+    char        *str;
+    char        *expanded_str;
 
     if (all->lexer->first_token)
     {
@@ -22,18 +43,10 @@ void create_word_token(t_all *all)
     }
     str = NULL;
     str = pick_char(str, all);
-    create_token(type, str, all);
+    expanded_str = handle_expand(str, all);
+    create_token(type, expanded_str, all);
 }
 
-char *handle_expand(char *str, t_all *all)
-{
-    char *expand;
-    
-
-    expand = (ft_strrchr(str, '$') + 1);
-
-
-}
 // void create_string_token(char quote, t_all *all)
 // {
 //     int         len;
