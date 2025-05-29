@@ -156,3 +156,4 @@ void	do_cd(t_all *all)
 
 }
 //bash: cd: ..ok: No such file or directory
+//coucou
