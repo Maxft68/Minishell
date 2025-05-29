@@ -70,22 +70,12 @@ char	*find_the_value(t_all *all, char *name)
 }
 void	do_cd_home(t_all *all, char *s)
 {
-	char no_pwd[4096];
 	printf(" JUSTE CD TOUT SEUL ------------\n");
-	if (search_env(all, "HOME") == 0)
+	if (find_the_value(all, "HOME"))
 	{
-		s = search_and_return_env(all, "HOME");
-		if (search_env(all, "PWD"))
-			ft_lstadd_back_env(&all->env, 
-			ft_lstnew_env(all, "PWD", gc_strdup_env(find_the_value(all, "HOME")
-			, all)));
-		else
-			replace_env(all, "PWD", gc_strdup_env(find_the_value(all, "HOME"), all));
-		if (search_env(all, "OLDPWD"))
-			ft_lstadd_back_env(&all->env, 
-			ft_lstnew_env(all, "OLDPWD", getcwd(no_pwd, sizeof(no_pwd))));
-		else
-			replace_env(all, "OLDPWD", getcwd(no_pwd, sizeof(no_pwd)));
+		s = find_the_value(all, "HOME");
+		replace_or_add_env(all, "OLDPWD", ft_pwd(all));
+		replace_or_add_env(all, "PWD", s);
 	}
 	else
 	{
@@ -94,42 +84,25 @@ void	do_cd_home(t_all *all, char *s)
 	}
 	if (s)
 		if (chdir(s) == -1)
-			printf("JE PRINT QUOI COMME ERREUR si chdir echoue??\n");
+			perror("WriteOnMe: cd:");
+	copy_list(all);
+	sort_list(all);
 }
 
 void	do_cd_double_dot(t_all *all)
 {
-	char *s = NULL;
-	char no_pwd[4096];
-	char *pwd;
 	char *new = NULL;
 
 	printf("je suis la1\n");
-	if (!search_env(all, "PWD")) 							//quand pwd existe A MODIFIER PAR IF FIND THE VALUE
-	{
-		//printf("je suis aussi la2\n");
-		pwd = find_the_value(all, "PWD"); //trouve pwd
-		//printf("value de PWD=%s\n", pwd);
-		new = replace_until_the_last(all, pwd, '/'); //modifie le pwd
-		//printf("new value PWD(new) =%s\n", new);
-		chdir(new);
-		replace_env(all, "PWD", new); //change la value de pwd
-		if (search_env(all, "OLDPWD"))					 //quand oldpwd existe
-			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "OLDPWD", s));
-		else
-			replace_env(all, "OLDPWD", pwd);
-	}
-	else if (getcwd(no_pwd, sizeof(no_pwd))) //s = "/home/mdsiurds"
+	if (ft_pwd(all)) //s = "/home/mdsiurds"
 	{
 		// printf("je suis meme la3\n");
-		// printf("new =%s\n", no_pwd);
-		new = replace_until_the_last(all, no_pwd, '/'); //new devient /home
-		//printf("new =%s\n", new);
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "PWD", new));
-		if (search_env(all, "OLDPWD"))
-			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "OLDPWD", no_pwd));
-		chdir(new);
+		new = replace_until_the_last(all, ft_pwd(all), '/'); //new devient /home
+		replace_or_add_env(all, "OLDPWD", ft_pwd(all));
+		replace_or_add_env(all, "PWD", new);
 	}
+	if (chdir(new) == -1)
+		perror("WriteOnMe: cd:");
 	copy_list(all);
 	sort_list(all);
 }
@@ -143,20 +116,21 @@ void	do_cd_minus(t_all *all)
 		printf("WriteOnMe: cd: OLDPWD not set\n");
 		if (search_env(all, "OLDPWD"))
 		{
-			char no_pwd[4096];
-			replace_or_add_env(all, "OLDPWD", getcwd(no_pwd, sizeof(no_pwd)));
+			replace_or_add_env(all, "OLDPWD", ft_pwd(all));
+			replace_or_add_env(all, "PWD", ft_pwd(all));
 		}
 		return ;
 	}
 	else
 	{
-		char no_pwd[4096];
 		old = find_the_value(all, "OLDPWD");
-		replace_or_add_env(all, "OLDPWD", getcwd(no_pwd, sizeof(no_pwd)));
+		replace_or_add_env(all, "OLDPWD", ft_pwd(all));
 		replace_or_add_env(all, "PWD", old);
 	}
 	if (chdir(old) == -1)
-		printf("JE PRINT QUOI COMME ERREUR si chdir echoue??\n");
+		perror("WriteOnMe: cd:");
+	copy_list(all);
+	sort_list(all);
 
 		//bash: cd: OLDPWD not set
 }
@@ -202,8 +176,8 @@ void	do_cd(t_all *all)
 			perror("WriteOnMe: cd:");
 		else
 		{
-			char no_pwd[4096];
-			replace_or_add_env(all, "PWD", getcwd(no_pwd, sizeof(no_pwd)));
+			char cwd[4096];
+			replace_or_add_env(all, "PWD", getcwd(cwd, sizeof(cwd)));
 		}
 		//printf("WriteOnMe: cd: %s No such file or directory\n", s);
 	printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));

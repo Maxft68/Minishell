@@ -198,5 +198,7 @@ void		print_and_null(t_all *all, char *s);
 void		do_unset(t_all *all);
 void		do_pwd(t_all *all);
 void		do_cd(t_all *all);
+char		*find_the_value(t_all *all, char *name);
+char		*ft_pwd(t_all *all);
 
 #endif
