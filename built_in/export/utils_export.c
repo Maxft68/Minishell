@@ -26,11 +26,11 @@ int	search_env(t_all *all, char *name)
 /*******************************************************************************
 If the node with the same name exist, replace the value
 *******************************************************************************/
-void	replace_env(t_all *all, char *name, char *value)
+int	replace_env(t_all *all, char *name, char *value)
 {
 	t_env	*current;
 	if (!all->env || !name)
-		return ;
+		return (0);
 	current = all->env;
 	while (current)
 	{
@@ -40,11 +40,21 @@ void	replace_env(t_all *all, char *name, char *value)
 				current->value = gc_strdup_env(value, all);
 			else
 				current->value = gc_strdup_env("", all);
-			return;
+			return (1);
 		}
 		current = current->next;
 	}
+	return(0);
 }
+/*******************************************************************************
+If the node exist replace the value, if not, create the node
+*******************************************************************************/
+void	replace_or_add_env(t_all *all, char *name, char *value)
+{
+	if (replace_env(all, name, value) == 0)
+		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
+}
+
 /*******************************************************************************
 The first carac need to be alpha or '_' the next could be numeric too
 *******************************************************************************/
@@ -53,6 +63,7 @@ int	is_alpha_str(char *str)
 {
 	int i;
 	i = 0;
+	
 	if (!str || !str[0])
 		return (0); // si chaine vide
 	if (str[i] == '_')
@@ -97,8 +108,9 @@ void	sort_list(t_all *all)
 		t_export *current = all->export;
 		while (current && current->next)
 		{
-			if (current->name && current->next &&
-				ft_strcmp(current->name, current->next->name) > 0)
+			if ((!current->name && current->next->name) || 
+			(current->name && current->next->name &&
+				ft_strcmp(current->name, current->next->name) > 0))
 			{
 				swap_node(current, current->next);
 				swapped = 1;
