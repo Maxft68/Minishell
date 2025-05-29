@@ -183,3 +183,4 @@ void	do_cd(t_all *all)
 	printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
 }
 //bash: cd: ..ok: No such file or directory
+//coucou

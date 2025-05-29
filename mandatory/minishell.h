@@ -154,7 +154,8 @@ char		*gc_strdup_env(char *s, t_all *all);
 char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
-char		*gc_realloc(t_all *all, char *old, int big);
+// char		*gc_realloc(t_all *all, char *old, int big);
+void		*gc_realloc(t_all *all, void *ptr, size_t size);
 /* **********Lexing parsing************************************************** */
 void		create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
