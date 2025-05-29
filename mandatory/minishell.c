@@ -48,11 +48,11 @@ int	main(int argc, char **argv, char **env)
 		return (1); 
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
-	//signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
-	//signal(SIGINT, SIG_IGN);
 	while (1)
 	{
+		signal(SIGINT, SIG_IGN);
 		signals_swing();
 		create_lexer(readline("WriteOnMe "), &all);
 
