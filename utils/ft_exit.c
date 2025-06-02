@@ -35,4 +35,9 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	exit(error_code);
 }
 
-//echo cou$USER,illes
+//echo 123$USER,$PWD,456
+//echo 123$USER,$USER456,$USER
+//echo 123$USERy,$USER456
+
+
+

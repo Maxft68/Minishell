@@ -23,74 +23,102 @@ void create_word_token(t_all *all)
 	str = NULL;
 	str = pick_char(str, all);
 	char *new = gc_strdup(handle_expand(str, all), all);
-	printf("Out= %s\n",new);
+	printf("In= %s\n",new);
 	create_token(type, new, all);
 }
 
-char *handle_expand(char *str, t_all *all)
+char	*find_and_define(t_all *all, char *tmp, char *old)
 {
-    char expanded[4096];
-	char expand[4096];
-	char *add;
 	int i = 0;
-	int e = 0;
 	int j = 0;
-	int x = 0;
-
-	while (str[i] && str[i] != '$')
-		expanded[j++] = str[i++];
-	if (str[i++] != '$')
-		return(str);
-	while(ft_isalnum(str[i]) == 1 || str[i] == '_')
-		expand[e++] = str[i++];
-	expand[e] = '\0';
-	if (find_the_value(all, expand))
+	char *new = NULL;
+	char *value = find_the_value(all, tmp);
+	while (old && old[i])
+		i++;
+	while (value && value[j])
 	{
-		add = find_the_value(all, expand);
-		while(add[x])
-			expanded[j++] = add[x++];
-		while(str[i])
-			expanded[j++] = str[i++];
-		expanded[j] = '\0';
+		old[i] = value[j];
+		i++;
+		j++;
 	}
-	else
-	{
-		while(str[i])
-			expanded[j++] = str[i++];
-		expanded[j] = '\0';
-	}
-	return (gc_strdup(expanded, all));
+	new = gc_strdup(old, all);
+	return (new);
 }
 
-// char *handle_expand(char *str, t_all *all)
+char *handle_expand(char *old, t_all *all)
+{
+	char *new = malloc(sizeof(char) * 4096);
+	char *tmp = malloc(sizeof(char) * 4096);
+	char *val = malloc(sizeof(char) * 4096);
+	int i = 0;
+	int j = 0;
+	int t = 0;
+	int x = 0;
+
+	while(old && old[i])
+	{
+		if (old[i] == '$')
+		{
+			i++;
+			t = 0;
+			while(ft_isalnum(old[i]) == 1 || old[i] == '_')
+				tmp[t++] = old[i++];
+			tmp[t] = '\0';
+			val = find_the_value(all, tmp);
+			if (val)
+			{
+				x = 0;
+				while (val[x])
+					new[j++] = val[x++];
+			}
+			else
+				new[j++] = '$';
+		}
+		else
+			new[j++] = old[i++];
+	}
+	new[j] = '\0';
+	free (tmp);
+	return (gc_strdup(new, all));
+}
+
+// char *handle_expand(char *old, t_all *all)
 // {
-// 	int i;
-// 	char *expand;
-// 	char *value;
-// 	char *new_str;
-// 	i = 0;
-// 	while(str && str[i])
-// 	{
-// 		if (str[i] == '$' && (ft_isalnum(str[i+1]) == 1 || str[i+1] == '_'))
-// 		{
-// 			i++;
-// 			while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
-// 				i++;
-// 			expand = gc_substr_env(str, 0, i, all);
-// 			value = find_the_value(all, expand);
-// 			if (value)
-// 				new_str = gc_strjoin_env(all, str + i, value); // linverse ??
-// 			else
-// 			{
-// 				new_str = gc_strdup_env(str, all);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	if (new_str)
-// 		return(new_str);
-// 	return(str);
+//     char *new = malloc(sizeof(char) * 4096);
+//     int i = 0, j = 0;
+
+//     while (old && old[i])
+//     {
+//         if (old[i] == '$')
+//         {
+//             i++;
+//             int t = 0;
+//             char tmp[256];
+//             while (old[i] && (ft_isalnum(old[i]) || old[i] == '_') && t < 255)
+//                 tmp[t++] = old[i++];
+//             tmp[t] = '\0';
+//             if (t > 0)
+//             {
+//                 char *val = find_the_value(all, tmp);
+//                 if (val)
+//                 {
+//                     int x = 0;
+//                     while (val[x])
+//                         new[j++] = val[x++];
+//                 }
+//             }
+//             // Si pas de nom de variable après le $, on garde juste le $
+//             else
+//                 new[j++] = '$';
+//         }
+//         else
+//             new[j++] = old[i++];
+//     }
+//     new[j] = '\0';
+//     return gc_strdup(new, all);
 // }
+
+
 
 
 // void create_string_token(char quote, t_all *all)
