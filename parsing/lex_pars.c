@@ -43,8 +43,18 @@ void create_word_token(t_all *all)
     }
     str = NULL;
     str = pick_char(str, all);
-    expanded_str = handle_expand(str, all);
-    create_token(type, expanded_str, all);
+    printf("str to handle: %s\n", str);
+    if (ft_strchr(str, '$') != NULL && (*(ft_strchr(str, '$') + 1) != '\0'))
+    {
+        expanded_str = handle_expand(str, all);
+        printf("token_str: %s\n", expanded_str);
+        create_token(type, expanded_str, all);
+    }
+    else //if (ft_strchr(str, '$') != NULL && !(ft_strchr(str, '$') + 1))
+    {
+        create_token(type, str, all);
+        printf("token_str2: %s\n", str);
+    }
 }
 
 // void create_string_token(char quote, t_all *all)
