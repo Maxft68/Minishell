@@ -1,12 +1,66 @@
 
 #include "../mandatory/minishell.h"
 
-void	initialize_data(t_all *all)
+void	initialize_data(t_all *all, char *old)
 {
 	all->data.z = 0;
 	all->data.j = 0;
-	all->data.new = gc_malloc(all, sizeof(char) * 4096);
-	all->data.tmp = gc_malloc(all, sizeof(char) * 4096);
+	all->data.new = NULL;
+	all->data.tmp = gc_malloc(all, sizeof(old));
+
+}
+
+void	part_one(t_all *all, char *old, char *val)
+{
+	all->data.z++;
+	all->data.t = 0;
+	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
+		all->data.tmp[all->data.t++] = old[all->data.z++];
+	all->data.tmp[all->data.t] = '\0';
+	val = find_the_value(all, all->data.tmp);
+	if (val && all->data.t > 0)
+	{
+		if (!all->data.new)
+			all->data.new = gc_strdup(val, all);
+		else
+		{
+			all->data.temp = gc_strjoin(all, all->data.new, val);
+			all->data.new = all->data.temp;
+		}
+	}
+}
+
+void	part_two(t_all *all, char *old)
+{
+	char tmp[2];
+	tmp[0] = old[all->data.z];
+	tmp[1] = '\0';
+	if (!all->data.new)
+		all->data.new = gc_strdup(tmp, all);
+	else
+	{
+		all->data.temp = gc_strjoin(all, all->data.new, tmp);
+		all->data.new = all->data.temp;
+	}
+	all->data.z++;
+}
+
+void	handle_expand(char *old, t_all *all)
+{
+	char *val;
+
+	val = NULL;
+	while(old && old[all->data.z])
+	{
+		if (old[all->data.z] == '$' && old[all->data.z + 1])
+		{
+			part_one(all, old, val);
+		}
+		else
+		{
+			part_two(all, old);
+		}
+	}
 }
 
 void create_word_token(t_all *all)
@@ -30,38 +84,11 @@ void create_word_token(t_all *all)
 	}
 	str = NULL;
 	str = pick_char(str, all);
-	initialize_data(all);
-	char *new = gc_strdup(handle_expand(str, all), all);
-	create_token(type, new, all);
+	initialize_data(all, str);
+	handle_expand(str, all);
+	create_token(type, all->data.new, all);
 }
 
-char *handle_expand(char *old, t_all *all)
-{
-	char *val;
-
-	while(old && old[all->data.z])
-	{
-		if (old[all->data.z] == '$' && old[all->data.z + 1])
-		{
-			all->data.z++;
-			all->data.t = 0;
-			while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
-				all->data.tmp[all->data.t++] = old[all->data.z++];
-			all->data.tmp[all->data.t] = '\0';
-			val = find_the_value(all, all->data.tmp);
-			if (val && all->data.t > 0)
-			{
-				all->data.x = 0;
-				while (val[all->data.x])
-					all->data.new[all->data.j++] = val[all->data.x++];
-			}
-		}
-		else
-			all->data.new[all->data.j++] = old[all->data.z++];
-	}
-	all->data.new[all->data.j] = '\0';
-	return (free(all->data.tmp), gc_strdup(all->data.new, all));
-}
 
 
 // void create_string_token(char quote, t_all *all)

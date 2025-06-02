@@ -112,6 +112,7 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	int			z;
 	char		*new;
 	char		*tmp;
+	char		*temp;
 
 }						t_data;
 
@@ -176,8 +177,6 @@ t_token		*ft_tknlast(t_token *lst);
 void    	create_redir_lst(t_all *all);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
-char		*handle_expand(char *str, t_all *all);
-void		initialize_data(t_all *all);
 /* **********Exec functions************************************************** */
 void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
@@ -211,4 +210,4 @@ void		do_cd(t_all *all);
 char		*find_the_value(t_all *all, char *name);
 char		*ft_pwd(t_all *all);
 
-#endif
+#endif /* MINISHELL_H */
