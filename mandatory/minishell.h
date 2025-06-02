@@ -106,6 +106,13 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	int			add;
 	char		*pwd;
 	char		*oldpwd;
+	int			j;
+	int			t;
+	int			x;
+	int			z;
+	char		*new;
+	char		*tmp;
+
 }						t_data;
 
 
@@ -170,6 +177,7 @@ void    	create_redir_lst(t_all *all);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
 char		*handle_expand(char *str, t_all *all);
+void		initialize_data(t_all *all);
 /* **********Exec functions************************************************** */
 void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);

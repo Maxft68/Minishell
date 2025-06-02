@@ -1,6 +1,14 @@
 
 #include "../mandatory/minishell.h"
 
+void	initialize_data(t_all *all)
+{
+	all->data.z = 0;
+	all->data.j = 0;
+	all->data.new = gc_malloc(all, sizeof(char) * 4096);
+	all->data.tmp = gc_malloc(all, sizeof(char) * 4096);
+}
+
 void create_word_token(t_all *all)
 {
 	char        *str;
@@ -22,103 +30,38 @@ void create_word_token(t_all *all)
 	}
 	str = NULL;
 	str = pick_char(str, all);
+	initialize_data(all);
 	char *new = gc_strdup(handle_expand(str, all), all);
-	printf("In= %s\n",new);
 	create_token(type, new, all);
-}
-
-char	*find_and_define(t_all *all, char *tmp, char *old)
-{
-	int i = 0;
-	int j = 0;
-	char *new = NULL;
-	char *value = find_the_value(all, tmp);
-	while (old && old[i])
-		i++;
-	while (value && value[j])
-	{
-		old[i] = value[j];
-		i++;
-		j++;
-	}
-	new = gc_strdup(old, all);
-	return (new);
 }
 
 char *handle_expand(char *old, t_all *all)
 {
-	char *new = malloc(sizeof(char) * 4096);
-	char *tmp = malloc(sizeof(char) * 4096);
-	char *val = malloc(sizeof(char) * 4096);
-	int i = 0;
-	int j = 0;
-	int t = 0;
-	int x = 0;
+	char *val;
 
-	while(old && old[i])
+	while(old && old[all->data.z])
 	{
-		if (old[i] == '$')
+		if (old[all->data.z] == '$' && old[all->data.z + 1])
 		{
-			i++;
-			t = 0;
-			while(ft_isalnum(old[i]) == 1 || old[i] == '_')
-				tmp[t++] = old[i++];
-			tmp[t] = '\0';
-			val = find_the_value(all, tmp);
-			if (val)
+			all->data.z++;
+			all->data.t = 0;
+			while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
+				all->data.tmp[all->data.t++] = old[all->data.z++];
+			all->data.tmp[all->data.t] = '\0';
+			val = find_the_value(all, all->data.tmp);
+			if (val && all->data.t > 0)
 			{
-				x = 0;
-				while (val[x])
-					new[j++] = val[x++];
+				all->data.x = 0;
+				while (val[all->data.x])
+					all->data.new[all->data.j++] = val[all->data.x++];
 			}
-			else
-				new[j++] = '$';
 		}
 		else
-			new[j++] = old[i++];
+			all->data.new[all->data.j++] = old[all->data.z++];
 	}
-	new[j] = '\0';
-	free (tmp);
-	return (gc_strdup(new, all));
+	all->data.new[all->data.j] = '\0';
+	return (free(all->data.tmp), gc_strdup(all->data.new, all));
 }
-
-// char *handle_expand(char *old, t_all *all)
-// {
-//     char *new = malloc(sizeof(char) * 4096);
-//     int i = 0, j = 0;
-
-//     while (old && old[i])
-//     {
-//         if (old[i] == '$')
-//         {
-//             i++;
-//             int t = 0;
-//             char tmp[256];
-//             while (old[i] && (ft_isalnum(old[i]) || old[i] == '_') && t < 255)
-//                 tmp[t++] = old[i++];
-//             tmp[t] = '\0';
-//             if (t > 0)
-//             {
-//                 char *val = find_the_value(all, tmp);
-//                 if (val)
-//                 {
-//                     int x = 0;
-//                     while (val[x])
-//                         new[j++] = val[x++];
-//                 }
-//             }
-//             // Si pas de nom de variable après le $, on garde juste le $
-//             else
-//                 new[j++] = '$';
-//         }
-//         else
-//             new[j++] = old[i++];
-//     }
-//     new[j] = '\0';
-//     return gc_strdup(new, all);
-// }
-
-
 
 
 // void create_string_token(char quote, t_all *all)
@@ -189,7 +132,7 @@ void next_token(t_all *all)
 	// else if (c == '$')
 	//     create_operator_token(VARIABLE, "$", all);
 	/* else if ((c == 34 && (all->lexer->input[all->lexer->position -1] != ' ')) \
-			 || (c == 39 && (all->lexer->input[all->lexer->position -1] != ' ')))*/
+			|| (c == 39 && (all->lexer->input[all->lexer->position -1] != ' ')))*/
 	// else if (c == 34 || c == 39)
 	//     create_string_token(c, all);
 	else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')
