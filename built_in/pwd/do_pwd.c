@@ -34,3 +34,4 @@ char	*ft_pwd(t_all *all)
 	}
 	return(NULL);
 }
+
