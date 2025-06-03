@@ -91,3 +91,4 @@ void    list_to_tab(t_all *all)
 	all->pipe.cmd_args[i][j] = NULL;
 	printf("\n");  // <---------------------------------------------------------printf
 }
+
