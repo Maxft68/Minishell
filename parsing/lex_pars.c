@@ -9,13 +9,25 @@ void	initialize_data(t_all *all, char *old)
 	all->data.tmp = gc_malloc(all, sizeof(old));
 
 }
-
 void	part_one(t_all *all, char *old, char *val)
 {
 	all->data.z++;
 	all->data.t = 0;
+
+	if (ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
+	{
+		all->data.z++;
+		return;
+	}
 	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
+	{
+		// if(ft_isdigit(old[all->data.z]))
+		// {
+		// 	//all->data.tmp[all->data.t++] = old[all->data.z++];
+		// 	break;
+		// }
 		all->data.tmp[all->data.t++] = old[all->data.z++];
+	}
 	all->data.tmp[all->data.t] = '\0';
 	val = find_the_value(all, all->data.tmp);
 	if (val && all->data.t > 0)
@@ -48,20 +60,81 @@ void	part_two(t_all *all, char *old)
 void	handle_expand(char *old, t_all *all)
 {
 	char *val;
+	// int in = 0;
+	// int dooble = 0;
 
 	val = NULL;
 	while(old && old[all->data.z])
 	{
-		if (old[all->data.z] == '$' && old[all->data.z + 1])
-		{
+		// if (old[all->data.z] == 39 && dooble == 0 && in == 0) //SIMPLE 
+		// 	in = 1;
+		// if (old[all->data.z] == 39 && dooble == 0 && in == 1) //SIMPLE 
+		// 	in = 0;
+		// if (old[all->data.z] == 34 && dooble == 0 && in == 0) // DOUBLE
+		// 	dooble = 1;
+		// if (old[all->data.z] == 34 && dooble == 1 && in == 0) // DOUBLE
+		// 	dooble = 0;
+		if (old[all->data.z] == '$' && old[all->data.z + 1] != ' ')
 			part_one(all, old, val);
-		}
 		else
 		{
 			part_two(all, old);
 		}
 	}
 }
+
+// void	part_one(t_all *all, char *old, char *val)
+// {
+// 	all->data.z++;
+// 	all->data.t = 0;
+// 	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
+// 		all->data.tmp[all->data.t++] = old[all->data.z++];
+// 	all->data.tmp[all->data.t] = '\0';
+// 	val = find_the_value(all, all->data.tmp);
+// 	if (val && all->data.t > 0)
+// 	{
+// 		if (!all->data.new)
+// 			all->data.new = gc_strdup(val, all);
+// 		else
+// 		{
+// 			all->data.temp = gc_strjoin(all, all->data.new, val);
+// 			all->data.new = all->data.temp;
+// 		}
+// 	}
+// }
+
+// void	part_two(t_all *all, char *old)
+// {
+// 	char tmp[2];
+// 	tmp[0] = old[all->data.z];
+// 	tmp[1] = '\0';
+// 	if (!all->data.new)
+// 		all->data.new = gc_strdup(tmp, all);
+// 	else
+// 	{
+// 		all->data.temp = gc_strjoin(all, all->data.new, tmp);
+// 		all->data.new = all->data.temp;
+// 	}
+// 	all->data.z++;
+// }
+
+// void	handle_expand(char *old, t_all *all)
+// {
+// 	char *val;
+
+// 	val = NULL;
+// 	while(old && old[all->data.z])
+// 	{
+// 		if (old[all->data.z] == '$' && old[all->data.z + 1])
+// 		{
+// 			part_one(all, old, val);
+// 		}
+// 		else
+// 		{
+// 			part_two(all, old);
+// 		}
+// 	}
+// }
 
 void create_word_token(t_all *all)
 {
