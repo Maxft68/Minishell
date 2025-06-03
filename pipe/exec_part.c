@@ -33,4 +33,4 @@ void	exec_part(t_all *all)
 
 //Première commande: redirige la sortie vers le pipe.
 //Commande du milieu: redirige l'entrée depuis le pipe précédent, la sortie vers le pipe suivant.
-//Dernière commande: redirige l'entrée depuis le pipe précédent.
+//Dernière commande: redirige l'entrée depuis le pipe précédent. 
