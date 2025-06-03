@@ -14,7 +14,8 @@ void	part_one(t_all *all, char *old, char *val)
 	all->data.z++;
 	all->data.t = 0;
 
-	if (ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
+	if ((ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
+		&& old[all->data.z] != '_')
 	{
 		if (old[all->data.z] != 39)
 			all->data.z++;
@@ -54,7 +55,6 @@ void	part_two(t_all *all, char *old)
 void	handle_expand(char *old, t_all *all)
 {
 	char *val;
-	int c;
 	bool d_quote = false;
 	bool s_quote = false;
 	val = NULL;
