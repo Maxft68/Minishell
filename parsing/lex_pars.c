@@ -66,15 +66,9 @@ void	handle_expand(char *old, t_all *all)
 	val = NULL;
 	while(old && old[all->data.z])
 	{
-		// if (old[all->data.z] == 39 && dooble == 0 && in == 0) //SIMPLE 
-		// 	in = 1;
-		// if (old[all->data.z] == 39 && dooble == 0 && in == 1) //SIMPLE 
-		// 	in = 0;
-		// if (old[all->data.z] == 34 && dooble == 0 && in == 0) // DOUBLE
-		// 	dooble = 1;
-		// if (old[all->data.z] == 34 && dooble == 1 && in == 0) // DOUBLE
-		// 	dooble = 0;
-		if (old[all->data.z] == '$' && old[all->data.z + 1] != ' ')
+		
+		if (old[all->data.z] == '$' && 
+			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]))
 			part_one(all, old, val);
 		else
 		{

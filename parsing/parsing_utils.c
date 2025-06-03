@@ -57,7 +57,7 @@ char	*pick_char(char *str, t_all *all)
         else if (c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
             all->lexer->s_quote = true;
         else if (c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
-           all->lexer->s_quote = false;
+			all->lexer->s_quote = false;
         else
 			str = ad_char(all, str);
         advance_char(all->lexer);
