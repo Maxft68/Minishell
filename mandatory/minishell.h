@@ -39,7 +39,7 @@ typedef struct s_pipe
 	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
 	char **cmd_path; // [numero de pipe]"/bin/ls"
 	int pipe;        // numero du pipe	 																										{-1} pipe2
-	int					nb_pipe;																									//			{0} pipe3
+	int					nb_pipe; //nombre de pipe																									//			{0} pipe3
 }							t_pipe;
 
 typedef struct s_env
@@ -106,6 +106,14 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	int			add;
 	char		*pwd;
 	char		*oldpwd;
+	int			j;
+	int			t;
+	int			x;
+	int			z;
+	char		*new;
+	char		*tmp;
+	char		*temp;
+
 }						t_data;
 
 
@@ -202,4 +210,4 @@ void		do_cd(t_all *all);
 char		*find_the_value(t_all *all, char *name);
 char		*ft_pwd(t_all *all);
 
-#endif
+#endif /* MINISHELL_H */

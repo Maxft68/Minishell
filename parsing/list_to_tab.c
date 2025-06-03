@@ -75,18 +75,20 @@ void    list_to_tab(t_all *all)
     {
         if (tmp->type == PIPE)
         {
+			all->pipe.cmd_args[i][j] = NULL;
             i++;
             j = 0;
         }
         if (tmp && tmp->type > 0 && tmp->type != 5)
         {
             // printf("%s %d %d\n", tmp->str, i , j);  <---------------------------------------------------------printf
-            all->pipe.cmd_args[i][j] = NULL;
             all->pipe.cmd_args[i][j] = gc_strdup(tmp->str, all);
             printf("pipe: %d tab %d str %s\n", i, j, tmp->str); //<---------------------------------------------------------printf
             j++;
         }
         tmp = tmp->next;
     }
+	all->pipe.cmd_args[i][j] = NULL;
 	printf("\n");  // <---------------------------------------------------------printf
 }
+
