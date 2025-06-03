@@ -10,7 +10,6 @@ int	verif_quoted(char *input)
 	i = 0;
 	while(input[i])
 	{
-	
 		c = input[i];
         if (c == 34 && !d_quote && !s_quote)
             d_quote = true;
@@ -24,7 +23,7 @@ int	verif_quoted(char *input)
 	}
 	if (s_quote || d_quote)
 	{
-		ft_putstr_fd("quotes Syntax error\n", 2);
+		ft_putstr_fd("Quotes Syntax error\n", 2);
 		return(-1);
 	}
 	return (0);

@@ -16,18 +16,12 @@ void	part_one(t_all *all, char *old, char *val)
 
 	if (ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
 	{
-		all->data.z++;
+		if (old[all->data.z] != 39)
+			all->data.z++;
 		return;
 	}
 	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
-	{
-		// if(ft_isdigit(old[all->data.z]))
-		// {
-		// 	//all->data.tmp[all->data.t++] = old[all->data.z++];
-		// 	break;
-		// }
 		all->data.tmp[all->data.t++] = old[all->data.z++];
-	}
 	all->data.tmp[all->data.t] = '\0';
 	val = find_the_value(all, all->data.tmp);
 	if (val && all->data.t > 0)
@@ -60,20 +54,29 @@ void	part_two(t_all *all, char *old)
 void	handle_expand(char *old, t_all *all)
 {
 	char *val;
-	// int in = 0;
-	// int dooble = 0;
-
+	int c;
+	bool d_quote = false;
+	bool s_quote = false;
 	val = NULL;
 	while(old && old[all->data.z])
 	{
-		
+        if (old[all->data.z] == 34 && !d_quote && !s_quote)
+            d_quote = true;
+        else if (old[all->data.z] == 34 && d_quote && !s_quote)
+            d_quote = false;
+        else if (old[all->data.z] == 39 && !s_quote && !d_quote)
+            s_quote = true;
+        else if (old[all->data.z] == 39 && s_quote && !d_quote)
+			s_quote = false;
 		if (old[all->data.z] == '$' && 
-			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]))
-			part_one(all, old, val);
-		else
+			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && !s_quote)
 		{
-			part_two(all, old);
+			part_one(all, old, val);
+			d_quote = false;
+			s_quote = false;
 		}
+		else
+			part_two(all, old);
 	}
 }
 

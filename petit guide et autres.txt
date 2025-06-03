@@ -141,7 +141,7 @@ Si getcwd échoue, affiche :
 bash: cd: error retrieving current directory: getcwd: cannot access parent directories: ...
 Sinon, construit le chemin parent et tente d’y aller.
 
-echo $USER,$rveve,12$USER ok $ $123 $!??USER $'USER' $US'ER'
+echo $USER,$rveve,12$USER ok $ $123 $!??USER $'USER' $US'ER' '$USER'
 
 void	part_one(t_all *all, char *old, char *val)
 {
