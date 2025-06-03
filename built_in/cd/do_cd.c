@@ -2,23 +2,23 @@
 #include "minishell.h"
 
 
-char	*search_and_return_env(t_all *all, char *name)
-{
-	t_env	*current;
+// char	*search_and_return_env(t_all *all, char *name)
+// {
+// 	t_env	*current;
 
-	if (!all->env || !name)
-		return (NULL);
-	current = all->env;
-	while (current)
-	{
-		if (ft_strcmp(current->name, name) == 0 && current->value)
-		{
-			return(current->value);
-		}
-		current = current->next;
-	}
-	return (NULL);
-}
+// 	if (!all->env || !name)
+// 		return (NULL);
+// 	current = all->env;
+// 	while (current)
+// 	{
+// 		if (ft_strcmp(current->name, name) == 0 && current->value)
+// 		{
+// 			return(current->value);
+// 		}
+// 		current = current->next;
+// 	}
+// 	return (NULL);
+// }
 
 // void	do_cd_minus(t_all *all)
 // {
