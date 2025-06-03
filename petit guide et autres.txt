@@ -1,17 +1,4 @@
 
-ajout dossierS /src /include/ execution /parsing/ 
-
-lancer des cmd simples pour commencer
-
-
-reflechir tokenisation/ parsing
-
-!! creer des branches AVANT dajouter des nouveautes !!
-
-
-faire export en premier ou env
-puis echo cd ....env
-
 en premier soi redirection "< > " soit commande
 
 enregistrer le code error dans une structure pour pouvoir le resortir avec $? meme si code erreur succes
