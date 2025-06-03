@@ -11,7 +11,7 @@ void	do_pwd(t_all *all)
 	else if (find_the_value(all, "PWD"))
 	{
 		f = find_the_value(all, "PWD");
-		printf("%s", f);
+		printf("%s\n", f);
 	}
 	// code erreur TOUJOURS A 0
 	(void) all;
