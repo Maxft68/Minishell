@@ -11,12 +11,12 @@ void    sig_handler(int signal)
         rl_on_new_line();
         rl_redisplay();
     }
-    // if (signal == SIGQUIT)
-    // {
-    //     // rl_replace_line("WriteToMe   ", 12);
-    //     // rl_redisplay();
-    //     return ;
-    // }
+    //if (signal == SIGQUIT)
+    //{
+   	//	rl_replace_line("WriteToMe   ", 12);
+    //	rl_redisplay();
+    //	return ;
+    //}
 }
 
 void    signals_swing(void)

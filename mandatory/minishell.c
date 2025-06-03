@@ -54,16 +54,15 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		create_lexer(readline("WriteOnMe "), &all);
-
+		if (create_lexer(readline("WriteOnMe "), &all) != -1)
+			pars_to_exec(&all);
 		// if (ft_strncmp(all.lexer->input, "aaa", 3) == 0)// a remplacer par le signal CTRL + C
 		// {					// a remplacer par le signal CTRL + C
 		// 	ft_exit("FINISH\n", &all, 0);// a remplacer par le signal CTRL + C
 		// }									// a remplacer par le signal CTRL + C
 
-		if (!all.lexer->input)
-			continue;
-		pars_to_exec(&all);
+		//if (!all.lexer->input)
+			//continue;
 		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
 		free_garbage_collect(&all.garbage);
 		ft_lstclear(&all.token);

@@ -165,7 +165,7 @@ void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
 // char		*gc_realloc(t_all *all, char *old, int big);
 void		*gc_realloc(t_all *all, void *ptr, size_t size);
 /* **********Lexing parsing************************************************** */
-void		create_lexer(char *input, t_all *all);
+int			create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
 char		*pick_char(char *str, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
@@ -177,6 +177,8 @@ t_token		*ft_tknlast(t_token *lst);
 void    	create_redir_lst(t_all *all);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
+void		initialize_data(t_all *all, char *old);
+void		handle_expand(char *old, t_all *all);
 /* **********Exec functions************************************************** */
 void		exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);

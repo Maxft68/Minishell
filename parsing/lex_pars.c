@@ -156,10 +156,10 @@ void create_word_token(t_all *all)
 			type = ARG;
 	}
 	str = NULL;
+	// initialize_data(all, str);
+	// handle_expand(str, all);
 	str = pick_char(str, all);
-	initialize_data(all, str);
-	handle_expand(str, all);
-	create_token(type, all->data.new, all);
+	create_token(type, str, all);
 }
 
 
