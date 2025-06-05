@@ -36,10 +36,14 @@ typedef struct s_garbage_env
 
 typedef struct s_pipe
 {
-	char ***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
-	char **cmd_path; // [numero de pipe]"/bin/ls"
-	int pipe;        // numero du pipe	 																										{-1} pipe2
-	int					nb_pipe; //nombre de pipe																									//			{0} pipe3
+	char					***cmd_args; // [numero de pipe]{"ls", "-l", NULL}
+	char					**cmd_path; // [numero de pipe]"/bin/ls"
+	int						pipe;        // numero du pipe actuel
+	int						nb_pipe; //nombre de pipe total
+	int						pipe_fd[2]; // [0] lecture  [1] ecriture
+	int						fd_infile;
+	int						fd_outfile;
+	
 }							t_pipe;
 
 typedef struct s_env
