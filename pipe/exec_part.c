@@ -21,8 +21,8 @@ void	open_and_define_fd(t_all *all)// define fd[0] et fd[1]
 	else
 		if (all->pipe.pipe_fd[1])
 			all->pipe.fd_infile = all->pipe.pipe_fd[1];
-
 }
+
 void	exec_part2(t_all *all)
 {
 	int pid[all->pipe.nb_pipe + 1];
@@ -50,7 +50,7 @@ void	exec_part2(t_all *all)
 	}
 }
 
-
+//gerer redirection pipe
 
 //Première commande: redirige la sortie vers le pipe.
 //Commande du milieu: redirige l'entrée depuis le pipe précédent, la sortie vers le pipe suivant.
