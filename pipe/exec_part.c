@@ -47,10 +47,9 @@ void	exec_part(t_all *all)
 		all->pipe.pipe++;
 	}
 	int i = all->pipe.nb_pipe;
-	while(i != -1)
-	{
-		waitpid(all->pipe.pid[i], NULL, 0);
-		all->pipe.nb_pipe--;
+	
+	waitpid(all->pipe.pid[i - 1], NULL, 0);
+	waitpid(all->pipe.pid[i], NULL, 0);
 	}
 	all->pipe.pipe = 0;
 }
