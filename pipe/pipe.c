@@ -24,7 +24,8 @@ char	*find_path_cmd(t_all *all, char **env)
 	}
 	path = search_good_path(path_to_search, all);
 	if (!path)
-		return; // et donner le code erreur 127 ? 
+		return (NULL); // et donner le code erreur 127 ?
+	return (path);
 }
 
 void	exec_cmd(t_all *all)
