@@ -43,11 +43,11 @@ char	*ad_char(t_all *all, char* str)
 	return (str);
 }
 
-char	*pick_char(char *str, t_all *all)
+char	*pick_char(char *str, token_type type, t_all *all)
 {
 	char	c;
 
-    while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
+    while (ft_isprint(all->lexer->c) && !new_tkn_char(type, all))//<---- new_tkn si en dehors quotes 
     {
 		c = all->lexer->c;
         if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)

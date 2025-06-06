@@ -138,10 +138,10 @@ void create_word_token(t_all *all)
 	char        *str;
 	token_type  type;
 
-	if (all->lexer->first_token)
+	if (all->lexer->cmd)
 	{
 		type = COMMAND;
-		all->lexer->first_token = false;
+		all->lexer->cmd = false;
 	}
 	else
 	{
@@ -151,50 +151,22 @@ void create_word_token(t_all *all)
 			type = SQ_STRING;
 		else
 			type = ARG;
+		all->lexer->cmd = true;
 	}
 	str = NULL;
 	// initialize_data(all, str);
 	// handle_expand(str, all);
-	str = pick_char(str, all);
+	str = pick_char(str, type, all);
 	create_token(type, str, all);
 }
 
-
-
-// void create_string_token(char quote, t_all *all)
-// {
-//     int         len;
-//     char        *str;
-//     token_type  type;
-	
-//     if (quote == '"')
-//         type = DQ_STRING;
-//     else
-//         type = SQ_STRING;
-//     // str = NULL;
-//     // str = pick_char(str, all);
-//     advance_char(all->lexer);
-//     int start = all->lexer->position;
-//     while (all->lexer->c != '\0' && all->lexer->c != quote)
-//         advance_char(all->lexer);
-//     len = all->lexer->position - start;
-//     str = NULL;
-//     str = (char*)gc_malloc(all, len + 1);
-//     if (!str)
-//         ft_exit("Cannot allocate memory\n", all, 12);
-//     ft_strlcpy(str, all->lexer->input + start, len + 1);
-//     str[len] = '\0';
-//     if (all->lexer->c == quote)
-//         advance_char(all->lexer);
-//     create_token(type, str, all);
-// }
 
 void create_operator_token(token_type type, char *str, t_all *all)
 {
 	advance_char(all->lexer);
 	if (type == APPEND_OUT || type == HEREDOC)
 		advance_char(all->lexer);
-	if (type == PIPE)
+	else if (type == PIPE)
 	{
 		if (all->lexer->c == '|' || all->lexer->position == 1 || \
 			(all->lexer->input[all->lexer->position] && \
@@ -202,8 +174,10 @@ void create_operator_token(token_type type, char *str, t_all *all)
 			all->lexer->c == '\0')
 			ft_exit("Syntax error\n", all, 1);
 		all->pipe.nb_pipe += 1;
-		all->lexer->first_token = true;
+		all->lexer->cmd = true;
 	}
+	else
+		all->lexer->cmd = false;
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
 	//     ft_exit("Syntax error\n", all, 1);
 	create_token(type, str, all);
@@ -246,8 +220,11 @@ void    pars_to_exec(t_all *all)
 		next_token(all);
 	if (all->token)
 	{
+		create_redir_lst(all);
 		print_node(all->token);    //<---------------------------------------------------------printf
+		// print_node(all->rdir_tkn);
 		list_to_tab(all);
+		printf("in/out: %s\n", search_pipe_redir(1, 7, all)); //<--------------------------------printf
 		exec_part(all);
 	}
 }

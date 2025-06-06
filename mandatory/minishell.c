@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
 		free_garbage_collect(&all.garbage);
 		ft_lstclear(&all.token);
-		//ft_lstclear(&all.rdir_tkn);
+		ft_lstclear(&all.rdir_tkn);
 	}
 	(void)argv;
 }

@@ -36,7 +36,7 @@ typedef struct s_lexer
     const char  *input;
     int         position;
     char        c;
-    bool        first_token;
+    bool        cmd;
 }       t_lexer;
 
 t_token *create_token(token_type type, const char *str);

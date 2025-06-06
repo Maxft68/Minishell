@@ -65,10 +65,10 @@ typedef struct s_lexer
     char        c;
 	bool		s_quote;
 	bool		d_quote;
-    bool        first_token;
+    bool        cmd;
 }       t_lexer;
 
-typedef enum
+typedef enum token_type
 {
 	WTF,
     COMMAND,
@@ -92,6 +92,7 @@ typedef struct  s_token
     struct s_token  *next;
 	// struct s_token	*prev;
 }  					t_token;
+
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -167,14 +168,15 @@ void		*gc_realloc(t_all *all, void *ptr, size_t size);
 /* **********Lexing parsing************************************************** */
 int			create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
-char		*pick_char(char *str, t_all *all);
+char		*pick_char(char *str, token_type type, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		skip_whitespace(t_lexer *lexr);
-int			new_tkn_char(t_all *all);
+int			new_tkn_char(token_type type, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 void    	create_redir_lst(t_all *all);
+char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
 void		print_node(t_token *token);//-------------------------debug
 void    	list_to_tab(t_all *all);
 void		initialize_data(t_all *all, char *old);
