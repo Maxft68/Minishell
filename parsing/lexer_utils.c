@@ -49,6 +49,7 @@ int	create_lexer(char *input, t_all *all)
     all->lexer->s_quote = false;
     all->lexer->d_quote = false;
     all->lexer->cmd = true;
+    all->lexer->redir = false;
     skip_whitespace(all->lexer);
 	return (0);
 }

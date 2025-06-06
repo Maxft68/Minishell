@@ -66,6 +66,7 @@ typedef struct s_lexer
 	bool		s_quote;
 	bool		d_quote;
     bool        cmd;
+	bool		redir;
 }       t_lexer;
 
 typedef enum token_type
@@ -80,6 +81,7 @@ typedef enum token_type
     REDIRECT_IN,
     APPEND_OUT,
     HEREDOC,
+	REDIR_FILE,
     VARIABLE,
     ILLEGAL,
 }       token_type;

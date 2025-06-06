@@ -138,7 +138,7 @@ void create_word_token(t_all *all)
 	char        *str;
 	token_type  type;
 
-	if (all->lexer->cmd)
+	if (all->lexer->cmd && !all->lexer->redir)
 	{
 		type = COMMAND;
 		all->lexer->cmd = false;
@@ -149,6 +149,8 @@ void create_word_token(t_all *all)
 			type = DQ_STRING;
 		else if (all->lexer->c == 39)
 			type = SQ_STRING;
+		else if (all->lexer->redir && !all->lexer->cmd)
+			type = REDIR_FILE;
 		else
 			type = ARG;
 		all->lexer->cmd = true;
@@ -164,9 +166,9 @@ void create_word_token(t_all *all)
 void create_operator_token(token_type type, char *str, t_all *all)
 {
 	advance_char(all->lexer);
-	if (type == APPEND_OUT || type == HEREDOC)
-		advance_char(all->lexer);
-	else if (type == PIPE)
+	// if (type == APPEND_OUT || type == HEREDOC)
+	// 	advance_char(all->lexer);
+	if (type == PIPE)
 	{
 		if (all->lexer->c == '|' || all->lexer->position == 1 || \
 			(all->lexer->input[all->lexer->position] && \
@@ -177,12 +179,17 @@ void create_operator_token(token_type type, char *str, t_all *all)
 		all->lexer->cmd = true;
 	}
 	else
+	{
+		if (type == APPEND_OUT || type == HEREDOC)
+			advance_char(all->lexer);
 		all->lexer->cmd = false;
+		all->lexer->redir = true;
+	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
 	//     ft_exit("Syntax error\n", all, 1);
 	create_token(type, str, all);
 }
-
+ 
 void next_token(t_all *all)
 {
 	char c;
