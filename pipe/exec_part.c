@@ -6,7 +6,7 @@ void	exec_part(t_all *all)
 	// 	return ;
 	// else
 	// 	exec_part2(all);
-	int old_fd;
+	//int old_fd;
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
 	{
 		if (pipe(all->pipe.pipe_fd) == -1)
@@ -16,30 +16,49 @@ void	exec_part(t_all *all)
 		}
 		// if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1)
 		// 	perror("dup2");
-		all->pipe.pid[all->pipe.pipe] = fork();
+		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
 		if (all->pipe.pid[all->pipe.pipe] == 0)
 		{
-			if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1)
-				perror("dup2");
-			close(all->pipe.pipe_fd[0]);
-			close(all->pipe.pipe_fd[1]);
-			// old_fd = dup(all->pipe.pipe_fd[0]);
-			//old_fd = dup(all->pipe.pipe_fd[0]); // ??
-			if (dup2(old_fd, STDIN_FILENO) == -1)
-				perror("dup2 2e")
+			if (all->pipe.pipe == 0) // si premier pipe
+			{
+				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN premier pipe
+					perror("dup2 stdin 1");
+				if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1) // OUT premier pipe
+					perror("dup2 stdout 1");
+			}
+			if (all->pipe.pipe == all->pipe.nb_pipe) // si dernier pipe
+			{
+				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN dernier pipe
+					perror("dup2 stdin 3");
+			}
+			else  // si pipe milieu
+			{
+				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN pipe milieu
+					perror("dup2 stdin 2");
+					if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1) // OUT pipe milieu
+					perror("dup2 stdout 2");
+			}
+				close(all->pipe.pipe_fd[0]);
+				close(all->pipe.pipe_fd[1]);
 			if (is_built_in(all) == 0)
 				ft_exit("",all, 0);
 			exec_cmd(all);
 		}
 		all->pipe.pipe++;
 	}
-	while(all->pipe.nb_pipe != 0)
+	int i = all->pipe.nb_pipe;
+	while(i != -1)
 	{
-		waitpid(all->pipe.pid[all->pipe.nb_pipe], NULL, 0);
+		waitpid(all->pipe.pid[i], NULL, 0);
 		all->pipe.nb_pipe--;
 	}
 	all->pipe.pipe = 0;
 }
+
+// waitpid(pipex.pid1, NULL, 0);
+// 	waitpid(pipex.pid2, &status, 0);
+// 	if (WIFEXITED(status))
+// 		return (WEXITSTATUS(status));
 
 // void	open_and_define_fd(t_all *all)// define fd[0] et fd[1]
 // {
