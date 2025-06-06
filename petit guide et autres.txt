@@ -217,4 +217,20 @@ void	handle_expand(char *old, t_all *all)
 	}
 }
 
+<<<<<<< Updated upstream
 --------il faudra encore ajouter le $?-------- 
+=======
+--------il faudra encore ajouter le $?-------- 
+echo ~ doit expand variable home
+echo ~/srtjykuyfutytyejryu
+
+sans pipe on lance chaque commande dans un enfant
+	pour ne pas execve dans le parent
+
+
+echo cou | | echo ok
+echo cou "| |" echo ok
+echo cou "|"
+echo ">out"
+>out <in echo ok
+>>>>>>> Stashed changes
