@@ -3,8 +3,6 @@
 #include "../mandatory/minishell.h"
 
 
-<<<<<<< Updated upstream
-=======
 char	*find_path_cmd(t_all *all, char **env)
 {
 	char **path_to_search = NULL;
@@ -30,7 +28,6 @@ char	*find_path_cmd(t_all *all, char **env)
 	return(path);
 }
 
->>>>>>> Stashed changes
 void	exec_cmd(t_all *all)
 {
 	char **env = do_char_env(all);
@@ -47,12 +44,7 @@ void	exec_cmd(t_all *all)
 	pipe = all->pipe.pipe;
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[pipe])
 	{
-<<<<<<< Updated upstream
-		//free_array(env); dans gc malloc env export
-		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
-=======
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------\n"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
->>>>>>> Stashed changes
 		return ;
 	}
 	cmd = all->pipe.cmd_args[pipe];
