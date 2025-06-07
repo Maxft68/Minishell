@@ -32,7 +32,7 @@ void	exec_part(t_all *all)
 				dup2(all->pipe.pipe_fd[1], STDOUT_FILENO);
 				close(all->pipe.pipe_fd[0]);
 				close(all->pipe.pipe_fd[1]);
-			}
+			} 
 			
 			if (all->pipe.pipe < all->pipe.nb_pipe)// sauvegarder pipe pour le prochain pipe
 			{
