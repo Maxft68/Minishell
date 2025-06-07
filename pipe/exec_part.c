@@ -6,43 +6,59 @@ void	exec_part(t_all *all)
 	// 	return ;
 	// else
 	// 	exec_part2(all);
-	//int old_fd;
+	int old_pipe[2];
+	int has_old_pipe = 0; // pour savoir si on a un pipe precedent
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
 	{
-		if (pipe(all->pipe.pipe_fd) == -1)
+		if (all->pipe.pipe < all->pipe.nb_pipe)
 		{
-			perror("pipe");
-			return; //exit ??
+			if (pipe(all->pipe.pipe_fd) == -1)
+			{
+				perror("pipe");
+				return; //exit ??
+			}
 		}
-		// if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1)
-		// 	perror("dup2");
 		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
 		if (all->pipe.pid[all->pipe.pipe] == 0)
 		{
-			if (all->pipe.pipe == 0) // si premier pipe
+			if (has_old_pipe)
 			{
-				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN premier pipe
-					perror("dup2 stdin 1");
-				if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1) // OUT premier pipe
-					perror("dup2 stdout 1");
+				dup2(old_pipe[0], STDIN_FILENO);
+				close(old_pipe[0]);
+				close(old_pipe[1]);
 			}
-			if (all->pipe.pipe == all->pipe.nb_pipe) // si dernier pipe
+			if (all->pipe.pipe < all->pipe.nb_pipe)
 			{
-				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN dernier pipe
-					perror("dup2 stdin 3");
-			}
-			else  // si pipe milieu
-			{
-				if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1) // IN pipe milieu
-					perror("dup2 stdin 2");
-					if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1) // OUT pipe milieu
-					perror("dup2 stdout 2");
-			}
+				dup2(all->pipe.pipe_fd[1], STDOUT_FILENO);
 				close(all->pipe.pipe_fd[0]);
 				close(all->pipe.pipe_fd[1]);
+			}
+			
+			if (all->pipe.pipe < all->pipe.nb_pipe)// sauvegarder pipe pour le prochain pipe
+			{
+				old_pipe[0] = all->pipe.pipe_fd[0];
+				old_pipe[1] = all->pipe.pipe_fd[1];
+				has_old_pipe = 1; // on a un pipe pour le suivant
+			}
+
+			close(all->pipe.pipe_fd[0]);
+			close(all->pipe.pipe_fd[1]);
 			if (is_built_in(all) == 0)
 				ft_exit("",all, 0);
 			exec_cmd(all);
+		}
+		if (has_old_pipe)
+		{
+			close(old_pipe[0]);
+			close(old_pipe[1]);
+		}
+		
+		// Sauvegarder le nouveau pipe pour la prochaine itération
+		if (all->pipe.pipe < all->pipe.nb_pipe)
+		{
+			old_pipe[0] = all->pipe.pipe_fd[0];
+			old_pipe[1] = all->pipe.pipe_fd[1];
+			has_old_pipe = 1;
 		}
 		all->pipe.pipe++;
 	}
@@ -50,7 +66,6 @@ void	exec_part(t_all *all)
 	
 	waitpid(all->pipe.pid[i - 1], NULL, 0);
 	waitpid(all->pipe.pid[i], NULL, 0);
-	}
 	all->pipe.pipe = 0;
 }
 
