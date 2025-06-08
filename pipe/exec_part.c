@@ -1,4 +1,6 @@
-#include "minishell.h"
+// #include "minishell.h"
+#include "../mandatory/minishell.h"
+
 
 void	exec_part(t_all *all)
 {

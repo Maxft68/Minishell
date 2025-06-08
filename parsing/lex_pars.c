@@ -138,7 +138,7 @@ void create_word_token(t_all *all)
 	char        *str;
 	token_type  type;
 
-	if (all->lexer->cmd && !all->lexer->redir)
+	if (all->lexer->cmd)// && !all->lexer->redir)
 	{
 		type = COMMAND;
 		all->lexer->cmd = false;
@@ -149,7 +149,7 @@ void create_word_token(t_all *all)
 			type = DQ_STRING;
 		else if (all->lexer->c == 39)
 			type = SQ_STRING;
-		else if (all->lexer->redir && !all->lexer->cmd)
+		else if (all->lexer->redir)// && !all->lexer->cmd)
 			type = REDIR_FILE;
 		else
 			type = ARG;
@@ -231,7 +231,7 @@ void    pars_to_exec(t_all *all)
 		print_node(all->token);    //<---------------------------------------------------------printf
 		// print_node(all->rdir_tkn);
 		list_to_tab(all);
-		printf("in/out: %s\n", search_pipe_redir(1, 7, all)); //<--------------------------------printf
+		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
 		exec_part(all);
 	}
 }
