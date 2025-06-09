@@ -1,138 +1,6 @@
 
 #include "../mandatory/minishell.h"
 
-void	initialize_data(t_all *all, char *old)
-{
-	all->data.z = 0;
-	all->data.j = 0;
-	all->data.new = NULL;
-	all->data.tmp = gc_malloc(all, sizeof(old));
-
-}
-void	part_one(t_all *all, char *old, char *val)
-{
-	all->data.z++;
-	all->data.t = 0;
-
-	if ((ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
-		&& old[all->data.z] != '_')
-	{
-		if (old[all->data.z] != 39)
-			all->data.z++;
-		return;
-	}
-	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
-		all->data.tmp[all->data.t++] = old[all->data.z++];
-	all->data.tmp[all->data.t] = '\0';
-	val = find_the_value(all, all->data.tmp);
-	if (val && all->data.t > 0)
-	{
-		if (!all->data.new)
-			all->data.new = gc_strdup(val, all);
-		else
-		{
-			all->data.temp = gc_strjoin(all, all->data.new, val);
-			all->data.new = all->data.temp;
-		}
-	}
-}
-
-void	part_two(t_all *all, char *old)
-{
-	char tmp[2];
-	tmp[0] = old[all->data.z];
-	tmp[1] = '\0';
-	if (!all->data.new)
-		all->data.new = gc_strdup(tmp, all);
-	else
-	{
-		all->data.temp = gc_strjoin(all, all->data.new, tmp);
-		all->data.new = all->data.temp;
-	}
-	all->data.z++;
-}
-
-void	handle_expand(char *old, t_all *all)
-{
-	char *val;
-	bool d_quote = false;
-	bool s_quote = false;
-	val = NULL;
-	while(old && old[all->data.z])
-	{
-        if (old[all->data.z] == 34 && !d_quote && !s_quote)
-            d_quote = true;
-        else if (old[all->data.z] == 34 && d_quote && !s_quote)
-            d_quote = false;
-        else if (old[all->data.z] == 39 && !s_quote && !d_quote)
-            s_quote = true;
-        else if (old[all->data.z] == 39 && s_quote && !d_quote)
-			s_quote = false;
-		if (old[all->data.z] == '$' && 
-			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && !s_quote)
-		{
-			part_one(all, old, val);
-			d_quote = false;
-			s_quote = false;
-		}
-		else
-			part_two(all, old);
-	}
-}
-
-// void	part_one(t_all *all, char *old, char *val)
-// {
-// 	all->data.z++;
-// 	all->data.t = 0;
-// 	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
-// 		all->data.tmp[all->data.t++] = old[all->data.z++];
-// 	all->data.tmp[all->data.t] = '\0';
-// 	val = find_the_value(all, all->data.tmp);
-// 	if (val && all->data.t > 0)
-// 	{
-// 		if (!all->data.new)
-// 			all->data.new = gc_strdup(val, all);
-// 		else
-// 		{
-// 			all->data.temp = gc_strjoin(all, all->data.new, val);
-// 			all->data.new = all->data.temp;
-// 		}
-// 	}
-// }
-
-// void	part_two(t_all *all, char *old)
-// {
-// 	char tmp[2];
-// 	tmp[0] = old[all->data.z];
-// 	tmp[1] = '\0';
-// 	if (!all->data.new)
-// 		all->data.new = gc_strdup(tmp, all);
-// 	else
-// 	{
-// 		all->data.temp = gc_strjoin(all, all->data.new, tmp);
-// 		all->data.new = all->data.temp;
-// 	}
-// 	all->data.z++;
-// }
-
-// void	handle_expand(char *old, t_all *all)
-// {
-// 	char *val;
-
-// 	val = NULL;
-// 	while(old && old[all->data.z])
-// 	{
-// 		if (old[all->data.z] == '$' && old[all->data.z + 1])
-// 		{
-// 			part_one(all, old, val);
-// 		}
-// 		else
-// 		{
-// 			part_two(all, old);
-// 		}
-// 	}
-// }
-
 void create_word_token(t_all *all)
 {
 	char        *str;
@@ -170,10 +38,11 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	// 	advance_char(all->lexer);
 	if (type == PIPE)
 	{
-		if (all->lexer->c == '|' || all->lexer->position == 1 || \
-			(all->lexer->input[all->lexer->position] && \
-			all->lexer->input[all->lexer->position] == '|') || \
-			all->lexer->c == '\0')
+		// if (all->lexer->c == '|' || all->lexer->position == 1 || \
+		// 	(all->lexer->input[all->lexer->position] && \
+		// 	all->lexer->input[all->lexer->position] == '|') || \
+		// 	all->lexer->c == '\0')
+		if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
 			ft_exit("Syntax error\n", all, 1);
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
@@ -221,14 +90,38 @@ void next_token(t_all *all)
 		create_token(ILLEGAL, "", all);
 }
 
+int	check_tkn_lst(t_all *all)
+{
+	t_token	*tmp;
+
+	tmp = all->token;
+	while (tmp)
+	{
+		if (tmp->type > 4 && tmp->type < 10 && \
+			tmp->next->type > 4 && tmp->next->type < 10)
+		{
+			write(2, "tash: syntax error near unexpected token `", 42);
+			write(2, tmp->next->str, ft_strlen(tmp->next->str));
+			write(2, "'\n", 2);
+			free_garbage_collect(&all->garbage);
+			ft_lstclear(&all->token);
+			return (1);
+			// ft_exit(NULL, all, 1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void    pars_to_exec(t_all *all)
 {
 	while (all->lexer->c)
 		next_token(all);
-	if (all->token)
+	if (all->token && !check_tkn_lst(all))
 	{
+		// check_tkn_lst(all);
 		create_redir_lst(all);
-		print_node(all->token);    //<---------------------------------------------------------printf
+		// print_node(all->token);    //<---------------------------------------------------------printf
 		// print_node(all->rdir_tkn);
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
