@@ -11,6 +11,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -177,6 +178,7 @@ void		skip_whitespace(t_lexer *lexr);
 int			new_tkn_char(token_type type, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
+int 		check_tkn_lst(t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
 void		print_node(t_token *token);//-------------------------debug

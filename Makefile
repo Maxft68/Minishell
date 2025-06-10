@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/09 15:52:10 by rbier            ###   ########.fr        #
+#    Updated: 2025/06/10 17:39:52 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC =	mandatory/minishell.c \
 		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
 		parsing/redir_list.c\
+		parsing/token_utils.c\
 		parsing/list_to_tab.c\
 		built_in/cd/do_cd.c \
 		built_in/pwd/do_pwd.c \

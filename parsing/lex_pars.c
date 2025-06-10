@@ -42,8 +42,8 @@ void create_operator_token(token_type type, char *str, t_all *all)
 		// 	(all->lexer->input[all->lexer->position] && \
 		// 	all->lexer->input[all->lexer->position] == '|') || \
 		// 	all->lexer->c == '\0')
-		if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
-			ft_exit("Syntax error\n", all, 1);
+		// if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
+		// 	ft_exit("Syntax error\n", all, 1);
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
 	}
@@ -90,41 +90,42 @@ void next_token(t_all *all)
 		create_token(ILLEGAL, "", all);
 }
 
-int	check_tkn_lst(t_all *all)
-{
-	t_token	*tmp;
+// int	check_tkn_lst(t_all *all)
+// {
+// 	t_token	*tmp;
 
-	tmp = all->token;
-	while (tmp)
-	{
-		if (tmp->type > 4 && tmp->type < 10 && \
-			tmp->next->type > 4 && tmp->next->type < 10)
-		{
-			write(2, "tash: syntax error near unexpected token `", 42);
-			write(2, tmp->next->str, ft_strlen(tmp->next->str));
-			write(2, "'\n", 2);
-			free_garbage_collect(&all->garbage);
-			ft_lstclear(&all->token);
-			return (1);
-			// ft_exit(NULL, all, 1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	tmp = all->token;
+// 	while (tmp)
+// 	{
+// 		if (tmp->type > 5 && tmp->type < 10 && \
+// 			tmp->next->type > 4 && tmp->next->type < 10)
+// 		{
+// 			write(2, "tash: syntax error near unexpected token `", 42);
+// 			write(2, tmp->next->str, ft_strlen(tmp->next->str));
+// 			write(2, "'\n", 2);
+// 			free_garbage_collect(&all->garbage);
+// 			ft_lstclear(&all->token);
+// 			return (1);
+// 			// ft_exit(NULL, all, 1);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 
 void    pars_to_exec(t_all *all)
 {
 	while (all->lexer->c)
 		next_token(all);
+	print_node(all->token);    //<---------------------------------------------------------printf
 	if (all->token && !check_tkn_lst(all))
 	{
 		// check_tkn_lst(all);
 		create_redir_lst(all);
-		// print_node(all->token);    //<---------------------------------------------------------printf
 		// print_node(all->rdir_tkn);
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
+		printf("input: %s\n", all->lexer->input);
 		exec_part(all);
 	}
 }

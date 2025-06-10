@@ -59,7 +59,7 @@ int new_tkn_char(token_type type, t_all *all)
     char    c;
 
     c = all->lexer->c;
-    if (type == COMMAND || type == ARG || type == REDIR_FILE)
+    if ((type == COMMAND || type == ARG || type == REDIR_FILE) && !all->lexer->d_quote && !all->lexer->s_quote)
     {
     if (c == '<' || c == '>' || c == '|')// || c == '$' )
         return (1);
