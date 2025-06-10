@@ -7,6 +7,7 @@ void	exec_part(t_all *all)
 	// else
 	// 	exec_part2(all);
 	int old_pipe[2];
+	all->pipe.pipe = 0;
 	int has_old_pipe = 0; // pour savoir si on a un pipe precedent
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
 	{
@@ -44,8 +45,9 @@ void	exec_part(t_all *all)
 			close(all->pipe.pipe_fd[0]);
 			close(all->pipe.pipe_fd[1]);
 			if (is_built_in(all) == 0)
-				ft_exit("",all, 0);
+				ft_exit("jexite apres mon built in\n",all, 0);
 			exec_cmd(all);
+			exit(0);
 		}
 		if (has_old_pipe)
 		{
@@ -63,10 +65,15 @@ void	exec_part(t_all *all)
 		all->pipe.pipe++;
 	}
 	int i = all->pipe.nb_pipe;
-	
-	waitpid(all->pipe.pid[i - 1], NULL, 0);
-	waitpid(all->pipe.pid[i], NULL, 0);
+
+	while (i <= all->pipe.nb_pipe)
+	{
+		waitpid(all->pipe.pid[i], NULL, 0);
+		i++;
+	}
+	//printf("jarrive laaaaaaaaaaaaaaaaaaaaaa\n");
 	all->pipe.pipe = 0;
+	all->pipe.nb_pipe = 0;
 }
 
 // waitpid(pipex.pid1, NULL, 0);
