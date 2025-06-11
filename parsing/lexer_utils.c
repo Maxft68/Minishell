@@ -48,20 +48,24 @@ int	create_lexer(char *input, t_all *all)
     all->lexer->c = all->lexer->input[0];
     all->lexer->s_quote = false;
     all->lexer->d_quote = false;
-    all->lexer->first_token = true;
+    all->lexer->cmd = true;
+    all->lexer->redir = false;
     skip_whitespace(all->lexer);
 	return (0);
 }
 
-int new_tkn_char(t_all *all)
+int new_tkn_char(token_type type, t_all *all)
 {
     char    c;
 
     c = all->lexer->c;
+    if ((type == COMMAND || type == ARG || type == REDIR_FILE) && !all->lexer->d_quote && !all->lexer->s_quote)
+    {
     if (c == '<' || c == '>' || c == '|')// || c == '$' )
         return (1);
     if ((c == ' ' && !all->lexer->s_quote) && (c == ' ' && !all->lexer->d_quote))
         return (1);
+    }
     return (0);
 }
 

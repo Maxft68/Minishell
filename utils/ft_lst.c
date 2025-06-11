@@ -21,7 +21,9 @@ const char *get_token_type_name(token_type type)
     if (type == APPEND_OUT)
         return "APPEND_OUT";
     if (type == HEREDOC)
-        return "HEREDOC";
+		return "HEREDOC";
+	if (type == REDIR_FILE)
+		return "REDIR_FILE";
     if (type == VARIABLE)
         return "VARIABLE";
     if (type == ILLEGAL)

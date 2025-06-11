@@ -1,37 +1,7 @@
 
 #include "../mandatory/minishell.h"
-#include <stddef.h>
 
 
-
-void	ft_tknadd_back(t_token **lst, t_token *tkn)
-{
-	t_token	*tmp;
-	
-	if (*lst == NULL)
-	{
-		*lst = tkn;
-		return ;
-	}
-	if (*lst != NULL)
-	{
-		tmp = ft_tknlast(*lst);
-		tmp->next = tkn;
-        // tkn->prev = tmp;
-	}
-}
-
-t_token	*ft_tknlast(t_token *lst)
-{
-	t_token	*tmp;
-	
-	if (lst == NULL)
-		return (NULL);
-	tmp = lst;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	return (tmp);
-}
 char	*ad_char(t_all *all, char* str)
 {
 	size_t	i;
@@ -43,11 +13,11 @@ char	*ad_char(t_all *all, char* str)
 	return (str);
 }
 
-char	*pick_char(char *str, t_all *all)
+char	*pick_char(char *str, token_type type, t_all *all)
 {
 	char	c;
 
-    while (ft_isprint(all->lexer->c) && !new_tkn_char(all))
+    while (ft_isprint(all->lexer->c) && !new_tkn_char(type, all))//<---- new_tkn si en dehors quotes 
     {
 		c = all->lexer->c;
         if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)

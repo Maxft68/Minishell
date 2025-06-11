@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/05/22 16:40:50 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/10 17:39:52 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,12 @@ SRC =	mandatory/minishell.c \
 		built_in/env/do_env.c \
 		pipe/pipe.c\
 		pipe/exec_part.c\
+		parsing/expand.c\
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
+		parsing/redir_list.c\
+		parsing/token_utils.c\
 		parsing/list_to_tab.c\
 		built_in/cd/do_cd.c \
 		built_in/pwd/do_pwd.c \

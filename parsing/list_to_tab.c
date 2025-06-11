@@ -79,7 +79,7 @@ void    list_to_tab(t_all *all)
             i++;
             j = 0;
         }
-        if (tmp && tmp->type > 0 && tmp->type != 5)
+        if (tmp && tmp->type > 0 && tmp->type < 5)
         {
             // printf("%s %d %d\n", tmp->str, i , j);  <---------------------------------------------------------printf
             all->pipe.cmd_args[i][j] = gc_strdup(tmp->str, all);
