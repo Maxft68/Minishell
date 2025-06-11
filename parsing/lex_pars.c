@@ -38,9 +38,9 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	// 	advance_char(all->lexer);
 	if (type == PIPE)
 	{
-		// if (all->lexer->c == '|' || all->lexer->position == 1 || \
-		// 	(all->lexer->input[all->lexer->position] && \
-		// 	all->lexer->input[all->lexer->position] == '|') || \
+		// if (all->lexer->c == '|' || all->lexer->position == 1 ||
+		// 	(all->lexer->input[all->lexer->position] && 
+		// 	all->lexer->input[all->lexer->position] == '|') || 
 		// 	all->lexer->c == '\0')
 		// if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
 		// 	ft_exit("Syntax error\n", all, 1);
@@ -58,7 +58,7 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	//     ft_exit("Syntax error\n", all, 1);
 	create_token(type, str, all);
 }
- 
+
 void next_token(t_all *all)
 {
 	char c;
@@ -97,7 +97,7 @@ void next_token(t_all *all)
 // 	tmp = all->token;
 // 	while (tmp)
 // 	{
-// 		if (tmp->type > 5 && tmp->type < 10 && \
+// 		if (tmp->type > 5 && tmp->type < 10 && 
 // 			tmp->next->type > 4 && tmp->next->type < 10)
 // 		{
 // 			write(2, "tash: syntax error near unexpected token `", 42);

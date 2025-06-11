@@ -1,25 +1,25 @@
 #include "minishell.h"
 
-char    *search_pipe_redir(int pipe, token_type type, t_all *all)
-{
-	t_token *tmp;
-	char    *redir;
+// char    *search_pipe_redir(int pipe, token_type type, t_all *all)
+// {
+// 	t_token *tmp;
+// 	char    *redir;
 
-	tmp = all->rdir_tkn;
-	redir = NULL;
-	while (tmp && tmp->pipe != pipe)
-			tmp = tmp->next;
-	if (tmp && tmp->pipe == pipe)
-	{
-		while (tmp->next && tmp->next->pipe == pipe)
-		{
-			if (tmp->type == type && tmp->next)
-				redir = tmp->next->str;
-			tmp = tmp->next;
-		}  
-	}
-	return (redir);
-}
+// 	tmp = all->rdir_tkn;
+// 	redir = NULL;
+// 	while (tmp && tmp->pipe != pipe)
+// 			tmp = tmp->next;
+// 	if (tmp && tmp->pipe == pipe)
+// 	{
+// 		while (tmp->next && tmp->next->pipe == pipe)
+// 		{
+// 			if (tmp->type == type && tmp->next)
+// 				redir = tmp->next->str;
+// 			tmp = tmp->next;
+// 		}  
+// 	}
+// 	return (redir);
+// }
 
 
 void	exec_part(t_all *all)
