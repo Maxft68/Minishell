@@ -6,7 +6,7 @@
 /*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:48:34 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/03/19 15:23:24 by maxoph           ###   ########.fr       */
+/*   Updated: 2025/06/11 13:44:02 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	free_all(char **s, char **s1)
 int	ft_strchr_int(const char *s, int c)
 {
 	size_t	i;
-
+	if (!s)
+		return (-1);
 	i = 0;
 	while (i < ft_strlen(s))
 	{

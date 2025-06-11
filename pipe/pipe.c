@@ -42,7 +42,7 @@ void	exec_cmd(t_all *all)
 	
 	// path = "/bin/ls";
 	pipe = all->pipe.pipe;
-	if (!all->pipe.cmd_args || !all->pipe.cmd_args[pipe])
+	if (!all->pipe.cmd_args || !all->pipe.cmd_args[pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------\n"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
 		return ;

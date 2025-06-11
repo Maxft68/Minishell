@@ -22,13 +22,36 @@ void	exec_part(t_all *all)
 		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
 		if (all->pipe.pid[all->pipe.pipe] == 0)
 		{
-			if (has_old_pipe)
+			if (search_redir_in(all->pipe.pipe))
+			{
+				all->pipe.fd_infile = open(search_pipe_redir(all->pipe.pipe), O_RDONLY);
+				if (all->pipe.fd_infile == -1)
+				{
+					perror("open infile");
+					exit(1);
+				}
+				dup2(all->pipe.fd_infile, STDIN_FILENO);
+				close(all->pipe.fd_infile);
+			}
+			else if (has_old_pipe) // si on a un pipe precedent
 			{
 				dup2(old_pipe[0], STDIN_FILENO);
 				close(old_pipe[0]);
 				close(old_pipe[1]);
 			}
-			if (all->pipe.pipe < all->pipe.nb_pipe)
+
+			if(search_redir_out(all->pipe.pipe))
+			{
+				all->pipe.fd_outfile = open(search_pipe_redir(all->pipe.pipe), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (all->pipe.fd_outfile == -1)
+				{
+					perror("open outfile");
+					exit(1);
+				}
+				dup2(all->pipe.fd_outfile, STDOUT_FILENO);
+				close(all->pipe.fd_outfile);
+			}
+			else if(all->pipe.pipe < all->pipe.nb_pipe)
 			{
 				dup2(all->pipe.pipe_fd[1], STDOUT_FILENO);
 				close(all->pipe.pipe_fd[0]);
@@ -37,8 +60,26 @@ void	exec_part(t_all *all)
 			
 			if (all->pipe.pipe < all->pipe.nb_pipe)// sauvegarder pipe pour le prochain pipe
 			{
-				old_pipe[0] = all->pipe.pipe_fd[0];
-				old_pipe[1] = all->pipe.pipe_fd[1];
+				if (all->pipe.pipe_fd[0])
+				{
+					old_pipe[0] = all->pipe.pipe_fd[0];
+					printf("numero de pipe= %d, jai un old_pipe[0]", all->pipe.pipe);
+				}
+				if (all->pipe.pipe_fd[1])
+				{
+					old_pipe[1] = all->pipe.pipe_fd[1];
+					printf("numero de pipe= %d, jai un old_pipe[1]", all->pipe.pipe);
+				}
+				if (all->pipe.fd_infile)
+				{
+					old_pipe[0] = all->pipe.fd_infile;
+					printf("numero de pipe= %d, jai un fd_infile", all->pipe.pipe);
+				}
+				if (all->pipe.fd_outfile)
+				{
+					old_pipe[1] = all->pipe.fd_outfile;
+					printf("numero de pipe= %d, jai un fd_outfile", all->pipe.pipe);
+				}
 				has_old_pipe = 1; // on a un pipe pour le suivant
 			}
 
@@ -64,7 +105,7 @@ void	exec_part(t_all *all)
 		}
 		all->pipe.pipe++;
 	}
-	int i = all->pipe.nb_pipe;
+	int i = 0;
 
 	while (i <= all->pipe.nb_pipe)
 	{
