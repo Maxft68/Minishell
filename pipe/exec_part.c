@@ -112,13 +112,13 @@ void	exec_part(t_all *all)
 			exec_cmd(all);
 			exit(0);
 		}
-		if (has_old_pipe)
+		if (has_old_pipe && all->pipe.pipe > 0)
 		{
 			close(old_pipe[0]);
 			close(old_pipe[1]);
 		}
 		
-		// Sauvegarder le nouveau pipe pour la prochaine itération
+		// Sauvegarder le nouveau pipe pour la prochaine fois
 		if (all->pipe.pipe < all->pipe.nb_pipe)
 		{
 			old_pipe[0] = all->pipe.pipe_fd[0];
