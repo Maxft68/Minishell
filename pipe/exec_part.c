@@ -1,5 +1,27 @@
 #include "minishell.h"
 
+char    *search_pipe_redir(int pipe, token_type type, t_all *all)
+{
+	t_token *tmp;
+	char    *redir;
+
+	tmp = all->rdir_tkn;
+	redir = NULL;
+	while (tmp && tmp->pipe != pipe)
+			tmp = tmp->next;
+	if (tmp && tmp->pipe == pipe)
+	{
+		while (tmp->next && tmp->next->pipe == pipe)
+		{
+			if (tmp->type == type && tmp->next)
+				redir = tmp->next->str;
+			tmp = tmp->next;
+		}  
+	}
+	return (redir);
+}
+
+
 void	exec_part(t_all *all)
 {
 	// if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0) //si 0pipe et built in
@@ -22,9 +44,9 @@ void	exec_part(t_all *all)
 		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
 		if (all->pipe.pid[all->pipe.pipe] == 0)
 		{
-			if (search_redir_in(all->pipe.pipe))
+			if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))
 			{
-				all->pipe.fd_infile = open(search_pipe_redir(all->pipe.pipe), O_RDONLY);
+				all->pipe.fd_infile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all), O_RDONLY);
 				if (all->pipe.fd_infile == -1)
 				{
 					perror("open infile");
@@ -40,9 +62,9 @@ void	exec_part(t_all *all)
 				close(old_pipe[1]);
 			}
 
-			if(search_redir_out(all->pipe.pipe))
+			if(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all))
 			{
-				all->pipe.fd_outfile = open(search_pipe_redir(all->pipe.pipe), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				all->pipe.fd_outfile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all ), O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (all->pipe.fd_outfile == -1)
 				{
 					perror("open outfile");
@@ -63,22 +85,22 @@ void	exec_part(t_all *all)
 				if (all->pipe.pipe_fd[0])
 				{
 					old_pipe[0] = all->pipe.pipe_fd[0];
-					printf("numero de pipe= %d, jai un old_pipe[0]", all->pipe.pipe);
+					printf("numero de pipe= %d, jai un old_pipe[0]\n", all->pipe.pipe);
 				}
 				if (all->pipe.pipe_fd[1])
 				{
 					old_pipe[1] = all->pipe.pipe_fd[1];
-					printf("numero de pipe= %d, jai un old_pipe[1]", all->pipe.pipe);
+					printf("numero de pipe= %d, jai un old_pipe[1]\n", all->pipe.pipe);
 				}
 				if (all->pipe.fd_infile)
 				{
 					old_pipe[0] = all->pipe.fd_infile;
-					printf("numero de pipe= %d, jai un fd_infile", all->pipe.pipe);
+					printf("numero de pipe= %d, jai un fd_infile\n", all->pipe.pipe);
 				}
 				if (all->pipe.fd_outfile)
 				{
 					old_pipe[1] = all->pipe.fd_outfile;
-					printf("numero de pipe= %d, jai un fd_outfile", all->pipe.pipe);
+					printf("numero de pipe= %d, jai un fd_outfile\n", all->pipe.pipe);
 				}
 				has_old_pipe = 1; // on a un pipe pour le suivant
 			}
