@@ -100,7 +100,7 @@ void	exec_part(t_all *all)
 				if (all->pipe.fd_outfile)
 				{
 					old_pipe[1] = all->pipe.fd_outfile;
-					printf("numero de pipe= %d, jai un fd_outfile\n", all->pipe.pipe);
+					printf("numero de pipe= %d, jai un fd_outfile ?\n", all->pipe.pipe);
 				}
 				has_old_pipe = 1; // on a un pipe pour le suivant
 			}
