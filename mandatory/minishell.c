@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **env)
 		return (printf("Just one arg, or nothing\n"), 1);
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
-	// add +1SHLVL
+	// add +1SHLVL ou recreer
 	signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	while (1)
