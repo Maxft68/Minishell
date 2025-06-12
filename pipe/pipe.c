@@ -70,7 +70,7 @@ char	*find_path_cmd(t_all *all, char **env)
 // 	if (!path)
 // 		return (NULL); // et donner le code erreur 127 ?
 // 	return (path);
-// }
+// } 
 
 void	exec_cmd(t_all *all)
 {
