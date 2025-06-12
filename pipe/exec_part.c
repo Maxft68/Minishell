@@ -1,27 +1,5 @@
 #include "minishell.h"
 
-// char    *search_pipe_redir(int pipe, token_type type, t_all *all)
-// {
-// 	t_token *tmp;
-// 	char    *redir;
-
-// 	tmp = all->rdir_tkn;
-// 	redir = NULL;
-// 	while (tmp && tmp->pipe != pipe)
-// 			tmp = tmp->next;
-// 	if (tmp && tmp->pipe == pipe)
-// 	{
-// 		while (tmp->next && tmp->next->pipe == pipe)
-// 		{
-// 			if (tmp->type == type && tmp->next)
-// 				redir = tmp->next->str;
-// 			tmp = tmp->next;
-// 		}  
-// 	}
-// 	return (redir);
-// }
-
-
 void	exec_part(t_all *all)
 {
 	// if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0) //si 0pipe et built in
@@ -31,6 +9,14 @@ void	exec_part(t_all *all)
 	int old_pipe[2];
 	all->pipe.pipe = 0;
 	int has_old_pipe = 0; // pour savoir si on a un pipe precedent
+
+	if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0)
+	{
+		printf("jexecute un built in et 0 pipe\n");
+		return;
+	}
+
+
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
 	{
 		if (all->pipe.pipe < all->pipe.nb_pipe)
