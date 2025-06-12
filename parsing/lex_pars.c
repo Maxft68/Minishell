@@ -6,7 +6,7 @@ void create_word_token(t_all *all)
 	char        *str;
 	token_type  type;
 
-	if (all->lexer->cmd)// && !all->lexer->redir)
+	if (all->lexer->cmd && !all->lexer->redir)
 	{
 		type = COMMAND;
 		all->lexer->cmd = false;
@@ -18,10 +18,13 @@ void create_word_token(t_all *all)
 		else if (all->lexer->c == 39)
 			type = SQ_STRING;
 		else if (all->lexer->redir)// && !all->lexer->cmd)
+		{	
 			type = REDIR_FILE;
+			all->lexer->redir = false;
+		}
 		else
 			type = ARG;
-		all->lexer->cmd = true;
+		// all->lexer->cmd = true;
 	}
 	str = NULL;
 	// initialize_data(all, str);
@@ -42,16 +45,18 @@ void create_operator_token(token_type type, char *str, t_all *all)
 		// 	(all->lexer->input[all->lexer->position] && 
 		// 	all->lexer->input[all->lexer->position] == '|') || 
 		// 	all->lexer->c == '\0')
+		// if (all->lexer->c == '|' || all->lexer->position == 1 || (all->lexer->input[all->lexer->position] && all->lexer->input[all->lexer->position] == '|') || all->lexer->c == '\0')
 		// if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
 		// 	ft_exit("Syntax error\n", all, 1);
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
+		all->lexer->redir = false;
 	}
 	else
 	{
 		if (type == APPEND_OUT || type == HEREDOC)
 			advance_char(all->lexer);
-		all->lexer->cmd = false;
+		// all->lexer->cmd = false;
 		all->lexer->redir = true;
 	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
@@ -99,6 +104,7 @@ void next_token(t_all *all)
 // 	{
 // 		if (tmp->type > 5 && tmp->type < 10 && 
 // 			tmp->next->type > 4 && tmp->next->type < 10)
+// 		if (tmp->type > 5 && tmp->type < 10 && tmp->next->type > 4 && tmp->next->type < 10)
 // 		{
 // 			write(2, "tash: syntax error near unexpected token `", 42);
 // 			write(2, tmp->next->str, ft_strlen(tmp->next->str));

@@ -42,7 +42,6 @@ typedef struct s_pipe
 	int						pipe;        // numero du pipe actuel
 	int						nb_pipe; //nombre de pipe total
 	int						pipe_fd[2]; // [0] lecture  [1] ecriture
-	int						pid[10];
 	int						fd_infile;
 	int						fd_outfile;
 	

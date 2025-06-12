@@ -157,17 +157,30 @@ void	exec_part(t_all *all)
 
 // 		open_and_and_define_fd(all); // define fd[0] et fd[1]
 // 		if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1)
+// 		pid[all->pipe.pipe] = -1;
+
+// 		if (pipe(all->pipe.pipe_fd) == -1);
+// 			return(perror("pipe"), 1); //exit ??
+// 		pid[all->pipe.pipe] = fork();
+
+// 		open_and_and_define_fd(all); // define fd[0] et fd[1]
+// 		if (dup2(all->pipe.pipe_fd[0], STDIN_FILENO) == -1)
 // 			perror("dup2");
 // 		if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1)
+// 		if (dup2(all->pipe.pipe_fd[1], STDOUT_FILENO) == -1)
 // 			perror("dup2");
+// 		//close(pipe_fd[1]);
 // 		//close(pipe_fd[1]);
 // 		if (pid == 0)
 // 			if (is_built_in(all))
 // 				exec_cmd(all);
 // 		//if old_fd    dup(oldfd, new fd)
+// 		//if old_fd    dup(oldfd, new fd)
 // 		all->pipe.pipe++;
 // 	}
 // }
+
+//gerer redirection pipe
 
 //gerer redirection pipe
 

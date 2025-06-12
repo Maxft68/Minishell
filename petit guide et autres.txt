@@ -25,6 +25,7 @@ command cat
 	sign >
 
 
+
 si | present alors executer les built-in uniquement dans les enfants
 
 
@@ -105,6 +106,12 @@ echo $USER,$rveve,12$USER ok $ $123 $!??USER $'USER' $US'ER' '$USER'
 
 
 --------il faudra encore ajouter le $?-------- 
+echo ~ doit expand variable home
+echo ~/srtjykuyfutytyejryu
+
+sans pipe on lance chaque commande dans un enfant
+	pour ne pas execve dans le parent
+
 --------il faudra encore ajouter le $?-------- 
 echo ~ doit expand variable home
 echo ~/srtjykuyfutytyejryu
