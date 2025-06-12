@@ -9,6 +9,7 @@ void	test_the_path(t_all *all, char *s)
 		if (chdir(s) == -1)
 			perror(str);
 	}
+	// set PWD ET OLDPWD ICI ??	
 }
 
 // char	*search_and_return_env(t_all *all, char *name)
@@ -153,7 +154,7 @@ void	do_cd(t_all *all)
 	else
 	{
 		test_the_path(all, s);
-		// 	replace_or_add_env(all, "PWD", ft_pwd(all));
+		// 	replace_or_add_env(all, "PWD", ft_pwd(all)); set OLDPWD ET PWD ensuite !!
 	}
 	printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
 }
