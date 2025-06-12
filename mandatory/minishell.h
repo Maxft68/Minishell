@@ -145,7 +145,7 @@ typedef struct s_all
 	t_data				data;
 	t_env_export		env_export;
 	t_export			*export;
-	int					error_code;
+	int					error_code;     // pour le code exit status
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);

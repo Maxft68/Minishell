@@ -21,9 +21,9 @@ void	free_array(char **array)
 
 void	ft_exit(char *error, t_all *all, int error_code)
 {
+	
 	if (error)
 		ft_putstr_fd(error, 2);
-	
 	if (all->garbage_env)
 		free_garbage_env(&all->garbage_env);
 	if (all->garbage)
@@ -31,7 +31,8 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	if (all->token)
 		ft_lstclear(&all->token);
 	rl_clear_history();
-	
+	if (error_code)
+		all->error_code = error_code;
 	exit(error_code);
 }
 
