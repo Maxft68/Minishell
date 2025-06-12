@@ -125,3 +125,24 @@ echo cou "| |" echo ok
 echo cou "|"
 echo ">out"
 >out <in echo ok
+Voici le tableau complété avec la différence entre **parent** (shell principal) et **enfant** (processus forké, ex : dans un pipe) :
+
+| Commande           | Affiche "exit" | Message d’erreur                  | Quitte le shell principal | Quitte le process enfant | Code de sortie |
+|--------------------|:--------------:|-----------------------------------|:------------------------:|:-----------------------:|:--------------:|
+| `exit`             | oui (parent)   | non                               | oui                      | oui                     |   `$?`         |
+|                    | non (enfant)   | non                               | non                      | oui                     |   `$?`         |
+| `exit 42`          | oui (parent)   | non                               | oui                      | oui                     |   42           |
+|                    | non (enfant)   | non                               | non                      | oui                     |   42           |
+| `exit abc`         | oui (parent)   | oui (numeric required)            | oui                      | oui                     |   2            |
+|                    | non (enfant)   | oui (numeric required)            | non                      | oui                     |   2            |
+| `exit 1 2`         | oui (parent)   | oui (too many arguments)          | non                      | oui                     |   1            |
+|                    | non (enfant)   | oui (too many arguments)          | non                      | oui                     |   1            |
+| `exit abc 2`       | oui (parent)   | oui (numeric required)            | oui                      | oui                     |   2            |
+|                    | non (enfant)   | oui (numeric required)            | non                      | oui                     |   2            |
+| `exit 1 abc`       | oui (parent)   | oui (too many arguments)          | non                      | oui                     |   1            |
+|                    | non (enfant)   | oui (too many arguments)          | non                      | oui                     |   1            |
+
+**Résumé** :
+- **Parent** : affiche "exit", quitte le shell principal (sauf "too many arguments")
+- **Enfant** : ne doit pas afficher "exit", quitte juste le process enfant (jamais le shell principal)
+- Les messages d’erreur sont toujours affichés (sur stderr) dans les deux cas

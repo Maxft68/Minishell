@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 	t_all	all;
 
 	if (argc != 1)
-		return (1); 
+		return (printf("Just one arg, or nothing\n"), 1);
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
 	signal(SIGQUIT, SIG_IGN);

@@ -15,6 +15,8 @@ void	exec_part(t_all *all)
 		printf("jexecute un built in et 0 pipe\n");
 		return;
 	}
+	else if (all->pipe.nb_pipe == 0)
+		exec_cmd(all);
 
 
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
@@ -93,10 +95,15 @@ void	exec_part(t_all *all)
 
 			close(all->pipe.pipe_fd[0]);
 			close(all->pipe.pipe_fd[1]);
-			if (is_built_in(all) == 0)
-				ft_exit("jexite apres mon built in\n",all, 0);
-			exec_cmd(all);
-			exit(0);
+			if (all->pipe.cmd_args[all->pipe.pipe])
+			{
+				if (is_built_in(all) == 0)
+					ft_exit("jexite apres mon built in\n",all, 0);
+				printf("je vai execve\n");
+				exec_cmd(all);
+			}
+			printf("JAI EXECVE OU PAS ???\n");
+			exit(0); // dans le if ou pas ? 
 		}
 		if (has_old_pipe && all->pipe.pipe > 0)
 		{

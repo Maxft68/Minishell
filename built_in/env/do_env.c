@@ -25,10 +25,25 @@ void	split_env(t_all *all, char *env)
 	all->data.value[j] = '\0';
 }
 
-void	do_env(t_all *all, char **env)
+void	minimal_env(t_all *all)
 {
-	int	i;
-	int	j;
+	char *path;
+
+	path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+	all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
+	if (!all->data.name)
+		ft_exit("Cannot allocate memory1\n", all, 12);
+	all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
+	if (!all->data.value)
+		ft_exit("Cannot allocate memory2\n", all, 12);
+	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "PATH", path));
+	all->env_export.nb_line_env = 1;
+}
+
+void	normal_env(t_all *all, char **env)
+{
+	int j;
+	int i;
 
 	i = 0;
 	while (env[i])
@@ -40,18 +55,29 @@ void	do_env(t_all *all, char **env)
 			all->data.len_name++;
 		all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
 		if (!all->data.name)
-			ft_exit("Cannot allocate memory\n", all, 12);
+			ft_exit("Cannot allocate memory1.1\n", all, 12);
 		while (env[i][j++])
 			all->data.len_value++;
 		all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
 		if (!all->data.value)
-			ft_exit("Cannot allocate memory\n", all, 12);
+			ft_exit("Cannot allocate memory2.1\n", all, 12);
 		split_env(all, env[i]);
 		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
 		i++;
 	}
 	all->env_export.nb_line_env = i;
+}
+
+void	do_env(t_all *all, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (!env[i])
+		minimal_env(all);
+	else
+		normal_env(all, env);
 }
 
 void	print_node_env(t_env *env)
@@ -96,7 +122,7 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 
 		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
 		if (!s1s2)
-			ft_exit("Cannot allocate memory\n", all, 12);
+			ft_exit("Cannot allocate memory3\n", all, 12);
 		i = 0;
 		j = 0;
 		while (s1 && s1[i])
@@ -123,12 +149,12 @@ char	**do_char_env(t_all *all)
 	t_env	*current;
 	int j;
 	j = 0;
-	current = all->env;
 	if (!all || !all->env)
 		ft_exit("pourquoi pas ??", all, 1);
+	current = all->env;
 	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
 	if (!env)
-		ft_exit("Cannot allocate memory\n", all, 12);
+		ft_exit("Cannot allocate memory4\n", all, 12);
 	while(current)
 	{
 		if (!current->name || !current->value)
