@@ -6,7 +6,7 @@ void create_word_token(t_all *all)
 	char        *str;
 	token_type  type;
 
-	if (all->lexer->cmd)// && !all->lexer->redir)
+	if (all->lexer->cmd && !all->lexer->redir)
 	{
 		type = COMMAND;
 		all->lexer->cmd = false;
@@ -52,7 +52,7 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	{
 		if (type == APPEND_OUT || type == HEREDOC)
 			advance_char(all->lexer);
-		all->lexer->cmd = false;
+		// all->lexer->cmd = false;
 		all->lexer->redir = true;
 	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char

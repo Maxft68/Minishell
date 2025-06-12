@@ -25,6 +25,7 @@ command cat
 	sign >
 
 
+
 si | present alors executer les built-in uniquement dans les enfants
 
 
