@@ -60,7 +60,7 @@ void create_operator_token(token_type type, char *str, t_all *all)
 		all->lexer->redir = true;
 	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
-	//     ft_exit("Syntax error\n", all, 1);
+	//     ft_exit("Syntax error\n", all, 1); 
 	create_token(type, str, all);
 }
 
