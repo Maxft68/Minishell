@@ -24,6 +24,8 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	
 	if (error)
 		ft_putstr_fd(error, 2);
+	if (all->rdir_tkn)
+		ft_lstclear(&all->rdir_tkn);
 	if (all->garbage_env)
 		free_garbage_env(&all->garbage_env);
 	if (all->garbage)
