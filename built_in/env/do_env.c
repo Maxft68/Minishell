@@ -72,12 +72,37 @@ void	normal_env(t_all *all, char **env)
 void	do_env(t_all *all, char **env)
 {
 	int	i;
+	int	old_shlvl;
+	char *new_shlvl;
 
 	i = 0;
+	new_shlvl = NULL;
+	old_shlvl = 0;
 	if (!env[i])
 		minimal_env(all);
 	else
 		normal_env(all, env);
+	if (search_env(all, "SHLVL")) //si il existe pas
+	{
+		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "SHLVL", "1"));
+	}
+	else
+	{
+		if(ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0);
+			replace_env(all, "SHLVL", "1");
+		else
+		{
+			old_shlvl = ft_atoi(find_the_value(all, "SHLVL"));
+			if (old_shlvl == 999)
+				replace_env(all, "SHLVL", "1");
+			else
+			{
+				old_shlvl ++;
+				new_shlvl = gc_itoa(all, old_shlvl);
+				replace_env(all, "SHLVL", "new_shlvl");
+			}
+		}
+	}
 }
 
 void	print_node_env(t_env *env)
