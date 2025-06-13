@@ -173,6 +173,7 @@ char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
 // char		*gc_realloc(t_all *all, char *old, int big);
 void		*gc_realloc(t_all *all, void *ptr, size_t size);
+char		*gc_itoa(t_all *all, int n);
 /* **********Lexing parsing************************************************** */
 int			create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);
@@ -192,7 +193,7 @@ void		initialize_data(t_all *all, char *old);
 void		handle_expand(char *old, t_all *all);
 char		*search_pipe_redir(int pipe, token_type type, t_all *all);
 /* **********Exec functions************************************************** */
-void		exec_cmd(t_all *all);
+int			exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
 char		**do_char_env(t_all *all);
 void		exec_part(t_all *all);

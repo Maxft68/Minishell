@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
+#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/10 17:39:52 by rbier            ###   ########.fr        #
+#    Updated: 2025/06/13 11:28:12 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC =	mandatory/minishell.c \
 		utils/ft_lst.c \
 		utils/ft_garbage.c \
 		utils/ft_garbage_env.c\
+		utils/gc_itoa.c\
 		built_in/env/do_env.c \
 		pipe/pipe.c\
 		pipe/exec_part.c\

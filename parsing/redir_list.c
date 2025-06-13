@@ -8,7 +8,7 @@ t_token *copy_token(t_token *tokn, t_all *all)
     // new = (t_token*)gc_malloc(all, sizeof(t_token));
     new = (t_token*)malloc(sizeof(t_token));
     if (!new)
-        ft_exit("Cannot allocate memory\n", all, 12);
+        ft_exit("Cannot allocate memory10\n", all, 12);
     // new->str = gc_strdup(tokn->str, all);
     new->str = ft_strdup(tokn->str);
     new->type = tokn->type;

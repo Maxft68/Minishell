@@ -46,7 +46,8 @@ int	main(int argc, char **argv, char **env)
 	int		lex;
 
 	if (argc != 1)
-		return (1); 
+		return (printf("Just one arg, or nothing\n"), 1);
+	printf("--------nouveau minishell----------\n");
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
 	signal(SIGQUIT, SIG_IGN);
@@ -55,12 +56,15 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		lex = create_lexer(readline("WriteOnMe "), &all);
-		// if (create_lexer(readline("WriteOnMe "), &all) != -1)
-		if (lex == 0) 
-			pars_to_exec(&all);	
-		if (lex == 42)
+		dup2(1, STDIN_FILENO);
+		char *input = readline("WriteOnMe ");
+		if (!input)
+		{
+			printf("pas de in put dans main go break, exit\n");
 			break;
+		}
+		if (create_lexer(input, &all) != -1)
+			pars_to_exec(&all);
 		//if (!all.lexer->input)
 			//continue;
 		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
@@ -69,5 +73,5 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&all.rdir_tkn);
 	}
 	(void)argv;
-}
+} 
 

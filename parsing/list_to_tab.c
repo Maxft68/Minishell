@@ -9,7 +9,7 @@ char	*gc_strdup(char *s, t_all *all)
 	l = ft_strlen(s);
 	alloc = gc_malloc(all, (l + 1) * sizeof(char));
 	if (!alloc)
-        ft_exit("Cannot allocate memory\n", all, 12);
+        ft_exit("Cannot allocate memory6\n", all, 12);
     ft_strlcpy(alloc, s, l + 1);
 	return (alloc);
 }
@@ -31,7 +31,7 @@ void    alloc_tab_star_star(t_all *all)
         {
             all->pipe.cmd_args[i] = gc_malloc(all, (sizeof(char*) * (j + 1)));
             if (!all->pipe.cmd_args[i])
-                ft_exit("Cannot allocate memory\n", all, 12);
+                ft_exit("Cannot allocate memory7\n", all, 12);
             all->pipe.cmd_args[i][j] = NULL;
             i++;
             j = 0;
@@ -55,7 +55,7 @@ void    alloc_tab_star_star_star(t_all *all)
     }
     all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 2))); //si 1pipe = 2 parties
     if (!all->pipe.cmd_args)
-        ft_exit("Cannot allocate memory\n", all, 12);
+        ft_exit("Cannot allocate memory8\n", all, 12);
     all->pipe.cmd_args[i + 1] = NULL;
     alloc_tab_star_star(all);
 }
