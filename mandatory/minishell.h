@@ -173,6 +173,7 @@ char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
 // char		*gc_realloc(t_all *all, char *old, int big);
 void		*gc_realloc(t_all *all, void *ptr, size_t size);
+char		*gc_itoa(t_all *all, int n);
 /* **********Lexing parsing************************************************** */
 int			create_lexer(char *input, t_all *all);
 void    	pars_to_exec(t_all *all);

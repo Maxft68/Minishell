@@ -69,15 +69,34 @@ void	normal_env(t_all *all, char **env)
 	all->env_export.nb_line_env = i;
 }
 
-void	do_env(t_all *all, char **env)
+void	change_shlvl(t_all *all)
 {
-	int	i;
 	int	old_shlvl;
 	char *new_shlvl;
 
-	i = 0;
 	new_shlvl = NULL;
 	old_shlvl = 0;
+	if(ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0)
+		replace_env(all, "SHLVL", "1");
+	else
+	{
+		old_shlvl = ft_atoi(find_the_value(all, "SHLVL"));
+		if (old_shlvl == 999)
+			replace_env(all, "SHLVL", "1");
+		else
+		{
+			old_shlvl ++;
+			new_shlvl = gc_itoa(all, old_shlvl);
+			replace_env(all, "SHLVL", "new_shlvl");
+		}
+	}
+}
+
+void	do_env(t_all *all, char **env)
+{
+	int i;
+
+	i = 0;
 	if (!env[i])
 		minimal_env(all);
 	else
@@ -88,20 +107,7 @@ void	do_env(t_all *all, char **env)
 	}
 	else
 	{
-		if(ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0);
-			replace_env(all, "SHLVL", "1");
-		else
-		{
-			old_shlvl = ft_atoi(find_the_value(all, "SHLVL"));
-			if (old_shlvl == 999)
-				replace_env(all, "SHLVL", "1");
-			else
-			{
-				old_shlvl ++;
-				new_shlvl = gc_itoa(all, old_shlvl);
-				replace_env(all, "SHLVL", "new_shlvl");
-			}
-		}
+		change_shlvl(all);
 	}
 }
 
