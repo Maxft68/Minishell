@@ -192,7 +192,6 @@ char	**do_char_env(t_all *all)
 	{
 		if (!current->name || !current->value)
 		{
-			printf("name ou value invalide\n");
 			while(current && (!current->name || !current->value))
 				current = current->next;
 			if (!current)

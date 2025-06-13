@@ -193,7 +193,7 @@ void		initialize_data(t_all *all, char *old);
 void		handle_expand(char *old, t_all *all);
 char		*search_pipe_redir(int pipe, token_type type, t_all *all);
 /* **********Exec functions************************************************** */
-void		exec_cmd(t_all *all);
+int			exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
 char		**do_char_env(t_all *all);
 void		exec_part(t_all *all);

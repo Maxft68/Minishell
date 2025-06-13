@@ -31,8 +31,9 @@ int	verif_quoted(char *input)
 
 int	create_lexer(char *input, t_all *all)
 {
-	if (!input)
-		ft_exit("exit\n", all, 0);
+	// if (!input) // evite de crash quqnd ctrl D
+	// 	ft_exit("pas d'input,exit\n", all, 0);
+	// printf("il est passer par ici\n");
     if (input && input[0] != '\0')
 		add_history(input);
     if (input[0] == '\0')

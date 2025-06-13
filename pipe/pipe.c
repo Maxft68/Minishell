@@ -13,6 +13,8 @@ char	*find_path_cmd(t_all *all, char **env)
 		i++;
 	if (!env[i]) //quand env nexiste plus
 	{
+		return(ft_putstr_fd("WriteOnMe: ", 2), ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2), ft_putstr_fd(": No such file or directory, PAS DE CHOCOLAT\n", 2), NULL);
+		
 		// ft_putstr_fd(args1, 2);
 		// ft_putstr_fd(": command not found\n", 2);   a modifier
 		// exit(127);
@@ -24,7 +26,7 @@ char	*find_path_cmd(t_all *all, char **env)
 	}
 	path = search_good_path(path_to_search, all);
 	if (!path)
-		return(ft_exit("PAS DE PATH, PAS DE CHOCOLAT", all, 127), NULL);
+		return(NULL);
 	return(path);
 }
 	void	print_char_tab(char **tab, char *name)
@@ -39,7 +41,7 @@ char	*find_path_cmd(t_all *all, char **env)
     }
 }
 
-void	exec_cmd(t_all *all)
+int	exec_cmd(t_all *all)
 {
 	char **env = do_char_env(all);
 	char **cmd = NULL;
@@ -47,21 +49,24 @@ void	exec_cmd(t_all *all)
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
-		return ;
+		return(1);
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
 	if (cmd && cmd[0] && ft_strchr(cmd[0], '/'))
-	path = all->pipe.cmd_args[all->pipe.pipe][0];
+		path = all->pipe.cmd_args[all->pipe.pipe][0];
 	else
-	path = find_path_cmd(all, env);
+		path = find_path_cmd(all, env);
+	if (!path)
+		return(all->error_code = 127, 1);
 	
 	/* path = NULL;
 	path = all->pipe.cmd_path[pipe]; */
 	//print_char_tab(env, *env);
 	// print_char_tab(cmd, *cmd);
 	// printf("path =%s\n", path);
-	if (execve(path, cmd, env) == -1)
+	if (execve(path, cmd, env) == -1) //return si echoue ??
 		printf("-=-=-=-execve fail-=-=--\n");
+	return(1);
 }
 
 
@@ -85,7 +90,7 @@ char	*search_good_path(char **paths, t_all *all)
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
 	ft_putstr_fd(": command not found\n", 2); // ??
-	//
+	all->error_code = 127;
 	// puis continue les pipes suivant ??
 	return (NULL);
 }

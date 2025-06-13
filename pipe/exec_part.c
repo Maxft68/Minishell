@@ -15,8 +15,11 @@ void	exec_part(t_all *all)
 		printf("jexecute un built in et 0 pipe\n");
 		return;
 	}
-	else if (all->pipe.nb_pipe == 0)
-		exec_cmd(all);
+	// else if (all->pipe.nb_pipe == 0)
+	// {
+	// 	if(exec_cmd(all))
+	// 		return;
+	// }
 
 
 	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
@@ -40,11 +43,13 @@ void	exec_part(t_all *all)
 					perror("open infile");
 					exit(1);
 				}
+				printf("JE DEVRAIS PAS DU TOUT ETRE LA OMG\n");
 				dup2(all->pipe.fd_infile, STDIN_FILENO);
 				close(all->pipe.fd_infile);
 			}
 			else if (has_old_pipe) // si on a un pipe precedent
 			{
+				printf("JE DEVRAIS PAS DU TOUT ETRE LA OMG1111\n");
 				dup2(old_pipe[0], STDIN_FILENO);
 				close(old_pipe[0]);
 				close(old_pipe[1]);
@@ -68,7 +73,7 @@ void	exec_part(t_all *all)
 				close(all->pipe.pipe_fd[1]);
 			} 
 			
-			if (all->pipe.pipe < all->pipe.nb_pipe)// sauvegarder pipe pour le prochain pipe
+			if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)// sauvegarder pipe pour le prochain pipe
 			{
 				if (all->pipe.pipe_fd[0])
 				{
@@ -102,17 +107,17 @@ void	exec_part(t_all *all)
 				printf("je vai execve\n");
 				exec_cmd(all);
 			}
-			printf("JAI EXECVE OU PAS ???\n");
-			exit(0); // dans le if ou pas ? 
+			printf("JAI PAS EXECVE\n");
+			//return; // dans le if ou pas ? 
 		}
-		if (has_old_pipe && all->pipe.pipe > 0)
+		if (has_old_pipe && all->pipe.nb_pipe > 0)
 		{
 			close(old_pipe[0]);
 			close(old_pipe[1]);
 		}
 		
 		// Sauvegarder le nouveau pipe pour la prochaine fois
-		if (all->pipe.pipe < all->pipe.nb_pipe)
+		if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)
 		{
 			old_pipe[0] = all->pipe.pipe_fd[0];
 			old_pipe[1] = all->pipe.pipe_fd[1];

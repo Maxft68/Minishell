@@ -46,16 +46,23 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 		return (printf("Just one arg, or nothing\n"), 1);
+	printf("--------nouveau minishell----------\n");
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
-	// add +1SHLVL ou recreer
 	signal(SIGQUIT, SIG_IGN);
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	while (1)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		if (create_lexer(readline("WriteOnMe "), &all) != -1)
+		dup2(1, STDIN_FILENO);
+		char *input = readline("WriteOnMe ");
+		if (!input)
+		{
+			printf("pas de in put dans main go break, exit\n");
+			break;
+		}
+		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
 		//if (!all.lexer->input)
 			//continue;
