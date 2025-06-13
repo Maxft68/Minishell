@@ -43,7 +43,6 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_all	all;
-	int		lex;
 
 	if (argc != 1)
 		return (printf("Just one arg, or nothing\n"), 1);
