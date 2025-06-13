@@ -135,7 +135,7 @@ void	exec_part(t_all *all)
 	//int fail;
 	int i;
 
-	i = 0;
+	i = 0; 
 	open_all_pipe(all);
 	while(i < all->pipe.nb_pipe + 1)
 	{
