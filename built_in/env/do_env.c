@@ -73,10 +73,12 @@ void	change_shlvl(t_all *all)
 {
 	int	old_shlvl;
 	char *new_shlvl;
+	char *shlvl;
 
 	new_shlvl = NULL;
 	old_shlvl = 0;
-	if(ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0)
+	shlvl = find_the_value(all, "SHLVL");
+	if(!shlvl || ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0)
 		replace_env(all, "SHLVL", "1");
 	else
 	{
@@ -87,7 +89,7 @@ void	change_shlvl(t_all *all)
 		{
 			old_shlvl ++;
 			new_shlvl = gc_itoa(all, old_shlvl);
-			replace_env(all, "SHLVL", "new_shlvl");
+			replace_env(all, "SHLVL", new_shlvl);
 		}
 	}
 }
@@ -189,9 +191,17 @@ char	**do_char_env(t_all *all)
 	while(current)
 	{
 		if (!current->name || !current->value)
-			ft_exit("Invalid environment variable", all, 1);
-		env[j] = strjoin_env(all, current->name, current->value);
-		current = current->next;
+		{
+			printf("name ou value invalide\n");
+			while(current && (!current->name || !current->value))
+				current = current->next;
+			if (!current)
+				break;
+		}
+		if (current && current->name && current->value)
+			env[j] = strjoin_env(all, current->name, current->value);
+		if (current)
+			current = current->next;
 		j++;
 	}
 	env[j] = NULL;
