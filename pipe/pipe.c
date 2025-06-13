@@ -90,7 +90,7 @@ char	*search_good_path(char **paths, t_all *all)
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
 	ft_putstr_fd(": command not found\n", 2); // ??
-	all->error_code = 127;
+	ft_exit("", all, 127); //test
 	// puis continue les pipes suivant ??
 	return (NULL);
 }

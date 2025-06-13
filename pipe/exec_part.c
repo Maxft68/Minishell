@@ -1,141 +1,131 @@
-#include "../mandatory/minishell.h"
+// #include "../mandatory/minishell.h"
 
-void	exec_part(t_all *all)
-{
-	// if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0) //si 0pipe et built in
-	// 	return ;
-	// else
-	// 	exec_part2(all);
-	int old_pipe[2];
-	all->pipe.pipe = 0;
-	int has_old_pipe = 0; // pour savoir si on a un pipe precedent
+// void	exec_part(t_all *all)
+// {
+// 	// if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0) //si 0pipe et built in
+// 	// 	return ;
+// 	// else
+// 	// 	exec_part2(all);
+// 	int old_pipe[2];
+// 	all->pipe.pipe = 0;
+// 	int has_old_pipe = 0; // pour savoir si on a un pipe precedent
 
-	if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0)
-	{
-		printf("jexecute un built in et 0 pipe\n");
-		return;
-	}
-	// else if (all->pipe.nb_pipe == 0)
-	// {
-	// 	if(exec_cmd(all))
-	// 		return;
-	// }
+// 	if (all->pipe.nb_pipe == 0 && is_built_in(all) == 0)
+// 	{
+// 		printf("jexecute un built in et 0 pipe\n");
+// 		return;
+// 	}
+// 	// else if (all->pipe.nb_pipe == 0)
+// 	// {
+// 	// 	if(exec_cmd(all))
+// 	// 		return;
+// 	// }
 
 
-	while(all->pipe.pipe != all->pipe.nb_pipe + 1)
-	{
-		if (all->pipe.pipe < all->pipe.nb_pipe)
-		{
-			if (pipe(all->pipe.pipe_fd) == -1)
-			{
-				perror("pipe");
-				return; //exit ??
-			}
-		}
-		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
-		if (all->pipe.pid[all->pipe.pipe] == 0)
-		{
-			if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))
-			{
-				all->pipe.fd_infile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all), O_RDONLY);
-				if (all->pipe.fd_infile == -1)
-				{
-					perror("open infile");
-					exit(1);
-				}
-				printf("JE DEVRAIS PAS DU TOUT ETRE LA OMG\n");
-				dup2(all->pipe.fd_infile, STDIN_FILENO);
-				close(all->pipe.fd_infile);
-			}
-			else if (has_old_pipe) // si on a un pipe precedent
-			{
-				printf("JE DEVRAIS PAS DU TOUT ETRE LA OMG1111\n");
-				dup2(old_pipe[0], STDIN_FILENO);
-				close(old_pipe[0]);
-				close(old_pipe[1]);
-			}
-
-			if(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all))
-			{
-				all->pipe.fd_outfile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all ), O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (all->pipe.fd_outfile == -1)
-				{
-					perror("open outfile");
-					exit(1);
-				}
-				dup2(all->pipe.fd_outfile, STDOUT_FILENO);
-				close(all->pipe.fd_outfile);
-			}
-			else if(all->pipe.pipe < all->pipe.nb_pipe)
-			{
-				dup2(all->pipe.pipe_fd[1], STDOUT_FILENO);
-				close(all->pipe.pipe_fd[0]);
-				close(all->pipe.pipe_fd[1]);
-			} 
+// 	while(all->pipe.pipe <= all->pipe.nb_pipe) // si 1pipe nbpipe 0 + 1
+// 	{
+// 		if (all->pipe.pipe < all->pipe.nb_pipe) // tant que pas dernier pipeline
+// 		{
+// 			if (pipe(all->pipe.pipe_fd) == -1)
+// 			{
+// 				perror("pipe");
+// 				return; //exit ??
+// 			}
+// 		}
+// 		all->pipe.pid[all->pipe.pipe] = fork(); // ---------FORK ICI
+// 		if (all->pipe.pid[all->pipe.pipe] == 0)
+// 		{
+// 			if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))
+// 			{
+// 				all->pipe.fd_infile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all), O_RDONLY);
+// 				dup2(all->pipe.fd_infile, STDIN_FILENO);
+// 				close(all->pipe.fd_infile);
+// 			}
+// 			else if (has_old_pipe) // si on a un pipe precedent
+// 			{
+// 				dup2(old_pipe[0], STDIN_FILENO);
+// 				close(old_pipe[0]);
+// 				close(old_pipe[1]);
+// 			}
+// 			if(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all))
+// 			{
+// 				all->pipe.fd_outfile = open(search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all ), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 				if (all->pipe.fd_outfile == -1)
+// 				{
+// 					perror("open outfile");
+// 					exit(1);
+// 				}
+// 				dup2(all->pipe.fd_outfile, STDOUT_FILENO);
+// 				close(all->pipe.fd_outfile);
+// 			}
+// 			else if(all->pipe.pipe < all->pipe.nb_pipe)
+// 			{
+// 				dup2(all->pipe.pipe_fd[1], STDOUT_FILENO);
+// 				close(all->pipe.pipe_fd[0]);
+// 				close(all->pipe.pipe_fd[1]);
+// 			} 
 			
-			if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)// sauvegarder pipe pour le prochain pipe
-			{
-				if (all->pipe.pipe_fd[0])
-				{
-					old_pipe[0] = all->pipe.pipe_fd[0];
-					printf("numero de pipe= %d, jai un old_pipe[0]\n", all->pipe.pipe);
-				}
-				if (all->pipe.pipe_fd[1])
-				{
-					old_pipe[1] = all->pipe.pipe_fd[1];
-					printf("numero de pipe= %d, jai un old_pipe[1]\n", all->pipe.pipe);
-				}
-				if (all->pipe.fd_infile)
-				{
-					old_pipe[0] = all->pipe.fd_infile;
-					printf("numero de pipe= %d, jai un fd_infile\n", all->pipe.pipe);
-				}
-				if (all->pipe.fd_outfile)
-				{
-					old_pipe[1] = all->pipe.fd_outfile;
-					printf("numero de pipe= %d, jai un fd_outfile ?\n", all->pipe.pipe);
-				}
-				has_old_pipe = 1; // on a un pipe pour le suivant
-			}
+// 			if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)// sauvegarder pipe pour le prochain pipe
+// 			{
+// 				if (all->pipe.pipe_fd[0])
+// 				{
+// 					old_pipe[0] = all->pipe.pipe_fd[0];
+// 					printf("numero de pipe= %d, jai un old_pipe[0]\n", all->pipe.pipe);
+// 				}
+// 				if (all->pipe.pipe_fd[1])
+// 				{
+// 					old_pipe[1] = all->pipe.pipe_fd[1];
+// 					printf("numero de pipe= %d, jai un old_pipe[1]\n", all->pipe.pipe);
+// 				}
+// 				if (all->pipe.fd_infile)
+// 				{
+// 					old_pipe[0] = all->pipe.fd_infile;
+// 					printf("numero de pipe= %d, jai un fd_infile\n", all->pipe.pipe);
+// 				}
+// 				if (all->pipe.fd_outfile)
+// 				{
+// 					old_pipe[1] = all->pipe.fd_outfile;
+// 					printf("numero de pipe= %d, jai un fd_outfile ?\n", all->pipe.pipe);
+// 				}
+// 				has_old_pipe = 1; // on a un pipe pour le suivant
+// 			}
+// 			close(all->pipe.pipe_fd[0]);
+// 			close(all->pipe.pipe_fd[1]);
+// 			if (all->pipe.cmd_args[all->pipe.pipe])
+// 			{
+// 				if (is_built_in(all) == 0)
+// 					ft_exit("jexite apres mon built in\n",all, 0);
+// 				printf("je vai execve\n");
+// 				exec_cmd(all);
+// 			}
+// 			printf("JAI PAS EXECVE\n");
+// 			//return; // dans le if ou pas ? 
+// 		}
+// 		if (has_old_pipe && all->pipe.nb_pipe > 0)
+// 		{
+// 			close(old_pipe[0]);
+// 			close(old_pipe[1]);
+// 		}
+// 		// Sauvegarder le nouveau pipe pour la prochaine fois
+// 		if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)
+// 		{
+// 			old_pipe[0] = all->pipe.pipe_fd[0];
+// 			old_pipe[1] = all->pipe.pipe_fd[1];
+// 			has_old_pipe = 1;
+// 		}
+// 		all->pipe.pipe++;
+// 	}
+// 	int i = 0;
 
-			close(all->pipe.pipe_fd[0]);
-			close(all->pipe.pipe_fd[1]);
-			if (all->pipe.cmd_args[all->pipe.pipe])
-			{
-				if (is_built_in(all) == 0)
-					ft_exit("jexite apres mon built in\n",all, 0);
-				printf("je vai execve\n");
-				exec_cmd(all);
-			}
-			printf("JAI PAS EXECVE\n");
-			//return; // dans le if ou pas ? 
-		}
-		if (has_old_pipe && all->pipe.nb_pipe > 0)
-		{
-			close(old_pipe[0]);
-			close(old_pipe[1]);
-		}
-		
-		// Sauvegarder le nouveau pipe pour la prochaine fois
-		if (all->pipe.pipe < all->pipe.nb_pipe && all->pipe.nb_pipe > 0)
-		{
-			old_pipe[0] = all->pipe.pipe_fd[0];
-			old_pipe[1] = all->pipe.pipe_fd[1];
-			has_old_pipe = 1;
-		}
-		all->pipe.pipe++;
-	}
-	int i = 0;
-
-	while (i <= all->pipe.nb_pipe)
-	{
-		waitpid(all->pipe.pid[i], NULL, 0);
-		i++;
-	}
-	//printf("jarrive laaaaaaaaaaaaaaaaaaaaaa\n");
-	all->pipe.pipe = 0;
-	all->pipe.nb_pipe = 0;
-}
+// 	while (i <= all->pipe.nb_pipe)
+// 	{
+// 		waitpid(all->pipe.pid[i], NULL, 0);
+// 		i++;
+// 	}
+// 	//printf("jarrive laaaaaaaaaaaaaaaaaaaaaa\n");
+// 	all->pipe.pipe = 0;
+// 	all->pipe.nb_pipe = 0;
+// }
 
 // waitpid(pipex.pid1, NULL, 0);
 // 	waitpid(pipex.pid2, &status, 0);

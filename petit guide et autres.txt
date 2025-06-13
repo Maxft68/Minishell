@@ -112,12 +112,6 @@ echo ~/srtjykuyfutytyejryu
 sans pipe on lance chaque commande dans un enfant
 	pour ne pas execve dans le parent
 
---------il faudra encore ajouter le $?-------- 
-echo ~ doit expand variable home
-echo ~/srtjykuyfutytyejryu
-
-sans pipe on lance chaque commande dans un enfant
-	pour ne pas execve dans le parent
 
 
 echo cou | | echo ok

@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/13 11:28:12 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/13 20:51:11 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC =	mandatory/minishell.c \
 		built_in/env/do_env.c \
 		pipe/pipe.c\
 		pipe/exec_part.c\
+		pipe/exec_part_try_two.c\
 		parsing/expand.c\
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\
