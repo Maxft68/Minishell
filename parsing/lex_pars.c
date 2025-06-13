@@ -37,17 +37,8 @@ void create_word_token(t_all *all)
 void create_operator_token(token_type type, char *str, t_all *all)
 {
 	advance_char(all->lexer);
-	// if (type == APPEND_OUT || type == HEREDOC)
-	// 	advance_char(all->lexer);
 	if (type == PIPE)
 	{
-		// if (all->lexer->c == '|' || all->lexer->position == 1 ||
-		// 	(all->lexer->input[all->lexer->position] && 
-		// 	all->lexer->input[all->lexer->position] == '|') || 
-		// 	all->lexer->c == '\0')
-		// if (all->lexer->c == '|' || all->lexer->position == 1 || (all->lexer->input[all->lexer->position] && all->lexer->input[all->lexer->position] == '|') || all->lexer->c == '\0')
-		// if (all->lexer->position == 1 || all->lexer->c == '\0')//<--------------gérer dans check_tkn_lst
-		// 	ft_exit("Syntax error\n", all, 1);
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
 		all->lexer->redir = false;

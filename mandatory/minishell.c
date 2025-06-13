@@ -43,6 +43,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_all	all;
+	int		lex;
 
 	if (argc != 1)
 		return (1); 
@@ -54,8 +55,12 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		if (create_lexer(readline("WriteOnMe "), &all) != -1)
-			pars_to_exec(&all);
+		lex = create_lexer(readline("WriteOnMe "), &all);
+		// if (create_lexer(readline("WriteOnMe "), &all) != -1)
+		if (lex == 0) 
+			pars_to_exec(&all);	
+		if (lex == 42)
+			break;
 		//if (!all.lexer->input)
 			//continue;
 		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
