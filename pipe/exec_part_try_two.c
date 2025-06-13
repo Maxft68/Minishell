@@ -95,11 +95,11 @@ void	close_all_fd(t_all *all)
 
 	i = 0;
 	while (i < all->pipe.nb_pipe)
-		{
-			close(all->pipe.pipe_fd[i][0]);
-			close(all->pipe.pipe_fd[i][1]);
-			i++;
-		}
+	{
+		close(all->pipe.pipe_fd[i][0]);
+		close(all->pipe.pipe_fd[i][1]);
+		i++;
+	}
 }
 
 void	do_pipe(t_all *all)
@@ -148,7 +148,7 @@ void	exec_part(t_all *all)
 		i++;
 		all->pipe.pipe++;
 	}
-	
+	// close_all_fd(all); a verifier si fermer les fd dan le parent 
 	all->pipe.pipe = 0;
 	all->pipe.nb_pipe = 0;
 }

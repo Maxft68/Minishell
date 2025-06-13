@@ -43,7 +43,6 @@ typedef struct s_pipe
 	int						nb_pipe; //nombre de pipe total
 	int						**pipe_fd; // [0] lecture  [1] ecriture
 	int						*pid; // to be allocated with size nb_pipe
-	int						old_fd_outfile; // si pas de out dans pipe1 alors stdout du pipe1 se met dedans.
 	int						fd_infile;
 	int						fd_outfile;
 	
