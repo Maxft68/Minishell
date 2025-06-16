@@ -60,7 +60,7 @@ If the node exist replace the value, if not, create the node
 void	replace_or_add_env(t_all *all, char *name, char *value)
 {
 	if (replace_env(all, name, value) == 0)
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, name, value));
 }
 
 /*******************************************************************************

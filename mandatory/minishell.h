@@ -156,7 +156,7 @@ void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 t_garb_env	*ft_lstnew(t_all *all, void *alloc);
-void		ft_lstadd_back_env(t_env **env, t_env *new);
+void		ft_lstadd_back_env(t_all *all, t_env **env, t_env *new);
 int			ft_strcmp(char *s1, char *s2);
 /* **********Garbage************************************************** */
 void		*gc_malloc(t_all *all, size_t size);

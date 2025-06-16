@@ -153,6 +153,7 @@ void	do_pipe(t_all *all)
 
 void	exec_part(t_all *all)
 {
+	int status;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 2)); //sizeof(int *)
 	alloc_my_pipe_fd(all);
 	//int fail;
@@ -178,12 +179,12 @@ void	exec_part(t_all *all)
 	all->pipe.pipe = 0;
 	while (all->pipe.pid && i < all->pipe.nb_pipe + 1)
 	{
-		if (waitpid(all->pipe.pid[i], NULL, 0) == -1) //&status pour le code erreur a rajouter plus tard
+		if (waitpid(all->pipe.pid[i], &status, 0) == -1) //&status pour le code erreur a rajouter plus tard
 			ft_exit("WAITPID", all, 1);
-		if (i == all->pipe.nb_pipe - 1)
-			//signaux(status ...)
-		else
-			//signaux(status.....)
+		// if (i == all->pipe.nb_pipe - 1)
+		// 	//signaux(status ...)
+		// else
+		// 	//signaux(status.....)
 		i++;
 	}
 	all->pipe.pipe = 0;

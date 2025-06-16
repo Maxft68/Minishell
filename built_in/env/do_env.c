@@ -36,7 +36,7 @@ void	minimal_env(t_all *all)
 	all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
 	if (!all->data.value)
 		ft_exit("Cannot allocate memory2\n", all, 12);
-	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "PATH", path));
+	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PATH", path));
 	all->env_export.nb_line_env = 1;
 }
 
@@ -62,11 +62,11 @@ void	normal_env(t_all *all, char **env)
 		if (!all->data.value)
 			ft_exit("Cannot allocate memory2.1\n", all, 12);
 		split_env(all, env[i]);
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.name,
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
-		i++;
+		//i++;
 	}
-	all->env_export.nb_line_env = i;
+	//all->env_export.nb_line_env = i;
 }
 
 void	change_shlvl(t_all *all)
@@ -108,7 +108,7 @@ void	do_env(t_all *all, char **env)
 		normal_env(all, env);
 	if (search_env(all, "SHLVL")) //si il existe pas
 	{
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "SHLVL", "1"));
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "SHLVL", "1"));
 	}
 	else
 	{
@@ -201,10 +201,12 @@ char	**do_char_env(t_all *all)
 				break;
 		}
 		if (current && current->name && current->value)
+		{
 			env[j] = strjoin_env(all, current->name, current->value);
+			j++;
+		}
 		if (current)
 			current = current->next;
-		j++;
 	}
 	env[j] = NULL;
 	return (env);

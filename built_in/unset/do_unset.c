@@ -27,18 +27,15 @@ static	void	suppr_env(t_all *all, char *name)
 			current->next = current->next->next;
 		}
 		current = current->next;
-		// if (ft_strcmp(current->name, name) == 0)
-		// {
-		// 	current->name = NULL;
-		// 	current->value = NULL;
-		// 	return ;
-		// }
 	}
 }
 void	unset_arg(t_all *all, char *s)
 {
 	if (search_env(all, s) == 0)
+	{
 		suppr_env(all, s);
+		all->env_export.nb_line_env--;
+	}
 }
 
 
