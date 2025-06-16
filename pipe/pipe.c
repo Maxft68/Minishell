@@ -46,6 +46,8 @@ int	exec_cmd(t_all *all)
 	char **env = do_char_env(all);
 	char **cmd = NULL;
 	char *path;
+	//printf("ICI\n");
+
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
@@ -58,7 +60,6 @@ int	exec_cmd(t_all *all)
 		path = find_path_cmd(all, env);
 	if (!path)
 		return(all->error_code = 127, 1);
-	
 	/* path = NULL;
 	path = all->pipe.cmd_path[pipe]; */
 	//print_char_tab(env, *env);

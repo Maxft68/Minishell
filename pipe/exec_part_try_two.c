@@ -64,6 +64,7 @@ int	do_redir_fd(t_all *all)
 				close(all->pipe.fd_outfile);
 			}
 		}
+		temp = temp->next;
 	}
 	return(0);
 }
@@ -78,7 +79,7 @@ void	open_all_pipe(t_all *all)
 {
 	int i;
 	
-	i = all->pipe.nb_pipe;
+	i = 0;
 	while(i < all->pipe.nb_pipe)
 	{
 		if (pipe(all->pipe.pipe_fd[i]) == -1)
@@ -89,7 +90,7 @@ void	open_all_pipe(t_all *all)
 		i++;
 	}
 }
-void	close_all_fd(t_all *all)
+void	close_all_fd(t_all *all) // close des pipes
 {
 	int i;
 
@@ -104,51 +105,75 @@ void	close_all_fd(t_all *all)
 
 void	do_pipe(t_all *all)
 {
+	//printf("%d\n", all->pipe.pipe);
 	all->pipe.pid[all->pipe.pipe] = fork();				// ---------FORK ICI
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
-		if (all->pipe.pipe > 0) 					// si pas premier pipeline
-			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDOUT_FILENO);
-		if (all->pipe.pipe < all->pipe.nb_pipe)		// si pas dernier pipeline
+		if (all->pipe.pipe == 0) // premiere commande
+			dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
+		else if (all->pipe.pipe == all->pipe.nb_pipe) // derniere commande
+			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+		else // commande du milieu
+		{
+			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
+		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) || 
-			search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
-			search_pipe_redir(all->pipe.pipe, HEREDOC, all) || 
-			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
-			if (do_redir_fd(all) == -1)
+		search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
+		search_pipe_redir(all->pipe.pipe, HEREDOC, all) || 
+		search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
+		if (do_redir_fd(all) == -1)
 				ft_exit("", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
-		close_all_fd(all);
+		close_all_fd(all); // close avant si exit ? 
 		if (all->pipe.cmd_args[all->pipe.pipe])
 		{
 			if (is_built_in(all) == 0)
 				ft_exit("jexite apres mon built in\n",all, 0);
-			printf("je vais execve\n");
-			exec_cmd(all);
+			else
+			{
+				ft_putstr_fd("je vais execve\n", 2);
+				exec_cmd(all);
+
+			}
+				
+
 		}
 		printf("JAI PAS EXECVE\n");
 	}
+	// else
+	// 	waitpid(all->pipe.pid[all->pipe.pipe], NULL, 0);
 }
 
 void	exec_part(t_all *all)
 {
+	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 2)); //sizeof(int *)
 	alloc_my_pipe_fd(all);
 	//int fail;
 	int i;
 
 	i = 0; 
 	open_all_pipe(all);
-	while(i < all->pipe.nb_pipe + 1)
+	while(all->pipe.pid && i < all->pipe.nb_pipe + 1) //exec dans enfant
 	{
 		
-		if (all->pipe.nb_pipe < 1)
-			do_no_pipe(all);
-		else if (all->pipe.nb_pipe >= 1)
+		// if (all->pipe.nb_pipe < 1)
+		// 	do_no_pipe(all);
+		if (all->pipe.nb_pipe >= 1)
 			do_pipe(all); //fork la dedans
 
 		i++;
 		all->pipe.pipe++;
 	}
-	// close_all_fd(all); a verifier si fermer les fd dan le parent 
+	close_all_fd(all); //a verifier si fermer les fd dan le parent 
+	i = 0;
+	all->pipe.pipe = 0;
+	while (all->pipe.pid && i < all->pipe.nb_pipe + 1)
+	{
+		waitpid(all->pipe.pid[i], NULL, 0);
+		i++;
+		
+		// waitpid(all->pipe.pid[i], NULL, 0);
+	}
 	all->pipe.pipe = 0;
 	all->pipe.nb_pipe = 0;
 }
