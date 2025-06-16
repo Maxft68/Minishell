@@ -156,5 +156,5 @@ void	do_cd(t_all *all)
 		test_the_path(all, s);
 		// 	replace_or_add_env(all, "PWD", ft_pwd(all)); set OLDPWD ET PWD ensuite !!
 	}
-	printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
+	//printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
 }

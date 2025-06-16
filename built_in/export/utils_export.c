@@ -34,6 +34,13 @@ int	replace_env(t_all *all, char *name, char *value)
 	current = all->env;
 	while (current)
 	{
+		if (!current->name || !current->value)
+		{
+			while(current && (!current->name || !current->value))
+				current = current->next;
+			if (!current)
+				break;
+		}
 		if (ft_strcmp(current->name, name) == 0)
 		{
 			if (value)
@@ -42,7 +49,8 @@ int	replace_env(t_all *all, char *name, char *value)
 				current->value = gc_strdup_env("", all);
 			return (1);
 		}
-		current = current->next;
+		if (current)
+			current = current->next;
 	}
 	return(0);
 }

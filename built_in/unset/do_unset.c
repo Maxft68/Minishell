@@ -8,15 +8,31 @@ static	void	suppr_env(t_all *all, char *name)
 	if (!all->env)
 		return ;
 	current = all->env;
-	while (current)
+	if (ft_strcmp(current->name, name) == 0)
 	{
-		if (ft_strcmp(current->name, name) == 0)
+		current = current->next;
+		all->env = current;
+		return;
+	}
+	while (current->next)
+	{
+		
+		if (ft_strcmp(current->next->name, name) == 0)
 		{
-			current->name = NULL;
-			current->value = NULL;
-			return ;
+			if (!current->next->next)
+			{
+				current->next = NULL;
+				return;
+			}
+			current->next = current->next->next;
 		}
 		current = current->next;
+		// if (ft_strcmp(current->name, name) == 0)
+		// {
+		// 	current->name = NULL;
+		// 	current->value = NULL;
+		// 	return ;
+		// }
 	}
 }
 void	unset_arg(t_all *all, char *s)

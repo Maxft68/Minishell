@@ -70,10 +70,20 @@ int	do_redir_fd(t_all *all)
 }
 
 
-// void	do_no_pipe(t_all *all)
-// {
-	
-// }
+void	do_no_pipe(t_all *all)
+{
+	if (is_built_in(all) == 0)
+	{
+		printf("jexite apres mon built in/ PAS DE PIPE\n");
+		return;
+	}
+	else
+	{
+		ft_putstr_fd("je vais execve/ PAS DE PIPE\n", 2);
+		exec_cmd(all);
+
+	}
+}
 
 void	open_all_pipe(t_all *all)
 {
@@ -109,11 +119,11 @@ void	do_pipe(t_all *all)
 	all->pipe.pid[all->pipe.pipe] = fork();				// ---------FORK ICI
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
-		if (all->pipe.pipe == 0) // premiere commande
+		if (all->pipe.pipe == 0 && all->pipe.nb_pipe != 0) // premiere commande
 			dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
-		else if (all->pipe.pipe == all->pipe.nb_pipe) // derniere commande
+		else if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
-		else // commande du milieu
+		else if (all->pipe.nb_pipe != 0) // commande du milieu
 		{
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
@@ -133,10 +143,7 @@ void	do_pipe(t_all *all)
 			{
 				ft_putstr_fd("je vais execve\n", 2);
 				exec_cmd(all);
-
 			}
-				
-
 		}
 		printf("JAI PAS EXECVE\n");
 	}
@@ -155,10 +162,12 @@ void	exec_part(t_all *all)
 	open_all_pipe(all);
 	while(all->pipe.pid && i < all->pipe.nb_pipe + 1) //exec dans enfant
 	{
-		
-		// if (all->pipe.nb_pipe < 1)
-		// 	do_no_pipe(all);
-		if (all->pipe.nb_pipe >= 1)
+		//ft_putstr_fd("hello ?? \n", 2);
+		if (all->pipe.nb_pipe < 1 && is_built_in(all) == 0)
+		{
+			return;
+		}
+		else
 			do_pipe(all); //fork la dedans
 
 		i++;
@@ -169,10 +178,13 @@ void	exec_part(t_all *all)
 	all->pipe.pipe = 0;
 	while (all->pipe.pid && i < all->pipe.nb_pipe + 1)
 	{
-		waitpid(all->pipe.pid[i], NULL, 0);
+		if (waitpid(all->pipe.pid[i], NULL, 0) == -1) //&status pour le code erreur a rajouter plus tard
+			ft_exit("WAITPID", all, 1);
+		if (i == all->pipe.nb_pipe - 1)
+			//signaux(status ...)
+		else
+			//signaux(status.....)
 		i++;
-		
-		// waitpid(all->pipe.pid[i], NULL, 0);
 	}
 	all->pipe.pipe = 0;
 	all->pipe.nb_pipe = 0;
