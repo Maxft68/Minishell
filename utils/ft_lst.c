@@ -89,6 +89,7 @@ void	ft_lstadd_back_env(t_all *all, t_env **env, t_env *new)
 	{
 		*env = new;
 		all->env_export.nb_line_env++;
+		printf("jai %d variables dans env(addback env env inexistant)\n", all->env_export.nb_line_env);
 		return ;
 	}
 	current = *env;
@@ -96,6 +97,7 @@ void	ft_lstadd_back_env(t_all *all, t_env **env, t_env *new)
 		current = current->next;
 	current->next = new;
 	all->env_export.nb_line_env++;
+	printf("jai %d variables dans env(addback ajout a la fin)\n", all->env_export.nb_line_env);
 	return ;
 }
 
