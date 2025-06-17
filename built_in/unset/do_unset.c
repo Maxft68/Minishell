@@ -5,7 +5,7 @@ static	void	suppr_env(t_all *all, char *name)
 {
 	t_env	*current;
 
-	if (!all->env)
+	if (!all->env) 
 		return ;
 	current = all->env;
 	if (ft_strcmp(current->name, name) == 0)
