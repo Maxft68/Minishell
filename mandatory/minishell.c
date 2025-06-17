@@ -60,6 +60,9 @@ int	main(int argc, char **argv, char **env)
 		if (!input)
 		{
 			printf("pas de in put dans main go break, exit\n");
+			free_garbage_collect(&all.garbage);
+			ft_lstclear(&all.token);
+			ft_lstclear(&all.rdir_tkn);
 			break;
 		}
 		if (create_lexer(input, &all) != -1)
