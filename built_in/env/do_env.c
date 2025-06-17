@@ -66,7 +66,7 @@ void	normal_env(t_all *all, char **env)
 		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
 		printf("jai %d variables dans env(normal env)\n", all->env_export.nb_line_env);
-		i++;
+		i++; // test foireux
 	}
 	//all->env_export.nb_line_env = i;
 }
