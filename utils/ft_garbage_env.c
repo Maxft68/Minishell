@@ -79,7 +79,6 @@ void	free_garbage_env(t_garb_env **garbage_env_head)
 		if (garbage_env->pointer != NULL)
 			free(garbage_env->pointer);
 		free(garbage_env);
-		garbage_env = NULL;
 		garbage_env = temp;
 	}
 	*garbage_env_head = NULL;
