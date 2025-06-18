@@ -65,7 +65,7 @@ char	*find_the_value(t_all *all, char *name)
 		if (ft_strcmp(current->name, name) == 0)
 		{
 			if (current->value)
-			return(gc_strdup_env(current->value, all));
+			return(current->value);//gc_strdup_env(current->value, all)
 		}
 		current = current->next;
 	}

@@ -83,11 +83,11 @@ void	change_shlvl(t_all *all)
 	printf("shvalue= %s\n", shlvl);
 	printf("len = %zu\n", ft_strlen(find_the_value(all, "SHLVL")));
 	printf("atoi = %d\n",ft_atoi(find_the_value(all, "SHLVL")));
-	if(!shlvl  || ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0 || ft_atoi(find_the_value(all, "SHLVL")) >= 999)
+	if(!shlvl  || ft_strlen(shlvl) > 3 || ft_atoi(shlvl) <= 0 || ft_atoi(shlvl) >= 999)
 		replace_env(all, "SHLVL", "1");
 	else
 	{
-		old_shlvl = ft_atoi(find_the_value(all, "SHLVL"));
+		old_shlvl = ft_atoi(shlvl);
 		if (old_shlvl == 999)
 			replace_env(all, "SHLVL", "1");
 		else

@@ -49,7 +49,7 @@ int	replace_env(t_all *all, char *name, char *value)
 					ft_strlcpy(current->value, value, ft_strlen(value) + 1);
 				else
 				{
-					free(current->value);
+					//free(current->value);
 					current->value = gc_strdup_env(value, all);
 				}
 			}
