@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
 		dup2(1, STDIN_FILENO);
-		char *input = readline("WriteOnMe ");
+		char *input = gc_strdup(readline("WriteOnMe "), &all);
 		if (!input)
 		{
 			printf("pas de in put dans main go break, exit\n");
