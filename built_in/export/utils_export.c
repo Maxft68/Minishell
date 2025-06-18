@@ -44,26 +44,10 @@ int	replace_env(t_all *all, char *name, char *value)
 		if (ft_strcmp(current->name, name) == 0)
 		{
 			if(value)
-			{
-				if (ft_strlen(value) < ft_strlen(current->value))
-					ft_strlcpy(current->value, value, ft_strlen(value) + 1);
-				else
-				{
-					//free(current->value);
-					current->value = gc_strdup_env(value, all);
-				}
-			}
+				current->value = gc_strdup_env(value, all);
 			else
-			{
-				free(current->value);
 				current->value = gc_strdup_env("", all);
-			}
 			return (1);
-			// if (value)
-			// 	current->value = gc_strdup_env(value, all);
-			// else
-			// 	current->value = gc_strdup_env("", all);
-			// return (1);
 		}
 		if (current)
 			current = current->next;

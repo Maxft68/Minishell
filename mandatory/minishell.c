@@ -59,8 +59,7 @@ int	main(int argc, char **argv, char **env)
 		char *input = readline("WriteOnMe ");
 		if (!input)
 		{
-			printf("pas de in put dans main go break, exit\n");
-			break;
+			ft_exit("pas de input dans main go exit\n", &all, 0);
 		}
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
