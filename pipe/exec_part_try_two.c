@@ -16,6 +16,7 @@ int	do_redir_fd(t_all *all)
 	t_token *temp;
 
 	temp = all->rdir_tkn;
+	ft_putstr_fd("-------je suis dans redir\n", 2);
 	while(temp)
 	{
 		if (temp->type >= 6 && temp->type <= 9)
@@ -23,6 +24,7 @@ int	do_redir_fd(t_all *all)
 
 			if (temp->type == REDIRECT_IN) 
 			{
+				ft_putstr_fd("--------je suis dans redir IN\n", 2);
 				all->pipe.fd_infile = open(temp->str, O_RDONLY);
 				if (all->pipe.fd_infile == -1)
 				{
@@ -47,6 +49,7 @@ int	do_redir_fd(t_all *all)
 			// }
 			if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 			{
+				ft_putstr_fd("------je suis dans redir out\n", 2);
 				if (temp->type == REDIRECT_OUT)
 					all->pipe.fd_outfile = open(temp->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
 				if (temp->type == APPEND_OUT)
@@ -124,21 +127,29 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 	}
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
+		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))
+			if (do_redir_fd(all) == -1)
+				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+		else
+			if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
+				dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+			else if (all->pipe.nb_pipe != 0) // commande du milieu
+				dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+		// if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) || 
+		// 	search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
+		// 	search_pipe_redir(all->pipe.pipe, HEREDOC, all) || 
+		// 	search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
+		// 	if (do_redir_fd(all) == -1)
+		// 		exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		if (all->pipe.pipe == 0 && all->pipe.nb_pipe != 0) // premiere commande
-			dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
+		dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
 		else if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
-			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+		dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
 		else if (all->pipe.nb_pipe != 0) // commande du milieu
 		{
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
 		}
-		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) || 
-			search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
-			search_pipe_redir(all->pipe.pipe, HEREDOC, all) || 
-			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
-		if (do_redir_fd(all) == -1)
-				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		close_all_fd(all); // close avant si exit ? 
 		if (all->pipe.cmd_args[all->pipe.pipe])
 		{
@@ -171,6 +182,7 @@ void	exec_part(t_all *all)
 		//ft_putstr_fd("hello ?? \n", 2);
 		if (all->pipe.nb_pipe < 1 && is_built_in(all) == 0)
 		{
+			do_no_pipe(all);
 			return;
 		}
 		else
