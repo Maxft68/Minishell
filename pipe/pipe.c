@@ -64,7 +64,7 @@ int	exec_cmd(t_all *all)
 	path = all->pipe.cmd_path[pipe]; */
 	//print_char_tab(env, *env);
 	// print_char_tab(cmd, *cmd);
-	printf("path =%s\n", path);
+	//printf("path =%s\n", path);
 	if (execve(path, cmd, env) == -1) //return si echoue ??
 		printf("-=-=-=-execve fail-=-=--\n");
 	return(1);

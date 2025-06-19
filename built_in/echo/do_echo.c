@@ -13,37 +13,6 @@ void	ft_putchar_fd(char c, int fd)
 		return ;
 	write(fd, &c, 1);
 }
-// do_echo(all->pipe.cmd_args[all->pipe.pipe], fd)
-// void	do_echo(char ***args, int pipe, int fd)
-// {
-// 	int	i;
-// 	int j = 1;
-// 	int	argument_n;
-
-// 	argument_n = 0;
-// 	i = 0;
-	
-// 	if (!args[pipe][j])
-// 		ft_putchar_fd('\n', fd);
-// 	while (args[pipe][j] && args[pipe][j][i])
-// 	{
-// 		if (i == 0 && args[pipe][j][i] == '-' && args[pipe][j][i + 1] == 'n' && argument_n == 0) // le -n forcement au debut
-// 		{
-// 			i += 2;
-// 			argument_n = 1;
-// 			while (args[pipe][j] && args[pipe][j][i] == 'n')
-// 			{
-// 				i++;
-// 				if (args[pipe][j] && args[pipe][j][i] != 'n' && args[pipe][j][i] != ' ')
-// 					i = 0;
-// 			}
-// 		}
-// 		ft_putchar_fd(args[pipe][j][i], fd);
-// 		i++;
-// 	}
-// 	if (argument_n == 0)
-// 		ft_putchar_fd('\n', fd);
-// }
 
 void	do_echo(char ***args, int pipe)
 {
@@ -87,27 +56,4 @@ void	do_echo(char ***args, int pipe)
 		if (argument_n == 0)
 		ft_putchar('\n');
 	}
-	
-	
-	// gerer le -nnnnnnnnnnnnnnn
-	
-// 	#include <stdio.h>
-// 	int main()
-// {
-// 	char ***args = malloc(2 * sizeof(char **));
-// 	args[0] = malloc(5 * sizeof(char *));
-// 	args[0][0] = "echo";
-// 	args[0][1] = "";
-// 	args[0][2] = "HELLO";
-// 	args[0][3] = "-n";
-// 	args[0][4] = NULL;
-	
-// 	args[1] = NULL;
-// 	int pipe = 0;
-// 	int fd = 1;
-// 	//ca doit renvoyer "-nnnnnntnnn   -n       -n coucou marc" // fonctionnelle a condition
-// 	// de recevoir les arguments sans espaces
-// 	do_echo(args, pipe, fd);
-// }
 
-//-n -n -n -nnnnnn doit fonctionner comme un simple -n

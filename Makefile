@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/16 17:53:42 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/19 14:44:31 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRC =	mandatory/minishell.c \
 		utils/gc_itoa.c\
 		built_in/env/do_env.c \
 		pipe/pipe.c\
-		pipe/exec_part.c\
 		pipe/exec_part_try_two.c\
 		parsing/expand.c\
 		parsing/lex_pars.c\
