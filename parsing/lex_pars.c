@@ -19,8 +19,11 @@ void create_word_token(t_all *all)
 			type = SQ_STRING;
 		else if (all->lexer->redir)// && !all->lexer->cmd)
 		{	
-			type = REDIR_FILE;
-			all->lexer->redir = false;
+			if (all->lexer->redir == 1)
+				type = REDIR_FILE;
+			if (all->lexer->redir == 2)
+				type = HD_EOF;
+			all->lexer->redir = 0;
 		}
 		else
 			type = ARG;
@@ -41,14 +44,16 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	{
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
-		all->lexer->redir = false;
+		all->lexer->redir = 0;
 	}
 	else
 	{
 		if (type == APPEND_OUT || type == HEREDOC)
 			advance_char(all->lexer);
-		// all->lexer->cmd = false;
-		all->lexer->redir = true;
+		if (type == HEREDOC)
+			all->lexer->redir = 2;
+		else
+			all->lexer->redir = 1;
 	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
 	//     ft_exit("Syntax error\n", all, 1); 

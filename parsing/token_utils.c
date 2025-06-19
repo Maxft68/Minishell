@@ -47,15 +47,15 @@ int check_tkn_lst(t_all *all)
 	tmp = all->token;
 	while (tmp->next)
 	{
-		if (tmp->type > 5 && tmp->type < 10 && \
-			tmp->next->type > 4 && tmp->next->type < 10)
+		if (tmp->type > 7 && tmp->type < 12 && \
+			tmp->next->type > 6 && tmp->next->type < 12)
 			return (syntax_error(tmp->next->str, all), 1);
-        if (tmp->type == 5 && i == 0)
+        if (tmp->type == 7 && i == 0)
             return (syntax_error(tmp->str, all), 1);
 		tmp = tmp->next;
         i++;
 	}
-    if (tmp->type > 4 && tmp->type < 10)
+    if (tmp->type > 6 && tmp->type < 12)
         return (syntax_error("newline", all), 1);
     return (0);
 }

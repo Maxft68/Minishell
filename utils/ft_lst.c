@@ -24,8 +24,8 @@ const char *get_token_type_name(token_type type)
 		return "HEREDOC";
 	if (type == REDIR_FILE)
 		return "REDIR_FILE";
-    if (type == VARIABLE)
-        return "VARIABLE";
+    if (type == HD_EOF)
+        return "HD_EOF";
     if (type == ILLEGAL)
         return "ILLEGAL";
     return "UNKNOWN";

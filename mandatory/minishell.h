@@ -72,25 +72,27 @@ typedef struct s_lexer
 	bool		s_quote;
 	bool		d_quote;
     bool        cmd;
-	bool		redir;
-}       t_lexer;
+	int		redir;
+}				t_lexer;
 
 typedef enum token_type
 {
-	WTF,
-    COMMAND,
-    ARG,
-    SQ_STRING,
-	DQ_STRING,
-    PIPE,
-    REDIRECT_OUT,
-    REDIRECT_IN,
-    APPEND_OUT,
-    HEREDOC,
-	REDIR_FILE,
-    VARIABLE,
-    ILLEGAL,
-}       token_type;
+	WTF				= 0,
+	REDIR_FILE		= 1,
+	HD_EOF			= 2,
+    COMMAND 		= 3,
+    ARG				= 4,
+    SQ_STRING		= 5,
+	DQ_STRING		= 6,
+    PIPE			= 7,
+    REDIRECT_OUT	= 8,
+    REDIRECT_IN		= 9,
+    APPEND_OUT		= 10,
+    HEREDOC			= 11,
+    ILLEGAL			= 12,
+}				token_type;
+
+//
 
 typedef struct  s_token
 {
@@ -99,7 +101,7 @@ typedef struct  s_token
     int             pipe;
     struct s_token  *next;
 	// struct s_token	*prev;
-}  					t_token;
+}					t_token;
 
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout

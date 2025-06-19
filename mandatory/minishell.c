@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 // int	main(int argc, char **argv, char **env)
 // {
@@ -74,6 +74,8 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&all.token);
 		ft_lstclear(&all.rdir_tkn);
 	}
+	printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
+	printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
 	(void)argv;
 } 
 
