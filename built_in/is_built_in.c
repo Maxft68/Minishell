@@ -8,20 +8,20 @@ int	is_built_in(t_all *all)
 		return(1);
 	}
 	if (!all->pipe.cmd_args)
-    {
-        printf("cmd_args is NULL\n");
-        return (1);
-    }
-    if (!all->pipe.cmd_args[all->pipe.pipe])
-    {
-        printf("cmd_args[%d] is NULL\n", all->pipe.pipe);
-        return (1);
-    }
-    if (!all->pipe.cmd_args[all->pipe.pipe][0])
-    {
-        printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe);
-        return (1);
-    }
+	{
+		printf("cmd_args is NULL\n");
+		return (1);
+	}
+	if (!all->pipe.cmd_args[all->pipe.pipe])
+	{
+		printf("cmd_args[%d] is NULL\n", all->pipe.pipe);
+		return (1);
+	}
+	if (!all->pipe.cmd_args[all->pipe.pipe][0])
+	{
+		printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe);
+		return (1);
+	}
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
 		return(do_echo(all->pipe.cmd_args, all->pipe.pipe), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)
