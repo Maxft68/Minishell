@@ -17,7 +17,7 @@ int	do_redir_fd(t_all *all)
 
 	temp = all->rdir_tkn;
 	ft_putstr_fd("-------je suis dans redir\n", 2);
-	while(temp)
+	while(temp->type != PIPE) // ou pipe.pipe = pipe actuel
 	{
 		if (temp->type >= 6 && temp->type <= 9)
 		{
@@ -25,7 +25,7 @@ int	do_redir_fd(t_all *all)
 			if (temp->type == REDIRECT_IN) 
 			{
 				ft_putstr_fd("--------je suis dans redir IN\n", 2);
-				all->pipe.fd_infile = open(temp->str, O_RDONLY);
+				all->pipe.fd_infile = open(temp->next->str, O_RDONLY);
 				if (all->pipe.fd_infile == -1)
 				{
 					perror("open infile"); //a verifier si \n ou pas
@@ -49,11 +49,19 @@ int	do_redir_fd(t_all *all)
 			// }
 			if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 			{
-				ft_putstr_fd("------je suis dans redir out\n", 2);
+				ft_putstr_fd("------je suis dans redir out globale\n", 2);
 				if (temp->type == REDIRECT_OUT)
-					all->pipe.fd_outfile = open(temp->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+				{
+					ft_putstr_fd("------je suis dans redir out\n", 2);
+					ft_putstr_fd(temp->next->str, 2);
+					ft_putstr_fd(" \n", 2);
+					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+				}
 				if (temp->type == APPEND_OUT)
-					all->pipe.fd_outfile = open(temp->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+				{
+					ft_putstr_fd("------je suis dans redir APPEND OUT\n", 2);
+					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+				}
 				if (all->pipe.fd_outfile == -1)
 					{
 						perror("open outfile"); //temp->str ??
@@ -118,7 +126,6 @@ void	close_all_fd(t_all *all) // close des pipes
 
 void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit 
 { //(lenfant le fait lui meme)
-	//printf("%d\n", all->pipe.pipe);
 	all->pipe.pid[all->pipe.pipe] = fork();				// ---------FORK ICI
 	if (all->pipe.pid[all->pipe.pipe] == -1)
 	{
@@ -127,30 +134,50 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 	}
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
-		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))
+		ft_putstr_fd("\n----------------------Pipeline ", 2);
+		ft_putnbr_fd(all->pipe.pipe, 2);
+		ft_putstr_fd(" -----------------------PIPE et je suis dans do pipe\n", 2);
+
+		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
+		{
+			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
 			if (do_redir_fd(all) == -1)
 				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
-		else
-			if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
-				dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
-			else if (all->pipe.nb_pipe != 0) // commande du milieu
-				dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
-		// if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) || 
-		// 	search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
-		// 	search_pipe_redir(all->pipe.pipe, HEREDOC, all) || 
-		// 	search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
-		// 	if (do_redir_fd(all) == -1)
-		// 		exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
-		if (all->pipe.pipe == 0 && all->pipe.nb_pipe != 0) // premiere commande
-		dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
-		else if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
-		dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
-		else if (all->pipe.nb_pipe != 0) // commande du milieu
+		}
+		else if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.pipe != 0) // derniere commande SANS REDIRECTION
 		{
+			ft_putstr_fd("REDIRECTION IN prend le dernier pipe\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+		}
+		else if (all->pipe.nb_pipe != 0 && all->pipe.pipe > 0) // commande du milieu SANS REDIRECTION
+		{
+			ft_putstr_fd("REDIRECTION IN depuis le pipeline ", 2);
+			ft_putnbr_fd(all->pipe.pipe, 2);
+			ft_putstr_fd(" \n", 2);
+			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+		}
+		if (search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
+			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
+		{
+			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION OUT\n", 2);
+			if (do_redir_fd(all) == -1)
+				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+		}
+		else if (all->pipe.pipe == 0 && all->pipe.nb_pipe != 0) // premiere commande
+		{
+			ft_putstr_fd("REDIRECTION OUT depuis le pipe ", 2);
+			ft_putnbr_fd(all->pipe.pipe, 2);
+			ft_putstr_fd(" premiere commande\n", 2);
+			dup2(all->pipe.pipe_fd[0][1], STDOUT_FILENO);
+		}
+		else if (all->pipe.pipe == all->pipe.nb_pipe && all->pipe.nb_pipe != 0) // derniere commande
+		{
+				ft_putstr_fd("REDIRECTION OUT depuis le pipe \n", 2);
+			ft_putnbr_fd(all->pipe.pipe, 2);
+			ft_putstr_fd(" derniere commande\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
 		}
-		close_all_fd(all); // close avant si exit ? 
+		close_all_fd(all); // close avant si exit ?
 		if (all->pipe.cmd_args[all->pipe.pipe])
 		{
 			if (is_built_in(all) == 0)
@@ -163,9 +190,11 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		}
 		printf("JAI PAS EXECVE\n");
 	}
-	// else
-	// 	waitpid(all->pipe.pid[all->pipe.pipe], NULL, 0);
 }
+
+//   echo a >out1 | echo b > out2 | >out3 echo c | > out4 echo d | echo e                     TEST IN
+//     cat out1
+//     cat out2
 
 void	exec_part(t_all *all)
 {
@@ -182,11 +211,18 @@ void	exec_part(t_all *all)
 		//ft_putstr_fd("hello ?? \n", 2);
 		if (all->pipe.nb_pipe < 1 && is_built_in(all) == 0)
 		{
+			ft_putstr_fd("je rentre dans no pipe\n", 2);
 			do_no_pipe(all);
+
 			return;
 		}
 		else
+		{
+			ft_putstr_fd("je rentre dans do_pipe, pipeline pipe= ", 2);
+			ft_putnbr_fd(all->pipe.pipe, 2);
+			ft_putstr_fd(" \n", 2);
 			do_pipe(all); //fork la dedans
+		}
 
 		i++;
 		all->pipe.pipe++;

@@ -119,3 +119,8 @@ t_garb_env	*ft_lstnew(t_all *all, void *alloc)
 	new->next = NULL;
 	return (new);
 }
+
+//   echo a >out1 | echo b > out2 | >out3 echo c | > out4 echo d | echo e                     TEST IN
+//     cat out1
+//     cat out2
+

@@ -38,7 +38,7 @@ void	minimal_env(t_all *all)
 		ft_exit("Cannot allocate memory2\n", all, 12);
 	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PATH", path));
 	all->env_export.nb_line_env = 1;
-	printf("jai %d variables dans env(minimal env)\n", all->env_export.nb_line_env);
+	//printf("jai %d variables dans env(minimal env)\n", all->env_export.nb_line_env);
 }
 
 void	normal_env(t_all *all, char **env)
@@ -65,7 +65,7 @@ void	normal_env(t_all *all, char **env)
 		split_env(all, env[i]);
 		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
-		printf("jai %d variables dans env(normal env)\n", all->env_export.nb_line_env);
+		//printf("jai %d variables dans env(normal env)\n", all->env_export.nb_line_env);
 		i++; // test foireux
 	}
 	//all->env_export.nb_line_env = i;
