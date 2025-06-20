@@ -157,11 +157,6 @@ int	do_no_pipe(t_all *all)
 	
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
-	// else
-	// {
-	// 	ft_putstr_fd("je vais execve/ PAS DE PIPE\n", 2);
-	// 	exec_cmd(all);
-	// }
 }
 
 void	open_all_pipe(t_all *all)
@@ -184,7 +179,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 	if (all->pipe.pid[all->pipe.pipe] == -1)
 	{
 		perror("fork");
-		ft_exit("", all, 1);
+		exit(1);
 	}
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
@@ -203,6 +198,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
+			//if (!dup2)
 		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
 			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
@@ -219,7 +215,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
 		}
 		close_all_pipe_exit(all); // close avant si exit ?
-		if (all->pipe.cmd_args[all->pipe.pipe])
+		if (all->pipe.cmd_args[all->pipe.pipe] && all->pipe.cmd_args[all->pipe.pipe][0])
 		{
 			if (is_built_in(all) == 0)
 			{
@@ -233,6 +229,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			}
 		}
 		printf("JAI PAS EXECVE\n");
+		exit(0);
 	}
 }
 
@@ -293,7 +290,7 @@ int	exec_part(t_all *all)
 	while (i < all->pipe.nb_pipe + 1)
 	{
 		if (waitpid(all->pipe.pid[i], &status, 0) == -1) //&status pour le code erreur a rajouter plus tard
-		ft_exit("WAITPID", all, 1);
+			ft_exit("WAITPID", all, 1);
 		// if (i == all->pipe.nb_pipe - 1)
 		// 	//signaux(status ...)
 		// else

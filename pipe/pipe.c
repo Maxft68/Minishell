@@ -67,7 +67,7 @@ int	exec_cmd(t_all *all)
 	//printf("path =%s\n", path);
 	if (execve(path, cmd, env) == -1) //return si echoue ??
 		printf("-=-=-=-execve fail-=-=--\n");
-	return(1);
+	exit(127); // cmd not found ??
 }
 
 

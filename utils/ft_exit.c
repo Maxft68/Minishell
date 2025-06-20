@@ -24,7 +24,7 @@ void	close_all_pipe_exit(t_all *all) // close des pipes
 	int i;
 
 	i = 0;
-	while (i < all->pipe.i) // quand pipe 4++ fermer pipe 1-2++
+	while (i < all->pipe.nb_pipe) // quand pipe 4++ fermer pipe 1-2++
 	{
 		if (all->pipe.pipe_fd && all->pipe.pipe_fd[i])
 		{
