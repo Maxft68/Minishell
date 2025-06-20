@@ -72,7 +72,7 @@ typedef struct s_lexer
 	bool		s_quote;
 	bool		d_quote;
     bool        cmd;
-	int		redir;
+	int			redir;
 }				t_lexer;
 
 typedef enum token_type
@@ -127,6 +127,14 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 
 }						t_data;
 
+typedef struct s_hd_data//structure data pour heredoc
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*new;
+}				t_hd_data;
+
 
 
 typedef struct	s_env_export
@@ -145,6 +153,7 @@ typedef struct s_all
 	t_garbage			*garbage;
 	t_garb_env			*garbage_env;
 	t_data				data;
+	t_hd_data			hd_data;
 	t_env_export		env_export;
 	t_export			*export;
 	int					error_code;     // pour le code exit status
@@ -187,6 +196,7 @@ int			new_tkn_char(token_type type, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 int 		check_tkn_lst(t_all *all);
+void    	catch_heredoc(t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
 void		print_node(t_token *token);//-------------------------debug
