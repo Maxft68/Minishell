@@ -47,7 +47,7 @@ int check_tkn_lst(t_all *all)
 	tmp = all->token;
 	while (tmp->next)
 	{
-		if (tmp->type > 7 && tmp->type < 12 && \
+		if (tmp->type > 6 && tmp->type < 12 && \
 			tmp->next->type > 6 && tmp->next->type < 12)
 			return (syntax_error(tmp->next->str, all), 1);
         if (tmp->type == 7 && i == 0)
