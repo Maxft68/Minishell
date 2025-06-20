@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	do_built_in(t_all *all)
+int	do_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{

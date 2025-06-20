@@ -45,6 +45,7 @@ typedef struct s_pipe
 	int						*pid; // to be allocated with size nb_pipe
 	int						fd_infile;
 	int						fd_outfile;
+	int						i; // alloc des pipes
 	
 }							t_pipe;
 
@@ -201,6 +202,7 @@ void		exec_part(t_all *all);
 void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
+int			do_built_in(t_all *all);
 void		do_echo(char ***args, int pipe);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_env *env);

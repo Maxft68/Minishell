@@ -3,6 +3,9 @@
 void	alloc_my_pipe_fd(t_all *all)
 {
 	int i = 0;
+
+	if (all->pipe.nb_pipe == 0)
+		return ;
 	all->pipe.pipe_fd = (int **)gc_malloc(all, sizeof(int *) * all->pipe.nb_pipe);
 	while (i < all->pipe.nb_pipe)
 	{
@@ -41,7 +44,7 @@ int	do_redir_fd(t_all *all)
 
 			if (temp->type == REDIRECT_IN) 
 			{
-				ft_putstr_fd("--------je suis dans redir IN\n", 2);
+				//ft_putstr_fd("--------je suis dans redir IN\n", 2);
 				all->pipe.fd_infile = open(temp->next->str, O_RDONLY);
 				if (all->pipe.fd_infile == -1)
 				{
@@ -58,19 +61,19 @@ int	do_redir_fd(t_all *all)
 			}
 			if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 			{
-				ft_putstr_fd("------je suis dans redir out globale\n", 2);
+				//ft_putstr_fd("------je suis dans redir out globale\n", 2);
 				if (temp->type == REDIRECT_OUT)
 				{
-					ft_putstr_fd("Pipeline: ", 2);
-					ft_putnbr_fd(all->pipe.pipe, 2);
-					ft_putstr_fd("\n------je suis dans redir out, mon out est: ", 2);
-					ft_putstr_fd(temp->next->str, 2);
-					ft_putstr_fd(" \n", 2);
+					//ft_putstr_fd("Pipeline: ", 2);
+					//ft_putnbr_fd(all->pipe.pipe, 2);
+					//ft_putstr_fd("\n------je suis dans redir out, mon out est: ", 2);
+					//ft_putstr_fd(temp->next->str, 2);
+					//ft_putstr_fd(" \n", 2);
 					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
 				}
 				if (temp->type == APPEND_OUT)
 				{
-					ft_putstr_fd("------je suis dans redir APPEND OUT\n", 2);
+					//ft_putstr_fd("------je suis dans redir APPEND OUT\n", 2);
 					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
 				}
 				if (all->pipe.fd_outfile == -1)
@@ -91,35 +94,57 @@ int	do_redir_fd(t_all *all)
 	return(0);
 }
 
+// void	do_redir_no_pipe(t_all *all)
+// {
+// 	if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
+// 	{
+// 		ft_putstr_fd("REDIR IN, NO PIPE, BUILT-IN\n", 2);
+// 		if (do_redir_fd_no_pipe(all) == -1)
+// 			ft_exit("", all, 1);
+// 	}
+// 	close_all_fd(all); // close avant si exit ?
+// }
 
 void	do_no_pipe(t_all *all)
 {
-	do_redir_no_pipe
-	if (is_built_in(all) == 0)
+	int stdout_original = dup(STDOUT_FILENO);
+	int stdin_original = dup(STDIN_FILENO);
+	do_redir_fd(all); // /!\ do_redir_no_pipe(all); reprendre do_redir_fd mais changer exit par ft_exit !! /!\.
+	if (!all->pipe.cmd_args[0][0])
 	{
-		printf("j'exit apres mon built in / PAS DE PIPE \n");
-		return;
+		dup2(stdout_original, STDOUT_FILENO);
+		dup2(stdin_original, STDIN_FILENO);
+		close (stdout_original);
+		close (stdin_original);
+		return ;
 	}
-	else
-	{
-		ft_putstr_fd("je vais execve/ PAS DE PIPE\n", 2);
-		exec_cmd(all);
-	}
+
+	do_built_in(all);
+	dup2(stdout_original, STDOUT_FILENO);
+	dup2(stdin_original, STDIN_FILENO);
+	close (stdout_original);
+	close (stdin_original);
+	
+	//printf("j'exit apres mon built in / PAS DE PIPE \n");
+	return;
+	// else
+	// {
+	// 	ft_putstr_fd("je vais execve/ PAS DE PIPE\n", 2);
+	// 	exec_cmd(all);
+	// }
 }
 
 void	open_all_pipe(t_all *all)
 {
-	int i;
 	
-	i = 0;
-	while(i < all->pipe.nb_pipe)
+	while(all->pipe.i < all->pipe.nb_pipe && all->pipe.i < all->pipe.pipe + 3)
 	{
-		if (pipe(all->pipe.pipe_fd[i]) == -1)
+		if (pipe(all->pipe.pipe_fd[all->pipe.i]) == -1)
 		{
 			perror("pipe");
 			ft_exit("", all, 1);
 		}
-		i++;
+		all->pipe.i++;
 	}
 }
 void	close_all_fd(t_all *all) // close des pipes
@@ -127,7 +152,7 @@ void	close_all_fd(t_all *all) // close des pipes
 	int i;
 
 	i = 0;
-	while (i < all->pipe.nb_pipe)
+	while (i < all->pipe.nb_pipe && i < all->pipe.i - 3) // quand pipe 4++ fermer pipe 1-2++
 	{
 		close(all->pipe.pipe_fd[i][0]);
 		close(all->pipe.pipe_fd[i][1]);
@@ -207,15 +232,15 @@ void	exec_part(t_all *all)
 	int i;
 
 	i = 0; 
-	open_all_pipe(all);
 	while(i < all->pipe.nb_pipe + 1) //exec dans enfant
 	{
-		if (all->pipe.nb_pipe < 1 && is_built_in(all) == 0)
+		open_all_pipe(all);
+		if (all->pipe.nb_pipe < 1 && (is_built_in(all) == 0 || !all->pipe.cmd_args[0][0]))
 		{
 			ft_putstr_fd("je rentre dans no pipe, pipeline =", 2);
 			ft_putnbr_fd(all->pipe.pipe, 2);
 			ft_putstr_fd(" \n", 2);
-			//do_no_pipe(all);
+			do_no_pipe(all);
 
 			return;
 		}
@@ -224,14 +249,16 @@ void	exec_part(t_all *all)
 			ft_putstr_fd("je rentre dans do_pipe, pipeline = ", 2);
 			ft_putnbr_fd(all->pipe.pipe, 2);
 			ft_putstr_fd(" \n", 2);
+
 			do_pipe(all); //fork la dedans
 		}
 
 		i++;
 		//printf("i =%d\n", i);
 		all->pipe.pipe++;
+		close_all_fd(all);
 	}
-	close_all_fd(all);
+	all->pipe.i = 0;
 	i = 0;
 	all->pipe.pipe = 0;
 	while (i < all->pipe.nb_pipe + 1)
