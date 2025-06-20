@@ -46,12 +46,11 @@ int	exec_cmd(t_all *all)
 	char **env = do_char_env(all);
 	char **cmd = NULL;
 	char *path;
-	//printf("ICI\n");
 
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
-		return(1);
+		exit(0);
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
 	if (cmd && cmd[0] && ft_strchr(cmd[0], '/'))
@@ -59,12 +58,7 @@ int	exec_cmd(t_all *all)
 	else
 		path = find_path_cmd(all, env);
 	if (!path)
-		return(all->error_code = 127, 1);
-	/* path = NULL;
-	path = all->pipe.cmd_path[pipe]; */
-	//print_char_tab(env, *env);
-	// print_char_tab(cmd, *cmd);
-	//printf("path =%s\n", path);
+		return(printf("PAS DE PATH go exit ?!"), exit(127), 127);
 	if (execve(path, cmd, env) == -1) //return si echoue ??
 		printf("-=-=-=-execve fail-=-=--\n");
 	exit(127); // cmd not found ??
@@ -91,7 +85,7 @@ char	*search_good_path(char **paths, t_all *all)
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
 	ft_putstr_fd(": command not found\n", 2); // ??
-	ft_exit("", all, 127); //test
+	exit(127);
 	// puis continue les pipes suivant ??
 	return (NULL);
 }
