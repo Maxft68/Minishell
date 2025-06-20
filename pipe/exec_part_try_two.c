@@ -29,96 +29,126 @@ void	alloc_my_pipe_fd(t_all *all)
 	// }
 }
 
+void	error_msg(char *s)
+{
+	ft_putstr_fd("WriteOnMe: ", 2);
+	perror(s); //a verifier si \n ou pas
+	exit(1);//sauf si built-in dans parent NI EXECVE
+}
+
+int	error_msg_no_pipe(char *s)
+{
+	ft_putstr_fd("WriteOnMe: ", 2);
+	perror(s); //a verifier si \n ou pas
+	return(1);
+}
+
+int	error_dup2(int fd, char *redir)
+{
+	error_msg(redir);
+	close(fd);
+	return(1);
+}
+
+int	error_dup2_no_pipe(int fd, char *redir)
+{
+	error_msg_no_pipe(redir);
+	close(fd);
+	return(1);
+}
+
+int	do_redir_in_no_pipe(t_all *all, char *redir)
+{
+	//ft_putstr_fd("--------je suis dans redir IN\n", 2);
+	all->pipe.fd_infile = open(redir, O_RDONLY);
+	if (all->pipe.fd_infile == -1)
+		return(error_msg_no_pipe(redir));
+	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
+		return(error_dup2_no_pipe(all->pipe.fd_infile, redir));
+	if (close(all->pipe.fd_infile) == -1)
+		return(error_msg_no_pipe(redir));
+	return(0);
+}
+
+int	do_redir_in(t_all *all, char *redir)
+{
+	//ft_putstr_fd("--------je suis dans redir IN\n", 2);
+	all->pipe.fd_infile = open(redir, O_RDONLY);
+	if (all->pipe.fd_infile == -1)
+		return(error_msg(redir), 1);
+	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
+		return(error_dup2(all->pipe.fd_infile, redir));
+	if (close(all->pipe.fd_infile) == -1)
+		return(error_dup2(all->pipe.fd_infile, redir));
+	return(0);
+}
+
 int	do_redir_fd(t_all *all)
 {
 	t_token *temp;
 
 	temp = all->rdir_tkn;
-	ft_putstr_fd("-------je suis dans redir\n", 2);
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
-	while(temp && temp->pipe == all->pipe.pipe) // ou pipe.pipe = pipe actuel
+	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		if (temp->type >= 6 && temp->type <= 9) // 8 et 11 apres merge et RAJOUTER && temp->next
+		if (temp->type == REDIRECT_IN) 
+			do_redir_in(all, temp->next->str);
+		if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 		{
-
-			if (temp->type == REDIRECT_IN) 
-			{
-				//ft_putstr_fd("--------je suis dans redir IN\n", 2);
-				all->pipe.fd_infile = open(temp->next->str, O_RDONLY);
-				if (all->pipe.fd_infile == -1)
-				{
-					ft_putstr_fd("WriteOnMe: ", 2);
-					perror(temp->next->str); //a verifier si \n ou pas
-					exit(1);//sauf si built-in dans parent
-				}
-				if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
-				{
-					perror("dup2 fd_infile");
-					exit(1);//sauf si built-in dans parent
-				}
-				close(all->pipe.fd_infile);
-			}
-			if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
-			{
-				//ft_putstr_fd("------je suis dans redir out globale\n", 2);
-				if (temp->type == REDIRECT_OUT)
-				{
-					//ft_putstr_fd("Pipeline: ", 2);
-					//ft_putnbr_fd(all->pipe.pipe, 2);
-					//ft_putstr_fd("\n------je suis dans redir out, mon out est: ", 2);
-					//ft_putstr_fd(temp->next->str, 2);
-					//ft_putstr_fd(" \n", 2);
-					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
-				}
-				if (temp->type == APPEND_OUT)
-				{
-					//ft_putstr_fd("------je suis dans redir APPEND OUT\n", 2);
-					all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
-				}
-				if (all->pipe.fd_outfile == -1)
-					{
-						perror("open outfile"); //temp->str ??
-						exit(1);//sauf si built-in dans parent
-					}
-				if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-				{
-					perror("dup2 fd_outfile");
-					exit(1);//sauf si built-in dans parent
-				}
-				close(all->pipe.fd_outfile);
-			}
+			if (temp->type == REDIRECT_OUT)
+				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+			if (temp->type == APPEND_OUT)
+				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+			if (all->pipe.fd_outfile == -1)
+				return(error_msg(temp->next->str), 1);
+			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
+				return(error_msg(temp->next->str), 1);
+			if (close(all->pipe.fd_outfile) == -1)
+				return(error_msg(temp->next->str), 1);
 		}
 		temp = temp->next;
 	}
 	return(0);
 }
 
-// void	do_redir_no_pipe(t_all *all)
-// {
-// 	if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
-// 	{
-// 		ft_putstr_fd("REDIR IN, NO PIPE, BUILT-IN\n", 2);
-// 		if (do_redir_fd_no_pipe(all) == -1)
-// 			ft_exit("", all, 1);
-// 	}
-// 	close_all_fd(all); // close avant si exit ?
-// }
+int	do_redir_no_pipe(t_all *all)
+{
+	t_token *temp;
 
-void	do_no_pipe(t_all *all)
+	temp = all->rdir_tkn;
+	while(temp && temp->pipe != all->pipe.pipe)
+		temp = temp->next;
+	while(temp && temp->pipe == all->pipe.pipe)
+	{
+		if (temp->type == REDIRECT_IN) 
+			if(do_redir_in_no_pipe(all, temp->next->str) == 1)
+				return(1);
+		if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
+		{
+			if (temp->type == REDIRECT_OUT)
+				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+			if (temp->type == APPEND_OUT)
+				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+			if (all->pipe.fd_outfile == -1)
+				return(error_msg_no_pipe(temp->next->str));
+			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
+				return(error_dup2_no_pipe(all->pipe.fd_outfile, temp->next->str));
+			if (close(all->pipe.fd_outfile) == -1)
+				return(error_msg_no_pipe(temp->next->str));
+		}
+		temp = temp->next;
+	}
+	return(0);
+}
+
+
+int	do_no_pipe(t_all *all)
 {
 	int stdout_original = dup(STDOUT_FILENO);
 	int stdin_original = dup(STDIN_FILENO);
-	do_redir_fd(all); // /!\ do_redir_no_pipe(all); reprendre do_redir_fd mais changer exit par ft_exit !! /!\.
-	if (!all->pipe.cmd_args[0][0])
-	{
-		dup2(stdout_original, STDOUT_FILENO);
-		dup2(stdin_original, STDIN_FILENO);
-		close (stdout_original);
-		close (stdin_original);
-		return ;
-	}
-
+	if(do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
+		return(dup2(stdout_original, STDOUT_FILENO), dup2(stdin_original, STDIN_FILENO), close (stdout_original), close (stdin_original), 1);
 	do_built_in(all);
 	dup2(stdout_original, STDOUT_FILENO);
 	dup2(stdin_original, STDIN_FILENO);
@@ -126,7 +156,7 @@ void	do_no_pipe(t_all *all)
 	close (stdin_original);
 	
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
-	return;
+	return(0);
 	// else
 	// {
 	// 	ft_putstr_fd("je vais execve/ PAS DE PIPE\n", 2);
@@ -145,18 +175,6 @@ void	open_all_pipe(t_all *all)
 			ft_exit("", all, 1);
 		}
 		all->pipe.i++;
-	}
-}
-void	close_all_fd(t_all *all) // close des pipes
-{
-	int i;
-
-	i = 0;
-	while (i < all->pipe.nb_pipe && i < all->pipe.i - 3) // quand pipe 4++ fermer pipe 1-2++
-	{
-		close(all->pipe.pipe_fd[i][0]);
-		close(all->pipe.pipe_fd[i][1]);
-		i++;
 	}
 }
 
@@ -197,10 +215,10 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("REDIRECTION OUT dans pipe depuis le pipeline numero ", 2);
 			ft_putnbr_fd(all->pipe.pipe, 2);
-			ft_putstr_fd(" derniere commande donc pas de dup2\n", 2);
+			ft_putstr_fd(" derniere commande\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
 		}
-		close_all_fd(all); // close avant si exit ?
+		close_all_pipe_exit(all); // close avant si exit ?
 		if (all->pipe.cmd_args[all->pipe.pipe])
 		{
 			if (is_built_in(all) == 0)
@@ -223,7 +241,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 //     cat out1
 //     cat out2
 
-void	exec_part(t_all *all)
+int	exec_part(t_all *all)
 {
 	int status;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1)); //sizeof(int *)
@@ -234,15 +252,20 @@ void	exec_part(t_all *all)
 	i = 0; 
 	while(i < all->pipe.nb_pipe + 1) //exec dans enfant
 	{
-		open_all_pipe(all);
+		//open_all_pipe(all);
+		if (i < all->pipe.nb_pipe)
+		{
+			if (pipe(all->pipe.pipe_fd[i]) == -1)
+				perror("pipe");
+		}
 		if (all->pipe.nb_pipe < 1 && (is_built_in(all) == 0 || !all->pipe.cmd_args[0][0]))
 		{
 			ft_putstr_fd("je rentre dans no pipe, pipeline =", 2);
 			ft_putnbr_fd(all->pipe.pipe, 2);
 			ft_putstr_fd(" \n", 2);
-			do_no_pipe(all);
-
-			return;
+			if (do_no_pipe(all) == 1)
+				return(1);
+			return(0);
 		}
 		else
 		{
@@ -252,27 +275,35 @@ void	exec_part(t_all *all)
 
 			do_pipe(all); //fork la dedans
 		}
+		if (i < all->pipe.nb_pipe)
+			close(all->pipe.pipe_fd[i][1]);
+		if (i > 0)
+			close(all->pipe.pipe_fd[i - 1][0]);
 
 		i++;
 		//printf("i =%d\n", i);
 		all->pipe.pipe++;
-		close_all_fd(all);
+		// close_pipe(all);
+		// if(!(i < all->pipe.nb_pipe + 1))
+		// 	close_all_pipe_exit(all);
 	}
-	all->pipe.i = 0;
+	close_all_pipe_exit(all);
 	i = 0;
 	all->pipe.pipe = 0;
 	while (i < all->pipe.nb_pipe + 1)
 	{
 		if (waitpid(all->pipe.pid[i], &status, 0) == -1) //&status pour le code erreur a rajouter plus tard
-			ft_exit("WAITPID", all, 1);
+		ft_exit("WAITPID", all, 1);
 		// if (i == all->pipe.nb_pipe - 1)
 		// 	//signaux(status ...)
 		// else
 		// 	//signaux(status.....)
 		i++;
 	}
+	all->pipe.i = 0;
 	all->pipe.pipe = 0;
 	all->pipe.nb_pipe = 0;
+	return(0);
 }
 
 

@@ -118,10 +118,17 @@ void	do_env(t_all *all, char **env)
 	}
 }
 
-void	print_node_env(t_env *env)
+void	print_node_env(t_all *all, t_env *env)
 {
 	if (!env)
 		return ;
+	if (all->pipe.cmd_args[all->pipe.pipe][1])
+	{
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
+		ft_putstr_fd("\n", 2);
+		return;
+	}
 	while (env)
 	{
 		if (env->value)

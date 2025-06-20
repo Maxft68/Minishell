@@ -110,7 +110,7 @@ void next_token(t_all *all)
 // 	return (0);
 // }
 
-void    pars_to_exec(t_all *all)
+int    pars_to_exec(t_all *all)
 {
 	while (all->lexer->c)
 		next_token(all);
@@ -123,6 +123,8 @@ void    pars_to_exec(t_all *all)
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
 		printf("input: %s\n", all->lexer->input);
-		exec_part(all);
+		if (exec_part(all) == 1)
+			return(1);
 	}
+	return(0);
 }
