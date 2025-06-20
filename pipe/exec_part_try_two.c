@@ -45,7 +45,8 @@ int	do_redir_fd(t_all *all)
 				all->pipe.fd_infile = open(temp->next->str, O_RDONLY);
 				if (all->pipe.fd_infile == -1)
 				{
-					perror("open infile"); //a verifier si \n ou pas
+					ft_putstr_fd("WriteOnMe: ", 2);
+					perror(temp->next->str); //a verifier si \n ou pas
 					exit(1);//sauf si built-in dans parent
 				}
 				if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
@@ -55,15 +56,6 @@ int	do_redir_fd(t_all *all)
 				}
 				close(all->pipe.fd_infile);
 			}
-			// if (temp->type == HEREDOC)
-			// {
-			// 	all->pipe.fd_infile = ; // a checker le 0644
-			// 	if (all->pipe.fd_infile == -1)
-			// 	{
-			// 		perror("open infile HEREDOC");
-			// 		exit(1);//sauf si built-in dans parent
-			// 	}
-			// }
 			if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 			{
 				ft_putstr_fd("------je suis dans redir out globale\n", 2);
@@ -102,6 +94,7 @@ int	do_redir_fd(t_all *all)
 
 void	do_no_pipe(t_all *all)
 {
+	do_redir_no_pipe
 	if (is_built_in(all) == 0)
 	{
 		printf("j'exit apres mon built in / PAS DE PIPE \n");
@@ -168,13 +161,6 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			ft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
 		}
-		// else if (all->pipe.nb_pipe != 0 && all->pipe.pipe > 0) // commande du milieu SANS REDIRECTION
-		// {
-		// 	ft_putstr_fd("REDIRECTION IN depuis le pipeline ", 2);
-		// 	ft_putnbr_fd(all->pipe.pipe, 2);
-		// 	ft_putstr_fd(" \n", 2);
-		// 	dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO);
-		// }
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
 			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
 		{
@@ -189,18 +175,14 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			ft_putstr_fd(" derniere commande donc pas de dup2\n", 2);
 			dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
 		}
-		// else if (all->pipe.pipe != 0) // premiere commande
-		// {
-		// 	ft_putstr_fd("REDIRECTION OUT dans pipe depuis le pipeline ", 2);
-		// 	ft_putnbr_fd(all->pipe.pipe, 2);
-		// 	ft_putstr_fd(" pipe milieu \n", 2);
-		// 	dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO);
-		// }
 		close_all_fd(all); // close avant si exit ?
 		if (all->pipe.cmd_args[all->pipe.pipe])
 		{
 			if (is_built_in(all) == 0)
+			{
+				do_built_in(all);
 				ft_exit("j'exit apres mon built in la??\n",all, 0);
+			}
 			else
 			{
 				ft_putstr_fd("je vais execve\n", 2);
@@ -226,9 +208,8 @@ void	exec_part(t_all *all)
 
 	i = 0; 
 	open_all_pipe(all);
-	while(all->pipe.pid && i < all->pipe.nb_pipe + 1) //exec dans enfant
+	while(i < all->pipe.nb_pipe + 1) //exec dans enfant
 	{
-		//ft_putstr_fd("hello ?? \n", 2);
 		if (all->pipe.nb_pipe < 1 && is_built_in(all) == 0)
 		{
 			ft_putstr_fd("je rentre dans no pipe, pipeline =", 2);
