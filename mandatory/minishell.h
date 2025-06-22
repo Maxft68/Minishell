@@ -73,25 +73,27 @@ typedef struct s_lexer
 	bool		s_quote;
 	bool		d_quote;
     bool        cmd;
-	bool		redir;
-}       t_lexer;
+	int			redir;
+}				t_lexer;
 
 typedef enum token_type
 {
-	WTF,
-    COMMAND,
-    ARG,
-    SQ_STRING,
-	DQ_STRING,
-    PIPE,
-    REDIRECT_OUT,
-    REDIRECT_IN,
-    APPEND_OUT,
-    HEREDOC,
-	REDIR_FILE,
-    VARIABLE,
-    ILLEGAL,
-}       token_type;
+	WTF				= 0,
+	REDIR_FILE		= 1,
+	HD_EOF			= 2,
+    COMMAND 		= 3,
+    ARG				= 4,
+    SQ_STRING		= 5,
+	DQ_STRING		= 6,
+    PIPE			= 7,
+    REDIRECT_OUT	= 8,
+    REDIRECT_IN		= 9,
+    APPEND_OUT		= 10,
+    HEREDOC			= 11,
+    ILLEGAL			= 12,
+}				token_type;
+
+//
 
 typedef struct  s_token
 {
@@ -100,7 +102,7 @@ typedef struct  s_token
     int             pipe;
     struct s_token  *next;
 	// struct s_token	*prev;
-}  					t_token;
+}					t_token;
 
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
@@ -126,6 +128,16 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 
 }						t_data;
 
+typedef struct s_hd_data//structure data pour heredoc
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*new;
+	size_t	hd_eof_len;
+    size_t	str_len;
+}				t_hd_data;
+
 
 
 typedef struct	s_env_export
@@ -144,6 +156,7 @@ typedef struct s_all
 	t_garbage			*garbage;
 	t_garb_env			*garbage_env;
 	t_data				data;
+	t_hd_data			hd_data;
 	t_env_export		env_export;
 	t_export			*export;
 	int					error_code;     // pour le code exit status
@@ -187,6 +200,7 @@ int			new_tkn_char(token_type type, t_all *all);
 void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 int 		check_tkn_lst(t_all *all);
+void    	catch_heredoc(t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
 void		print_node(t_token *token);//-------------------------debug

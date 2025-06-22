@@ -46,7 +46,7 @@ void    create_redir_lst(t_all *all)
     tmp = all->token;
     while (tmp)
     {
-        if (tmp->type > 5 && tmp->type < 10)
+        if (tmp->type > 7 && tmp->type < 12)
         {
             ft_tknadd_back(&all->rdir_tkn, copy_token(tmp, all));
             ft_tknadd_back(&all->rdir_tkn, copy_token(tmp->next, all));

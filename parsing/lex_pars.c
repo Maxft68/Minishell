@@ -1,6 +1,18 @@
 
 #include "../mandatory/minishell.h"
 
+token_type	def_redir(t_all *all)
+{
+	token_type	type;
+
+	if (all->lexer->redir == 2)
+		type = HD_EOF;
+	else
+		type = REDIR_FILE;
+	all->lexer->redir = 0;
+	return (type);
+}
+
 void create_word_token(t_all *all)
 {
 	char        *str;
@@ -18,10 +30,7 @@ void create_word_token(t_all *all)
 		else if (all->lexer->c == 39)
 			type = SQ_STRING;
 		else if (all->lexer->redir)// && !all->lexer->cmd)
-		{	
-			type = REDIR_FILE;
-			all->lexer->redir = false;
-		}
+			type = def_redir(all);
 		else
 			type = ARG;
 		// all->lexer->cmd = true;
@@ -41,14 +50,16 @@ void create_operator_token(token_type type, char *str, t_all *all)
 	{
 		all->pipe.nb_pipe += 1;
 		all->lexer->cmd = true;
-		all->lexer->redir = false;
+		all->lexer->redir = 0;
 	}
 	else
 	{
 		if (type == APPEND_OUT || type == HEREDOC)
 			advance_char(all->lexer);
-		// all->lexer->cmd = false;
-		all->lexer->redir = true;
+		if (type == HEREDOC)
+			all->lexer->redir = 2;
+		else
+			all->lexer->redir = 1;
 	}
 	// if (type == VARIABLE && all->lexer->c == '$') //<---------------------------- à déplacer dans pick_char
 	//     ft_exit("Syntax error\n", all, 1); 
@@ -117,9 +128,9 @@ int    pars_to_exec(t_all *all)
 	print_node(all->token);    //<---------------------------------------------------------printf
 	if (all->token && !check_tkn_lst(all))
 	{
-		// check_tkn_lst(all);
+		catch_heredoc(all);
 		create_redir_lst(all);
-		// print_node(all->rdir_tkn);
+		print_node(all->rdir_tkn);
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
 		printf("input: %s\n", all->lexer->input);
