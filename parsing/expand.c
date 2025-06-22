@@ -5,7 +5,7 @@ void	initialize_data(t_all *all, char *old)
 	all->data.z = 0;
 	all->data.j = 0;
 	all->data.new = NULL;
-	all->data.tmp = gc_malloc(all, sizeof(old));
+	all->data.tmp = gc_malloc(all, ft_strlen(old) + 1);
 
 }
 void	part_one(t_all *all, char *old, char *val)

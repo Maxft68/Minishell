@@ -26,7 +26,12 @@ char	*find_path_cmd(t_all *all, char **env)
 	}
 	path = search_good_path(path_to_search, all);
 	if (!path)
-		return(NULL);
+	{
+		ft_putstr_fd("WriteOnMe: ", 2);
+		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		return (NULL);
+	}
 	return(path);
 }
 // 	void	print_char_tab(char **tab, char *name)
@@ -41,7 +46,7 @@ char	*find_path_cmd(t_all *all, char **env)
 //     }
 // }
 
-int	exec_cmd(t_all *all)
+int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 {
 	char **env = do_char_env(all);
 	char **cmd = NULL;
@@ -54,14 +59,16 @@ int	exec_cmd(t_all *all)
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
 	if (cmd && cmd[0] && ft_strchr(cmd[0], '/'))
-		path = all->pipe.cmd_args[all->pipe.pipe][0];
+		path = cmd[0];
 	else
 		path = find_path_cmd(all, env);
 	if (!path)
 		return(printf("PAS DE PATH go exit ?!"), exit(127), 127);
-	if (execve(path, cmd, env) == -1) //return si echoue ??
-		printf("-=-=-=-execve fail-=-=--\n");
-	exit(127); // cmd not found ??
+	execve(path, cmd, env); //return si echoue ??
+	ft_putstr_fd("WriteOnMe: ", 2);
+	perror(cmd[0]);
+	printf("-=-=-=-execve fail-=-=--\n");
+	exit(127); // exit(126) ??
 }
 
 
@@ -85,7 +92,6 @@ char	*search_good_path(char **paths, t_all *all)
 	}
 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
 	ft_putstr_fd(": command not found\n", 2); // ??
-	exit(127);
 	// puis continue les pipes suivant ??
 	return (NULL);
 }

@@ -2,7 +2,7 @@
 
 t_token *copy_token(t_token *tokn, t_all *all)
 {
-    t_token *new;
+	t_token	*new;
 
     new = NULL;
     // new = (t_token*)gc_malloc(all, sizeof(t_token));
@@ -17,7 +17,7 @@ t_token *copy_token(t_token *tokn, t_all *all)
     return (new);
 }
 
-char    *search_pipe_redir(int pipe, token_type type, t_all *all)
+char	*search_pipe_redir(int pipe, token_type type, t_all *all)
 {
     t_token *tmp;
     char    *redir;
