@@ -50,7 +50,7 @@ int	error_dup2(int fd, char *redir)
 	error_msg(redir);
 	close(fd);
 	return(1);
-}
+} 
 
 int	error_dup2_no_pipe(int fd, char *redir)
 {
