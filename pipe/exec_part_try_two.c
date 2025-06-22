@@ -35,7 +35,7 @@ void	error_msg(t_all *all, char *s)
 {
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(s); //a verifier si \n ou pas
-	ft_exit("", all, 1);//sauf si built-in dans parent NI EXECVE
+	ft_exit_bis("test", all, 1);//sauf si built-in dans parent NI EXECVE
 }
 
 int	error_msg_no_pipe(char *s)
@@ -47,8 +47,8 @@ int	error_msg_no_pipe(char *s)
 
 int	error_dup2(t_all *all, int fd, char *redir)
 {
-	error_msg(all, redir);
 	close(fd);
+	error_msg(all, redir);
 	return(1);
 } 
 
@@ -183,7 +183,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 	if (all->pipe.pid[all->pipe.pipe] == -1)
 	{
 		perror("fork");
-		exit(1);
+		ft_exit_bis("test", all, 1);
 	}
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
@@ -196,7 +196,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
 			if (do_redir_fd(all) == -1)
-				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+				ft_exit_bis("test", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		}
 		if (!search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && all->pipe.pipe != 0)
 		{
@@ -209,7 +209,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION OUT\n", 2);
 			if (do_redir_fd(all) == -1)
-				exit(1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+				ft_exit_bis("test", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		}
 		else if (all->pipe.pipe < all->pipe.nb_pipe) // derniere commande
 		{
@@ -233,7 +233,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			if (is_built_in(all) == 0)
 			{
 				do_built_in(all);
-				exit(all->error_code);
+				ft_exit_bis("test", all, 1);
 			}
 			else
 			{
@@ -242,8 +242,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			}
 		}
 		ft_putstr_fd("JAI PAS EXECVE\n", 2);
-		ft_exit("je free tout", all, 1);
-		exit(127);
+		ft_exit_bis("test", all, 1);
 	}
 }
 

@@ -163,6 +163,7 @@ typedef struct s_all
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);
+void		ft_exit_bis(char *error, t_all *all, int error_code);
 void		close_all_pipe_exit(t_all *all);
 void		do_node(char **read_array, t_all *all);
 void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);

@@ -130,7 +130,7 @@ int    pars_to_exec(t_all *all)
 	{
 		catch_heredoc(all);
 		create_redir_lst(all);
-		print_node(all->rdir_tkn);
+		//print_node(all->rdir_tkn);
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
 		printf("input: %s\n", all->lexer->input);

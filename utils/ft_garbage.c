@@ -31,6 +31,25 @@ void	*gc_malloc(t_all *all, size_t size)
 	return (alloc);
 }
 
+void	free_garbage_collect(t_garbage **garbage_head)
+{
+    t_garbage	*current;
+    t_garbage	*next;
+
+    if (!garbage_head || !*garbage_head)
+        return;
+    current = *garbage_head;
+    while (current)
+    {
+        next = current->next;         // 1. Sauvegarder le nœud suivant
+        if (current->pointer)
+            free(current->pointer);   // 2. Libérer la mémoire allouée
+        free(current);                // 3. Libérer le nœud de la liste lui-même
+        current = next;               // 4. Passer au nœud suivant
+    }
+    *garbage_head = NULL;             // 5. Réinitialiser la tête de liste
+}
+
 // void	free_garbage_collect(t_garbage **garbage_head)
 // {
 // 	t_garbage	*current;
@@ -50,38 +69,38 @@ void	*gc_malloc(t_all *all, size_t size)
 // 	*garbage_head = NULL;
 // }
 
-void	free_garbage_collect(t_garbage **garbage_head)
-{
-	t_garbage	*current;
-	t_garbage	*next;
+// void	free_garbage_collect(t_garbage **garbage_head)
+// {
+// 	t_garbage	*current;
+// 	t_garbage	*next;
 
-	if (!garbage_head)
-		return;
-	current = *garbage_head;
-	while (current)
-	{
-		if(!current->pointer)
-		{
-			while(current && !current->pointer)
-			{
-				next = current->next;
-				free(current);
-				current = next;
-			}
-			if (!current)
-				break;
-		}
-		next = current->next;
-		if (current->pointer)
-		{
-			free(current->pointer);
-			free(current);
-		}
-		if (current)
-			current = next;
-	}
-	*garbage_head = NULL;
-}
+// 	if (!garbage_head)
+// 		return;
+// 	current = *garbage_head;
+// 	while (current)
+// 	{
+// 		if(!current->pointer)
+// 		{
+// 			while(current && !current->pointer)
+// 			{
+// 				char 
+// 				current = current->next;
+// 				free(current);
+// 			}
+// 			if (current)
+// 				break;
+// 		}
+// 		next = current->next;
+// 		if (current->pointer)
+// 		{
+// 			free(current->pointer);
+// 			free(current);
+// 		}
+// 		if (current)
+// 			current = next;
+// 	}
+// 	*garbage_head = NULL;
+// }
 
 
 // char	*gc_realloc(t_all *all, char *old, int big)

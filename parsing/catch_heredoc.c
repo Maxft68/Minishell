@@ -33,11 +33,11 @@ char *append_hd(char *hd_eof, t_all *all)
     all->hd_data.str_len = 0;
     while (1)
     {
-        line = ft_strdup(readline("heredoc:"));
+        line = readline("heredoc:");
         if (line == NULL)
             break;
         if (ft_strncmp(line, hd_eof, all->hd_data.hd_eof_len) == 0 &&
-            		ft_strlen(line) == all->hd_data.hd_eof_len)
+            ft_strlen(line) == all->hd_data.hd_eof_len)
             break;
         if (line != NULL)
         {
