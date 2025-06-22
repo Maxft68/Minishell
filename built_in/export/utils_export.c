@@ -34,15 +34,23 @@ int	replace_env(t_all *all, char *name, char *value)
 	current = all->env;
 	while (current)
 	{
+		if (!current->name || !current->value)
+		{
+			while(current && (!current->name || !current->value))
+				current = current->next;
+			if (!current)
+				break;
+		}
 		if (ft_strcmp(current->name, name) == 0)
 		{
-			if (value)
+			if(value)
 				current->value = gc_strdup_env(value, all);
 			else
 				current->value = gc_strdup_env("", all);
 			return (1);
 		}
-		current = current->next;
+		if (current)
+			current = current->next;
 	}
 	return(0);
 }
@@ -52,7 +60,7 @@ If the node exist replace the value, if not, create the node
 void	replace_or_add_env(t_all *all, char *name, char *value)
 {
 	if (replace_env(all, name, value) == 0)
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, name, value));
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, name, value));
 }
 
 /*******************************************************************************

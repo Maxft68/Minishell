@@ -41,10 +41,11 @@ typedef struct s_pipe
 	char					**cmd_path; // [numero de pipe]"/bin/ls"
 	int						pipe;        // numero du pipe actuel
 	int						nb_pipe; //nombre de pipe total
-	int						pipe_fd[2]; // [0] lecture  [1] ecriture
-	int						pid[10];
+	int						**pipe_fd; // [0] lecture  [1] ecriture
+	int						*pid; // to be allocated with size nb_pipe
 	int						fd_infile;
 	int						fd_outfile;
+	int						i; // alloc des pipes
 	
 }							t_pipe;
 
@@ -162,6 +163,7 @@ typedef struct s_all
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);
+void		close_all_pipe_exit(t_all *all);
 void		do_node(char **read_array, t_all *all);
 void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);
@@ -169,7 +171,7 @@ void		ft_lstclear(t_token **token);
 void		free_array(char **array);
 t_env		*ft_lstnew_env(t_all *all, char *name, char *value);
 t_garb_env	*ft_lstnew(t_all *all, void *alloc);
-void		ft_lstadd_back_env(t_env **env, t_env *new);
+void		ft_lstadd_back_env(t_all *all, t_env **env, t_env *new);
 int			ft_strcmp(char *s1, char *s2);
 /* **********Garbage************************************************** */
 void		*gc_malloc(t_all *all, size_t size);
@@ -189,7 +191,7 @@ void		*gc_realloc(t_all *all, void *ptr, size_t size);
 char		*gc_itoa(t_all *all, int n);
 /* **********Lexing parsing************************************************** */
 int			create_lexer(char *input, t_all *all);
-void    	pars_to_exec(t_all *all);
+int			pars_to_exec(t_all *all);
 char		*pick_char(char *str, token_type type, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
@@ -210,14 +212,15 @@ char		*search_pipe_redir(int pipe, token_type type, t_all *all);
 int			exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
 char		**do_char_env(t_all *all);
-void		exec_part(t_all *all);
+int			exec_part(t_all *all);
 /* **********Signal functions************************************************ */
 void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
+int			do_built_in(t_all *all);
 void		do_echo(char ***args, int pipe);
 void		do_env(t_all *all, char **env);
-void		print_node_env(t_env *env);
+void		print_node_env(t_all *all, t_env *env);
 void		free_env(t_env **env);
 void		do_export(t_all *all);
 void		do_add_env_next(t_all *all, char *s);

@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/20 17:54:37 by rbier            ###   ########.fr        #
+#    Updated: 2025/06/22 20:41:48 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC =	mandatory/minishell.c \
 		utils/gc_itoa.c\
 		built_in/env/do_env.c \
 		pipe/pipe.c\
-		pipe/exec_part.c\
+		pipe/exec_part_try_two.c\
 		parsing/expand.c\
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\

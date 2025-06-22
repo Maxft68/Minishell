@@ -38,7 +38,7 @@
 // 		free_garbage_collect(&all.garbage);
 // 	}
 // 	(void)argv;
-// }
+// } 
 
 int	main(int argc, char **argv, char **env)
 {
@@ -55,27 +55,18 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		dup2(1, STDIN_FILENO);
 		char *input = gc_strdup(readline("WriteOnMe "), &all);
 		if (!input)
-		{
-			printf("pas de in put dans main go break, exit\n");
-			free_garbage_collect(&all.garbage);
-			ft_lstclear(&all.token);
-			ft_lstclear(&all.rdir_tkn);
 			break;
-		}
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
-		//if (!all.lexer->input)
-			//continue;
-		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
-		free_garbage_collect(&all.garbage);
 		ft_lstclear(&all.token);
 		ft_lstclear(&all.rdir_tkn);
+		free_garbage_collect(&all.garbage);
 	}
 	printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
+	ft_exit("pas de in put dans main go break, exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
 } 
 

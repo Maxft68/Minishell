@@ -1,11 +1,32 @@
 
 #include "minishell.h"
 
+
+void	del_export(t_export **export)
+{
+	t_export	*temp;
+
+	if (!export || !*export)
+		return ;
+	while (*export)
+	{
+		temp = (*export)->next;
+		if ((*export)->name)
+			free((*export)->name);
+		if ((*export)->value)
+			free((*export)->value);
+		free(*export);
+		*export = temp;
+	}	
+}
+
 void	copy_list(t_all *all)
 {
 	t_env		*current;
 	t_export	*curr;
 
+	// del_export(&all->export);
+	// all->export = NULL; // test pour ne pas creer des lst export a la pelle
 	if (!(all)->env)
 		return ;
 	current = all->env;
@@ -86,7 +107,7 @@ void	export_arg(t_all *all, char *s)
 		if (all->data.egal == 1 && search_env(all, all->data.n) == 0)
 			replace_env(all, all->data.n, all->data.val);
 		else if (search_env(all, all->data.n) == 1) //si le node nexiste pas deja
-			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.n,
+			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n,
 					all->data.val));
 	}
 }

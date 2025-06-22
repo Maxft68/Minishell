@@ -65,7 +65,7 @@ char	*find_the_value(t_all *all, char *name)
 		if (ft_strcmp(current->name, name) == 0)
 		{
 			if (current->value)
-			return(gc_strdup_env(current->value, all));
+			return(current->value);//gc_strdup_env(current->value, all)
 		}
 		current = current->next;
 	}
@@ -156,5 +156,5 @@ void	do_cd(t_all *all)
 		test_the_path(all, s);
 		// 	replace_or_add_env(all, "PWD", ft_pwd(all)); set OLDPWD ET PWD ensuite !!
 	}
-	printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
+	//printf("PWD=%s\nOLDPWD=%s\n", find_the_value(all, "PWD"), find_the_value(all, "OLDPWD"));
 }

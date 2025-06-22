@@ -55,7 +55,7 @@ void	add_value_env(t_all *all, char *s)
 		if (all->data.egal == 1 && search_env(all, all->data.n) == 0)
 			add_env(all, all->data.n, all->data.val);
 		else if (search_env(all, all->data.n) == 1)
-			ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.n,
+			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n,
 					all->data.val));
 	}
 }
@@ -119,3 +119,8 @@ t_garb_env	*ft_lstnew(t_all *all, void *alloc)
 	new->next = NULL;
 	return (new);
 }
+
+//   echo a >out1 | echo b > out2 | >out3 echo c | > out4 echo d | echo e                     TEST IN
+//     cat out1
+//     cat out2
+

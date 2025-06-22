@@ -36,8 +36,9 @@ void	minimal_env(t_all *all)
 	all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
 	if (!all->data.value)
 		ft_exit("Cannot allocate memory2\n", all, 12);
-	ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "PATH", path));
+	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PATH", path));
 	all->env_export.nb_line_env = 1;
+	//printf("jai %d variables dans env(minimal env)\n", all->env_export.nb_line_env);
 }
 
 void	normal_env(t_all *all, char **env)
@@ -62,11 +63,12 @@ void	normal_env(t_all *all, char **env)
 		if (!all->data.value)
 			ft_exit("Cannot allocate memory2.1\n", all, 12);
 		split_env(all, env[i]);
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, all->data.name,
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));
-		i++;
+		//printf("jai %d variables dans env(normal env)\n", all->env_export.nb_line_env);
+		i++; // test foireux
 	}
-	all->env_export.nb_line_env = i;
+	//all->env_export.nb_line_env = i;
 }
 
 void	change_shlvl(t_all *all)
@@ -78,11 +80,14 @@ void	change_shlvl(t_all *all)
 	new_shlvl = NULL;
 	old_shlvl = 0;
 	shlvl = find_the_value(all, "SHLVL");
-	if(!shlvl || ft_strlen(find_the_value(all, "SHLVL")) > 3 || ft_atoi(find_the_value(all, "SHLVL")) <= 0)
+	printf("shvalue= %s\n", shlvl);
+	printf("len = %zu\n", ft_strlen(find_the_value(all, "SHLVL")));
+	printf("atoi = %d\n",ft_atoi(find_the_value(all, "SHLVL")));
+	if(!shlvl  || ft_strlen(shlvl) > 3 || ft_atoi(shlvl) <= 0 || ft_atoi(shlvl) >= 999)
 		replace_env(all, "SHLVL", "1");
 	else
 	{
-		old_shlvl = ft_atoi(find_the_value(all, "SHLVL"));
+		old_shlvl = ft_atoi(shlvl);
 		if (old_shlvl == 999)
 			replace_env(all, "SHLVL", "1");
 		else
@@ -105,7 +110,7 @@ void	do_env(t_all *all, char **env)
 		normal_env(all, env);
 	if (search_env(all, "SHLVL")) //si il existe pas
 	{
-		ft_lstadd_back_env(&all->env, ft_lstnew_env(all, "SHLVL", "1"));
+		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "SHLVL", "1"));
 	}
 	else
 	{
@@ -113,10 +118,17 @@ void	do_env(t_all *all, char **env)
 	}
 }
 
-void	print_node_env(t_env *env)
+void	print_node_env(t_all *all, t_env *env)
 {
 	if (!env)
 		return ;
+	if (all->pipe.cmd_args[all->pipe.pipe][1])
+	{
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
+		ft_putstr_fd("\n", 2);
+		return;
+	}
 	while (env)
 	{
 		if (env->value)
@@ -198,10 +210,12 @@ char	**do_char_env(t_all *all)
 				break;
 		}
 		if (current && current->name && current->value)
+		{
 			env[j] = strjoin_env(all, current->name, current->value);
+			j++;
+		}
 		if (current)
 			current = current->next;
-		j++;
 	}
 	env[j] = NULL;
 	return (env);

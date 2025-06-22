@@ -5,16 +5,28 @@ static	void	suppr_env(t_all *all, char *name)
 {
 	t_env	*current;
 
-	if (!all->env)
+	if (!all->env) 
 		return ;
 	current = all->env;
-	while (current)
+	if (ft_strcmp(current->name, name) == 0)
 	{
-		if (ft_strcmp(current->name, name) == 0)
+		current = current->next;
+		all->env = current;
+		all->env_export.nb_line_env--;
+		//printf("jai %d variables dans env(unset arg--1)\n", all->env_export.nb_line_env);
+		return;
+	}
+	while (current->next)
+	{
+		
+		if (ft_strcmp(current->next->name, name) == 0)
 		{
-			current->name = NULL;
-			current->value = NULL;
-			return ;
+			if (!current->next->next)
+			{
+				current->next = NULL;
+				return;
+			}
+			current->next = current->next->next;
 		}
 		current = current->next;
 	}
@@ -22,7 +34,11 @@ static	void	suppr_env(t_all *all, char *name)
 void	unset_arg(t_all *all, char *s)
 {
 	if (search_env(all, s) == 0)
+	{
 		suppr_env(all, s);
+		all->env_export.nb_line_env--;
+		//printf("jai %d variables dans env(unset arg--)\n", all->env_export.nb_line_env);
+	}
 }
 
 
