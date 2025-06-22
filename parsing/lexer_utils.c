@@ -38,12 +38,12 @@ int	create_lexer(char *input, t_all *all)
 		add_history(input);
     if (input[0] == '\0')
 	{
-		free(input); // ??
+		//free(input); // ??
 		return (-1);
 	}
 	if (verif_quoted(input) == -1)
 	{
-		free(input);
+		//free(input);
 		return (-1);
 	}
 	initialize_data(all, input);

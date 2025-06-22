@@ -31,6 +31,25 @@ void	*gc_malloc(t_all *all, size_t size)
 	return (alloc);
 }
 
+// void	free_garbage_collect(t_garbage **garbage_head)
+// {
+// 	t_garbage	*current;
+// 	t_garbage	*next;
+
+// 	if (!garbage_head)
+// 		return;
+// 	current = *garbage_head;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		if (current->pointer)
+// 			free(current->pointer);
+// 		free(current);
+// 		current = next;
+// 	}
+// 	*garbage_head = NULL;
+// }
+
 void	free_garbage_collect(t_garbage **garbage_head)
 {
 	t_garbage	*current;
@@ -41,14 +60,29 @@ void	free_garbage_collect(t_garbage **garbage_head)
 	current = *garbage_head;
 	while (current)
 	{
+		if(!current->pointer)
+		{
+			while(current && !current->pointer)
+			{
+				next = current->next;
+				free(current);
+				current = next;
+			}
+			if (!current)
+				break;
+		}
 		next = current->next;
 		if (current->pointer)
+		{
 			free(current->pointer);
-		free(current);
-		current = next;
+			free(current);
+		}
+		if (current)
+			current = next;
 	}
 	*garbage_head = NULL;
 }
+
 
 // char	*gc_realloc(t_all *all, char *old, int big)
 // {

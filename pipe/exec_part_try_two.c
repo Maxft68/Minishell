@@ -31,11 +31,11 @@ void	alloc_my_pipe_fd(t_all *all)
 	// }
 }
 
-void	error_msg(char *s)
+void	error_msg(t_all *all, char *s)
 {
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(s); //a verifier si \n ou pas
-	exit(1);//sauf si built-in dans parent NI EXECVE
+	ft_exit("", all, 1);//sauf si built-in dans parent NI EXECVE
 }
 
 int	error_msg_no_pipe(char *s)
@@ -45,12 +45,12 @@ int	error_msg_no_pipe(char *s)
 	return(1);
 }
 
-int	error_dup2(int fd, char *redir)
+int	error_dup2(t_all *all, int fd, char *redir)
 {
-	error_msg(redir);
+	error_msg(all, redir);
 	close(fd);
 	return(1);
-}
+} 
 
 int	error_dup2_no_pipe(int fd, char *redir)
 {
@@ -77,11 +77,11 @@ int	do_redir_in(t_all *all, char *redir)
 	//ft_putstr_fd("--------je suis dans redir IN\n", 2);
 	all->pipe.fd_infile = open(redir, O_RDONLY);
 	if (all->pipe.fd_infile == -1)
-		return(error_msg(redir), 1);
+		return(error_msg(all, redir), 1);
 	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
-		return(error_dup2(all->pipe.fd_infile, redir));
+		return(error_dup2(all, all->pipe.fd_infile, redir));
 	if (close(all->pipe.fd_infile) == -1)
-		return(error_dup2(all->pipe.fd_infile, redir));
+		return(error_dup2(all, all->pipe.fd_infile, redir));
 	return(0);
 }
 
@@ -107,11 +107,11 @@ int	do_redir_fd(t_all *all)
 			else
 				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (all->pipe.fd_outfile == -1)
-				return (error_msg(temp->next->str), 1);
+				return (error_msg(all, temp->next->str), 1);
 			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-				return(error_dup2(all->pipe.fd_outfile, temp->next->str), 1);
+				return(error_dup2(all, all->pipe.fd_outfile, temp->next->str), 1);
 			if (close(all->pipe.fd_outfile) == -1)
-				return (error_msg(temp->next->str), 1);
+				return (error_msg(all, temp->next->str), 1);
 			temp = temp->next->next;
 		}
 		else
@@ -202,7 +202,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO) == -1)
-				error_msg("dup2 stdin");
+				error_msg(all, "dup2 stdin");
 		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
 			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all)) //si au moins une redir alors faire redir
@@ -217,7 +217,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			ft_putnbr_fd(all->pipe.pipe, 2);
 			ft_putstr_fd(" derniere commande\n", 2);
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO) == -1)
-				error_msg("dup2 stdout");
+				error_msg(all, "dup2 stdout");
 		}
 		int j = 0;
 		while (j < all->pipe.nb_pipe)
@@ -241,7 +241,8 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 				exec_cmd(all);
 			}
 		}
-		printf("JAI PAS EXECVE\n");
+		ft_putstr_fd("JAI PAS EXECVE\n", 2);
+		ft_exit("je free tout", all, 1);
 		exit(127);
 	}
 }
