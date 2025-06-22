@@ -66,5 +66,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	ft_exit("pas de in put dans main go break, exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
-}
+} 
 
