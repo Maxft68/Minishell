@@ -133,6 +133,8 @@ typedef struct s_hd_data//structure data pour heredoc
 	int		j;
 	char	*tmp;
 	char	*new;
+	size_t	hd_eof_len;
+    size_t	str_len;
 }				t_hd_data;
 
 
