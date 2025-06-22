@@ -57,23 +57,14 @@ int	main(int argc, char **argv, char **env)
 		signals_swing();
 		char *input = gc_strdup(readline("WriteOnMe "), &all);
 		if (!input)
-		{
-			printf("pas de in put dans main go break, exit\n");
-			free_garbage_collect(&all.garbage);
-			ft_lstclear(&all.token);
-			ft_lstclear(&all.rdir_tkn);
 			break;
-		}
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
-		//if (!all.lexer->input)
-			//continue;
-		//print_node(all.rdir_tkn);  //<---------------------------------------------------------printf
 		ft_lstclear(&all.token);
 		ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);
 	}
-	//ft_exit("exit", &all, 0); // ?? utile dans un monde parallele ?
+	ft_exit("pas de in put dans main go break, exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
 }
 
