@@ -58,9 +58,9 @@ int	main(int argc, char **argv, char **env)
 		//dup2(1, STDIN_FILENO);
 		char *input = readline("WriteOnMe ");
 		if (!input)
-			break;
-		if (ft_strlen(input) > 0)
-			add_history(input);
+		{
+			ft_exit("pas de input dans main go exit\n", &all, 0);
+		}
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
 		//if (!all.lexer->input)
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);
 	}
-	ft_exit("exit", &all, 0);
+	ft_exit("exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
 }
 
