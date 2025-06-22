@@ -57,7 +57,7 @@ int	error_dup2_no_pipe(int fd, char *redir)
 	error_msg_no_pipe(redir);
 	close(fd);
 	return(1);
-}
+} 
 
 int	do_redir_in_no_pipe(t_all *all, char *redir)
 {
