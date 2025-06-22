@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);
 	}
-	ft_exit("exit", &all, 0); // ?? utile dans un monde parallele ?
+	//ft_exit("exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
 }
 
