@@ -50,7 +50,7 @@ int	create_lexer(char *input, t_all *all)
 	handle_expand(input, all);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     all->lexer->input = gc_strdup(all->data.new, all);
-    free(input);
+    // free(input);
     all->lexer->position = 0;
     all->lexer->c = all->lexer->input[0];
     all->lexer->s_quote = false;

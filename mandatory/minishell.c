@@ -55,11 +55,14 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		//dup2(1, STDIN_FILENO);
-		char *input = readline("WriteOnMe ");
+		char *input = gc_strdup(readline("WriteOnMe "), &all);
 		if (!input)
 		{
-			ft_exit("pas de input dans main go exit\n", &all, 0);
+			printf("pas de in put dans main go break, exit\n");
+			free_garbage_collect(&all.garbage);
+			ft_lstclear(&all.token);
+			ft_lstclear(&all.rdir_tkn);
+			break;
 		}
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
