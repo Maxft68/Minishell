@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/23 22:15:36 by rbier            ###   ########.fr        #
+#    Updated: 2025/06/24 00:14:43 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ SRC =	mandatory/minishell.c \
 		utils/gc_split.c\
 		utils/gc_strjoin.c\
 		utils/ft_strcmp.c\
-		signals/signals.c
-#		built_in/exit/do_exit.c \
+		signals/signals.c\
+		built_in/exit/do_exit.c
 
 
 
@@ -75,6 +75,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/built_in/echo
 	@mkdir -p $(OBJ_DIR)/built_in/export
 	@mkdir -p $(OBJ_DIR)/built_in/unset
+	@mkdir -p $(OBJ_DIR)/built_in/exit
 	@mkdir -p $(OBJ_DIR)/built_in/pwd
 	@mkdir -p $(OBJ_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/mandatory

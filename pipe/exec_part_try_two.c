@@ -35,19 +35,18 @@ void	alloc_my_herdoc_fd(t_all *all)
 	i = 0;
 	while(i < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
 	{
-		if (all->hd_data.new) 
+		if (is_heredoc(all->pipe.pipe)) 
 		{
 			if (pipe(all->pipe.heredoc_fd[i]) == -1)
 			{
 				perror("pipe");
 			}
-			ft_putstr_fd(all->hd_data.new, all->pipe.heredoc_fd[i][1]);
+			ft_putstr_fd(is_heredoc(all->pipe.pipe), all->pipe.heredoc_fd[i][1]);
 			close(all->pipe.heredoc_fd[i][1]);
 			break;
 		}
 		i++;
 	}
-
 }
 
 void	error_msg(t_all *all, char *s)
@@ -149,12 +148,12 @@ int	do_redir_no_pipe(t_all *all)
 		temp = temp->next;
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		if (all->hd_data.new)
-		{
-			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
-				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-		}
-		else if (temp->type == REDIRECT_IN)
+		// if (is_herdoc(all->pipe.pipe)) // a modifier quqnd jaurais la vrai fonction et a ne ps appeler plusieurs fois...
+		// {
+		// 	if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+		// 		error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+		// }
+		if (temp->type == REDIRECT_IN) //else if
 		{
 			if(do_redir_in_no_pipe(all, temp->next->str) == 1)
 				return(1);
@@ -213,11 +212,11 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		ft_putnbr_fd(all->pipe.pipe, 2);
 		ft_putstr_fd(" -----------------------PIPE et je suis dans do pipe\n", 2);
 
-		if (all->hd_data.new)
-		{
-			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
-				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-		}
+		// if (is_heredoc(all->pipe.pipe))
+		// {
+		// 	if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+		// 		error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+		// }
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
@@ -280,8 +279,7 @@ int	exec_part(t_all *all)
 	int status;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1)); //sizeof(int *)
 	alloc_my_pipe_fd(all);
-	alloc_my_herdoc_fd(all);
-	//int fail;
+	//alloc_my_herdoc_fd(all);
 	int i;
 
 	i = 0; 
