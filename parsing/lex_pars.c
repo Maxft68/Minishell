@@ -130,6 +130,7 @@ int    pars_to_exec(t_all *all)
 	{
 		catch_heredoc(all);
 		create_redir_lst(all);
+		printf("last_hd: %s\n", find_last_hd(1, all));
 		//print_node(all->rdir_tkn);
 		list_to_tab(all);
 		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
