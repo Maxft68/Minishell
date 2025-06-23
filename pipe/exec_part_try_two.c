@@ -47,7 +47,7 @@ void	alloc_my_herdoc_fd(t_all *all)
 		}
 		i++;
 	}
-} 
+}
 
 void	error_msg(t_all *all, char *s)
 {
