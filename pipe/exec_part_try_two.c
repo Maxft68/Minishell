@@ -17,11 +17,12 @@ void	alloc_my_pipe_fd(t_all *all)
 }
 void	alloc_my_herdoc_fd(t_all *all)
 {
+	if (!all->hd_data.new)
+		printf("cest la merdeee\n");
 	int i = 0;
-	if (all->pipe.nb_pipe == 0)
-		return ;
-	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *) * all->pipe.nb_pipe);
-	while (i < all->pipe.nb_pipe)
+
+	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *) * (all->pipe.nb_pipe + 1));
+	while (i < all->pipe.nb_pipe + 1)
 	{
 		all->pipe.heredoc_fd[i] = (int *)gc_malloc(all, sizeof(int) * 2);
 		all->pipe.heredoc_fd[i][0] = -1;
@@ -29,7 +30,7 @@ void	alloc_my_herdoc_fd(t_all *all)
 		i++;
 	}
 	i = 0;
-	while(i < all->pipe.nb_pipe) // pour les herdoc avant de fork
+	while(i < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
 	{
 		if (all->hd_data.new) 
 		{
@@ -39,6 +40,7 @@ void	alloc_my_herdoc_fd(t_all *all)
 			}
 			ft_putstr_fd(all->hd_data.new, all->pipe.heredoc_fd[i][1]);
 			close(all->pipe.heredoc_fd[i][1]);
+			break;
 		}
 		i++;
 	}
@@ -61,6 +63,7 @@ int	error_msg_no_pipe(char *s)
 
 int	error_dup2(t_all *all, int fd, char *redir)
 {
+	ft_putstr_fd("NTR", 2);
 	close(fd);
 	error_msg(all, redir);
 	return(1);
@@ -143,14 +146,10 @@ int	do_redir_no_pipe(t_all *all)
 		temp = temp->next;
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		printf("----------------------------datanew= %s\n", all->hd_data.new);
 		if (all->hd_data.new)
 		{
 			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
 				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
-			printf("----------------------------datanew= %s\n", all->hd_data.new);
-			temp = temp->next;
 		}
 		else if (temp->type == REDIRECT_IN)
 		{
@@ -213,12 +212,10 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 
 		if (all->hd_data.new)
 		{
-			printf("----------------------------datanew= %s\n", all->hd_data.new);
 			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
 				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
 		}
-		else if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
+		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
 			if (do_redir_fd(all) == -1)
@@ -280,6 +277,7 @@ int	exec_part(t_all *all)
 	int status;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1)); //sizeof(int *)
 	alloc_my_pipe_fd(all);
+	alloc_my_herdoc_fd(all);
 	//int fail;
 	int i;
 
@@ -313,6 +311,13 @@ int	exec_part(t_all *all)
 			close(all->pipe.pipe_fd[i - 1][0]);
 			all->pipe.pipe_fd[i - 1][0] = -1;
 		}
+        if (all->pipe.heredoc_fd && all->pipe.heredoc_fd[all->pipe.pipe][0] != -1)
+        {
+            close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+            all->pipe.heredoc_fd[all->pipe.pipe][0] = -1;
+        }
+		
+		
 
 		i++;
 		//printf("i =%d\n", i);
