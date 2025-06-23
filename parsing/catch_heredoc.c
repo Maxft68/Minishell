@@ -111,7 +111,7 @@ void    catch_heredoc(t_all *all)
             printf("HD_input:\n%s\n###############\n", str);
             // tmp->next->str = (char*)gc_realloc(all,tmp->next->str, ft_strlen(str));
             tmp->next->str = gc_strdup(str, all);
-            
+            all->hd_data.new = str;
         }
         tmp = tmp->next;
     }

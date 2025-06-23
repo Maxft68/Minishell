@@ -55,7 +55,7 @@ int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
 		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
-		exit(0);
+		ft_exit("jfais quoi", all, 1);
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
 	if (cmd && cmd[0] && ft_strchr(cmd[0], '/'))
@@ -63,7 +63,7 @@ int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 	else
 		path = find_path_cmd(all, env);
 	if (!path)
-		return(printf("PAS DE PATH go exit ?!"), exit(127), 127);
+		return(ft_exit("degage de la",all, 127), 1);
 	execve(path, cmd, env); //return si echoue ??
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(cmd[0]);

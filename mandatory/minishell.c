@@ -42,7 +42,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_all	all;
+	t_all all;
 
 	if (argc != 1)
 		return (printf("Just one arg, or nothing\n"), 1);
@@ -64,10 +64,13 @@ int	main(int argc, char **argv, char **env)
 		// ft_lstclear(&all.rdir_tkn);
 		free(input);
 		free_garbage_collect(&all.garbage);
+		all.garbage = NULL;
+		all.token = NULL;
+		all.rdir_tkn = NULL;
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
 	ft_exit("pas de in put dans main go break, exit", &all, 0); // ?? utile dans un monde parallele ?
 	(void)argv;
-} 
+}
 

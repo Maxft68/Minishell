@@ -14,28 +14,42 @@ void	alloc_my_pipe_fd(t_all *all)
 		all->pipe.pipe_fd[i][1] = -1;
 		i++;
 	}
+}
+void	alloc_my_herdoc_fd(t_all *all)
+{
+	int i = 0;
+	if (all->pipe.nb_pipe == 0)
+		return ;
+	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *) * all->pipe.nb_pipe);
+	while (i < all->pipe.nb_pipe)
+	{
+		all->pipe.heredoc_fd[i] = (int *)gc_malloc(all, sizeof(int) * 2);
+		all->pipe.heredoc_fd[i][0] = -1;
+		all->pipe.heredoc_fd[i][1] = -1;
+		i++;
+	}
 	i = 0;
+	while(i < all->pipe.nb_pipe) // pour les herdoc avant de fork
+	{
+		if (all->hd_data.new) 
+		{
+			if (pipe(all->pipe.heredoc_fd[i]) == -1)
+			{
+				perror("pipe");
+			}
+			ft_putstr_fd(all->hd_data.new, all->pipe.heredoc_fd[i][1]);
+			close(all->pipe.heredoc_fd[i][1]);
+		}
+		i++;
+	}
 
-	// while(i < all->pipe.nb_pipe) // pour les herdoc avant de fork
-	// {
-	// 	if (heredoc_in(i)) 
-	// 	{
-	// 		if (pipe(heredoc_fd[i]) == -1)
-	// 		{
-	// 			perror("pipe");
-	// 			return (1);
-	// 		}
-	// 		ft_putstr_fd(char *mon_herdoc, herdoc_fd[i][1]);
-	// 	}
-	// 	i++;
-	// }
 }
 
 void	error_msg(t_all *all, char *s)
 {
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(s); //a verifier si \n ou pas
-	ft_exit_bis("test", all, 1);//sauf si built-in dans parent NI EXECVE
+	ft_exit("", all, 1);//sauf si built-in dans parent NI EXECVE
 }
 
 int	error_msg_no_pipe(char *s)
@@ -129,7 +143,16 @@ int	do_redir_no_pipe(t_all *all)
 		temp = temp->next;
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		if (temp->type == REDIRECT_IN)
+		printf("----------------------------datanew= %s\n", all->hd_data.new);
+		if (all->hd_data.new)
+		{
+			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+			printf("----------------------------datanew= %s\n", all->hd_data.new);
+			temp = temp->next;
+		}
+		else if (temp->type == REDIRECT_IN)
 		{
 			if(do_redir_in_no_pipe(all, temp->next->str) == 1)
 				return(1);
@@ -181,24 +204,27 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 	}
 	all->pipe.pid[all->pipe.pipe] = fork();				// ---------FORK ICI
 	if (all->pipe.pid[all->pipe.pipe] == -1)
-	{
-		perror("fork");
-		ft_exit_bis("test", all, 1);
-	}
+		ft_exit("fork failed", all, 1);
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
 		ft_putstr_fd("\n----------------------Pipeline ", 2);
 		ft_putnbr_fd(all->pipe.pipe, 2);
 		ft_putstr_fd(" -----------------------PIPE et je suis dans do pipe\n", 2);
 
-		//if (herdoc_in(pipe))
-		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
+		if (all->hd_data.new)
+		{
+			printf("----------------------------datanew= %s\n", all->hd_data.new);
+			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+		}
+		else if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
 			if (do_redir_fd(all) == -1)
-				ft_exit_bis("test", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+				ft_exit("", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		}
-		if (!search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && all->pipe.pipe != 0)
+		else if (!search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && all->pipe.pipe != 0)
 		{
 			ft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO) == -1)
@@ -209,7 +235,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 		{
 			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION OUT\n", 2);
 			if (do_redir_fd(all) == -1)
-				ft_exit_bis("test", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
+				ft_exit("", all, 1);//sauf si built-in dans parent //si un infile foire ou un out alors fail = -1
 		}
 		else if (all->pipe.pipe < all->pipe.nb_pipe) // derniere commande
 		{
@@ -233,7 +259,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			if (is_built_in(all) == 0)
 			{
 				do_built_in(all);
-				ft_exit_bis("test", all, 1);
+				ft_exit("test", all, 1);
 			}
 			else
 			{
@@ -242,7 +268,7 @@ void	do_pipe(t_all *all) //dans process enfant faire exit(1) pas ft_exit
 			}
 		}
 		ft_putstr_fd("JAI PAS EXECVE\n", 2);
-		ft_exit_bis("test", all, 1);
+		ft_exit("test", all, 1);
 	}
 }
 
@@ -278,9 +304,15 @@ int	exec_part(t_all *all)
 			do_pipe(all); //fork la dedans
 		}
 		if (i < all->pipe.nb_pipe)
+		{
 			close(all->pipe.pipe_fd[i][1]);
+			all->pipe.pipe_fd[i][1] = -1;
+		}
 		if (i > 0 && all->pipe.pipe_fd[i - 1][0] != -1)
+		{
 			close(all->pipe.pipe_fd[i - 1][0]);
+			all->pipe.pipe_fd[i - 1][0] = -1;
+		}
 
 		i++;
 		//printf("i =%d\n", i);

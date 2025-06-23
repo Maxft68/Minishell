@@ -43,7 +43,10 @@ void	free_garbage_collect(t_garbage **garbage_head)
     {
         next = current->next;         // 1. Sauvegarder le nœud suivant
         if (current->pointer)
-            free(current->pointer);   // 2. Libérer la mémoire allouée
+		{
+            free(current->pointer);
+			current->pointer = NULL;   // 2. Libérer la mémoire allouée
+		}
         free(current);                // 3. Libérer le nœud de la liste lui-même
         current = next;               // 4. Passer au nœud suivant
     }
