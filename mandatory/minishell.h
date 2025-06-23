@@ -164,7 +164,6 @@ typedef struct s_all
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);
-void		ft_exit(char *error, t_all *all, int error_code);
 void		close_all_pipe_exit(t_all *all);
 void		do_node(char **read_array, t_all *all);
 void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
@@ -227,6 +226,7 @@ void		free_env(t_env **env);
 void		do_export(t_all *all);
 void		do_add_env_next(t_all *all, char *s);
 void		do_add_env(t_all *all);
+int			do_exit(t_all *all);
 void		print_export(t_export *export);
 void		ft_lstadd_back_export(t_export **export, t_export *new);
 void		copy_list(t_all *all);
