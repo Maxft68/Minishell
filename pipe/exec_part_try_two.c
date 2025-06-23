@@ -111,7 +111,7 @@ int	do_redir_fd(t_all *all)
 		temp = temp->next;
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		if (temp->type == REDIRECT_IN)
+		if (temp->type == REDIRECT_IN) // mettre tout dans le meme if pour 25lignes
 		{
 			if (do_redir_in(all, temp->next->str) != 0)
 				return (1);

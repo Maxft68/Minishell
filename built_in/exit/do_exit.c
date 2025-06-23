@@ -1,3 +1,5 @@
+
+
 #include "minishell.h"
 
 // 1. Afficher "exit" si pas dans un fork
@@ -40,16 +42,16 @@ int	ft_str_digit(char *str)
 		if (str[i] >= '0' && str[i] <= '9')
 			i++;
 		else
-			return (0);
+			return (-1);
 	}
-	return (1);
+	return (0);
 }
 
 void	exit_args(t_all *all) //quand plusieurs args
 {
 	if (ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1])) // str_is_digit a faire
 	{
-		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1]))
+		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1])) //erreur
 		{
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
@@ -65,34 +67,53 @@ void	exit_args(t_all *all) //quand plusieurs args
 	}
 }
 
+long long int	ft_atolli(char *s) // a tester avec  long max long min et 0 ou nbre neegatif
+{
+	int				i;
+	int				sign;
+	long long int	result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+	if (!s)
+		return (0);
+	while (s && s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
+		i++;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		if (s[i] == '-')
+			sign = sign * -1;
+		i++;
+	}
+	while (s && s[i] >= '0' && s[i] <= '9')
+	{
+		result = result * 10 + (s[i] - '0');
+		i++;
+	}
+	return (result * sign);
+}
+
 void	do_exit(t_all *all) // 0 ou 1 args
 {
 	int long long arg1;
 	char **arg = all->pipe.cmd_args[all->pipe.pipe];
 
 	if (arg[1])
-		arg1 = ft_atoi(arg[1]);
+		arg1 = ft_atolli(arg[1]);
 	if (arg[2])
-	{
 		exit_args(all);// plusieurs args
-	}
-
-	if (!arg[1] && all->pipe.nb_pipe == 0) // JUSTE EXIT dans parent
+	if (!arg[1] && all->pipe.nb_pipe == 0) //EXIT dans parent
 		return(ft_putstr_fd("exit", 1), ft_exit("", all, all->error_code));
 	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
 		return(ft_exit("", all, all->error_code));
 	if (arg[1] && all->pipe.nb_pipe == 0) // 1seul arg dans parent
 	{
-		if (ft_str_digit(arg[1])) //1 arg NUM
+		if (!ft_str_digit(arg[1])) //1 arg NUM //
 		{
-
+			return(ft_putstr_fd("exit\n", 1), ft_exit("", all, (arg1 % 256)));
 		}
 	}
-	
-
-	// if (all->pipe.nb_pipe == 0)
-	// 	ft_putstr_fd(exit, 2);
-	
 }
 
 // $ exit 42
