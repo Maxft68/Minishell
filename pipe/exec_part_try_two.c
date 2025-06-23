@@ -17,7 +17,7 @@ void	alloc_my_pipe_fd(t_all *all)
 }
 void	alloc_my_herdoc_fd(t_all *all)
 {
-	if (!find_last_hd(all->pipe.pipe))
+	if (!find_last_hd(all->pipe.pipe, all))
 	{
 		printf("cest la merdeee\n");
 		return;
@@ -35,13 +35,13 @@ void	alloc_my_herdoc_fd(t_all *all)
 	i = 0;
 	while(i < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
 	{
-		if (is_heredoc(all->pipe.pipe)) 
+		if (!find_last_hd(all->pipe.pipe, all))
 		{
 			if (pipe(all->pipe.heredoc_fd[i]) == -1)
 			{
 				perror("pipe");
 			}
-			ft_putstr_fd(is_heredoc(all->pipe.pipe), all->pipe.heredoc_fd[i][1]);
+			ft_putstr_fd(find_last_hd(all->pipe.pipe, all), all->pipe.heredoc_fd[i][1]);
 			close(all->pipe.heredoc_fd[i][1]);
 			break;
 		}

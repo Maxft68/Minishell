@@ -50,9 +50,9 @@ int	ft_str_digit(char *str)
 
 void	exit_args(t_all *all) //quand plusieurs args
 {
-	if (ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1]))
+	if (ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1])) // PAS DIGIT
 	{
-		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1])) //erreur
+		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1])) //trop long long
 		{
 			ft_putstr_fd("exit\n", 2);
 			ft_putstr_fd("WriteOnMe: exit: ", 2);
@@ -72,13 +72,15 @@ void	exit_args(t_all *all) //quand plusieurs args
 		return(ft_exit("", all, all->error_code));
 	}
 	else
-	{
-		ft_putstr_fd("exit\n", 2);
-		ft_putstr_fd("WriteOnMe: exit: ", 2);
-		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		ft_exit("", all, 2);
-	}
+		ft_putstr_fd("exit: too many arguments", 2);
+	// else
+	// {
+	// 	ft_putstr_fd("exit\n", 2);
+	// 	ft_putstr_fd("WriteOnMe: exit: ", 2);
+	// 	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
+	// 	ft_putstr_fd(": numeric argument required\n", 2);
+	// 	ft_exit("", all, 2);
+	// }
 }
 
 long long int	ft_atolli(char *s) // a tester avec  long max long min et 0 ou nbre neegatif
