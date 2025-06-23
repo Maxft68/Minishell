@@ -143,7 +143,7 @@ int	do_redir_fd(t_all *all)
 			temp = temp->next;
 	}
 	return(0);
-}
+} 
 
 int	do_redir_no_pipe(t_all *all)
 {
