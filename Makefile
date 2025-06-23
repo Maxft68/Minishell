@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
+#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/24 00:14:43 by rbier            ###   ########.fr        #
+#    Updated: 2025/06/24 01:42:16 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
 INCLUDES = -I./mandatory
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g3 -fsanitize=address
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\
