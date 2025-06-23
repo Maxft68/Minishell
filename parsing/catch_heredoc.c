@@ -10,6 +10,7 @@ static char *append_line(char *str, char *line, t_all *all)
         return (str);
     line_len = ft_strlen(line);
     new_len = all->hd_data.str_len + line_len + 2;
+    // new_len = all->hd_data.str_len + line_len + 1;
     new_str = gc_malloc(all, new_len);
     if (new_str == NULL)
         return (NULL);
@@ -33,7 +34,7 @@ char *append_hd(char *hd_eof, t_all *all)
     all->hd_data.str_len = 0;
     while (1)
     {
-        line = readline("heredoc:");
+        line = readline("> ");
         if (line == NULL)
             break;
         if (ft_strncmp(line, hd_eof, all->hd_data.hd_eof_len) == 0 &&
@@ -50,8 +51,6 @@ char *append_hd(char *hd_eof, t_all *all)
     }
 	if (line)
 		free(line);
-    if (str != NULL && all->hd_data.str_len > 0)
-        str[all->hd_data.str_len - 1] = '\0';
     return (str);
 }
 
@@ -108,7 +107,7 @@ void    catch_heredoc(t_all *all)
         if (tmp->type == HEREDOC)
         {
             str = gc_strdup(append_hd(tmp->next->str, all), all);
-            printf("HD_input:\n%s\n###############\n", str);
+            printf("HD_input:\n%s||\n###############\n", str);
             // tmp->next->str = (char*)gc_realloc(all,tmp->next->str, ft_strlen(str));
             tmp->next->str = gc_strdup(str, all);
             all->hd_data.new = str;

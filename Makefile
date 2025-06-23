@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/23 21:25:16 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/24 00:14:43 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC =	mandatory/minishell.c \
 		parsing/parsing_utils.c\
 		parsing/redir_list.c\
 		parsing/catch_heredoc.c\
+		parsing/heredoc_utils.c\
 		parsing/token_utils.c\
 		parsing/list_to_tab.c\
 		built_in/cd/do_cd.c \
