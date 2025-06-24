@@ -37,20 +37,13 @@ int	create_lexer(char *input, t_all *all)
     if (input && input[0] != '\0')
 		add_history(input);
     if (input[0] == '\0')
-	{
-		//free(input); // ??
 		return (-1);
-	}
 	if (verif_quoted(input) == -1)
-	{
-		//free(input);
 		return (-1);
-	}
 	initialize_data(all, input);
 	handle_expand(input, all);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     all->lexer->input = gc_strdup(all->data.new, all);
-    // free(input);
     all->lexer->position = 0;
     all->lexer->c = all->lexer->input[0];
     all->lexer->s_quote = false;
