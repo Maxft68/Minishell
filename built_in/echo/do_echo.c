@@ -1,11 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
+/*   Updated: 2025/06/27 11:02:51 by mdsiurds         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-
-# include <limits.h> 
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 void	ft_putchar_fd(char c, int fd)
 {
