@@ -220,7 +220,7 @@ void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
 int			do_built_in(t_all *all);
-void		do_echo(char ***args, int pipe);
+int		do_echo(char ***args, int pipe);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_all *all, t_env *env);
 void		free_env(t_env **env);

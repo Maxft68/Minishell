@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/27 11:02:51 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:03:40 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,30 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	do_echo(char ***args, int pipe)
+int	do_echo(char ***args, int pipe)
 {
 	int	j;
 	int	argument_n;
+	int	i;
 
 	argument_n = 0;
 	j = 1;
-
 	if (!args[pipe] || !args[pipe][j])
-	{
-		ft_putchar('\n');
-		return;
-	}
-
+		return (ft_putchar('\n'), 1);
 	while (args[pipe][j] && args[pipe][j][0] == '-' && args[pipe][j][1] == 'n')
 	{
-		int i = 2;
+		argument_n = 1;
+		i = 2;
 		while (args[pipe][j][i] == 'n')
 			i++;
 		if (args[pipe][j][i] == '\0') // alors juste -nnnnnnnnnnn
-		{
-			argument_n = 1;
 			j++;
-		}
 		else
-			break;
+			break ;
 	}
 	while (args[pipe][j])
 	{
-		int i = 0;
+		i = 0;
 		while (args[pipe][j][i])
 		{
 			ft_putchar(args[pipe][j][i]);
@@ -57,8 +51,7 @@ void	do_echo(char ***args, int pipe)
 		j++;
 		if (j > 1 && args[pipe][j] != NULL && args[pipe][j - 1][0] != '\0')
 			ft_putchar(' ');
-		}
-		if (argument_n == 0)
-		ft_putchar('\n');
 	}
-
+	if (argument_n == 0)
+		ft_putchar('\n');
+}

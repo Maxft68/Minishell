@@ -6,10 +6,11 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/27 11:02:03 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:02:10 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 void	do_cd_home(t_all *all, char *s)
 {
 	if (find_the_value(all, "HOME"))

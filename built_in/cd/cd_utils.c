@@ -6,11 +6,11 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/27 11:01:35 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:02:14 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "minishell.h"
 void	test_the_path(t_all *all, char *s)
 {
 	char	*str;
