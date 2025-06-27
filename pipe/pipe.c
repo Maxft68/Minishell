@@ -34,17 +34,6 @@ char	*find_path_cmd(t_all *all, char **env)
 	}
 	return(path);
 }
-// 	void	print_char_tab(char **tab, char *name)
-// {
-//     int i = 0;
-//     if (!tab)
-//         return;
-//     while (tab[i])
-//     {
-//         printf("%s:[%d]: %s\n",name, i, tab[i]);
-//         i++;
-//     }
-// }
 
 int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 {

@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/27 16:08:22 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/27 17:49:11 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC =	mandatory/minishell.c \
 		utils/ft_garbage_env.c\
 		utils/gc_itoa.c\
 		built_in/env/do_env.c \
+		built_in/env/do_env_utils.c \
 		pipe/pipe.c\
 		pipe/exec_part_try_two.c\
 		parsing/expand.c\

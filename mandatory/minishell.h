@@ -230,6 +230,7 @@ int			is_built_in(t_all *all);
 int			do_built_in(t_all *all);
 int			do_echo(t_all *all, char ***args, int pipe);
 void		do_env(t_all *all, char **env);
+char		**do_char_env(t_all *all);
 void		print_node_env(t_all *all, t_env *env);
 void		free_env(t_env **env);
 void		do_export(t_all *all);
