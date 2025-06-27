@@ -2,9 +2,6 @@
 
 #include "minishell.h"
 
-// 1. Afficher "exit" si pas dans un fork
-
-
 int	is_long_long(char *str)
 {
 	int i;
