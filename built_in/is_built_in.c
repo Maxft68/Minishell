@@ -23,7 +23,7 @@ int	do_built_in(t_all *all)
 		return (1);
 	}
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
-		return(do_echo(all->pipe.cmd_args, all->pipe.pipe), 0);
+		return(do_echo(all, all->pipe.cmd_args, all->pipe.pipe), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)
 		return(do_cd(all), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "env", 4) == 0)

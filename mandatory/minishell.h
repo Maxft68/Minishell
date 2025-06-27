@@ -105,6 +105,13 @@ typedef struct  s_token
 	// struct s_token	*prev;
 }					t_token;
 
+typedef struct s_built_in
+{
+	int		i;
+	int		j;
+	int		n;
+}				t_built_in;
+
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -149,6 +156,7 @@ typedef struct	s_env_export
 
 typedef struct s_all
 {
+	t_built_in			built_in;
 	t_pipe				pipe;
 	t_env				*env;
 	t_lexer				*lexer;
@@ -220,7 +228,7 @@ void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
 int			do_built_in(t_all *all);
-int		do_echo(char ***args, int pipe);
+int			do_echo(t_all *all, char ***args, int pipe);
 void		do_env(t_all *all, char **env);
 void		print_node_env(t_all *all, t_env *env);
 void		free_env(t_env **env);

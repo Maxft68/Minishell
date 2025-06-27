@@ -6,7 +6,7 @@
 #    By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/24 01:42:16 by mdsiurds         ###   ########.fr        #
+#    Updated: 2025/06/27 16:08:22 by mdsiurds         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =	mandatory/minishell.c \
 		parsing/token_utils.c\
 		parsing/list_to_tab.c\
 		built_in/cd/do_cd.c \
+		built_in/cd/cd_utils.c \
 		built_in/pwd/do_pwd.c \
 		built_in/is_built_in.c\
 		built_in/echo/do_echo.c\

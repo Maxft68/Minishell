@@ -166,8 +166,6 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		char	*s1s2;
 
 		s1s2 = gc_malloc_env(all, (ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
-		if (!s1s2)
-			ft_exit("Cannot allocate memory3\n", all, 12);
 		i = 0;
 		j = 0;
 		while (s1 && s1[i])
@@ -179,9 +177,8 @@ char	*strjoin_env(t_all *all, char *s1, char *s2)
 		i++;
 		while (s2 && s2[j])
 		{
-			s1s2[i] = s2[j];
+			s1s2[i] = s2[j++];
 			i++;
-			j++;
 		}
 		s1s2[i] = '\0';
 		return (s1s2);
@@ -210,14 +207,10 @@ char	**do_char_env(t_all *all)
 				break;
 		}
 		if (current && current->name && current->value)
-		{
-			env[j] = strjoin_env(all, current->name, current->value);
-			j++;
-		}
+			env[j++] = strjoin_env(all, current->name, current->value);
 		if (current)
 			current = current->next;
 	}
-	env[j] = NULL;
-	return (env);
+	return (env[j] = NULL, env);
 }
 
