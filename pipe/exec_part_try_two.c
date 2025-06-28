@@ -283,9 +283,6 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 	}
 }
 
-// echo nouveau1 >out1 | echo nouveau21 | cat | cat >out2 | echo nouveau31 | cat
-//   echo a >out1 | echo b > out2 | >out3 echo c | > out4 echo d | echo e                     TEST IN
-
 int	exec_part(t_all *all)
 {
 	int status;
