@@ -112,6 +112,13 @@ typedef struct s_built_in
 	int		n;
 }				t_built_in;
 
+typedef struct s_exec
+{
+	int		i;
+	int		j;
+}				t_exec;
+
+
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -168,6 +175,7 @@ typedef struct s_all
 	t_hd_data			hd_data;
 	t_env_export		env_export;
 	t_export			*export;
+	t_exec				exec;
 	int					error_code;     // pour le code exit status
 }						t_all;
 

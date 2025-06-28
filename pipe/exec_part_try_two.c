@@ -15,37 +15,40 @@ void	alloc_my_pipe_fd(t_all *all)
 		i++;
 	}
 }
-void	alloc_my_herdoc_fd(t_all *all)
+
+void	initialise_exec(t_all *all)
 {
+	all->exec.i = 0;
+	all->exec.j = 0;
+}
+
+void	alloc_my_herdoc_fd(t_all *all)//est ce que ca alloue tout les heredoc en meme temps ?
+{
+	initialise_exec(all);
 	if (!find_last_hd(all->pipe.pipe, all))
 	{
-		printf("cest la merdeee\n");
+		printf("NO HEREDOC BRO\n"); // a enlever
 		return;
 	}
-	int i = 0;
-
 	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *) * (all->pipe.nb_pipe + 1));
-	while (i < all->pipe.nb_pipe + 1)
+	while (all.exec.i < all->pipe.nb_pipe + 1)
 	{
-		all->pipe.heredoc_fd[i] = (int *)gc_malloc(all, sizeof(int) * 2);
-		all->pipe.heredoc_fd[i][0] = -1;
-		all->pipe.heredoc_fd[i][1] = -1;
-		i++;
+		all->pipe.heredoc_fd[all.exec.i] = (int *)gc_malloc(all, sizeof(int) * 2);
+		all->pipe.heredoc_fd[all.exec.i][0] = -1;
+		all->pipe.heredoc_fd[all.exec.i][1] = -1;
+		all.exec.i++;
 	}
-	i = 0;
-	while(i < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
+	while(all.exec.j < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
 	{
-		if (find_last_hd(i, all))
+		if (find_last_hd(all.exec.j, all))
 		{
-			if (pipe(all->pipe.heredoc_fd[i]) == -1)
-			{
-				perror("pipe");
-			}
-			ft_putstr_fd(find_last_hd(i, all), all->pipe.heredoc_fd[i][1]);
-			close(all->pipe.heredoc_fd[i][1]);
-			all->pipe.heredoc_fd[i][1] = -1;
+			if (pipe(all->pipe.heredoc_fd[all.exec.j]) == -1)
+				error_msg(all, "pipe"); // si enfant alors pas exit, comment verifier ?? alloc_my_heredoc_enfant ??
+			ft_putstr_fd(find_last_hd(all.exec.j, all), all->pipe.heredoc_fd[all.exec.j][1]);
+			close(all->pipe.heredoc_fd[all.exec.j][1]);
+			all->pipe.heredoc_fd[all.exec.j][1] = -1;
 		}
-		i++;
+		all.exec.j++;
 	}
 }
 
