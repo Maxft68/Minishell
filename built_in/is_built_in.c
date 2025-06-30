@@ -36,7 +36,6 @@ int	is_built_in(t_all *all)
 	if (!all->pipe.cmd_args)
 		return (printf("cmd_args is NULL\n"), 1);// a enlever printf
 	if (!all->pipe.cmd_args[all->pipe.pipe])
-		printf("cmd_args[%d] is NULL\n", all->pipe.pipe);// a enlever printf
 		return (printf("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);
 	if (!all->pipe.cmd_args[all->pipe.pipe][0])
 		return (printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever printf

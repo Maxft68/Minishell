@@ -1,86 +1,8 @@
 #include "../mandatory/minishell.h"
 
-void	alloc_my_pipe_fd(t_all *all)
-{
-	int i = 0;
-
-	if (all->pipe.nb_pipe == 0)
-		return ;
-	all->pipe.pipe_fd = (int **)gc_malloc(all, sizeof(int *) * all->pipe.nb_pipe);
-	while (i < all->pipe.nb_pipe)
-	{
-		all->pipe.pipe_fd[i] = (int *)gc_malloc(all, sizeof(int) * 2);
-		all->pipe.pipe_fd[i][0] = -1;
-		all->pipe.pipe_fd[i][1] = -1;
-		i++;
-	}
-}
-
-void	initialise_exec(t_all *all)
-{
-	all->exec.i = 0;
-	all->exec.j = 0;
-}
-
-void	alloc_my_herdoc_fd(t_all *all)//est ce que ca alloue tout les heredoc en meme temps ?
-{
-	initialise_exec(all);
-	if (!find_last_hd(all->pipe.pipe, all))
-	{
-		printf("NO HEREDOC BRO\n"); // a enlever
-		return;
-	}
-	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *) * (all->pipe.nb_pipe + 1));
-	while (all.exec.i < all->pipe.nb_pipe + 1)
-	{
-		all->pipe.heredoc_fd[all.exec.i] = (int *)gc_malloc(all, sizeof(int) * 2);
-		all->pipe.heredoc_fd[all.exec.i][0] = -1;
-		all->pipe.heredoc_fd[all.exec.i][1] = -1;
-		all.exec.i++;
-	}
-	while(all.exec.j < all->pipe.nb_pipe + 1) // pour les herdoc avant de fork
-	{
-		if (find_last_hd(all.exec.j, all))
-		{
-			if (pipe(all->pipe.heredoc_fd[all.exec.j]) == -1)
-				error_msg(all, "pipe"); // si enfant alors pas exit, comment verifier ?? alloc_my_heredoc_enfant ??
-			ft_putstr_fd(find_last_hd(all.exec.j, all), all->pipe.heredoc_fd[all.exec.j][1]);
-			close(all->pipe.heredoc_fd[all.exec.j][1]);
-			all->pipe.heredoc_fd[all.exec.j][1] = -1;
-		}
-		all.exec.j++;
-	}
-}
-
-void	error_msg(t_all *all, char *s)
-{
-	ft_putstr_fd("WriteOnMe: ", 2);
-	perror(s); //a verifier si \n ou pas
-	ft_exit("", all, 1);//sauf si built-in dans parent NI EXECVE
-}
-
-int	error_msg_no_pipe(char *s)
-{
-	ft_putstr_fd("WriteOnMe: ", 2);
-	perror(s); //a verifier si \n ou pas
-	return(1);
-}
-
-int	error_dup2(t_all *all, int fd, char *redir)
-{
-	ft_putstr_fd("NTR", 2);
-	close(fd);
-	error_msg(all, redir);
-	return(1);
-} 
-
-int	error_dup2_no_pipe(int fd, char *redir)
-{
-	error_msg_no_pipe(redir);
-	close(fd);
-	return(1);
-} 
-
+/******************************************************************************
+Redirection of file descriptors from char *infile to stdin
+******************************************************************************/
 int	do_redir_in_no_pipe(t_all *all, char *redir)
 {
 	//ft_putstr_fd("--------je suis dans redir IN\n", 2);
@@ -107,6 +29,9 @@ int	do_redir_in(t_all *all, char *redir)
 	return(0);
 }
 
+/******************************************************************************
+Redirection of file descriptors for input and output
+******************************************************************************/
 int	do_redir_fd(t_all *all)
 {
 	t_token *temp;
@@ -115,7 +40,7 @@ int	do_redir_fd(t_all *all)
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
 	printf("heredoc ----DO PIPE:%s\n", find_last_hd(all->pipe.pipe, all));
-	if (find_last_hd(all->pipe.pipe, all)) // a modifier quqnd jaurais la vrai fonction et a ne ps appeler plusieurs fois...
+	if (find_last_hd(all->pipe.pipe, all))
 	{
 		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
 			error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
@@ -283,10 +208,10 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 	}
 }
 
-int	exec_part(t_all *all)
+int	exec_part(t_all *all)// exexcuter une seule fois par readline
 {
 	int status;
-	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1)); //sizeof(int *)
+	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1));
 	alloc_my_pipe_fd(all);
 	alloc_my_herdoc_fd(all);
 	int i;

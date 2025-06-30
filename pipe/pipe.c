@@ -12,15 +12,11 @@ char	*find_path_cmd(t_all *all, char **env)
 	while (env && env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (!env[i]) //quand env nexiste plus
-	{
-		return(ft_putstr_fd("WriteOnMe: ", 2), ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2), ft_putstr_fd(": No such file or directory, PAS DE CHOCOLAT\n", 2), NULL);
-		
-		// ft_putstr_fd(args1, 2);
-		// ft_putstr_fd(": command not found\n", 2);   a modifier
-		// exit(127);
-	}
+		return(ft_putstr_fd("WriteOnMe: ", 2),
+		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2), 
+		ft_putstr_fd(": No such file or directory, PAS DCHOCOLAT\n", 2), NULL);
 	path_to_search = gc_split(all, env[i] + 5, ':');
-	if (!path_to_search) //quel cas echoue ?
+	if (!path_to_search) //quel cas echoue ? si plus d'env ??
 	{
 		// exit(1); a modif
 	}
