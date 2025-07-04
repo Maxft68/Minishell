@@ -24,6 +24,12 @@ void	do_dollar_interrogation(t_all *all)
 	return ;
 }
 
+void	join_to_new(t_all *all, char *val)
+{
+	all->data.temp = gc_strjoin(all, all->data.new, val);
+	all->data.new = all->data.temp;
+}
+
 void	part_one(t_all *all, char *old, char *val)
 {
 	all->data.z++;
@@ -49,8 +55,9 @@ void	part_one(t_all *all, char *old, char *val)
 			all->data.new = gc_strdup(val, all);
 		else
 		{
-			all->data.temp = gc_strjoin(all, all->data.new, val);// mettre dans un autre fonction
-			all->data.new = all->data.temp;
+			join_to_new(all, val);
+			// all->data.temp = gc_strjoin(all, all->data.new, val);// mettre dans un autre fonction
+			// all->data.new = all->data.temp;
 		}
 	}
 }

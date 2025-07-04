@@ -247,9 +247,6 @@ int	exec_part(t_all *all)// exexcuter une seule fois par readline
             close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
             all->pipe.heredoc_fd[all->pipe.pipe][0] = -1;
         }
-		
-		
-
 		i++;
 		//printf("i =%d\n", i);
 		all->pipe.pipe++;
@@ -274,6 +271,3 @@ int	exec_part(t_all *all)// exexcuter une seule fois par readline
 	all->pipe.nb_pipe = 0;
 	return(0);
 }
-
-
-

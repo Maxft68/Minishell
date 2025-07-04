@@ -44,9 +44,6 @@ void	ft_exit(char *error, t_all *all, int error_code)
 		ft_putstr_fd(error, 2);
 	if (error_code) // useless ??
 		all->error_code = error_code;
-	if (!error_code) // useless  bis??
-		error_code = all->error_code;
-	
 	if (all->garbage)
 		free_garbage_collect(&all->garbage);
 	// if (all->token)

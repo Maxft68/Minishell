@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/04 15:32:28 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:20:37 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	do_cd_home(t_all *all, char *s)
 	}
 	if (s)
 		test_the_path(all, s);
+	all->error_code = 1;
 	copy_list(all);
 	sort_list(all);
 }
@@ -95,4 +96,5 @@ void	do_cd(t_all *all)
 		do_cd_double_dot(all);
 	else
 		test_the_path(all, s);
+	//all->error_code = 0;
 }
