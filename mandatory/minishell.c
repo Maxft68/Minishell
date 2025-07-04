@@ -67,6 +67,7 @@ int	main(int argc, char **argv, char **env)
 		all.garbage = NULL;
 		all.token = NULL;
 		all.rdir_tkn = NULL;
+		
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");

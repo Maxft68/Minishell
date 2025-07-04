@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/27 12:02:10 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:32:28 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	do_cd(t_all *all)
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][2])
 	{
 		printf("WriteOnMe: cd: too many arguments\n");
+		all->error_code = 123456789; // test
 		return ;
 	}
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1])
