@@ -131,11 +131,13 @@ int    pars_to_exec(t_all *all)
 	{
 		catch_heredoc(all);
 		create_redir_lst(all);
-		printf("last_hd: %s\n", find_last_hd(0, all));
+		//printf("last_hd: %s\n", find_last_hd(0, all));
 		//print_node(all->rdir_tkn);
 		list_to_tab(all);
-		printf("in/out: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
-		printf("input: %s\n", all->lexer->input);
+		// printf("in/out0: %s\n", search_pipe_redir(1, 6, all)); //<--------------------------------printf
+		// printf("in/out1: %s\n", search_pipe_redir(1, 6, all));
+		// printf("in/out2: %s\n", search_pipe_redir(1, 6, all));
+		// printf("input: %s\n", all->lexer->input);
 		if (exec_part(all) == 1)
 			return(1);
 	}

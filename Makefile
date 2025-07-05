@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/07/05 15:19:32 by rbier            ###   ########.fr        #
+#    Updated: 2025/07/05 21:19:44 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,11 @@ SRC =	mandatory/minishell.c \
 		utils/ft_garbage_env.c\
 		utils/gc_itoa.c\
 		built_in/env/do_env.c \
+		built_in/env/do_env_utils.c \
 		pipe/pipe.c\
 		pipe/exec_part_try_two.c\
+		pipe/alloc.c\
+		pipe/error.c\
 		parsing/expand.c\
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\
@@ -31,6 +34,7 @@ SRC =	mandatory/minishell.c \
 		parsing/token_utils.c\
 		parsing/list_to_tab.c\
 		built_in/cd/do_cd.c \
+		built_in/cd/cd_utils.c \
 		built_in/pwd/do_pwd.c \
 		built_in/is_built_in.c\
 		built_in/echo/do_echo.c\
@@ -39,6 +43,7 @@ SRC =	mandatory/minishell.c \
 		built_in/export/utils_export.c\
 		built_in/export/utils2_export.c\
 		built_in/export/print_and_assign.c\
+		built_in/export/swap_sort_print.c\
 		utils/gc_split.c\
 		utils/gc_strjoin.c\
 		utils/ft_strcmp.c\
@@ -51,7 +56,7 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = ./temp
 CC = cc
 INCLUDES = -I./mandatory
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES) -g3 -fsanitize=address
 LIBFT_DIR = ./libft
 LIBFT_LIB = ./libft/libft.a
 VALGRIND_FLAGS = -s --leak-check=full --show-leak-kinds=all --track-origins=yes\

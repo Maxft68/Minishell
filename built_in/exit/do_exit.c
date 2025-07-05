@@ -2,9 +2,6 @@
 
 #include "minishell.h"
 
-// 1. Afficher "exit" si pas dans un fork
-
-
 int	is_long_long(char *str)
 {
 	int i;
@@ -48,11 +45,15 @@ int	ft_str_digit(char *str)
 	return (0);
 }
 
-void	exit_args(t_all *all) //quand plusieurs args
+/*******************************************************************************
+If more then 1 arg, check if the first is a digit, and if it is a long long.
+*******************************************************************************/
+void	exit_args(t_all *all)
 {
 	if (ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1]))
 	{
-		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1])) //erreur
+		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1]))
+		
 		{
 			ft_putstr_fd("exit\n", 2);
 			ft_putstr_fd("WriteOnMe: exit: ", 2);
@@ -72,14 +73,9 @@ void	exit_args(t_all *all) //quand plusieurs args
 		return(ft_exit("", all, all->error_code));
 	}
 	else
-	{
-		ft_putstr_fd("exit\n", 2);
-		ft_putstr_fd("WriteOnMe: exit: ", 2);
-		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		ft_exit("", all, 2);
-	}
+		ft_putstr_fd("exit: too many arguments", 2);
 }
+
 
 long long int	ft_atolli(char *s) // a tester avec  long max long min et 0 ou nbre neegatif
 {
@@ -108,7 +104,7 @@ long long int	ft_atolli(char *s) // a tester avec  long max long min et 0 ou nbr
 	return (result * sign);
 }
 
-int	do_exit(t_all *all) // 0 ou 1 args
+int	do_exit(t_all *all)
 {
 	int long long arg1;
 	char **arg = all->pipe.cmd_args[all->pipe.pipe];

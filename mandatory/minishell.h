@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <errno.h>
 
 typedef struct s_garbage
 {
@@ -105,6 +106,20 @@ typedef struct  s_token
 	// struct s_token	*prev;
 }					t_token;
 
+typedef struct s_built_in
+{
+	int		i;
+	int		j;
+	int		n;
+}				t_built_in;
+
+typedef struct s_exec
+{
+	int		i;
+	int		j;
+}				t_exec;
+
+
 
 typedef struct s_data // structure poubelle pour stocker un peu de tout
 {
@@ -150,6 +165,7 @@ typedef struct	s_env_export
 
 typedef struct s_all
 {
+	t_built_in			built_in;
 	t_pipe				pipe;
 	t_env				*env;
 	t_lexer				*lexer;
@@ -161,6 +177,7 @@ typedef struct s_all
 	t_hd_data			hd_data;
 	t_env_export		env_export;
 	t_export			*export;
+	t_exec				exec;
 	int					error_code;     // pour le code exit status
 }						t_all;
 
@@ -184,6 +201,7 @@ char		*gc_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 void		free_garbage_collect(t_garbage **garbage);
 void		free_garbage_env(t_garb_env **garbage_env_head);
 char		*gc_strdup(char *s, t_all *all);
+char		*gc_strdup_input(char *s, t_all *all);
 char		*gc_strdup_env(char *s, t_all *all);
 char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);
@@ -219,13 +237,21 @@ int			exec_cmd(t_all *all);
 char		*search_good_path(char **paths, t_all *all);
 char		**do_char_env(t_all *all);
 int			exec_part(t_all *all);
+void		alloc_my_pipe_fd(t_all *all);
+void		alloc_my_herdoc_fd(t_all *all);
+int			error_dup2_no_pipe(int fd, char *redir);
+int			error_dup2(t_all *all, int fd, char *redir);
+int			error_msg_no_pipe(char *s);
+void		error_msg(t_all *all, char *s);
+
 /* **********Signal functions************************************************ */
 void    	signals_swing(void);
 /* **********Built_in functions********************************************** */
 int			is_built_in(t_all *all);
 int			do_built_in(t_all *all);
-void		do_echo(char ***args, int pipe);
+int			do_echo(t_all *all, char ***args, int pipe);
 void		do_env(t_all *all, char **env);
+char		**do_char_env(t_all *all);
 void		print_node_env(t_all *all, t_env *env);
 void		free_env(t_env **env);
 void		do_export(t_all *all);
@@ -246,6 +272,8 @@ void		print_and_null(t_all *all, char *s);
 void		do_unset(t_all *all);
 void		do_pwd(t_all *all);
 void		do_cd(t_all *all);
+void		test_the_path(t_all *all, char *s);
+char		*replace_until_the_last(t_all *all, char *s, int c);
 char		*find_the_value(t_all *all, char *name);
 char		*ft_pwd(t_all *all);
 
