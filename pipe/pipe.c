@@ -18,7 +18,8 @@ char	*find_path_cmd(t_all *all, char **env)
 	path_to_search = gc_split(all, env[i] + 5, ':');
 	if (!path_to_search) //quel cas echoue ? si plus d'env ??
 	{
-		// exit(1); a modif
+		printf("PATH null ? ");
+		exit(1);
 	}
 	path = search_good_path(path_to_search, all);
 	if (!path)
@@ -48,7 +49,7 @@ int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 	else
 		path = find_path_cmd(all, env);
 	if (!path)
-		return(ft_exit("degage de la",all, 127), 1);
+		return(ft_exit("",all, 127), 1);
 	execve(path, cmd, env); //return si echoue ??
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(cmd[0]);

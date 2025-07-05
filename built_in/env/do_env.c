@@ -31,13 +31,12 @@ void	minimal_env(t_all *all)
 
 	path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 	all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
-	if (!all->data.name)
-		ft_exit("Cannot allocate memory1\n", all, 12);
 	all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
-	if (!all->data.value)
-		ft_exit("Cannot allocate memory2\n", all, 12);
 	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PATH", path));
 	all->env_export.nb_line_env = 1;
+	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PWD", ft_pwd(all))); // a verifier pwd
+	all->env_export.nb_line_env = 2;
+	
 }
 
 void	normal_env(t_all *all, char **env)

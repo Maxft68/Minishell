@@ -6,13 +6,13 @@ void	do_pwd(t_all *all)
 	char s[4096];
 	char *f;
 
-	if (getcwd(s,sizeof(s)))
-		printf("%s\n", s);
-	else if (find_the_value(all, "PWD"))
+	if (find_the_value(all, "PWD"))
 	{
 		f = find_the_value(all, "PWD");
 		printf("%s\n", f);
 	}
+	else if (getcwd(s,sizeof(s)))
+		printf("%s\n", s);
 	all->error_code = 0;
 }
 

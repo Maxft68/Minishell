@@ -77,7 +77,8 @@ char	**do_char_env(t_all *all)
 	if (!all || !all->env)
 		ft_exit("pourquoi pas ??", all, 1);
 	current = all->env;
-	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 1));
+	printf("nb de ligne : %d\n", all->env_export.nb_line_env);
+	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 2));
 	if (!env)
 		ft_exit("Cannot allocate memory4\n", all, 12);
 	while(current)
@@ -91,8 +92,7 @@ char	**do_char_env(t_all *all)
 		}
 		if (current && current->name && current->value)
 			env[j++] = strjoin_env(all, current->name, current->value);
-		if (current)
-			current = current->next;
+		current = current->next;
 	}
 	return (env[j] = NULL, env);
 }

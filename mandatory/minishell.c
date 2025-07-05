@@ -62,7 +62,8 @@ int	main(int argc, char **argv, char **env)
 			pars_to_exec(&all);
 		// ft_lstclear(&all.token);
 		// ft_lstclear(&all.rdir_tkn);
-		free(input);
+		if (input)
+			free(input);
 		free_garbage_collect(&all.garbage);
 		all.garbage = NULL;
 		all.token = NULL;

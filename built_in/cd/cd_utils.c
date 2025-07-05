@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/04 18:43:08 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:32:00 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,26 @@ void	test_the_path(t_all *all, char *s)
 
 	if (s)
 	{
-		str = gc_strjoin(all, "WriteOnMe: cd ", s);
-		if (chdir(s) == -1)
+		str = find_the_value(all, "PWD"); // copy
+		if (s[0] == '/' && chdir(s) == 0)
 		{
+			replace_or_add_env(all, "OLDPWD", gc_strdup_env(str, all));
+			replace_or_add_env(all, "PWD", gc_strdup_env(s, all));
+		}
+		else if (chdir(s) == 0)
+		{
+			replace_or_add_env(all, "OLDPWD", gc_strdup_env(str, all));
+			replace_or_add_env(all, "PWD", gc_strjoin_env(all, find_the_value(all, "PWD"), "/"));
+			replace_or_add_env(all, "PWD", gc_strjoin_env(all, find_the_value(all, "PWD"), s));
+		}
+		else if(chdir(s) == -1)
+		{
+			str = gc_strjoin(all, "WriteOnMe: cd ", s);
 			perror(str);
 			all->error_code = 1;
 		}
 	}
+	
 }
 
 char	*replace_until_the_last(t_all *all, char *s, int c)
@@ -66,4 +79,3 @@ char	*find_the_value(t_all *all, char *name)
 	}
 	return (NULL);
 }
-
