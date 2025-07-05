@@ -22,6 +22,7 @@
 # include <termios.h>
 # include <unistd.h>
 # include <errno.h>
+# include <limits.h>
 
 typedef struct s_garbage
 {
