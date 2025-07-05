@@ -39,6 +39,7 @@ void create_word_token(t_all *all)
 	// initialize_data(all, str);
 	// handle_expand(str, all);
 	str = pick_char(str, type, all);
+	printf("WT_str:|%s|\n", str);
 	create_token(type, str, all);
 }
 
@@ -125,7 +126,7 @@ int    pars_to_exec(t_all *all)
 {
 	while (all->lexer->c)
 		next_token(all);
-	//print_node(all->token);    //<---------------------------------------------------------printf
+	print_node(all->token);    //<---------------------------------------------------------printf
 	if (all->token && !check_tkn_lst(all))
 	{
 		catch_heredoc(all);

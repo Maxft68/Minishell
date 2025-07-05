@@ -46,25 +46,28 @@ void	part_two(t_all *all, char *old)
 void	handle_expand(char *old, t_all *all)
 {
 	char *val;
-	bool d_quote = false;
-	bool s_quote = false;
+	// bool d_quote = false;
+	// bool s_quote = false;
 	val = NULL;
+	reset_quotes(all);
 	while(old[all->hd_data.i])
 	{
-        if (old[all->hd_data.i] == 34 && !d_quote && !s_quote)
-            d_quote = true;
-        else if (old[all->hd_data.i] == 34 && d_quote && !s_quote)
-            d_quote = false;
-        else if (old[all->hd_data.i] == 39 && !s_quote && !d_quote)
-            s_quote = true;
-        else if (old[all->hd_data.i] == 39 && s_quote && !d_quote)
-			s_quote = false;
+        // if (old[all->hd_data.i] == 34 && !d_quote && !s_quote)
+        //     d_quote = true;
+        // else if (old[all->hd_data.i] == 34 && d_quote && !s_quote)
+        //     d_quote = false;
+        // else if (old[all->hd_data.i] == 39 && !s_quote && !d_quote)
+        //     s_quote = true;
+        // else if (old[all->hd_data.i] == 39 && s_quote && !d_quote)
+		// 	s_quote = false;
+		check_quotes(old[all->hd_data.i], all);
 		if (old[all->hd_data.i] == '$' && 
-			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !s_quote)
+			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !all->data.s_quote)
 		{
 			part_one(all, old, val);
-			d_quote = false;
-			s_quote = false;
+			reset_quotes(all);
+			// d_quote = false;
+			// s_quote = false;
 		}
 		else
 			part_two(all, old);

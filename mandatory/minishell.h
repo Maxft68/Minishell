@@ -71,8 +71,8 @@ typedef struct s_lexer
     const char  *input;
     int         position;
     char        c;
-	bool		s_quote;
-	bool		d_quote;
+	// bool		s_quote;
+	// bool		d_quote;
     bool        cmd;
 	int			redir;
 }				t_lexer;
@@ -126,7 +126,8 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char		*new;
 	char		*tmp;
 	char		*temp;
-
+	bool		s_quote;
+	bool		d_quote;
 }						t_data;
 
 typedef struct s_hd_data//structure data pour heredoc
@@ -194,6 +195,9 @@ char		*gc_itoa(t_all *all, int n);
 int			create_lexer(char *input, t_all *all);
 int			pars_to_exec(t_all *all);
 char		*pick_char(char *str, token_type type, t_all *all);
+void		check_quotes(char c, t_all *all);
+void    	reset_quotes(t_all *all);
+int			verif_quoted(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		skip_whitespace(t_lexer *lexr);

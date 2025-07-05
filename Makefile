@@ -6,7 +6,7 @@
 #    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/06/24 00:14:43 by rbier            ###   ########.fr        #
+#    Updated: 2025/07/05 15:19:32 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC =	mandatory/minishell.c \
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
+		parsing/quotes_utils.c\
 		parsing/redir_list.c\
 		parsing/catch_heredoc.c\
 		parsing/heredoc_utils.c\

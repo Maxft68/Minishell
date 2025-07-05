@@ -1,33 +1,33 @@
 #include "../mandatory/minishell.h"
 
-int	verif_quoted(char *input)
-{
+// int	verif_quoted(char *input)
+// {
 
-	int i;
-	int c;
-	bool d_quote = false;
-	bool s_quote = false;
-	i = 0;
-	while(input[i])
-	{
-		c = input[i];
-        if (c == 34 && !d_quote && !s_quote)
-            d_quote = true;
-        else if (c == 34 && d_quote && !s_quote)
-            d_quote = false;
-        else if (c == 39 && !s_quote && !d_quote)
-            s_quote = true;
-        else if (c == 39 && s_quote && !d_quote)
-			s_quote = false;
-		i++;
-	}
-	if (s_quote || d_quote)
-	{
-		ft_putstr_fd("Quotes Syntax error\n", 2);
-		return(-1);
-	}
-	return (0);
-}
+// 	int i;
+// 	int c;
+// 	bool d_quote = false;
+// 	bool s_quote = false;
+// 	i = 0;
+// 	while(input[i])
+// 	{
+// 		c = input[i];
+//         if (c == 34 && !d_quote && !s_quote)
+//             d_quote = true;
+//         else if (c == 34 && d_quote && !s_quote)
+//             d_quote = false;
+//         else if (c == 39 && !s_quote && !d_quote)
+//             s_quote = true;
+//         else if (c == 39 && s_quote && !d_quote)
+// 			s_quote = false;
+// 		i++;
+// 	}
+// 	if (s_quote || d_quote)
+// 	{
+// 		ft_putstr_fd("Quotes Syntax error\n", 2);
+// 		return(-1);
+// 	}
+// 	return (0);
+// }
 
 int	create_lexer(char *input, t_all *all)
 {
@@ -38,16 +38,17 @@ int	create_lexer(char *input, t_all *all)
 		add_history(input);
     if (input[0] == '\0')
 		return (-1);
-	if (verif_quoted(input) == -1)
+	if (verif_quoted(input, all) == -1)
 		return (-1);
 	initialize_data(all, input);
 	handle_expand(input, all);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     all->lexer->input = gc_strdup(all->data.new, all);
+    printf("lexer_input:|%s|\n", all->lexer->input);
     all->lexer->position = 0;
     all->lexer->c = all->lexer->input[0];
-    all->lexer->s_quote = false;
-    all->lexer->d_quote = false;
+    // all->lexer->s_quote = false;
+    // all->lexer->d_quote = false;
     all->lexer->cmd = true;
     all->lexer->redir = 0;
     skip_whitespace(all->lexer);
@@ -59,11 +60,11 @@ int new_tkn_char(token_type type, t_all *all)
     char    c;
 
     c = all->lexer->c;
-    if ((type > 0 && type < 5) && !all->lexer->d_quote && !all->lexer->s_quote)
+    if ((type > 0 && type < 5) && !all->data.d_quote && !all->data.s_quote)
     {
     if (c == '<' || c == '>' || c == '|')// || c == '$' )
         return (1);
-    if ((c == ' ' && !all->lexer->s_quote) && (c == ' ' && !all->lexer->d_quote))
+    if ((c == ' ' && !all->data.s_quote) && (c == ' ' && !all->data.d_quote))
         return (1);
     }
     return (0);

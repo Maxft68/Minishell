@@ -1,7 +1,6 @@
 
 #include "../mandatory/minishell.h"
 
-
 char	*ad_char(t_all *all, char* str)
 {
 	size_t	i;
@@ -17,18 +16,21 @@ char	*pick_char(char *str, token_type type, t_all *all)
 {
 	char	c;
 
+	reset_quotes(all);
     while (ft_isprint(all->lexer->c) && !new_tkn_char(type, all))//<---- new_tkn si en dehors quotes 
     {
 		c = all->lexer->c;
-        if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
-            all->lexer->d_quote = true;
-        else if (c == 34 && all->lexer->d_quote && !all->lexer->s_quote)
-            all->lexer->d_quote = false;
-        else if (c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
-            all->lexer->s_quote = true;
-        else if (c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
-			all->lexer->s_quote = false;
-        else
+        // if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
+        //     all->lexer->d_quote = true;
+        // else if (c == 34 && all->lexer->d_quote && !all->lexer->s_quote)
+        //     all->lexer->d_quote = false;
+        // else if (c == 39 && !all->lexer->s_quote && !all->lexer->d_quote)
+        //     all->lexer->s_quote = true;
+        // else if (c == 39 && all->lexer->s_quote && !all->lexer->d_quote)
+		// 	all->lexer->s_quote = false;
+		if (c == 34 || c == 39)
+			check_quotes(c, all);
+        if ((c != 34 && c != 39 ) || (c == 34 && all->data.s_quote) || (c == 39 && all->data.d_quote))
 			str = ad_char(all, str);
         advance_char(all->lexer);
     }
@@ -46,8 +48,8 @@ void   create_token(token_type type, char *str, t_all *all)
 	tokn = NULL;
 	tokn = (t_token*)gc_malloc(all, sizeof(t_token));
 	// tokn = (t_token*)gc_malloc(all, sizeof(t_token));
-	if (!tokn)
-		ft_exit("Cannot allocate memory9\n", all, 12);
+	// if (!tokn)
+	// 	ft_exit("Cannot allocate memory9\n", all, 12);
 	tokn->str = NULL;
 	tokn->next = NULL;
 	tokn->pipe = all->pipe.nb_pipe;
@@ -55,7 +57,7 @@ void   create_token(token_type type, char *str, t_all *all)
 	tokn->str = gc_strdup(str, all);
 	// tokn->str = gc_strdup(str, all);
 	// printf("token created: ->type: %u  str: %s\n", tokn->type, tokn->str); // <--------------------------------printf
-	if (!tokn->str)
-		ft_exit("Cannot allocate memory10\n", all, 12);
+	// if (!tokn->str)
+	// 	ft_exit("Cannot allocate memory10\n", all, 12);
 	ft_tknadd_back(&all->token, tokn);
 }
