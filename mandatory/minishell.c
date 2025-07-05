@@ -55,9 +55,10 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		char *input = readline("WriteOnMe ");
-		if (!input)
+		char *firstinput = readline("WriteOnMe ");
+		if (!firstinput)
 			break;
+		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
 		// ft_lstclear(&all.token);

@@ -200,6 +200,7 @@ char		*gc_strjoin3(char *s1, char *s2, char *s3, t_all *all);
 void		free_garbage_collect(t_garbage **garbage);
 void		free_garbage_env(t_garb_env **garbage_env_head);
 char		*gc_strdup(char *s, t_all *all);
+char		*gc_strdup_input(char *s, t_all *all);
 char		*gc_strdup_env(char *s, t_all *all);
 char		*gc_strjoin_env(t_all *all, char *s1, char *s2);
 char		*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all);

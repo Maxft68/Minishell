@@ -1,5 +1,23 @@
 #include "../mandatory/minishell.h"
 
+char	*gc_strdup_input(char *s, t_all *all)
+{
+	char	*alloc;
+	size_t	l;
+	if (!s)
+		return (NULL);
+	l = ft_strlen(s);
+	alloc = gc_malloc(all, (l + 1) * sizeof(char));
+	if (!alloc)
+	{
+		free(s);
+        ft_exit("Cannot allocate memory6\n", all, 12);
+	}
+    ft_strlcpy(alloc, s, l + 1);
+	free(s);
+	return (alloc);
+}
+
 char	*gc_strdup(char *s, t_all *all)
 {
 	char	*alloc;
