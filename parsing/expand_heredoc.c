@@ -1,5 +1,7 @@
 #include "../mandatory/minishell.h"
 
+//initialiser hd_data!!!!!!
+
 void	part_one(t_all *all, char *old, char *val)
 {
 	all->hd_data.i++;
