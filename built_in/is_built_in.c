@@ -3,27 +3,15 @@
 int	do_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-	{
-		printf("REGIS POURQUOI JAI PAS DARGS\n");
-		return(1);
-	}
+		return(printf("REGIS POURQUOI JAI PAS DARGS\n"), 1); // a enlever printf
 	if (!all->pipe.cmd_args)
-	{
-		printf("cmd_args is NULL\n");
-		return (1);
-	}
+		return (printf("cmd_args is NULL\n"), 1);// a enlever printf
 	if (!all->pipe.cmd_args[all->pipe.pipe])
-	{
-		printf("cmd_args[%d] is NULL\n", all->pipe.pipe);
-		return (1);
-	}
+		return (printf("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);// a enlever printf
 	if (!all->pipe.cmd_args[all->pipe.pipe][0])
-	{
-		printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe);
-		return (1);
-	}
+		return (printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever printf
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
-		return(do_echo(all->pipe.cmd_args, all->pipe.pipe), 0);
+		return(do_echo(all, all->pipe.cmd_args, all->pipe.pipe), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)
 		return(do_cd(all), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "env", 4) == 0)
@@ -44,25 +32,13 @@ int	do_built_in(t_all *all)
 int	is_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-	{
-		printf("REGIS POURQUOI JAI PAS DARGS\n");
-		return(1);
-	}
+		return(printf("REGIS POURQUOI JAI PAS DARGS\n"), 1);// a enlever printf
 	if (!all->pipe.cmd_args)
-	{
-		printf("cmd_args is NULL\n");
-		return (1);
-	}
+		return (printf("cmd_args is NULL\n"), 1);// a enlever printf
 	if (!all->pipe.cmd_args[all->pipe.pipe])
-	{
-		printf("cmd_args[%d] is NULL\n", all->pipe.pipe);
-		return (1);
-	}
+		return (printf("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);
 	if (!all->pipe.cmd_args[all->pipe.pipe][0])
-	{
-		printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe);
-		return (1);
-	}
+		return (printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever printf
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
 		return(0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)
@@ -79,11 +55,3 @@ int	is_built_in(t_all *all)
 		return(0);
 	return (1);
 }
-
-
-
-// j = i
-// j =
-
-// /home/mdsiurds/C/Minishell2 == 11carac avant le /
-// /home/mdsiu   = 11carac imprimer

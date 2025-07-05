@@ -57,31 +57,6 @@ void	ft_lstadd_back_export(t_export **export, t_export *new)
 	return ;
 }
 
-void	print_export(t_export *export)
-{
-	if (!export)
-		return ;
-	while (export)
-	{
-		if (!export->name)
-			export = export->next;
-		else
-		{
-			if (export->value)
-			{
-				printf("declare -x ");
-				printf("%s=", export->name);
-				printf("\"%s\"\n", export->value);
-			}
-			else
-			{
-				printf("declare -x ");
-				printf("%s\n", export->name);
-			}
-			export = export->next;
-		}
-	}
-}
 
 /*******************************************************************************
 Check if export is: with = / += / without =

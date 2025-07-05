@@ -1,11 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
+/*   Updated: 2025/06/27 16:24:59 by mdsiurds         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-
-# include <limits.h> 
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 void	ft_putchar_fd(char c, int fd)
 {
@@ -14,46 +19,40 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	do_echo(char ***args, int pipe)
+void	write_all(t_all *all, int pipe)
 {
-	int	j;
-	int	argument_n;
+	char	***args;
 
-	argument_n = 0;
-	j = 1;
+	args = all->pipe.cmd_args;
+	all->built_in.i = 0;
+	while (args[pipe][all->built_in.j][all->built_in.i])
+		ft_putchar(args[pipe][all->built_in.j][all->built_in.i++]);
+	all->built_in.j++;
+	if (all->built_in.j > 1 && args[pipe][all->built_in.j] != NULL
+		&& args[pipe][all->built_in.j - 1][0] != '\0')
+		ft_putchar(' ');
+}
 
-	if (!args[pipe] || !args[pipe][j])
+int	do_echo(t_all *all, char ***args, int pipe)
+{
+	all->built_in.j = 1;
+	if (!args[pipe] || !args[pipe][all->built_in.j])
+		return (ft_putchar('\n'), 1);
+	while (args[pipe][all->built_in.j] && args[pipe][all->built_in.j][0] == '-'
+		&& args[pipe][all->built_in.j][1] == 'n')
 	{
-		ft_putchar('\n');
-		return;
-	}
-
-	while (args[pipe][j] && args[pipe][j][0] == '-' && args[pipe][j][1] == 'n')
-	{
-		int i = 2;
-		while (args[pipe][j][i] == 'n')
-			i++;
-		if (args[pipe][j][i] == '\0') // alors juste -nnnnnnnnnnn
-		{
-			argument_n = 1;
-			j++;
-		}
+		all->built_in.n = 1;
+		all->built_in.i = 2;
+		while (args[pipe][all->built_in.j][all->built_in.i] == 'n')
+			all->built_in.i++;
+		if (args[pipe][all->built_in.j][all->built_in.i] == '\0')
+			all->built_in.j++;
 		else
-			break;
+			break ;
 	}
-	while (args[pipe][j])
-	{
-		int i = 0;
-		while (args[pipe][j][i])
-		{
-			ft_putchar(args[pipe][j][i]);
-			i++;
-		}
-		j++;
-		if (j > 1 && args[pipe][j] != NULL && args[pipe][j - 1][0] != '\0')
-			ft_putchar(' ');
-		}
-		if (argument_n == 0)
+	while (args[pipe][all->built_in.j])
+		write_all(all, pipe);
+	if (all->built_in.n == 0)
 		ft_putchar('\n');
-	}
-
+	return (0);
+}
