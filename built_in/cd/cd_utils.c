@@ -6,18 +6,40 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/05 15:32:00 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/05 19:35:03 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	test_the_path_mini(t_all *all, char *s)
+{
+	char	*str;
+	char	*temp;
+	int i = ft_strlen(s);
+	while (i > 0 && (s[i - 1] == '/'))
+	{
+		temp = gc_substr_env(s, 0, i - 1, all);
+		s = temp;
+		i--;
+	}
+	if(chdir(s) == -1)
+		{
+			str = gc_strjoin(all, "WriteOnMe: cd ", s);
+			perror(str);
+			all->error_code = 1;
+		}
+}
+
 void	test_the_path(t_all *all, char *s)
 {
 	char	*str;
 
 	if (s)
 	{
-		str = find_the_value(all, "PWD"); // copy
+		str = ft_pwd(all);
+		if (!str)
+			return ;
 		if (s[0] == '/' && chdir(s) == 0)
 		{
 			replace_or_add_env(all, "OLDPWD", gc_strdup_env(str, all));
@@ -36,7 +58,6 @@ void	test_the_path(t_all *all, char *s)
 			all->error_code = 1;
 		}
 	}
-	
 }
 
 char	*replace_until_the_last(t_all *all, char *s, int c)
@@ -45,6 +66,9 @@ char	*replace_until_the_last(t_all *all, char *s, int c)
 	int		j;
 	char	*new;
 
+	printf("ancien s=%s\n", s);
+	s = do_valid_s(all, s);
+	printf("nouveau s=%s\n", s);
 	i = ft_strlen(s);
 	j = i;
 	while (i > 0)

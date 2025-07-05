@@ -21,19 +21,18 @@ char	*ft_pwd(t_all *all)
 	char s[4096];
 	char *f;
 
-	if (getcwd(s,sizeof(s)))
+	if(find_the_value(all, "PWD"))
 	{
-		f = gc_strdup_env(s, all);
+		f = find_the_value(all, "PWD");
 		all->error_code = 0;
 		return(f);
 	}
-	else if(find_the_value(all, "PWD"))
+	else if (getcwd(s,sizeof(s)))
 	{
-		f = find_the_value(all, "PWD");
+		f = gc_strdup_env(s, all);
 		all->error_code = 0;
 		return(f);
 	}
 	all->error_code = 0;
 	return(NULL);
 }
-

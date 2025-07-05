@@ -6,7 +6,7 @@
 /*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/05 12:57:56 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/05 19:34:15 by mdsiurds         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	do_cd_double_dot(t_all *all)
 		replace_or_add_env(all, "PWD", new);
 	}
 	if (new)
-		test_the_path(all, new);
+		test_the_path_mini(all, new);
 	copy_list(all);
 	sort_list(all);
 }
@@ -74,6 +74,21 @@ void	do_cd_minus(t_all *all)
 	sort_list(all);
 }
 
+char *do_valid_s(t_all *all, char *s)
+{
+	size_t	i;
+	char	*temp;
+
+	i = ft_strlen(s);
+	while (i > 0 && (s[i - 1] == '/'))
+	{
+		temp = gc_substr_env(s, 0, i - 1, all);
+		s = temp;
+		i--;
+	}
+	return(s);
+}
+
 void	do_cd(t_all *all)
 {
 	char	*s;
@@ -87,7 +102,8 @@ void	do_cd(t_all *all)
 		return ;
 	}
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1])
-		s = all->pipe.cmd_args[all->pipe.nb_pipe][1];
+		s = do_valid_s(all, all->pipe.cmd_args[all->pipe.nb_pipe][1]);
+	printf("nouveau s = %s\n", s);
 	if (!s || ft_strcmp(s, "~") == 0)
 		do_cd_home(all, s);
 	else if (ft_strcmp(s, "-") == 0)
@@ -97,3 +113,4 @@ void	do_cd(t_all *all)
 	else
 		test_the_path(all, s);
 }
+
