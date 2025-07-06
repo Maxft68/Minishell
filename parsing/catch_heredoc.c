@@ -30,7 +30,7 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
 
     while (1)
     {
-        line = readline("heredoc:");
+        line = readline("> ");
         if (line == NULL)
             break;
         if (ft_strncmp(line, hd_eof, all->hd_data.hd_eof_len) == 0 &&
