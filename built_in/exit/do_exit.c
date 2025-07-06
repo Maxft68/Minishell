@@ -47,11 +47,11 @@ int	is_long_long(char *str) // 0 = ok
 		return (1);
 	if ((end - start) < 19)
 		return (0);
-	if (ft_strcmp(str, "9223372036854775807") <= 0 && negative == 0)
-		return (0);
-	if (ft_strcmp(str, "9223372036854775808") <= 0 && negative == 1)
-		return (0);
-	return(1);
+	if (ft_strcmp(str, "9223372036854775808") >= 0 && negative == 0)
+		return (1);
+	if (ft_strcmp(str, "9223372036854775809") >= 0 && negative == 1)
+		return (1);
+	return(0);
 }
 
 int	ft_str_digit(char *str) // 0 = digit
