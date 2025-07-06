@@ -11,20 +11,15 @@ char	*find_path_cmd(t_all *all, char **env)
 
 	while (env && env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
-	if (!env[i]) //quand env nexiste plus
-		return(ft_putstr_fd("WriteOnMe: ", 2),
+	if (!env[i])
+		return(ft_putstr_fd("WriteOnMe: ", 2), all->error_code = 127,
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2), 
-		ft_putstr_fd(": No such file or directory, PAS DCHOCOLAT\n", 2), NULL);
+		ft_putstr_fd(": No such file or directory\n", 2), NULL);
 	path_to_search = gc_split(all, env[i] + 5, ':');
-	if (!path_to_search) //quel cas echoue ? si plus d'env ??
-	{
-		printf("PATH null ? ");
-		exit(1);
-	}
 	path = search_good_path(path_to_search, all);
 	if (!path)
 	{
-		ft_putstr_fd("WriteOnMe: ", 2);
+		//ft_putstr_fd("WriteOnMe: ", 2);
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		return (NULL);
@@ -76,9 +71,8 @@ char	*search_good_path(char **paths, t_all *all)
 		}
 		i++;
 	}
-	ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
-	ft_putstr_fd(": command not found\n", 2); // ??
-	// puis continue les pipes suivant ??
+	// ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2); // ?? 
+	// ft_putstr_fd(": command not found\n", 2); // ??
 	return (NULL);
 }
 

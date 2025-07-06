@@ -85,7 +85,7 @@ Only if i'm not a child write exit before exit.
 *******************************************************************************/
 static void	im_a_child(t_all *all)
 {
-	if (all->pipe.nb_pipe == 0)
+	if (all->pipe.nb_pipe != 0)
 		return;
 	ft_putstr_fd("exit\n", 2);
 }
@@ -121,8 +121,7 @@ static void	exit_args(t_all *all)
 	}
 }
 
-// a tester avec  long max long min et 0 ou nbre neegatif
-long long int	ft_atolli(char *s)
+static long long int	ft_atolli(char *s)
 {
 	int				i;
 	int				sign;
@@ -169,85 +168,8 @@ int	do_exit(t_all *all)
 	}
 	if (arg[1] && arg[2])
 		return(exit_args(all), 1);
-	// if (arg[1] && all->pipe.nb_pipe == 0) // 1seul arg dans parent
-	// {
-	// 	if (ft_str_digit(arg[1])) //1 arg NUM non valide
-	// 	{
-	// 		ft_putstr_fd("WriteOnMe: exit: ", 2);
-	// 		ft_putstr_fd(arg[1], 2);
-	// 		ft_putstr_fd(": numeric argument required222222222\n", 2);
-	// 		ft_exit("", all, 2);
-	// 	}
-	// }
 	arg1 = ft_atolli(arg[1]);
 	im_a_child(all);
 	ft_exit("", all, (arg1 % 256));
 	return(1);
 }
-
-
-// $ exit 42
-// exit
-// # shell quitte avec code 42
-
-// $ exit abc
-// exit
-// minishell: exit: abc: numeric argument required
-// # shell quitte avec code 2
-
-// $ exit 1 2
-// exit
-// minishell: exit: too many arguments
-// # shell NE quitte PAS, code de retour 1
-
-
-// void do_exit(char **args, int last_status, int is_fork)
-// {
-//     // 1. Afficher "exit" si pas dans un fork
-//     // 2. Si pas d'argument : exit(last_status)
-//     // 3. Si 1 argument :
-//     //    - Si pas numérique : afficher erreur, exit(2)
-//     //    - Sinon : exit(n % 256)
-//     // 4. Si plus d'un argument :
-//     //    - Si premier argument pas numérique : erreur, exit(2)
-//     //    - Sinon : erreur, ne pas quitter (return 1)
-// }
-
-// ## 9. **Fonctions utiles**
-
-// - `write(2, ...)` pour les erreurs
-// - `ft_atoi` ou `strtol` pour convertir l’argument
-// - `exit(n)` pour quitter
-
-// ## 10. **Exemple d’implémentation Bash**
-
-// ```bash
-// $ exit 42
-// exit
-// # shell quitte avec code 42
-
-// $ exit abc
-// exit
-// minishell: exit: abc: numeric argument required
-// # shell quitte avec code 2
-
-// $ exit 1 2
-// exit
-// minishell: exit: too many arguments
-// # shell NE quitte PAS, code de retour 1
-// ```
-
-// ---
-
-// ## **Résumé des étapes à suivre**
-
-// 1. **Afficher "exit"** (sauf dans un fork)
-// 2. **Vérifier le nombre d’arguments**
-//    - 0 → exit(last_status)
-//    - 1 → vérifier si numérique, sinon erreur
-//    - >1 → erreur "too many arguments", ne pas quitter
-// 3. **Gérer la conversion numérique et les erreurs**
-// 4. **Utiliser exit(n % 256)**
-// 5. **Afficher les erreurs sur stderr**
-
-// ---

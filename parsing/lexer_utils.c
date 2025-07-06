@@ -44,7 +44,7 @@ int	create_lexer(char *input, t_all *all)
 	if (verif_quoted(input) == -1)
 	{
 		//free(input);
-		return (-1);
+		return (all->error_code = 2, -1);
 	}
 	initialize_data(all, input);
 	handle_expand(input, all);
