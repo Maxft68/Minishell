@@ -71,6 +71,6 @@ int	main(int argc, char **argv, char **env)
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
 	ft_exit("pas de in put dans main go break, exit", &all, all.error_code); // ?? utile dans un monde parallele ?
-	(void)argv;
+	(void)argv; 
 }
 
