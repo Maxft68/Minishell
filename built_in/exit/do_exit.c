@@ -2,12 +2,39 @@
 
 #include "minishell.h"
 
-// 0 = ok
-int	is_long_long(t_all *all, char *str)
+static int	part_two_long(t_all *all, char *str)
+{
+	all->exit.end = all->exit.i;
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 &&
+		str[all->exit.i] <= 13))
+		all->exit.i++;
+	if (all->exit.start != all->exit.end)
+	{
+		ft_memmove(str, str + (all->exit.start - all->exit.sign), all->exit.end
+		- (all->exit.start - all->exit.sign));
+		str[all->exit.end - (all->exit.start- all->exit.sign)] = '\0';
+		if (all->exit.negative == 1)
+			str[0] = '-';
+	}
+	if ((all->exit.end - all->exit.start) > 19)
+		return (1);
+	if ((all->exit.end - all->exit.start) < 19)
+		return (0);
+	if (ft_strcmp(str, "9223372036854775808") >= 0 && all->exit.negative == 0)
+		return (1);
+	if (ft_strcmp(str, "9223372036854775809") >= 0 && all->exit.negative == 1)
+		return (1);
+	else
+		return(0);
+}
+
+
+static int	is_long_long(t_all *all, char *str)
 {
 	all->exit.i = 0;
 	all->exit.negative = 0;
-	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 && str[all->exit.i] <= 13))
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 &&
+		str[all->exit.i] <= 13))
 		all->exit.i++;
 	if (str[all->exit.i] == '-' || str[all->exit.i] == '+')
 	{
@@ -21,36 +48,17 @@ int	is_long_long(t_all *all, char *str)
 	all->exit.start = all->exit.i;
 	while(str[all->exit.i])
 	{
-		if (str[all->exit.i] != ' ' && (str[all->exit.i] < '0' || str[all->exit.i] > '9'))
+		if (str[all->exit.i] != ' ' && (str[all->exit.i] < '0' ||
+		str[all->exit.i] > '9'))
 			return(1);
 		while (str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
 			all->exit.i++;
 	}
-	end = all->exit.i;
-	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 && str[all->exit.i] <= 13))
-		all->exit.i++;
-	if (all->exit.start != end)
-	{
-		ft_memmove(str, str + (all->exit.start - all->exit.sign), end - (all->exit.start - all->exit.sign));
-		str[end - (all->exit.start- all->exit.sign)] = '\0';
-		if (all->exit.negative == 1)
-			str[0] = '-';
-	}
-	//test_long(all);
-	if ((end - all->exit.start) > 19)
-		return (1);
-	if ((end - all->exit.start) < 19)
-		return (0);
-	if (ft_strcmp(str, "9223372036854775808") >= 0 && all->exit.negative == 0)
-		return (1);
-	if (ft_strcmp(str, "9223372036854775809") >= 0 && all->exit.negative == 1)
-		return (1);
-	else
-		return(0);
+	return (part_two_long(all, str));
 }
 
 // 0 = digit
-int	ft_str_digit(char *str)
+static int	ft_str_digit(char *str)
 {
 	if (!str)
 		return(-1);
@@ -72,7 +80,10 @@ int	ft_str_digit(char *str)
 	return (0);
 }
 
-void	im_a_child(t_all *all)
+/*******************************************************************************
+Only if i'm not a child write exit before exit.
+*******************************************************************************/
+static void	im_a_child(t_all *all)
 {
 	if (all->pipe.nb_pipe == 0)
 		return;
@@ -82,7 +93,7 @@ void	im_a_child(t_all *all)
 /*******************************************************************************
 If more then 1 arg, check if the first is a digit, and if it is a long long.
 *******************************************************************************/
-void	exit_args(t_all *all)
+static void	exit_args(t_all *all)
 {
 	if (!ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1])) //si digit verifier si valide
 	{
