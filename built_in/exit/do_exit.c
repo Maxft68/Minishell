@@ -2,59 +2,55 @@
 
 #include "minishell.h"
 
-int	is_long_long(char *str) // 0 = ok
+// 0 = ok
+int	is_long_long(t_all *all, char *str)
 {
-	int	i;
-	int	start;
-	int	end;
-	int	negative;
-	int	sign;
-
-	i = 0;
-	negative = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	all->exit.i = 0;
+	all->exit.negative = 0;
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 && str[all->exit.i] <= 13))
+		all->exit.i++;
+	if (str[all->exit.i] == '-' || str[all->exit.i] == '+')
 	{
-		sign = 1;
-		if (str[i] == '-')
-			negative = 1;
-		i++;
+		all->exit.sign = 1;
+		if (str[all->exit.i] == '-')
+			all->exit.negative = 1;
+		all->exit.i++;
 	}
-	while (str[i] == '0')
-		i++;
-	start = i;
-	while(str[i])
+	while (str[all->exit.i] == '0')
+		all->exit.i++;
+	all->exit.start = all->exit.i;
+	while(str[all->exit.i])
 	{
-		if (str[i] != ' ' && (str[i] < '0' || str[i] > '9')) // dernier rajoute pour exit 42abc
+		if (str[all->exit.i] != ' ' && (str[all->exit.i] < '0' || str[all->exit.i] > '9'))
 			return(1);
-		while (str[i] >= '0' && str[i] <= '9')
-			i++;
+		while (str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
+			all->exit.i++;
 	}
-	end = i;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	printf("avant memmove: %s\n", str); // a supprimer
-	if (start != end)
+	end = all->exit.i;
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 && str[all->exit.i] <= 13))
+		all->exit.i++;
+	if (all->exit.start != end)
 	{
-		ft_memmove(str, str + (start - sign), end - (start - sign));
-		str[end - (start- sign)] = '\0';
-		if (negative == 1)
+		ft_memmove(str, str + (all->exit.start - all->exit.sign), end - (all->exit.start - all->exit.sign));
+		str[end - (all->exit.start- all->exit.sign)] = '\0';
+		if (all->exit.negative == 1)
 			str[0] = '-';
-		printf("apres memmove: %s\n", str); // a supprimer
 	}
-	if ((end - start) > 19)
+	//test_long(all);
+	if ((end - all->exit.start) > 19)
 		return (1);
-	if ((end - start) < 19)
+	if ((end - all->exit.start) < 19)
 		return (0);
-	if (ft_strcmp(str, "9223372036854775808") >= 0 && negative == 0)
+	if (ft_strcmp(str, "9223372036854775808") >= 0 && all->exit.negative == 0)
 		return (1);
-	if (ft_strcmp(str, "9223372036854775809") >= 0 && negative == 1)
+	if (ft_strcmp(str, "9223372036854775809") >= 0 && all->exit.negative == 1)
 		return (1);
-	return(0);
+	else
+		return(0);
 }
 
-int	ft_str_digit(char *str) // 0 = digit
+// 0 = digit
+int	ft_str_digit(char *str)
 {
 	if (!str)
 		return(-1);
@@ -68,13 +64,19 @@ int	ft_str_digit(char *str) // 0 = digit
 		return(-1);
 	while(str[i])
 	{
-
 		if (str[i] >= '0' && str[i] <= '9')
 			i++;
 		else
 			return (-1);
 	}
 	return (0);
+}
+
+void	im_a_child(t_all *all)
+{
+	if (all->pipe.nb_pipe == 0)
+		return;
+	ft_putstr_fd("exit\n", 2);
 }
 
 /*******************************************************************************
@@ -84,17 +86,16 @@ void	exit_args(t_all *all)
 {
 	if (!ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1])) //si digit verifier si valide
 	{
-		if (is_long_long(all->pipe.cmd_args[all->pipe.pipe][1])) // si non valide
+		if (is_long_long(all, all->pipe.cmd_args[all->pipe.pipe][1])) // si non valide
 		{
-			ft_putstr_fd("exit\n", 2);
+			im_a_child(all);
 			ft_putstr_fd("WriteOnMe: exit: ", 2);
 			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
-			ft_putstr_fd(": numeric argument required1111111111\n", 2);
-			ft_exit("", all, 2);
+			ft_exit(": numeric argument required1111111111\n", all, 2);
 		}
 		else// digit valide
 		{
-			ft_putstr_fd("exit\n", 2);
+			im_a_child(all);
 			ft_putstr_fd("WriteOnMe: exit: too many arguments444444444\n", 2);
 			all->error_code = 1;
 			return ;
@@ -102,16 +103,15 @@ void	exit_args(t_all *all)
 	}
 	else // 2ARGS pas digit
 	{
-		ft_putstr_fd("exit\n", 2);
+		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
-		ft_putstr_fd(": numeric argument required ARGS\n", 2);
-		ft_exit("", all, 2);
+		ft_exit(": numeric argument required ARGS\n", all, 2);
 	}
 }
 
-
-long long int	ft_atolli(char *s) // a tester avec  long max long min et 0 ou nbre neegatif
+// a tester avec  long max long min et 0 ou nbre neegatif
+long long int	ft_atolli(char *s)
 {
 	int				i;
 	int				sign;
@@ -149,13 +149,12 @@ int	do_exit(t_all *all)
 	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
 		return(ft_exit("", all, all->error_code), all->error_code);
 
-	if (is_long_long(arg[1]) != 0 || ft_str_digit(arg[1]) != 0)
+	if (is_long_long(all, arg[1]) != 0 || ft_str_digit(arg[1]) != 0)
 	{
-		ft_putstr_fd("exit\n", 1);
+		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
-		ft_putstr_fd(": numeric argument required DOEXIT\n", 2);
-		ft_exit("", all, 2);
+		ft_exit(": numeric argument required DOEXIT\n", all, 2);
 	}
 	if (arg[1] && arg[2])
 		return(exit_args(all), 1);
@@ -170,7 +169,7 @@ int	do_exit(t_all *all)
 	// 	}
 	// }
 	arg1 = ft_atolli(arg[1]);
-	ft_putstr_fd("exit\n", 1);
+	im_a_child(all);
 	ft_exit("", all, (arg1 % 256));
 	return(1);
 }

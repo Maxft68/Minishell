@@ -70,12 +70,12 @@ typedef struct s_export
 
 typedef struct s_lexer
 {
-    const char  *input;
-    int         position;
-    char        c;
+	const char  *input;
+	int         position;
+	char        c;
 	bool		s_quote;
 	bool		d_quote;
-    bool        cmd;
+	bool        cmd;
 	int			redir;
 }				t_lexer;
 
@@ -84,26 +84,26 @@ typedef enum token_type
 	WTF				= 0,
 	REDIR_FILE		= 1,
 	HD_EOF			= 2,
-    COMMAND 		= 3,
-    ARG				= 4,
-    SQ_STRING		= 5,
+	COMMAND 		= 3,
+	ARG				= 4,
+	SQ_STRING		= 5,
 	DQ_STRING		= 6,
-    PIPE			= 7,
-    REDIRECT_OUT	= 8,
-    REDIRECT_IN		= 9,
-    APPEND_OUT		= 10,
-    HEREDOC			= 11,
-    ILLEGAL			= 12,
+	PIPE			= 7,
+	REDIRECT_OUT	= 8,
+	REDIRECT_IN		= 9,
+	APPEND_OUT		= 10,
+	HEREDOC			= 11,
+	ILLEGAL			= 12,
 }				token_type;
 
 //
 
 typedef struct  s_token
 {
-    token_type      type;
-    char            *str;
-    int             pipe;
-    struct s_token  *next;
+	token_type      type;
+	char            *str;
+	int             pipe;
+	struct s_token  *next;
 	// struct s_token	*prev;
 }					t_token;
 
@@ -135,7 +135,6 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	int			add;
 	char		*pwd;
 	char		*oldpwd;
-	int			j;
 	int			t;
 	int			x;
 	int			z;
@@ -152,10 +151,17 @@ typedef struct s_hd_data//structure data pour heredoc
 	char	*tmp;
 	char	*new;
 	size_t	hd_eof_len;
-    size_t	str_len;
+	size_t	str_len;
 }				t_hd_data;
 
-
+typedef struct	s_exit
+{
+	int			i;
+	int			start;
+	int			end;
+	int			negative;
+	int			sign;
+}				t_exit;
 
 typedef struct	s_env_export
 {
@@ -179,6 +185,7 @@ typedef struct s_all
 	t_export			*export;
 	t_exec				exec;
 	int					error_code;     // pour le code exit status
+	t_exit				exit;
 }						t_all;
 
 void		ft_exit(char *error, t_all *all, int error_code);

@@ -3,7 +3,6 @@
 void	initialize_data(t_all *all, char *old)
 {
 	all->data.z = 0;
-	all->data.j = 0;
 	all->data.new = NULL;
 	all->data.tmp = gc_malloc(all, ft_strlen(old) + 1);
 }
