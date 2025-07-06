@@ -76,10 +76,11 @@ void    catch_heredoc(t_all *all)
             str = gc_strdup(append_hd(tmp->next->str, all), all);
             printf("HD_input:\n%s###############\n", str);
             // tmp->next->str = (char*)gc_realloc(all,tmp->next->str, ft_strlen(str));
-            handle_expand(str, all);
+            initialize_hd_data(str, all);
+            handle_hd_expand(str, all);
             printf("HD_expended:%s\n", all->hd_data.new);
-            tmp->next->str = gc_strdup(str, all);
-            all->hd_data.new = str;
+            tmp->next->str = gc_strdup(all->hd_data.new, all);
+            // all->hd_data.new = str;
         }
         tmp = tmp->next;
     }

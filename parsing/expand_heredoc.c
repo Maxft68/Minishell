@@ -2,11 +2,20 @@
 
 //initialiser hd_data!!!!!!
 
-void	part_one(t_all *all, char *old, char *val)
+void	initialize_hd_data(char *old, t_all *all)
 {
+	all->hd_data.i = 0;
+	// all->hd_data.j = 0;
+	all->hd_data.new = NULL;
+	all->hd_data.tmp = gc_malloc(all, ft_strlen(old) + 1);
+}
+
+void	expand_hd(t_all *all, char *old, char *val)
+{
+	int b = 0;
+
 	all->hd_data.i++;
 	all->hd_data.j = 0;
-
 	if ((ft_isdigit(old[all->hd_data.i]) || !ft_isalpha(old[all->hd_data.i]))
 		&& old[all->hd_data.i] != '_')
 	{
@@ -27,12 +36,16 @@ void	part_one(t_all *all, char *old, char *val)
 			all->hd_data.tmp = gc_strjoin(all, all->hd_data.new, val);
 			all->hd_data.new = all->hd_data.tmp;
 		}
+		printf("%d--->", b);
+		printf("%s\n", all->hd_data.new);
+		b++;
 	}
 }
 
-void	part_two(t_all *all, char *old)
+void	no_hd_expand(t_all *all, char *old)
 {
 	char tmp[2];
+
 	tmp[0] = old[all->hd_data.i];
 	tmp[1] = '\0';
 	if (!all->hd_data.new)
@@ -45,7 +58,7 @@ void	part_two(t_all *all, char *old)
 	all->hd_data.i++;
 }
 
-void	handle_expand(char *old, t_all *all)
+void	handle_hd_expand(char *old, t_all *all)
 {
 	char *val;
 	// bool d_quote = false;
@@ -66,12 +79,12 @@ void	handle_expand(char *old, t_all *all)
 		if (old[all->hd_data.i] == '$' && 
 			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !all->data.s_quote)
 		{
-			part_one(all, old, val);
+			expand_hd(all, old, val);
 			reset_quotes(all);
 			// d_quote = false;
 			// s_quote = false;
 		}
 		else
-			part_two(all, old);
+			no_hd_expand(all, old);
 	}
 }

@@ -224,6 +224,8 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 int 		check_tkn_lst(t_all *all);
 void    	catch_heredoc(t_all *all);
+void		initialize_hd_data(char *old, t_all *all);
+void		handle_hd_expand(char *old, t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*find_last_hd(int pipe, t_all *all);
 char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
