@@ -8,11 +8,11 @@ int	do_redir_in_no_pipe(t_all *all, char *redir)
 	//ft_putstr_fd("--------je suis dans redir IN\n", 2);
 	all->pipe.fd_infile = open(redir, O_RDONLY);
 	if (all->pipe.fd_infile == -1)
-		return(error_msg_no_pipe(redir));
+		return(error_msg_no_pipe(all, redir));
 	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
-		return(error_dup2_no_pipe(all->pipe.fd_infile, redir));
+		return(error_dup2_no_pipe(all, all->pipe.fd_infile, redir));
 	if (close(all->pipe.fd_infile) == -1)
-		return(error_msg_no_pipe(redir));
+		return(error_msg_no_pipe(all, redir));
 	return(0);
 }
 
@@ -102,11 +102,11 @@ int	do_redir_no_pipe(t_all *all)
 			else
 				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
 			if (all->pipe.fd_outfile == -1)
-				return(error_msg_no_pipe(temp->next->str));
+				return(error_msg_no_pipe(all,temp->next->str));
 			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-				return(error_dup2_no_pipe(all->pipe.fd_outfile, temp->next->str));
+				return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp->next->str));
 			if (close(all->pipe.fd_outfile) == -1)
-				return(error_msg_no_pipe(temp->next->str));
+				return(error_msg_no_pipe(all, temp->next->str));
 			temp = temp->next->next;
 		}
 		else
