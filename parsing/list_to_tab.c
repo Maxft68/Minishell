@@ -10,11 +10,11 @@ char	*gc_strdup_input(char *s, t_all *all)
 	alloc = gc_malloc(all, (l + 1) * sizeof(char));
 	if (!alloc)
 	{
-		free(s);
+		//free(s); le temps de funcheck
         ft_exit("Cannot allocate memory6\n", all, 12);
 	}
     ft_strlcpy(alloc, s, l + 1);
-	free(s);
+	//free(s);le temps de funcheck
 	return (alloc);
 }
 

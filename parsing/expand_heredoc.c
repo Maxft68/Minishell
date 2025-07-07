@@ -43,7 +43,7 @@ void	part_two(t_all *all, char *old)
 	all->hd_data.i++;
 }
 
-void	handle_expand(char *old, t_all *all)
+void	expand_hd(char *old, t_all *all)
 {
 	char *val;
 	bool d_quote = false;

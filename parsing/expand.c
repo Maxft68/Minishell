@@ -83,10 +83,14 @@ void	handle_expand(char *old, t_all *all)
 	bool	d_quote;
 	bool	s_quote;
 
+	// Sécurité : funcheck ou d'autres tests externes peuvent appeler cette fonction avec all ou ses champs non initialisés.
+	if (!old || !all)
+		return ;
+
 	d_quote = false;
 	s_quote = false;
 	val = NULL;
-	while (old && old[all->data.z])
+	while (old && all->data.z >= 0 && all->data.z < (int)ft_strlen(old) && old[all->data.z])
 	{
 		if (old[all->data.z] == 34 && !d_quote && !s_quote)
 			d_quote = true;
@@ -100,63 +104,10 @@ void	handle_expand(char *old, t_all *all)
 				&& old[all->data.z + 1]) && !s_quote)
 		{
 			part_one(all, old, val);
-			//d_quote = false; // a confirmer
-			//s_quote = false; // a confirmer
 		}
 		else
+		{
 			part_two(all, old);
+		}
 	}
 }
-
-// void	part_one(t_all *all, char *old, char *val)
-// {
-// 	all->data.z++;
-// 	all->data.t = 0;
-// 	while(ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
-// 		all->data.tmp[all->data.t++] = old[all->data.z++];
-// 	all->data.tmp[all->data.t] = '\0';
-// 	val = find_the_value(all, all->data.tmp);
-// 	if (val && all->data.t > 0)
-// 	{
-// 		if (!all->data.new)
-// 			all->data.new = gc_strdup(val, all);
-// 		else
-// 		{
-// 			all->data.temp = gc_strjoin(all, all->data.new, val);
-// 			all->data.new = all->data.temp;
-// 		}
-// 	}
-// }
-
-// void	part_two(t_all *all, char *old)
-// {
-// 	char tmp[2];
-// 	tmp[0] = old[all->data.z];
-// 	tmp[1] = '\0';
-// 	if (!all->data.new)
-// 		all->data.new = gc_strdup(tmp, all);
-// 	else
-// 	{
-// 		all->data.temp = gc_strjoin(all, all->data.new, tmp);
-// 		all->data.new = all->data.temp;
-// 	}
-// 	all->data.z++;
-// }
-
-// void	handle_expand(char *old, t_all *all)
-// {
-// 	char *val;
-
-// 	val = NULL;
-// 	while(old && old[all->data.z])
-// 	{
-// 		if (old[all->data.z] == '$' && old[all->data.z + 1])
-// 		{
-// 			part_one(all, old, val);
-// 		}
-// 		else
-// 		{
-// 			part_two(all, old);
-// 		}
-// 	}
-// }
