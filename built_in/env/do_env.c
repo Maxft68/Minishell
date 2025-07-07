@@ -53,13 +53,9 @@ void	normal_env(t_all *all, char **env)
 		while (env[i][j++] != '=')
 			all->data.len_name++;
 		all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
-		if (!all->data.name)
-			ft_exit("Cannot allocate memory1.1\n", all, 12);
 		while (env[i][j++])
 			all->data.len_value++;
 		all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
-		if (!all->data.value)
-			ft_exit("Cannot allocate memory2.1\n", all, 12);
 		split_env(all, env[i]);
 		ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.name,
 				all->data.value));

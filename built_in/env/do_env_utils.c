@@ -75,11 +75,9 @@ char	**do_char_env(t_all *all)
 	int j;
 	j = 0;
 	if (!all || !all->env)
-		ft_exit("pourquoi pas ??", all, 1);
+		ft_exit("", all, 1);
 	current = all->env;
 	env = gc_malloc_env(all, sizeof(char *) * (all->env_export.nb_line_env + 2));
-	if (!env)
-		ft_exit("Cannot allocate memory4\n", all, 12);
 	while(current)
 	{
 		if (!current->name || !current->value)

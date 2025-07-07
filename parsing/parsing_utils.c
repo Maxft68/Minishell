@@ -46,8 +46,6 @@ void   create_token(token_type type, char *str, t_all *all)
 	tokn = NULL;
 	tokn = (t_token*)gc_malloc(all, sizeof(t_token));
 	// tokn = (t_token*)gc_malloc(all, sizeof(t_token));
-	if (!tokn)
-		ft_exit("Cannot allocate memory9\n", all, 12);
 	tokn->str = NULL;
 	tokn->next = NULL;
 	tokn->pipe = all->pipe.nb_pipe;
@@ -55,7 +53,5 @@ void   create_token(token_type type, char *str, t_all *all)
 	tokn->str = gc_strdup(str, all);
 	// tokn->str = gc_strdup(str, all);
 	// printf("token created: ->type: %u  str: %s\n", tokn->type, tokn->str); // <--------------------------------printf
-	if (!tokn->str)
-		ft_exit("Cannot allocate memory10\n", all, 12);
 	ft_tknadd_back(&all->token, tokn);
 }

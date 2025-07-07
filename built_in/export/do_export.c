@@ -114,7 +114,7 @@ t_garb_env	*ft_lstnew(t_all *all, void *alloc)
 
 	new = malloc(sizeof(t_garb_env));
 	if (!new)
-		ft_exit("Cannot allocate memory5\n", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	new->pointer = alloc;
 	new->next = NULL;
 	return (new);

@@ -243,9 +243,9 @@ char		**do_char_env(t_all *all);
 int			exec_part(t_all *all);
 void		alloc_my_pipe_fd(t_all *all);
 void		alloc_my_herdoc_fd(t_all *all);
-int			error_dup2_no_pipe(int fd, char *redir);
+int			error_dup2_no_pipe(t_all *all, int fd, char *redir);
 int			error_dup2(t_all *all, int fd, char *redir);
-int			error_msg_no_pipe(char *s);
+int			error_msg_no_pipe(t_all *all, char *s);
 void		error_msg(t_all *all, char *s);
 
 /* **********Signal functions************************************************ */

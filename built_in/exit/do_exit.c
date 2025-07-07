@@ -95,19 +95,19 @@ If more then 1 arg, check if the first is a digit, and if it is a long long.
 *******************************************************************************/
 static void	exit_args(t_all *all)
 {
-	if (!ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1])) //si digit verifier si valide
+	if (!ft_str_digit(all->pipe.cmd_args[all->pipe.pipe][1]))
 	{
-		if (is_long_long(all, all->pipe.cmd_args[all->pipe.pipe][1])) // si non valide
+		if (is_long_long(all, all->pipe.cmd_args[all->pipe.pipe][1]))
 		{
 			im_a_child(all);
 			ft_putstr_fd("WriteOnMe: exit: ", 2);
 			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
-			ft_exit(": numeric argument required1111111111\n", all, 2);
+			ft_exit(": numeric argument required\n", all, 2);
 		}
 		else// digit valide
 		{
 			im_a_child(all);
-			ft_putstr_fd("WriteOnMe: exit: too many arguments444444444\n", 2);
+			ft_putstr_fd("WriteOnMe: exit: too many arguments\n", 2);
 			all->error_code = 1;
 			return ;
 		}
@@ -148,17 +148,16 @@ static long long int	ft_atolli(char *s)
 	return (result * sign);
 }
 
-
 int	do_exit(t_all *all)
 {
 	int long long arg1;
 	char **arg = all->pipe.cmd_args[all->pipe.pipe];
 
 	if (!arg[1] && all->pipe.nb_pipe == 0) //EXIT dans parent
-		return(ft_putstr_fd("exit\n", 1), ft_exit("", all, all->error_code), all->error_code);
+		return(ft_putstr_fd("exit\n", 2), ft_exit("", all, all->error_code),
+		all->error_code);
 	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
 		return(ft_exit("", all, all->error_code), all->error_code);
-
 	if (is_long_long(all, arg[1]) != 0 || ft_str_digit(arg[1]) != 0)
 	{
 		im_a_child(all);
