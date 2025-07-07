@@ -54,8 +54,6 @@ char	*gc_itoa(t_all *all, int n)
 		index[2] = to_minus(&n);
 	index[0] = count_char(n);
 	s = gc_malloc(all, (index[0] + 1 + index[2]) * sizeof(char));
-	if (!s)
-		ft_exit("Cannot allocate memory\n", all, 12);
 	index[1] = (index[0] + index[2]) - 1;
 	while (index[1] >= 0 + index[2])
 	{

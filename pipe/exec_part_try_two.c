@@ -195,16 +195,16 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 			if (is_built_in(all) == 0)
 			{
 				do_built_in(all);
-				ft_exit("test", all, 1);
+				ft_exit("", all, 0);
 			}
 			else
 			{
-				ft_putstr_fd("je vais execve\n", 2);
+				//ft_putstr_fd("je vais execve\n", 2);
 				exec_cmd(all);
 			}
 		}
-		ft_putstr_fd("JAI PAS EXECVE\n", 2);
-		ft_exit("test", all, 0);
+		//ft_putstr_fd("JAI PAS EXECVE\n", 2);
+		ft_exit("", all, 0);
 	}
 }
 

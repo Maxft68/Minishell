@@ -55,9 +55,14 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGINT, SIG_IGN);
 		signals_swing();
-		char *firstinput = readline("WriteOnMe ");
+		//char *firstinput = readline("WriteOnMe ");
+		char *firstinput = ">in11 echo magueule2 | >inf | >in12 | ls >inls >inls2 | echo cou | ls";
 		if (!firstinput)
 			break;
+		
+		// ✅ INITIALISER all->data AVANT gc_strdup_input
+		initialize_data(&all, firstinput);
+		
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			pars_to_exec(&all);
@@ -67,6 +72,9 @@ int	main(int argc, char **argv, char **env)
 		all.garbage = NULL;
 		all.token = NULL;
 		all.rdir_tkn = NULL;
+		
+		// ✅ SORTIR APRÈS UN TEST
+		break;
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");

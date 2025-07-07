@@ -19,7 +19,6 @@ char	*find_path_cmd(t_all *all, char **env)
 	path = search_good_path(path_to_search, all);
 	if (!path)
 	{
-		//ft_putstr_fd("WriteOnMe: ", 2);
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		return (NULL);
