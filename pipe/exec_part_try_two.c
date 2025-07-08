@@ -109,7 +109,7 @@ int	do_redir_out_no_pipe(t_all *all, char *temp, token_type type)
 	if (close(all->pipe.fd_outfile) == -1)
 		return(error_msg_no_pipe(all, temp));
 	return(0);
-}
+} 
 
 int	do_redir_no_pipe(t_all *all)
 {

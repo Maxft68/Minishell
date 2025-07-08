@@ -99,8 +99,9 @@ void	handle_expand(char *old, t_all *all)
 			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && !all->data.s_quote)
 		{
 			part_one(all, old, val);
-			//d_quote = false; // a confirmer
-			//s_quote = false; // a confirmer
+			reset_quotes(all);
+			// d_quote = false;
+			// s_quote = false;
 		}
 		else
 		{
