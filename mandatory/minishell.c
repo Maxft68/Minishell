@@ -63,7 +63,8 @@ int	main(int argc, char **argv, char **env)
 			break;		
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
-			pars_to_exec(&all);
+			if (pars_to_exec(&all) != 0)
+				ft_putstr_fd("Error in execution\n", 2);
 		// ft_lstclear(&all.token);
 		// ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);

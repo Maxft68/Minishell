@@ -10,9 +10,8 @@ int	do_redir_in_no_pipe(t_all *all, char *redir)
 	if (all->pipe.fd_infile == -1)
 		return(error_msg_no_pipe(all, redir));
 	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
-		return(error_dup2_no_pipe(all, all->pipe.fd_infile, redir));
-	if (close(all->pipe.fd_infile) == -1)
-		return(error_msg_no_pipe(all, redir));
+		return(error_dup2(all, all->pipe.fd_infile, redir));
+	ft_close(all, &all->pipe.fd_infile);
 	return(0);
 }
 
@@ -24,8 +23,7 @@ int	do_redir_in(t_all *all, char *redir)
 		return(error_msg(all, redir), 1);
 	if (dup2(all->pipe.fd_infile, STDIN_FILENO) == -1)
 		return(error_dup2(all, all->pipe.fd_infile, redir));
-	if (close(all->pipe.fd_infile) == -1)
-		return(error_dup2(all, all->pipe.fd_infile, redir));
+	ft_close(all, &all->pipe.fd_infile);
 	return(0);
 }
 
@@ -34,11 +32,10 @@ void	do_hd_fd_no_pipe(t_all *all)
 	if (find_last_hd(all->pipe.pipe, all))
 	{
 		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
-			error_dup2_no_pipe(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-		close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+			error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+		ft_close(all, &all->pipe.heredoc_fd[all->pipe.pipe][0]);
 	}
 }
-
 
 void	do_hd_fd(t_all *all)
 {
@@ -59,8 +56,7 @@ int	do_redir_out(t_all *all, char *temp, token_type type)
 		return (error_msg(all, temp), 1);
 	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
 		return(error_dup2(all, all->pipe.fd_outfile, temp), 1);
-	if (close(all->pipe.fd_outfile) == -1)
-		return (error_msg(all, temp), 1);
+	ft_close(all, &all->pipe.fd_outfile);
 	return(0);
 }
 
@@ -105,9 +101,8 @@ int	do_redir_out_no_pipe(t_all *all, char *temp, token_type type)
 	if (all->pipe.fd_outfile == -1)
 		return(error_msg_no_pipe(all,temp));
 	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-		return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp));
-	if (close(all->pipe.fd_outfile) == -1)
-		return(error_msg_no_pipe(all, temp));
+		return(error_dup2(all, all->pipe.fd_outfile, temp));
+	ft_close(all, &all->pipe.fd_outfile);
 	return(0);
 } 
  
@@ -139,24 +134,48 @@ int	do_redir_no_pipe(t_all *all)
 	}
 	return(0);
 }
+/******************************************************************************
+Set stdout and stdin back to original file descriptors
+******************************************************************************/
+void	fd_back_to_original(t_all *all, int stdout_original, int stdin_original)
+{
+	if (dup2(stdout_original, STDOUT_FILENO) == -1)
+		error_dup2(all, stdout_original, "dup2");
+	if (dup2(stdin_original, STDIN_FILENO) == -1)
+		error_dup2(all, stdin_original, "dup2");
+	ft_close(all, &stdout_original);
+	ft_close(all, &stdin_original);
+}
 
+/******************************************************************************
+No forks we are in the parent process
+******************************************************************************/
 int	do_no_pipe(t_all *all)
 {
-	int stdout_original = dup(STDOUT_FILENO);
-	int stdin_original = dup(STDIN_FILENO);
+	int stdout_original;
+	int stdin_original;
+
+	stdout_original = dup(STDOUT_FILENO);
+	if (stdout_original == -1)
+		error_msg_no_pipe(all, "dup stdout");
+	stdin_original = dup(STDIN_FILENO);
+	if (stdin_original == -1)
+		error_msg_no_pipe(all, "dup stdin");
 	if(do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
-		return(dup2(stdout_original, STDOUT_FILENO), dup2(stdin_original, STDIN_FILENO), close (stdout_original), close (stdin_original), 1);
+	{
+		fd_back_to_original(all, stdout_original, stdin_original);
+		return(1);
+	}
 	do_built_in(all);
-	dup2(stdout_original, STDOUT_FILENO);
-	dup2(stdin_original, STDIN_FILENO);
-	close (stdout_original);
-	close (stdin_original);
-	
+	fd_back_to_original(all, stdout_original, stdin_original);
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
 }
 
-void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
+/******************************************************************************
+Fork and redirection by default between pipes
+******************************************************************************/
+void	do_pipe(t_all *all)
 {
 	if (all->pipe.pipe < all->pipe.nb_pipe)
 	{
@@ -205,15 +224,7 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO) == -1)
 				error_msg(all, "dup2 stdout");
 		}
-		int j = 0;
-		while (j < all->pipe.nb_pipe)
-		{
-			if (all->pipe.pipe_fd[j][0] != -1)
-				close(all->pipe.pipe_fd[j][0]);
-			if (all->pipe.pipe_fd[j][1] != -1)
-				close(all->pipe.pipe_fd[j][1]);
-			j++;
-		}
+		close_all_pipe_exit(all);
 		if (all->pipe.cmd_args[all->pipe.pipe] && all->pipe.cmd_args[all->pipe.pipe][0])
 		{
 			if (is_built_in(all) == 0)
@@ -221,18 +232,34 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 				do_built_in(all);
 				ft_exit("", all, 0);
 			}
-			else
-			{
-				//ft_putstr_fd("je vais execve\n", 2);
-				exec_cmd(all);
-			}
+			//ft_putstr_fd("je vais execve\n", 2);
+			exec_cmd(all);
 		}
 		//ft_putstr_fd("JAI PAS EXECVE\n", 2);
 		ft_exit("", all, 0);
 	}
 }
 
-int	exec_part(t_all *all)// exexcuter une seule fois par readline
+void	close_fd_and_hd_fd(t_all *all, int i)
+{
+	if (i < all->pipe.nb_pipe)
+	{
+		ft_close(all, &all->pipe.pipe_fd[i][1]);
+		all->pipe.pipe_fd[i][1] = -1;
+	}
+	if (i > 0 && all->pipe.pipe_fd[i - 1][0] != -1)
+	{
+		ft_close(all, &all->pipe.pipe_fd[i - 1][0]);
+		all->pipe.pipe_fd[i - 1][0] = -1;
+	}
+	if (all->pipe.heredoc_fd && all->pipe.heredoc_fd[all->pipe.pipe][0] != -1)
+	{
+		ft_close(all, &all->pipe.heredoc_fd[all->pipe.pipe][0]);
+		all->pipe.heredoc_fd[all->pipe.pipe][0] = -1;
+	}
+}
+
+int	exec_part(t_all *all)
 {
 	int status;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1));
@@ -253,30 +280,10 @@ int	exec_part(t_all *all)// exexcuter une seule fois par readline
 			return(0);
 		}
 		else
-		{
 			do_pipe(all); //fork la dedans
-		}
-		if (i < all->pipe.nb_pipe)
-		{
-			close(all->pipe.pipe_fd[i][1]);
-			all->pipe.pipe_fd[i][1] = -1;
-		}
-		if (i > 0 && all->pipe.pipe_fd[i - 1][0] != -1)
-		{
-			close(all->pipe.pipe_fd[i - 1][0]);
-			all->pipe.pipe_fd[i - 1][0] = -1;
-		}
-        if (all->pipe.heredoc_fd && all->pipe.heredoc_fd[all->pipe.pipe][0] != -1)
-        {
-            close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
-            all->pipe.heredoc_fd[all->pipe.pipe][0] = -1;
-        }
+		close_fd_and_hd_fd(all, i);
 		i++;
-		//printf("i =%d\n", i);
 		all->pipe.pipe++;
-		// close_pipe(all);
-		// if(!(i < all->pipe.nb_pipe + 1))
-		// 	close_all_pipe_exit(all);
 	}
 	i = 0;
 	all->pipe.pipe = 0;

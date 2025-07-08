@@ -45,7 +45,7 @@ void	alloc_my_herdoc_fd(t_all *all)
 				error_msg(all, "pipe");
 			ft_putstr_fd(find_last_hd(all->exec.j, all),
 				all->pipe.heredoc_fd[all->exec.j][1]);
-			close(all->pipe.heredoc_fd[all->exec.j][1]);
+			ft_close(all, &all->pipe.heredoc_fd[all->exec.j][1]);
 			all->pipe.heredoc_fd[all->exec.j][1] = -1;
 		}
 		all->exec.j++;
