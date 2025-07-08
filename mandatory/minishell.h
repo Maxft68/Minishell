@@ -192,7 +192,7 @@ typedef struct s_all
 
 void		ft_exit(char *error, t_all *all, int error_code);
 void		close_all_pipe_exit(t_all *all);
-int			ft_close(t_all *all, int fd);
+int			ft_close(t_all *all, int *fd);
 void		do_node(char **read_array, t_all *all);
 void		ft_lstadd_front(t_garbage **garbage, t_garbage *new);
 void		ft_lstadd_front_gc_env(t_garb_env **garbage_env, t_garb_env *new);

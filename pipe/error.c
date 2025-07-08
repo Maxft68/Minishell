@@ -1,16 +1,19 @@
 #include "../mandatory/minishell.h"
 
-int	ft_close(t_all *all, int fd)
+int	ft_close(t_all *all, int *fd)
 {
-	if (close(fd) == -1)
+	if (*fd >= 0)
 	{
-		all->error_code = 1;
-		ft_putstr_fd("WriteOnMe: ", 2);
-		perror("close");
-		fd = -1;
-		return (1);
+		if (close(*fd) == -1)
+		{
+			all->error_code = 1;
+			ft_putstr_fd("WriteOnMe: ", 2);
+			perror("close");
+			*fd = -1;
+			return (1);
+		}
 	}
-	fd = -1;
+	*fd = -1;
 	return (0);
 }
 
@@ -31,7 +34,7 @@ int	error_msg_no_pipe(t_all *all, char *s)
 
 int	error_dup2(t_all *all, int fd, char *redir)
 {
-	ft_close(all, fd);
+	ft_close(all, &fd);
 	all->error_code = 1;
 	error_msg(all, redir);
 	return(1);
