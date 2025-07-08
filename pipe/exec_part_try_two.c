@@ -152,8 +152,15 @@ No forks we are in the parent process
 ******************************************************************************/
 int	do_no_pipe(t_all *all)
 {
-	int stdout_original = dup(STDOUT_FILENO);
-	int stdin_original = dup(STDIN_FILENO);
+	int stdout_original;
+	int stdin_original;
+
+	stdout_original = dup(STDOUT_FILENO);
+	if (stdout_original == -1)
+		error_msg_no_pipe(all, "dup stdout");
+	stdin_original = dup(STDIN_FILENO);
+	if (stdin_original == -1)
+		error_msg_no_pipe(all, "dup stdin");
 	if(do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
 	{
 		fd_back_to_original(all, stdout_original, stdin_original);
