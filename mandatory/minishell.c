@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 		return (printf("Just one arg, or nothing\n"), 1);
-	printf("--------nouveau minishell----------\n");
+	//printf("--------nouveau minishell----------\n");
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
 	signal(SIGQUIT, SIG_IGN);
@@ -74,6 +74,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
-	ft_exit("exit de fin hors boucle while\n", &all, all.error_code); // ?? utile dans un monde parallele ?
+	ft_exit("exit\n", &all, all.error_code); // ?? utile dans un monde parallele ?
 	(void)argv;
 }

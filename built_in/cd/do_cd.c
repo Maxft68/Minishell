@@ -6,7 +6,7 @@
 /*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/08 20:50:59 by maxoph           ###   ########.fr       */
+/*   Updated: 2025/07/08 22:19:29 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	do_cd_minus(t_all *all)
 
 	if (!find_the_value(all, "OLDPWD"))
 	{
-		printf("WriteOnMe: cd: OLDPWD not set\n");
+		ft_putstr_fd("WriteOnMe: cd: OLDPWD not set\n", 2);
 		if (search_env(all, "OLDPWD"))
 		{
 			replace_or_add_env(all, "OLDPWD", ft_pwd(all));
