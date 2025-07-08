@@ -29,6 +29,41 @@ int	do_redir_in(t_all *all, char *redir)
 	return(0);
 }
 
+void	do_hd_fd_no_pipe(int pipe, t_all *all)
+{
+	if (find_last_hd(all->pipe.pipe, all))
+	{
+		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+			error_dup2_no_pipe(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+		close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+	}
+}
+
+
+void	do_hd_fd(int pipe, t_all *all)
+{
+	if (find_last_hd(all->pipe.pipe, all))
+	{
+		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
+			error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
+	}
+}
+
+int	do_redir_out(t_all *all, t_token *temp)
+{
+	if (temp->type == REDIRECT_OUT)
+		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (all->pipe.fd_outfile == -1)
+		return (error_msg(all, temp->next->str), 1);
+	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
+		return(error_dup2(all, all->pipe.fd_outfile, temp->next->str), 1);
+	if (close(all->pipe.fd_outfile) == -1)
+		return (error_msg(all, temp->next->str), 1);
+	return(0);
+}
+
 /******************************************************************************
 Redirection of file descriptors for input and output
 ******************************************************************************/
@@ -40,11 +75,7 @@ int	do_redir_fd(t_all *all)
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
 	printf("last heredoc :%s dans pipe : %d\n", find_last_hd(all->pipe.pipe, all), all->pipe.pipe); // a suppr !!
-	if (find_last_hd(all->pipe.pipe, all))
-	{
-		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
-			error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-	}	
+	do_hd_fd(all->pipe.pipe, all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
 		if (temp->type == REDIRECT_IN) // mettre tout dans le meme if pour 25lignes
@@ -55,16 +86,8 @@ int	do_redir_fd(t_all *all)
 		}
 		else if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 		{
-			if (temp->type == REDIRECT_OUT)
-				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else
-				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (all->pipe.fd_outfile == -1)
-				return (error_msg(all, temp->next->str), 1);
-			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-				return(error_dup2(all, all->pipe.fd_outfile, temp->next->str), 1);
-			if (close(all->pipe.fd_outfile) == -1)
-				return (error_msg(all, temp->next->str), 1);
+			if (do_redir_out(all, temp) == 0)
+				return(1);
 			temp = temp->next->next;
 		}
 		else
@@ -72,6 +95,21 @@ int	do_redir_fd(t_all *all)
 	}
 	return(0);
 } 
+
+int	do_redir_out_no_pipe(t_all *all, t_token *temp)
+{
+	if (temp->type == REDIRECT_OUT)
+		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+	else
+		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+	if (all->pipe.fd_outfile == -1)
+		return(error_msg_no_pipe(all,temp->next->str));
+	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
+		return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp->next->str));
+	if (close(all->pipe.fd_outfile) == -1)
+		return(error_msg_no_pipe(all, temp->next->str));
+	return(0);
+}
 
 int	do_redir_no_pipe(t_all *all)
 {
@@ -81,15 +119,10 @@ int	do_redir_no_pipe(t_all *all)
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
 	printf("heredoc ----:%s\n", find_last_hd(all->pipe.pipe, all));
-	if (find_last_hd(all->pipe.pipe, all)) // a modifier quqnd jaurais la vrai fonction et a ne ps appeler plusieurs fois...
-	{
-		if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
-			error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-		close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
-	}	
+	do_hd_fd_no_pipe(all->pipe.pipe, all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
-		if (temp->type == REDIRECT_IN && !find_last_hd(all->pipe.pipe, all)) //else if
+		if (temp->type == REDIRECT_IN)
 		{
 			if(do_redir_in_no_pipe(all, temp->next->str) == 1)
 				return(1);
@@ -97,16 +130,8 @@ int	do_redir_no_pipe(t_all *all)
 		}
 		else if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 		{
-			if (temp->type == REDIRECT_OUT)
-				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
-			else
-				all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
-			if (all->pipe.fd_outfile == -1)
-				return(error_msg_no_pipe(all,temp->next->str));
-			if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-				return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp->next->str));
-			if (close(all->pipe.fd_outfile) == -1)
-				return(error_msg_no_pipe(all, temp->next->str));
+			if (do_redir_out_no_pipe(all, temp) == 1)
+				return(1);
 			temp = temp->next->next;
 		}
 		else
@@ -115,7 +140,6 @@ int	do_redir_no_pipe(t_all *all)
 	return(0);
 }
 
-no git
 int	do_no_pipe(t_all *all)
 {
 	int stdout_original = dup(STDOUT_FILENO);

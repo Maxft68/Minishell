@@ -4,7 +4,7 @@ void	error_msg(t_all *all, char *s)
 {
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(s);
-	ft_exit("", all, 1);//sauf si built-in dans parent NI EXECVE
+	ft_exit("", all, 1);
 }
 
 int	error_msg_no_pipe(t_all *all, char *s)
