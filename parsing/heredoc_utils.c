@@ -18,23 +18,27 @@
 
 char	*find_last_hd(int pipe, t_all *all)
 {
-    t_token *tmp;
-    char    *redir;
+	t_token *tmp;
+	char    *redir;
 
-    tmp = all->rdir_tkn;
-    redir = NULL;
-    while (tmp && tmp->pipe != pipe)
-            tmp = tmp->next;
-    if (tmp && tmp->pipe == pipe)
-    {
-        while (tmp->next && tmp->next->pipe == pipe)
-        {
-            if (tmp->type == HEREDOC && tmp->next)
-                redir = tmp->next->str;
-            if (tmp->type == REDIRECT_IN)
-                redir = NULL;
-            tmp = tmp->next;
-        }  
-    }
-    return (redir);
+	tmp = all->rdir_tkn;
+	redir = NULL;
+	while (tmp && tmp->pipe != pipe)
+			tmp = tmp->next;
+	if (tmp && tmp->pipe == pipe)
+	{
+		while (tmp->next && tmp->next->pipe == pipe)
+		{
+			if (tmp->type == HEREDOC && tmp->next)
+			{
+				if (tmp->next->str == NULL)
+					ft_putstr_fd("Error: NULL string in HEREDOC\n", 2);
+				redir = tmp->next->str;
+			}
+			if (tmp->type == REDIRECT_IN)
+				redir = NULL;
+			tmp = tmp->next;
+		}  
+	}
+	return (redir);
 }
