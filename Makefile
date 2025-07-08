@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+         #
+#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/07/08 14:27:09 by maxoph           ###   ########.fr        #
+#    Updated: 2025/07/08 16:43:45 by rbier            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT_LIB)
 		@echo "Compiling Minishell..."
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -lreadline -o $(NAME)
-		@echo "Minishell successfully compiled.\n"
+		@echo "Minishell successfully compiled."
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -99,7 +99,7 @@ clean:
 	@echo	"Cleaning..."
 	@rm -rf $(OBJ)
 	@make -C $(LIBFT_DIR) clean >/dev/null 2>&1
-	@echo	"Successfully cleaned !\n"
+	@echo	"Successfully cleaned !"
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean

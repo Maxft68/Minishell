@@ -1,5 +1,8 @@
 #include "../mandatory/minishell.h"
 
+volatile sig_atomic_t g_sigint_flag = 0;
+
+
 // int	main(int argc, char **argv, char **env)
 // {
 // 	char	*read_copy;
