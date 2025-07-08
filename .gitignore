@@ -7,3 +7,4 @@ minishell
 .vscode
 out*
 in*
+minishell_tester/
