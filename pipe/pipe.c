@@ -49,6 +49,7 @@ int	exec_cmd(t_all *all) // DANS ENFANT
 	perror(cmd[0]);
 	printf("-=-=-=-execve fail-=-=--\n");
 	ft_exit("", all, 127);
+	return(1);
 }
 
 

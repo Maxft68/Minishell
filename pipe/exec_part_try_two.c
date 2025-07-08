@@ -195,7 +195,7 @@ void	do_pipe(t_all *all)
 		{
 			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
 				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+			ft_close(all, &all->pipe.heredoc_fd[all->pipe.pipe][0]);
 		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && !find_last_hd(all->pipe.pipe, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
 		{
