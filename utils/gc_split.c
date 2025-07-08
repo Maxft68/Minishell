@@ -28,8 +28,6 @@ static char	*str_c_dup(t_all *all, char *s, int start, int end)
 	char	*alloc;
 
 	alloc = gc_malloc(all, (end - start + 2) * sizeof(char));
-	if (!alloc)
-		ft_exit("Cannot allocate memory19\n", all, 12);
 	ft_strlcpy(alloc, s + start, end - start + 2);
 	return (alloc);
 }
@@ -60,8 +58,6 @@ static char	**ft_inter_split(t_all *all, char **array, char *s, char c)
 		while (s[i] != c && s[i] != 0)
 			i++;
 		array[a] = str_c_dup(all, s, start, i - 1);
-		if (array[a] == NULL)
-			ft_exit("Cannot allocate memory20\n", all, 12);
 		a++;
 	}
 	array[a] = NULL;
@@ -75,7 +71,5 @@ char	**gc_split(t_all *all, char *s, char c)
 	if (!s)
 		return (NULL);
 	array = gc_malloc(all, (words_count(s, c) + 1) * sizeof(char *));
-	if (!array)
-		ft_exit("Cannot allocate memory21\n", all, 12);
 	return (ft_inter_split(all, array, s, c));
 }
