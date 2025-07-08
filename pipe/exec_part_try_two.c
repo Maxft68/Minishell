@@ -110,7 +110,7 @@ int	do_redir_out_no_pipe(t_all *all, char *temp, token_type type)
 		return(error_msg_no_pipe(all, temp));
 	return(0);
 } 
-
+ 
 int	do_redir_no_pipe(t_all *all)
 {
 	t_token *temp;
