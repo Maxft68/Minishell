@@ -115,7 +115,6 @@ int	do_redir_no_pipe(t_all *all)
 	return(0);
 }
 
-
 int	do_no_pipe(t_all *all)
 {
 	int stdout_original = dup(STDOUT_FILENO);
