@@ -29,9 +29,9 @@ void	close_all_pipe_exit(t_all *all) // close des pipes
 		if (all->pipe.pipe_fd && all->pipe.pipe_fd[i])
 		{
 			if (all->pipe.pipe_fd[i][0] != -1)
-				close(all->pipe.pipe_fd[i][0]);
+				ft_close(all, all->pipe.pipe_fd[i][0]);
 			if (all->pipe.pipe_fd[i][1] != -1)
-				close(all->pipe.pipe_fd[i][1]);
+				ft_close(all, all->pipe.pipe_fd[i][1]);
 		}
 		i++;
 	}
