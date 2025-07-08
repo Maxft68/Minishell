@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **env)
 		signals_swing();
 		char *firstinput = readline("WriteOnMe ");
 		if (!firstinput)
-			break;		
+			break;
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)

@@ -3,7 +3,7 @@
 int	do_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 1); // a enlever ft_putstr_fd
+		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 0); // a enlever ft_putstr_fd
 	// if (!all->pipe.cmd_args)
 	// 	return (ft_putstr_fd("cmd_args is NULL\n", 2), 1);// a enlever ft_putstr_fd
 	// if (!all->pipe.cmd_args[all->pipe.pipe])
@@ -32,7 +32,7 @@ int	do_built_in(t_all *all)
 int	is_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 1);// a enlever ft_putstr_fd
+		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 0);// a enlever ft_putstr_fd
 	// if (!all->pipe.cmd_args)
 	// 	return (ft_putstr_fd("cmd_args is NULL\n"), 1);// a enlever ft_putstr_fd
 	// if (!all->pipe.cmd_args[all->pipe.pipe])
