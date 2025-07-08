@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 	//signal(SIGQUIT, SIG_DFL); // a remettre dans chaque enfant 
 	while (1)
 	{
-		// signal(SIGINT, SIG_IGN);
+		// 
 		signals_swing();
 		char *firstinput = readline("WriteOnMe ");
 		if (!firstinput)
