@@ -105,7 +105,7 @@ int	do_redir_out_no_pipe(t_all *all, char *temp, token_type type)
 	ft_close(all, &all->pipe.fd_outfile);
 	return(0);
 } 
-
+ 
 int	do_redir_no_pipe(t_all *all)
 {
 	t_token *temp;
