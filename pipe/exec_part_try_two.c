@@ -39,7 +39,6 @@ void	do_hd_fd_no_pipe(t_all *all)
 	}
 }
 
-
 void	do_hd_fd(t_all *all)
 {
 	if (find_last_hd(all->pipe.pipe, all))
@@ -205,15 +204,7 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO) == -1)
 				error_msg(all, "dup2 stdout");
 		}
-		int j = 0;
-		while (j < all->pipe.nb_pipe)
-		{
-			if (all->pipe.pipe_fd[j][0] != -1)
-				close(all->pipe.pipe_fd[j][0]);
-			if (all->pipe.pipe_fd[j][1] != -1)
-				close(all->pipe.pipe_fd[j][1]);
-			j++;
-		}
+		close_all_pipe_exit(all);
 		if (all->pipe.cmd_args[all->pipe.pipe] && all->pipe.cmd_args[all->pipe.pipe][0])
 		{
 			if (is_built_in(all) == 0)
