@@ -24,6 +24,8 @@
 # include <errno.h>
 # include <limits.h>
 
+extern volatile sig_atomic_t g_sigint_flag;
+
 typedef struct s_garbage
 {
 	void				*pointer;

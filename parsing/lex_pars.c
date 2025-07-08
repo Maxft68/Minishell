@@ -130,6 +130,8 @@ int    pars_to_exec(t_all *all)
 	if (all->token && !check_tkn_lst(all))
 	{
 		catch_heredoc(all);
+		if (g_sigint_flag == 1)
+			return (0);
 		create_redir_lst(all);
 		//printf("last_hd: %s\n", find_last_hd(0, all));
 		//print_node(all->rdir_tkn);
