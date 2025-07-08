@@ -29,7 +29,7 @@ int	do_redir_in(t_all *all, char *redir)
 	return(0);
 }
 
-void	do_hd_fd_no_pipe(int pipe, t_all *all)
+void	do_hd_fd_no_pipe(t_all *all)
 {
 	if (find_last_hd(all->pipe.pipe, all))
 	{
@@ -40,7 +40,7 @@ void	do_hd_fd_no_pipe(int pipe, t_all *all)
 }
 
 
-void	do_hd_fd(int pipe, t_all *all)
+void	do_hd_fd(t_all *all)
 {
 	if (find_last_hd(all->pipe.pipe, all))
 	{
@@ -49,18 +49,18 @@ void	do_hd_fd(int pipe, t_all *all)
 	}
 }
 
-int	do_redir_out(t_all *all, t_token *temp)
+int	do_redir_out(t_all *all, char *temp, token_type type)
 {
-	if (temp->type == REDIRECT_OUT)
-		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (type == REDIRECT_OUT)
+		all->pipe.fd_outfile = open(temp, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		all->pipe.fd_outfile = open(temp, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (all->pipe.fd_outfile == -1)
-		return (error_msg(all, temp->next->str), 1);
+		return (error_msg(all, temp), 1);
 	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-		return(error_dup2(all, all->pipe.fd_outfile, temp->next->str), 1);
+		return(error_dup2(all, all->pipe.fd_outfile, temp), 1);
 	if (close(all->pipe.fd_outfile) == -1)
-		return (error_msg(all, temp->next->str), 1);
+		return (error_msg(all, temp), 1);
 	return(0);
 }
 
@@ -75,7 +75,7 @@ int	do_redir_fd(t_all *all)
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
 	printf("last heredoc :%s dans pipe : %d\n", find_last_hd(all->pipe.pipe, all), all->pipe.pipe); // a suppr !!
-	do_hd_fd(all->pipe.pipe, all);
+	do_hd_fd(all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
 		if (temp->type == REDIRECT_IN) // mettre tout dans le meme if pour 25lignes
@@ -86,7 +86,7 @@ int	do_redir_fd(t_all *all)
 		}
 		else if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 		{
-			if (do_redir_out(all, temp) == 0)
+			if (do_redir_out(all, temp->next->str, temp->type) == 1)
 				return(1);
 			temp = temp->next->next;
 		}
@@ -94,20 +94,20 @@ int	do_redir_fd(t_all *all)
 			temp = temp->next;
 	}
 	return(0);
-} 
+}
 
-int	do_redir_out_no_pipe(t_all *all, t_token *temp)
+int	do_redir_out_no_pipe(t_all *all, char *temp, token_type type)
 {
-	if (temp->type == REDIRECT_OUT)
-		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
+	if (type == REDIRECT_OUT)
+		all->pipe.fd_outfile = open(temp, O_WRONLY | O_CREAT | O_TRUNC, 0644); // a checker le 0644
 	else
-		all->pipe.fd_outfile = open(temp->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
+		all->pipe.fd_outfile = open(temp, O_WRONLY | O_CREAT | O_APPEND, 0644); // a checker le 0644
 	if (all->pipe.fd_outfile == -1)
-		return(error_msg_no_pipe(all,temp->next->str));
+		return(error_msg_no_pipe(all,temp));
 	if (dup2(all->pipe.fd_outfile, STDOUT_FILENO) == -1)
-		return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp->next->str));
+		return(error_dup2_no_pipe(all, all->pipe.fd_outfile, temp));
 	if (close(all->pipe.fd_outfile) == -1)
-		return(error_msg_no_pipe(all, temp->next->str));
+		return(error_msg_no_pipe(all, temp));
 	return(0);
 }
 
@@ -119,7 +119,7 @@ int	do_redir_no_pipe(t_all *all)
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
 	printf("heredoc ----:%s\n", find_last_hd(all->pipe.pipe, all));
-	do_hd_fd_no_pipe(all->pipe.pipe, all);
+	do_hd_fd_no_pipe(all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
 		if (temp->type == REDIRECT_IN)
@@ -130,7 +130,7 @@ int	do_redir_no_pipe(t_all *all)
 		}
 		else if (temp->type == REDIRECT_OUT || temp->type == APPEND_OUT)
 		{
-			if (do_redir_out_no_pipe(all, temp) == 1)
+			if (do_redir_out_no_pipe(all, temp->next->str, temp->type) == 1)
 				return(1);
 			temp = temp->next->next;
 		}
