@@ -17,7 +17,7 @@ void	free_array(char **array)
 	free(array);
 	array = NULL;
 	return ;
-}
+} 
 
 void	close_all_pipe_exit(t_all *all) // close des pipes
 {
