@@ -1,10 +1,17 @@
+
 #include "../mandatory/minishell.h"
 
-void	part_one(t_all *all, char *old, char *val)
+void	initialize_hd_data(char *old, t_all *all)
+{
+	all->hd_data.i = 0;
+	all->hd_data.new = NULL;
+	all->hd_data.tmp2 = gc_malloc(all, ft_strlen(old) + 1);
+}
+
+void	expand_hd(t_all *all, char *old, char *val)
 {
 	all->hd_data.i++;
 	all->hd_data.j = 0;
-
 	if ((ft_isdigit(old[all->hd_data.i]) || !ft_isalpha(old[all->hd_data.i]))
 		&& old[all->hd_data.i] != '_')
 	{
@@ -13,9 +20,9 @@ void	part_one(t_all *all, char *old, char *val)
 		return;
 	}
 	while(ft_isalnum(old[all->hd_data.i]) == 1 || old[all->hd_data.i] == '_')
-		all->hd_data.tmp[all->hd_data.j++] = old[all->hd_data.i++];
-	all->hd_data.tmp[all->hd_data.j] = '\0';
-	val = find_the_value(all, all->hd_data.tmp);
+		all->hd_data.tmp2[all->hd_data.j++] = old[all->hd_data.i++];
+	all->hd_data.tmp2[all->hd_data.j] = '\0';
+	val = find_the_value(all, all->hd_data.tmp2);
 	if (val && all->hd_data.j > 0)
 	{
 		if (!all->hd_data.new)
@@ -28,9 +35,10 @@ void	part_one(t_all *all, char *old, char *val)
 	}
 }
 
-void	part_two(t_all *all, char *old)
+void	no_hd_expand(t_all *all, char *old)
 {
 	char tmp[2];
+
 	tmp[0] = old[all->hd_data.i];
 	tmp[1] = '\0';
 	if (!all->hd_data.new)
@@ -43,30 +51,22 @@ void	part_two(t_all *all, char *old)
 	all->hd_data.i++;
 }
 
-void	expand_hd(char *old, t_all *all)
+void	handle_hd_expand(char *old, t_all *all)
 {
 	char *val;
-	bool d_quote = false;
-	bool s_quote = false;
+
 	val = NULL;
+	reset_quotes(all);
 	while(old[all->hd_data.i])
 	{
-        if (old[all->hd_data.i] == 34 && !d_quote && !s_quote)
-            d_quote = true;
-        else if (old[all->hd_data.i] == 34 && d_quote && !s_quote)
-            d_quote = false;
-        else if (old[all->hd_data.i] == 39 && !s_quote && !d_quote)
-            s_quote = true;
-        else if (old[all->hd_data.i] == 39 && s_quote && !d_quote)
-			s_quote = false;
+		check_quotes(old[all->hd_data.i], all);
 		if (old[all->hd_data.i] == '$' && 
-			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !s_quote)
+			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !all->data.s_quote)
 		{
-			part_one(all, old, val);
-			d_quote = false;
-			s_quote = false;
+			expand_hd(all, old, val);
+			reset_quotes(all);
 		}
 		else
-			part_two(all, old);
+			no_hd_expand(all, old);
 	}
 }

@@ -79,31 +79,28 @@ void	part_two(t_all *all, char *old)
 
 void	handle_expand(char *old, t_all *all)
 {
-	char	*val;
-	bool	d_quote;
-	bool	s_quote;
-
-	// Sécurité : funcheck ou d'autres tests externes peuvent appeler cette fonction avec all ou ses champs non initialisés.
-	if (!old || !all)
-		return ;
-
-	d_quote = false;
-	s_quote = false;
+	char *val;
+	// bool d_quote = false;
+	// bool s_quote = false;
 	val = NULL;
-	while (old && all->data.z >= 0 && all->data.z < (int)ft_strlen(old) && old[all->data.z])
+	reset_quotes(all);
+	while(old && old[all->data.z])
 	{
-		if (old[all->data.z] == 34 && !d_quote && !s_quote)
-			d_quote = true;
-		else if (old[all->data.z] == 34 && d_quote && !s_quote)
-			d_quote = false;
-		else if (old[all->data.z] == 39 && !s_quote && !d_quote)
-			s_quote = true;
-		else if (old[all->data.z] == 39 && s_quote && !d_quote)
-			s_quote = false;
-		if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' '
-				&& old[all->data.z + 1]) && !s_quote)
+		check_quotes(old[all->data.z], all);
+        // if (old[all->data.z] == 34 && !d_quote && !s_quote)
+        //     d_quote = true;
+        // else if (old[all->data.z] == 34 && d_quote && !s_quote)
+        //     d_quote = false;
+        // else if (old[all->data.z] == 39 && !s_quote && !d_quote)
+        //     s_quote = true;
+        // else if (old[all->data.z] == 39 && s_quote && !d_quote)
+		// 	s_quote = false;
+		if (old[all->data.z] == '$' && 
+			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && !all->data.s_quote)
 		{
 			part_one(all, old, val);
+			//d_quote = false; // a confirmer
+			//s_quote = false; // a confirmer
 		}
 		else
 		{

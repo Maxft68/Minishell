@@ -70,12 +70,12 @@ typedef struct s_export
 
 typedef struct s_lexer
 {
-	const char  *input;
-	int         position;
-	char        c;
-	bool		s_quote;
-	bool		d_quote;
-	bool        cmd;
+    const char  *input;
+    int         position;
+    char        c;
+	// bool		s_quote;
+	// bool		d_quote;
+    bool        cmd;
 	int			redir;
 }				t_lexer;
 
@@ -141,7 +141,8 @@ typedef struct s_data // structure poubelle pour stocker un peu de tout
 	char		*new;
 	char		*tmp;
 	char		*temp;
-
+	bool		s_quote;
+	bool		d_quote;
 }						t_data;
 
 typedef struct s_hd_data//structure data pour heredoc
@@ -149,6 +150,7 @@ typedef struct s_hd_data//structure data pour heredoc
 	int		i;
 	int		j;
 	char	*tmp;
+	char	*tmp2;
 	char	*new;
 	size_t	hd_eof_len;
 	size_t	str_len;
@@ -220,6 +222,9 @@ char		*gc_itoa(t_all *all, int n);
 int			create_lexer(char *input, t_all *all);
 int			pars_to_exec(t_all *all);
 char		*pick_char(char *str, token_type type, t_all *all);
+void		check_quotes(char c, t_all *all);
+void    	reset_quotes(t_all *all);
+int			verif_quoted(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);
 void		advance_char(t_lexer *lexr);
 void		skip_whitespace(t_lexer *lexr);
@@ -228,6 +233,8 @@ void		ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token		*ft_tknlast(t_token *lst);
 int 		check_tkn_lst(t_all *all);
 void    	catch_heredoc(t_all *all);
+void		initialize_hd_data(char *old, t_all *all);
+void		handle_hd_expand(char *old, t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*find_last_hd(int pipe, t_all *all);
 char    	*search_pipe_redir(int pipe, token_type type, t_all *all);
