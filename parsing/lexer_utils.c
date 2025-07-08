@@ -38,8 +38,7 @@ int	create_lexer(char *input, t_all *all)
 		add_history(input);
     if (input[0] == '\0')
 		return (-1);
-	}
-	if (verif_quoted(input) == -1)
+	if (verif_quoted(input, all) == -1)
 	{
 		//free(input);
 		return (all->error_code = 2, -1);

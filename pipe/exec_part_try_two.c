@@ -138,24 +138,43 @@ int	do_redir_no_pipe(t_all *all)
 	}
 	return(0);
 }
+/******************************************************************************
+Set stdout and stdin back to original file descriptors
+******************************************************************************/
+void	fd_back_to_original(t_all *all, int stdout_original, int stdin_original)
+{
+	if (dup2(stdout_original, STDOUT_FILENO) == -1)
+		error_dup2(all, stdout_original, "dup2");
+	if (dup2(stdin_original, STDIN_FILENO) == -1)	
+		error_dup2(all, stdin_original, "dup2");
+	if (close (stdout_original) == -1)
+		error_dup2(all, stdout_original, "close");
+	if (close (stdin_original) == -1)
+		error_dup2(all, stdin_original, "close");
+}
 
+/******************************************************************************
+No forks we are in the parent process
+******************************************************************************/
 int	do_no_pipe(t_all *all)
 {
 	int stdout_original = dup(STDOUT_FILENO);
 	int stdin_original = dup(STDIN_FILENO);
 	if(do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
-		return(dup2(stdout_original, STDOUT_FILENO), dup2(stdin_original, STDIN_FILENO), close (stdout_original), close (stdin_original), 1);
+	{
+		fd_back_to_original(all, stdout_original, stdin_original);
+		return(1);
+	}
 	do_built_in(all);
-	dup2(stdout_original, STDOUT_FILENO);
-	dup2(stdin_original, STDIN_FILENO);
-	close (stdout_original);
-	close (stdin_original);
-	
+	fd_back_to_original(all, stdout_original, stdin_original);
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
 }
 
-void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
+/******************************************************************************
+Fork and redirection by default between pipes
+******************************************************************************/
+void	do_pipe(t_all *all)
 {
 	if (all->pipe.pipe < all->pipe.nb_pipe)
 	{
@@ -212,11 +231,8 @@ void	do_pipe(t_all *all) // FORK ET REDIRECTION PAR DEFAUT ENTRE LES PIPES
 				do_built_in(all);
 				ft_exit("", all, 0);
 			}
-			else
-			{
-				//ft_putstr_fd("je vais execve\n", 2);
-				exec_cmd(all);
-			}
+			//ft_putstr_fd("je vais execve\n", 2);
+			exec_cmd(all);
 		}
 		//ft_putstr_fd("JAI PAS EXECVE\n", 2);
 		ft_exit("", all, 0);
