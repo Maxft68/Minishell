@@ -44,10 +44,10 @@ int	exec_cmd(t_all *all) // DANS ENFANT
 		path = find_path_cmd(all, env);
 	if (!path)
 		return(ft_exit("",all, 127), 1);
-	execve(path, cmd, env); //return si echoue ??
+	execve(path, cmd, env);
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(cmd[0]);
-	printf("-=-=-=-execve fail-=-=--\n");
+	//testerprintf("-=-=-=-execve fail-=-=--\n");
 	ft_exit("", all, 127);
 	return(1);
 }

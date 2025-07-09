@@ -67,7 +67,7 @@ void	replace_or_add_env(t_all *all, char *name, char *value)
 /******************************************************************************
 The first carac need to be alpha or '_' the next could be numeric too
 ******************************************************************************/
-int	is_alpha_str(char *str)
+int	is_alpha_str(char *str) // 1 quand cest valide
 {
 	int i;
 	i = 0;
@@ -83,7 +83,7 @@ int	is_alpha_str(char *str)
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
-			return (1);
+			return (0);
 		i++;
 	}
 	return (1);

@@ -73,7 +73,6 @@ void	do_add_env_next(t_all *all, char *s)
 		ft_putstr_fd("WriteOnMe: export: `", 2);
 		ft_putstr_fd(s, 2);
 		ft_putstr_fd("' not a valid identifier\n", 2);
-		//printf("WriteOnMe: export: `%s' not a valid identifier\n", s);
 		all->data.n = NULL;
 		all->data.val = NULL;
 	}
