@@ -117,8 +117,9 @@ void    catch_heredoc(t_all *all)
             initialize_hd_data(str, all);
             if (g_sigint_flag == 1)
             {
-                str = NULL;
+                // str = NULL;
                 tmp->next->str = NULL;
+                all->hd_data.hd_escape = true;
             }
             if (!str)
             {

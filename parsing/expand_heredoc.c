@@ -6,6 +6,7 @@ void	initialize_hd_data(char *old, t_all *all)
 	all->hd_data.i = 0;
 	all->hd_data.new = NULL;
 	all->hd_data.tmp2 = gc_malloc(all, ft_strlen(old) + 1);
+	all->hd_data.hd_escape = false;
 }
 
 void	expand_hd(t_all *all, char *old, char *val)

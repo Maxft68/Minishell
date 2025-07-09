@@ -1,6 +1,6 @@
 #include "../mandatory/minishell.h"
 
-volatile sig_atomic_t g_sigint_flag = 0;
+//volatile sig_atomic_t g_sigint_flag = 0;
 
 
 // int	main(int argc, char **argv, char **env)
@@ -59,8 +59,13 @@ int	main(int argc, char **argv, char **env)
 		// 
 		signals_swing();
 		char *firstinput = readline("WriteOnMe ");
-		if (!firstinput)
-			break;		
+		if (!firstinput && !all.hd_data.hd_escape)
+			break;
+		if (all.hd_data.hd_escape)
+		{
+			free(firstinput);
+			firstinput = NULL;
+		}
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)

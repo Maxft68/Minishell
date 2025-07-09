@@ -156,6 +156,7 @@ typedef struct s_hd_data//structure data pour heredoc
 	char	*new;
 	size_t	hd_eof_len;
 	size_t	str_len;
+	bool	hd_escape;
 }				t_hd_data;
 
 typedef struct	s_exit
