@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)
-				ft_putstr_fd("Error in execution\n", 2);
+				//testerft_putstr_fd("Error in execution\n", 2);
 		//testerprintf("sig_atomic:%d\n", g_sigint_flag);
 		// ft_lstclear(&all.token);
 		// ft_lstclear(&all.rdir_tkn);

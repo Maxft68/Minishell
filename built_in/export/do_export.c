@@ -70,10 +70,7 @@ void	do_add_env_next(t_all *all, char *s)
 		i++;
 	if (i == 0)
 	{
-		ft_putstr_fd("WriteOnMe: export: `", 2);
-		ft_putstr_fd(s, 2);
-		ft_putstr_fd("' not a valid identifier\n", 2);
-		all->data.n = NULL;
+		print_and_null(all, s);
 		all->data.val = NULL;
 	}
 	else if (s[i] == '=' && i > 0)

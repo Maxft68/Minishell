@@ -36,7 +36,7 @@ void    alloc_tab_star_star(t_all *all)
 	j = 0;
 	while (tmp)
 	{
-		if (tmp && tmp->type > 0 && tmp->type != 5)
+		if (tmp && tmp->type > 0 && tmp->type != 7)
 			j++;
 		if (tmp->type == PIPE || tmp->next == NULL)
 		{
