@@ -46,29 +46,21 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
 {
     char *line;
     char *new_str;
-
+	int save_stdin;
+	save_stdin = dup(STDIN_FILENO);
+	signal(SIGINT, &sigint_hd);
     while (1)
     {
-        signal(SIGINT, &sigint_hd);
         // if (g_sigint_flag == 1)// && escape_hd(line))
         // {
         //     printf("premier_catch");
         //     g_sigint_flag = 0; // Réinitialise le flag
         //     break; // Quitte la boucle si Ctrl-C est pressé
         // }
+
         line = readline("> ");
         if (line == NULL)
             break;
-        // if (g_sigint_flag == 1)// && escape_hd(line))
-        // {
-        //     printf("deuxieme_catch\n");
-        //     g_sigint_flag = 0; // Réinitialise le flag
-        //     if (line)
-        //         free(line);
-        //     // close(STDIN_FILENO);
-        //     return (NULL);
-        //     // break; // Quitte la boucle si Ctrl-C est pressé
-        // }
         if (ft_strncmp(line, hd_eof, all->hd_data.hd_eof_len) == 0 &&
             ft_strlen(line) == all->hd_data.hd_eof_len)
         {
@@ -81,6 +73,8 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
         str = new_str;
         free(line);
     }
+	dup2(save_stdin, STDIN_FILENO);
+	close(save_stdin);
     // if (line != NULL)
     //     free(line);
     return (str);
