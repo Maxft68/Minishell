@@ -37,7 +37,7 @@ static void	sigint_hd(int signum)
 	{
 		g_sigint_flag = 1;
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		close(STDIN_FILENO);
+		// close(STDIN_FILENO);
         return;
 	}
 }
@@ -50,12 +50,12 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
     while (1)
     {
         signal(SIGINT, &sigint_hd);
-        // if (g_sigint_flag == 1)// && escape_hd(line))
-        // {
-        //     printf("premier_catch");
-        //     g_sigint_flag = 0; // Réinitialise le flag
-        //     break; // Quitte la boucle si Ctrl-C est pressé
-        // }
+        if (g_sigint_flag == 1)// && escape_hd(line))
+        {
+            printf("premier_catch");
+            g_sigint_flag = 0; // Réinitialise le flag
+            continue; // Quitte la boucle si Ctrl-C est pressé
+        }
         line = readline("> ");
         if (line == NULL)
             break;
@@ -120,6 +120,7 @@ void    catch_heredoc(t_all *all)
                 // str = NULL;
                 tmp->next->str = NULL;
                 all->hd_data.hd_escape = true;
+                g_sigint_flag = 0;
             }
             if (!str)
             {
