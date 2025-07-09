@@ -34,7 +34,7 @@ int	exec_cmd(t_all *all) // DANS ENFANT
 
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
-		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
+		//testerprintf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
 		ft_exit("jfais quoi", all, 0);
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
