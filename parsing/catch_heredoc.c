@@ -122,8 +122,9 @@ void    catch_heredoc(t_all *all)
             }
             if (!str)
             {
-                kill(0, 2);
-                return;
+                // kill(0, 2);
+                break;
+                // return;
             }
             if (str != NULL)
                 handle_hd_expand(str, all);

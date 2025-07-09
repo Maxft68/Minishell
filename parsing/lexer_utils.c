@@ -62,10 +62,11 @@ int new_tkn_char(token_type type, t_all *all)
     char    c;
 
     c = all->lexer->c;
-    if ((type > 0 && type < 5) && !all->data.d_quote && !all->data.s_quote)
+    if ((type > 0 && type < 7) && !all->data.d_quote && !all->data.s_quote)
     {
     if (c == '<' || c == '>' || c == '|')// || c == '$' )
         return (1);
+    
     if ((c == ' ' && !all->data.s_quote) && (c == ' ' && !all->data.d_quote))
         return (1);
     }
