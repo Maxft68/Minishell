@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **env)
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)
 				ft_putstr_fd("Error in execution\n", 2);
+		printf("sig_atomic:%d\n", g_sigint_flag);
 		// ft_lstclear(&all.token);
 		// ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);
@@ -74,6 +75,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
+	printf("tchao\n");
 	ft_exit("exit\n", &all, all.error_code); // ?? utile dans un monde parallele ?
 	(void)argv;
 }

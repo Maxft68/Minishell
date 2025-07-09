@@ -131,8 +131,11 @@ int    pars_to_exec(t_all *all)
 	{
 		catch_heredoc(all);
 		if (g_sigint_flag == 1)
-			return (0);
-		create_redir_lst(all);
+		{
+			g_sigint_flag = 0;
+			return (1);
+		}
+			create_redir_lst(all);
 		//printf("last_hd: %s\n", find_last_hd(0, all));
 		//print_node(all->rdir_tkn);
 		list_to_tab(all);

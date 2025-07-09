@@ -43,11 +43,12 @@ int	create_lexer(char *input, t_all *all)
 		//free(input);
 		return (all->error_code = 2, -1);
 	}
+    printf("lexer_input:|%s|\n", input);
 	initialize_data(all, input);
 	handle_expand(input, all);
     all->lexer = (t_lexer*)gc_malloc(all, sizeof(t_lexer));
     all->lexer->input = gc_strdup(all->data.new, all);
-    printf("lexer_input:|%s|\n", all->lexer->input);
+    printf("expded_input:|%s|\n", all->lexer->input);
     all->lexer->position = 0;
     all->lexer->c = all->lexer->input[0];
     // all->lexer->s_quote = false;
@@ -63,10 +64,11 @@ int new_tkn_char(token_type type, t_all *all)
     char    c;
 
     c = all->lexer->c;
-    if ((type > 0 && type < 5) && !all->data.d_quote && !all->data.s_quote)
+    if ((type > 0 && type < 7) && !all->data.d_quote && !all->data.s_quote)
     {
     if (c == '<' || c == '>' || c == '|')// || c == '$' )
         return (1);
+    
     if ((c == ' ' && !all->data.s_quote) && (c == ' ' && !all->data.d_quote))
         return (1);
     }

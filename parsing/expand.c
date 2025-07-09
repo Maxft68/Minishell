@@ -95,13 +95,12 @@ void	handle_expand(char *old, t_all *all)
         //     s_quote = true;
         // else if (old[all->data.z] == 39 && s_quote && !d_quote)
 		// 	s_quote = false;
-		if (old[all->data.z] == '$' && 
-			(old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && !all->data.s_quote)
+		if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' ' && 
+			old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39 &&
+		old[all->data.z + 1]) && !all->data.s_quote)// && !all->data.d_quote)
 		{
 			part_one(all, old, val);
 			reset_quotes(all);
-			// d_quote = false;
-			// s_quote = false;
 		}
 		else
 		{
