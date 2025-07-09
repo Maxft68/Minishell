@@ -112,7 +112,7 @@ void    catch_heredoc(t_all *all)
         if (tmp->type == HEREDOC)
         {
             str = gc_strdup(append_hd(tmp->next->str, all), all);
-            printf("HD_input:\n%s###############\n", str);
+            //testerprintf("HD_input:\n%s###############\n", str);
             // tmp->next->str = (char*)gc_realloc(all,tmp->next->str, ft_strlen(str));
             initialize_hd_data(str, all);
             if (g_sigint_flag == 1)
@@ -128,7 +128,7 @@ void    catch_heredoc(t_all *all)
             }
             if (str != NULL)
                 handle_hd_expand(str, all);
-            printf("HD_expended:%s\n", all->hd_data.new);
+            //testerprintf("HD_expended:%s\n", all->hd_data.new);
             tmp->next->str = gc_strdup(all->hd_data.new, all);
             // all->hd_data.new = str;
         }

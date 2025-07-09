@@ -72,9 +72,9 @@ void	change_shlvl(t_all *all)
 	new_shlvl = NULL;
 	old_shlvl = 0;
 	shlvl = find_the_value(all, "SHLVL");
-	printf("shvalue= %s\n", shlvl);
-	printf("len = %zu\n", ft_strlen(find_the_value(all, "SHLVL")));
-	printf("atoi = %d\n",ft_atoi(find_the_value(all, "SHLVL")));
+	// printf("shvalue= %s\n", shlvl);
+	// printf("len = %zu\n", ft_strlen(find_the_value(all, "SHLVL")));
+	// printf("atoi = %d\n",ft_atoi(find_the_value(all, "SHLVL")));
 	if(!shlvl  || ft_strlen(shlvl) > 3 || ft_atoi(shlvl) <= 0 || ft_atoi(shlvl) >= 999)
 		replace_env(all, "SHLVL", "1");
 	else

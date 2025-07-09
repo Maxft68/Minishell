@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 		return (printf("Just one arg, or nothing\n"), 1);
-	printf("--------nouveau minishell----------\n");
+	//printf("--------nouveau minishell----------\n");
 	ft_memset(&all, 0, sizeof(t_all));
 	do_env(&all, env);
 	signal(SIGQUIT, SIG_IGN);
@@ -60,12 +60,12 @@ int	main(int argc, char **argv, char **env)
 		signals_swing();
 		char *firstinput = readline("WriteOnMe ");
 		if (!firstinput)
-			break;		
+			break;
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)
 				ft_putstr_fd("Error in execution\n", 2);
-		printf("sig_atomic:%d\n", g_sigint_flag);
+		//testerprintf("sig_atomic:%d\n", g_sigint_flag);
 		// ft_lstclear(&all.token);
 		// ft_lstclear(&all.rdir_tkn);
 		free_garbage_collect(&all.garbage);
@@ -75,6 +75,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
-	ft_exit("exit\n", &all, all.error_code); // ?? utile dans un monde parallele ?
+	//testerft_exit("exit final apres boucle while\n", &all, all.error_code); // ?? utile dans un monde parallele ?
 	(void)argv;
 }

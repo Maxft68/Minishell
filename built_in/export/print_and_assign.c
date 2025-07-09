@@ -3,6 +3,9 @@
 
 void	print_and_null(t_all *all, char *s)
 {
-	printf("WriteOnMe: export: `%s': not a valid identifier\n", s);
+	ft_putstr_fd("WriteOnMe: export: `", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("' not a valid identifier\n", 2);
 	all->data.n = NULL;
+	all->error_code = 1;
 }

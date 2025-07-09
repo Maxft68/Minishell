@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/05 19:34:15 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:19:29 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ void	do_cd_home(t_all *all, char *s)
 	}
 	else
 	{
-		printf("WriteOnMe: cd: HOME not set\n");
+		ft_putstr_fd("WriteOnMe: cd: HOME not set\n", 2);
 		s = NULL;
 	}
 	if (s)
 		test_the_path(all, s);
-	all->error_code = 1;
 	copy_list(all);
 	sort_list(all);
 }
@@ -54,7 +53,7 @@ void	do_cd_minus(t_all *all)
 
 	if (!find_the_value(all, "OLDPWD"))
 	{
-		printf("WriteOnMe: cd: OLDPWD not set\n");
+		ft_putstr_fd("WriteOnMe: cd: OLDPWD not set\n", 2);
 		if (search_env(all, "OLDPWD"))
 		{
 			replace_or_add_env(all, "OLDPWD", ft_pwd(all));
@@ -97,13 +96,13 @@ void	do_cd(t_all *all)
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1]
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][2])
 	{
-		printf("WriteOnMe: cd: too many arguments\n");
+		ft_putstr_fd("WriteOnMe: cd: too many arguments\n", 2);
 		all->error_code = 1;
 		return ;
 	}
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1])
 		s = do_valid_s(all, all->pipe.cmd_args[all->pipe.nb_pipe][1]);
-	printf("nouveau s = %s\n", s);
+	//printf("nouveau s = %s\n", s);
 	if (!s || ft_strcmp(s, "~") == 0)
 		do_cd_home(all, s);
 	else if (ft_strcmp(s, "-") == 0)

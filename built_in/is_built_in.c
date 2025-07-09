@@ -3,13 +3,13 @@
 int	do_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-		return(printf("REGIS POURQUOI JAI PAS DARGS\n"), 1); // a enlever printf
-	if (!all->pipe.cmd_args)
-		return (printf("cmd_args is NULL\n"), 1);// a enlever printf
-	if (!all->pipe.cmd_args[all->pipe.pipe])
-		return (printf("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);// a enlever printf
-	if (!all->pipe.cmd_args[all->pipe.pipe][0])
-		return (printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever printf
+		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 0); // a enlever ft_putstr_fd
+	// if (!all->pipe.cmd_args)
+	// 	return (ft_putstr_fd("cmd_args is NULL\n", 2), 1);// a enlever ft_putstr_fd
+	// if (!all->pipe.cmd_args[all->pipe.pipe])
+	// 	return (ft_putstr_fd("cmd_args[%d] is NULL\n", all->pipe.pipe), 2);// a enlever ft_putstr_fd
+	// if (!all->pipe.cmd_args[all->pipe.pipe][0])
+	// 	return (ft_putstr_fd("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever ft_putstr_fd
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
 		return(do_echo(all, all->pipe.cmd_args, all->pipe.pipe), 0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)
@@ -32,13 +32,13 @@ int	do_built_in(t_all *all)
 int	is_built_in(t_all *all)
 {
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
-		return(printf("REGIS POURQUOI JAI PAS DARGS\n"), 1);// a enlever printf
-	if (!all->pipe.cmd_args)
-		return (printf("cmd_args is NULL\n"), 1);// a enlever printf
-	if (!all->pipe.cmd_args[all->pipe.pipe])
-		return (printf("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);
-	if (!all->pipe.cmd_args[all->pipe.pipe][0])
-		return (printf("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever printf
+		return(ft_putstr_fd("REGIS POURQUOI JAI PAS DARGS\n", 2), 0);// a enlever ft_putstr_fd
+	// if (!all->pipe.cmd_args)
+	// 	return (ft_putstr_fd("cmd_args is NULL\n"), 1);// a enlever ft_putstr_fd
+	// if (!all->pipe.cmd_args[all->pipe.pipe])
+	// 	return (ft_putstr_fd("cmd_args[%d] is NULL\n", all->pipe.pipe), 1);
+	// if (!all->pipe.cmd_args[all->pipe.pipe][0])
+	// 	return (ft_putstr_fd("cmd_args[%d][0] is NULL\n", all->pipe.pipe), 1);// a enlever ft_putstr_fd
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "echo", 5) == 0)
 		return(0);
 	if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "cd", 3) == 0)

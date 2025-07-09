@@ -39,7 +39,7 @@ void create_word_token(t_all *all)
 	// initialize_data(all, str);
 	// handle_expand(str, all);
 	str = pick_char(str, type, all);
-	printf("WT_str:|%s|\n", str);
+	//testerprintf("WT_str:|%s|\n", str);
 	create_token(type, str, all);
 }
 
