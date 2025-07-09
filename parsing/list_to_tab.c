@@ -62,7 +62,7 @@ void    alloc_tab_star_star_star(t_all *all)
 			i++;
 		tmp = tmp->next;
 	}
-	all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 1))); //si 1pipe = 2 parties
+	all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 2))); //si 1pipe = 2 parties
 	all->pipe.cmd_args[i + 1] = NULL;
 	alloc_tab_star_star(all);
 }
