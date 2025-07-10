@@ -111,7 +111,7 @@ static void	exit_args(t_all *all)
 			all->error_code = 1;
 			return ;
 		}
-	}
+	} 
 	else // 2ARGS pas digit
 	{
 		im_a_child(all);
