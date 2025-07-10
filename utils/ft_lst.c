@@ -44,10 +44,10 @@ void	print_node(t_token *token)
 	//testerprintf("\n");
 	while (token && token->type && token->str)
 	{
-		//testerprintf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
+		//printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
 		token = token->next;
 	}
-	//testerprintf("\n");
+	//printf("\n");
 }
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)

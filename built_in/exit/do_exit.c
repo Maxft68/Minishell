@@ -10,12 +10,13 @@ static int	part_two_long(t_all *all, char *str)
 		all->exit.i++;
 	if (all->exit.start != all->exit.end)
 	{
-		ft_memmove(str, str + (all->exit.start - all->exit.sign), all->exit.end
-		- (all->exit.start - all->exit.sign));
-		str[all->exit.end - (all->exit.start- all->exit.sign)] = '\0';
+		ft_memmove(str, str + (all->exit.start - all->exit.negative), all->exit.end
+		- (all->exit.start - all->exit.negative));
+		str[all->exit.end - (all->exit.start- all->exit.negative)] = '\0';
 		if (all->exit.negative == 1)
 			str[0] = '-';
 	}
+	//printf("str:%s\n", str);
 	if ((all->exit.end - all->exit.start) > 19)
 		return (1);
 	if ((all->exit.end - all->exit.start) < 19)
@@ -42,18 +43,18 @@ static int	is_long_long(t_all *all, char *str)
 		if (str[all->exit.i] == '-')
 			all->exit.negative = 1;
 		all->exit.i++;
+		if (str[all->exit.i] == '-' || str[all->exit.i] == '+')
+		{
+			ft_putstr_fd("WriteOnMe: exit: ", 2);
+			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
+			ft_exit(": numeric argument required\n", all, 2);
+		}
 	}
 	while (str[all->exit.i] == '0')
 		all->exit.i++;
 	all->exit.start = all->exit.i;
-	while(str[all->exit.i])
-	{
-		if (str[all->exit.i] != ' ' && (str[all->exit.i] < '0' ||
-		str[all->exit.i] > '9'))
-			return(1);
-		while (str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
-			all->exit.i++;
-	}
+	while(str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
+		all->exit.i++;
 	return (part_two_long(all, str));
 }
 
@@ -154,8 +155,11 @@ int	do_exit(t_all *all)
 	char **arg = all->pipe.cmd_args[all->pipe.pipe];
 
 	if (!arg[1] && all->pipe.nb_pipe == 0) //EXIT dans parent
+	{
+		//ft_putstr_fd("JE SUIS LA \n", 2);
 		return(ft_putstr_fd("exit\n", 2), ft_exit("", all, all->error_code),
 		all->error_code);
+	}
 	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
 		return(ft_exit("", all, all->error_code), all->error_code);
 	if (is_long_long(all, arg[1]) != 0 || ft_str_digit(arg[1]) != 0)

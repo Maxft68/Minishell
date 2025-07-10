@@ -46,12 +46,18 @@ void	print_export(t_export *export)
 		return ;
 	while (export)
 	{
+		//ft_putstr_fd("JE SUIS BIEN DANS LA BOUCLE PRINT EXPORT\n", 2);
 		if (!export->name)
 			export = export->next;
 		else
 		{
 			if (export->value)
 			{
+				// ft_putstr_fd("declare -x ", 2);
+				// ft_putstr_fd(export->name, 2);
+				// ft_putstr_fd("=\"", 2);
+				// ft_putstr_fd(export->value, 2);
+				// ft_putstr_fd("\"\n", 2);
 				printf("declare -x ");
 				printf("%s=", export->name);
 				printf("\"%s\"\n", export->value);

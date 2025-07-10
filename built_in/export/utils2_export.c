@@ -94,13 +94,13 @@ void	do_add_env(t_all *all)
 	char	*s;
 
 	x = 0;
-	while (all->pipe.cmd_args[all->pipe.nb_pipe][1 + x])
+	while (all->pipe.cmd_args[all->pipe.pipe][1 + x])
 	{
 		all->data.val = NULL;
 		all->data.n = NULL;
 		all->data.egal = 0;
 		all->data.add = 0;
-		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.nb_pipe][1 + x], all);
+		s = gc_strdup_env(all->pipe.cmd_args[all->pipe.pipe][1 + x], all);
 		export_arg(all, s);
 		x++;
 	}

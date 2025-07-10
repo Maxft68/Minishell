@@ -58,9 +58,16 @@ int	main(int argc, char **argv, char **env)
 	{
 		// 
 		//signals_swing();
-		char *firstinput = readline("WriteOnMe ");
+		// char *firstinput = readline("WriteOnMe "); a remettre apres mpanic tester
+		char *firstinput = readline("minishell $");
 		if (!firstinput)
-			break;
+		{
+			if (isatty(STDIN_FILENO))
+			write(2, "exit\n", 6);
+			exit (all.error_code);
+		}
+		// if (!firstinput)
+		// 	break;
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
 			if (pars_to_exec(&all) != 0)
