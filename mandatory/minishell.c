@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		// 
-		signals_swing();
+		//signals_swing();
 		char *firstinput = readline("WriteOnMe ");
 		if (!firstinput)
 			break;
@@ -75,6 +75,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
-	ft_exit("", &all, all.error_code); // ?? utile dans un monde parallele ?
+	ft_exit("exit", &all, all.error_code); // ?? utile dans un monde parallele ?
 	(void)argv;
 }

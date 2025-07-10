@@ -21,6 +21,8 @@ char	*find_path_cmd(t_all *all, char **env)
 	{
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2);
 		ft_putstr_fd(": command not found\n", 2);
+		ft_exit("", all, 127);
+		//all->error_code = 127;
 		return (NULL);
 	}
 	return(path);

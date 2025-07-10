@@ -51,12 +51,6 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
 	signal(SIGINT, &sigint_hd);
     while (1)
     {
-        // if (g_sigint_flag == 1)// && escape_hd(line))
-        // {
-        //     printf("premier_catch");
-        //     g_sigint_flag = 0; // Réinitialise le flag
-        //     break; // Quitte la boucle si Ctrl-C est pressé
-        // }
 
         line = readline("> ");
         if (line == NULL)

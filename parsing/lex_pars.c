@@ -126,7 +126,7 @@ int    pars_to_exec(t_all *all)
 {
 	while (all->lexer->c)
 		next_token(all);
-	print_node(all->token);    //<---------------------------------------------------------printf
+	print_node(all->token);    //<-----------------printf
 	if (all->token && !check_tkn_lst(all))
 	{
 		catch_heredoc(all);

@@ -32,7 +32,7 @@ char	*find_last_hd(int pipe, t_all *all)
 			if (tmp->type == HEREDOC && tmp->next)
 			{
 				if (tmp->next->str == NULL)
-					ft_putstr_fd("Error: NULL string in HEREDOC\n", 2);
+					ft_putstr_fd("Error: NULL string in HEREDOC\n", 2); // a suppr
 				redir = tmp->next->str;
 			}
 			if (tmp->type == REDIRECT_IN)
