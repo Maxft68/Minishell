@@ -257,7 +257,6 @@ int			error_dup2(t_all *all, int fd, char *redir);
 int			error_dup2(t_all *all, int fd, char *redir);
 int			error_msg_no_pipe(t_all *all, char *s);
 void		error_msg(t_all *all, char *s);
- 
 /* **********Signal functions************************************************ */
 //void    	signals_swing(void);
 //void    	sigint_hd(int sig);
