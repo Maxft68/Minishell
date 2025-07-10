@@ -152,7 +152,7 @@ int	do_exit(t_all *all)
 		all->error_code);
 	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
 		return(ft_exit("", all, all->error_code), all->error_code);
-	if (is_long_long(all, arg[1]) != 0 || ft_str_digit(arg[1]) != 0)
+	if (ft_str_digit(arg[1]) != 0 || is_long_long(all, arg[1]) != 0)
 	{
 		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);

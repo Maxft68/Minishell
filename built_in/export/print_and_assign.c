@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../../mandatory/minishell.h"
 
 void	print_and_null(t_all *all, char *s)
 {
