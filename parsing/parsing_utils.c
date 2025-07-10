@@ -17,7 +17,7 @@ char	*pick_char(char *str, token_type type, t_all *all)
 	char	c;
 
 	reset_quotes(all);
-    while (ft_isprint(all->lexer->c) && !new_tkn_char(type, all))//<---- new_tkn si en dehors quotes 
+    while ((ft_isprint(all->lexer->c) /*|| all->lexer->c == '\0'*/) && !new_tkn_char(type, all))//<---- new_tkn si en dehors quotes 
     {
 		c = all->lexer->c;
         // if (c == 34 && !all->lexer->d_quote && !all->lexer->s_quote)
@@ -44,7 +44,7 @@ void   create_token(token_type type, char *str, t_all *all)
 	t_token   *tokn;
 	
 	if (type == ILLEGAL)
-		ft_exit("Syntax error\n", all, 2);
+		ft_exit("Syntax error tkn\n", all, 2);//<------enlever tkn
 	tokn = NULL;
 	tokn = (t_token*)gc_malloc(all, sizeof(t_token));
 	// tokn = (t_token*)gc_malloc(all, sizeof(t_token));

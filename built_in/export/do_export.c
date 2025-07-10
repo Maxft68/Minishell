@@ -1,6 +1,4 @@
-
-
-#include "minishell.h"
+#include "../../mandatory/minishell.h"
 
 /*******************************************************************************
 If the name exist AND with += => join
@@ -93,21 +91,23 @@ void	do_add_env_next(t_all *all, char *s)
 /******************************************************************************
 Check if if juste print or add a new node env
 ******************************************************************************/
-void	do_export(t_all *all)
+void    do_export(t_all *all)
 {
-	if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export", 6) == 0
-		&& all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'
-		&& !all->pipe.cmd_args[all->pipe.nb_pipe][1])
-	{
-		all->export = NULL;
-		copy_list(all);
-		sort_list(all);
-		print_export(all->export);
-	}
-	else if (ft_strncmp(all->pipe.cmd_args[all->pipe.nb_pipe][0], "export",
-			6) == 0 && all->pipe.cmd_args[all->pipe.nb_pipe][0][6] == '\0'
-		&& all->pipe.cmd_args[all->pipe.nb_pipe][1])
-		do_add_env(all);
+    //ft_putstr_fd("jarrive la ? ", 2);
+    if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "export", 6) == 0
+        && all->pipe.cmd_args[all->pipe.pipe][0][6] == '\0'
+        && all->pipe.cmd_args[all->pipe.pipe][1] == NULL)
+    {
+        //ft_putstr_fd("jarrive la 1? ", 2);
+        all->export = NULL;
+        copy_list(all);
+        sort_list(all);
+        print_export(all->export);
+    }
+    else if (ft_strncmp(all->pipe.cmd_args[all->pipe.pipe][0], "export",
+            6) == 0 && all->pipe.cmd_args[all->pipe.pipe][0][6] == '\0'
+        && (all->pipe.cmd_args[all->pipe.pipe][1] != NULL))
+        do_add_env(all);
 }
 
 t_garb_env	*ft_lstnew(t_all *all, void *alloc)

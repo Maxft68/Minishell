@@ -1,6 +1,6 @@
 
 
-#include "minishell.h"
+#include "../../mandatory/minishell.h"
 
 static int	part_two_long(t_all *all, char *str)
 {
@@ -46,14 +46,8 @@ static int	is_long_long(t_all *all, char *str)
 	while (str[all->exit.i] == '0')
 		all->exit.i++;
 	all->exit.start = all->exit.i;
-	while(str[all->exit.i])
-	{
-		if (str[all->exit.i] != ' ' && (str[all->exit.i] < '0' ||
-		str[all->exit.i] > '9'))
-			return(1);
-		while (str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
-			all->exit.i++;
-	}
+	while(str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
+		all->exit.i++;
 	return (part_two_long(all, str));
 }
 

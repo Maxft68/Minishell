@@ -39,6 +39,8 @@ void create_word_token(t_all *all)
 	// initialize_data(all, str);
 	// handle_expand(str, all);
 	str = pick_char(str, type, all);
+	if (str == NULL)
+		str = gc_strdup("", all);
 	//testerprintf("WT_str:|%s|\n", str);
 	create_token(type, str, all);
 }
@@ -90,9 +92,9 @@ void next_token(t_all *all)
 			|| (c == 39 && (all->lexer->input[all->lexer->position -1] != ' ')))*/
 	// else if (c == 34 || c == 39)
 	//     create_string_token(c, all);
-	else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')
+	else if (ft_isprint(c) || c == '/' || c == '-' || c == '_')// || c == '\0')
 		create_word_token(all);
-	else if (c == '\0')
+	else if (c == '\0' && !all->lexer->input[all->lexer->position + 1])
 		return ;
 	else
 		create_token(ILLEGAL, "", all);
