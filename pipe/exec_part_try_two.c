@@ -166,7 +166,8 @@ int	do_no_pipe(t_all *all)
 		fd_back_to_original(all, stdout_original, stdin_original);
 		return(1);
 	}
-	all->error_code = do_built_in(all);
+	do_built_in(all);
+	// all->error_code = do_built_in(all);
 	fd_back_to_original(all, stdout_original, stdin_original);
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
