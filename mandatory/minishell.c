@@ -75,6 +75,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	// printf("d_quote= %s\n", all.lexer->d_quote ? "true" : "false");
 	// printf("s_quote= %s\n", all.lexer->s_quote ? "true" : "false");
-	//testerft_exit("exit final apres boucle while\n", &all, all.error_code); // ?? utile dans un monde parallele ?
+	ft_exit("exit final apres boucle while\n", &all, all.error_code); // ?? utile dans un monde parallele ?
 	(void)argv;
 }
