@@ -90,12 +90,12 @@ void    list_to_tab(t_all *all)
 		{
 			// printf("%s %d %d\n", tmp->str, i , j);  <---------------------------------------------------------printf
 			all->pipe.cmd_args[i][j] = gc_strdup(tmp->str, all);
-			printf("pipe: %d tab %d str %s\n", i, j, tmp->str); //<---------------------------------------------------------printf
+			//testerprintf("pipe: %d tab %d str %s\n", i, j, tmp->str); //<---------------------------------------------------------printf
 			j++;
 		}
 		tmp = tmp->next;
 	}
 	all->pipe.cmd_args[i][j] = NULL;
-	printf("\n");  // <---------------------------------------------------------printf
+	//testerprintf("\n");  // <---------------------------------------------------------printf
 }
 

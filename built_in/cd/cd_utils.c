@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/05 19:35:03 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/08 20:52:59 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*replace_until_the_last(t_all *all, char *s, int c)
 	int		j;
 	char	*new;
 
-	printf("ancien s=%s\n", s);
+	//printf("ancien s=%s\n", s);
 	s = do_valid_s(all, s);
-	printf("nouveau s=%s\n", s);
+	//printf("nouveau s=%s\n", s);
 	i = ft_strlen(s);
 	j = i;
 	while (i > 0)

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   do_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdsiurds <mdsiurds@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/27 16:24:59 by mdsiurds         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:48:56 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putchar_fd(char c, int fd)
-{
-	if (fd < 0)
-		return ;
-	write(fd, &c, 1);
-}
+// void	ft_putchar_fd(char c, int fd)
+// {
+// 	if (fd < 0)
+// 		return ;
+// 	write(fd, &c, 1);
+// }
 
 void	write_all(t_all *all, int pipe)
 {

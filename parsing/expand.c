@@ -38,6 +38,12 @@ void	part_one(t_all *all, char *old, char *val)
 		do_dollar_interrogation(all);
 		return;
 	}
+	if (old[all->data.z] == '"')
+	{
+		all->data.d_quote = true;
+		all->data.z++;
+		return ;
+	}
 	if ((ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z])) && old[all->data.z] != '_')
 		{
 			if (old[all->data.z] != 39)
@@ -50,6 +56,7 @@ void	part_one(t_all *all, char *old, char *val)
 	val = find_the_value(all, all->data.tmp);
 	if (val && all->data.t > 0)
 	{
+
 		if (!all->data.new)
 			all->data.new = gc_strdup(val, all);
 		else
@@ -87,24 +94,36 @@ void	handle_expand(char *old, t_all *all)
 	while(old && old[all->data.z])
 	{
 		check_quotes(old[all->data.z], all);
-        // if (old[all->data.z] == 34 && !d_quote && !s_quote)
-        //     d_quote = true;
-        // else if (old[all->data.z] == 34 && d_quote && !s_quote)
-        //     d_quote = false;
-        // else if (old[all->data.z] == 39 && !s_quote && !d_quote)
-        //     s_quote = true;
-        // else if (old[all->data.z] == 39 && s_quote && !d_quote)
-		// 	s_quote = false;
 		if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' ' && 
 			old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39 &&
-		old[all->data.z + 1]) && !all->data.s_quote)// && !all->data.d_quote)
+		old[all->data.z + 1]) && !all->data.s_quote)
 		{
+			//printf("part_one et data.z = %c\n",old[all->data.z]);
 			part_one(all, old, val);
 			reset_quotes(all);
 		}
 		else
 		{
+			//printf("part_two et data.z = %c\n",old[all->data.z]);
 			part_two(all, old);
 		}
 	}
 }
+
+// if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' ' && 
+//             old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39 &&
+//         old[all->data.z + 1]) && !all->data.s_quote)// && !all->data.d_quote)
+//         {
+//             part_one(all, old, val);
+//             reset_quotes(all);
+//         }
+
+// if (old[all->data.z] == '$' && 
+//             (old[all->data.z + 1] != ' ' && old[all->data.z + 1]) && 
+//             !all->data.s_quote && !all->data.d_quote)
+//         {
+//             part_one(all, old, val);
+//             reset_quotes(all);
+//             // d_quote = false;
+//             // s_quote = false;
+//         }

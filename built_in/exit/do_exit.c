@@ -111,7 +111,7 @@ static void	exit_args(t_all *all)
 			all->error_code = 1;
 			return ;
 		}
-	}
+	} 
 	else // 2ARGS pas digit
 	{
 		im_a_child(all);
@@ -163,7 +163,7 @@ int	do_exit(t_all *all)
 		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
-		ft_exit(": numeric argument required DOEXIT\n", all, 2);
+		ft_exit(": numeric argument required\n", all, 2);
 	}
 	if (arg[1] && arg[2])
 		return(exit_args(all), 1);

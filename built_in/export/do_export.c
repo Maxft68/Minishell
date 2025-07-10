@@ -32,6 +32,7 @@ If we have '+='
 void	add_value_env(t_all *all, char *s)
 {
 	int	i;
+	char *tmp = NULL;
 
 	i = 0;
 	while (s[i] && s[i] != '=')
@@ -39,13 +40,14 @@ void	add_value_env(t_all *all, char *s)
 	if (s[i] == '=' && i > 0 && s[i - 1] == '+')
 	{
 		all->data.egal = 1;
-		all->data.n = gc_strdup_env(gc_substr_env(s, 0, i - 1, all), all);
-		if (is_alpha_str(all->data.n) == 0)
+		tmp = gc_substr_env(s, 0, i - 1, all);
+		if (is_alpha_str(tmp) == 0)
 			print_and_null(all, s);
-		if (s[i + 1] && all->data.n)
-			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s)
-						- i - 1, all), all);
 		else
+			all->data.n = gc_strdup_env(tmp, all);
+		if (s[i + 1] && all->data.n)
+			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+		else if (all->data.n)
 			all->data.val = gc_strdup_env("", all);
 	}
 	if (all->data.n)
@@ -53,8 +55,7 @@ void	add_value_env(t_all *all, char *s)
 		if (all->data.egal == 1 && search_env(all, all->data.n) == 0)
 			add_env(all, all->data.n, all->data.val);
 		else if (search_env(all, all->data.n) == 1)
-			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n,
-					all->data.val));
+			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n, all->data.val));
 	}
 }
 
@@ -64,26 +65,27 @@ If we have just '='
 void	do_add_env_next(t_all *all, char *s)
 {
 	int	i;
+	char *tmp = NULL;
 
 	i = 0;
 	while (s[i] && s[i] != '=')
 		i++;
 	if (i == 0)
 	{
-		printf("WriteOnMe: export: `%s' not a valid identifier\n", s);
-		all->data.n = NULL;
+		print_and_null(all, s);
 		all->data.val = NULL;
 	}
 	else if (s[i] == '=' && i > 0)
 	{
 		all->data.egal = 1;
-		all->data.n = gc_strdup_env(gc_substr_env(s, 0, i, all), all);
-		if (is_alpha_str(all->data.n) == 0)
-			print_and_null(all, all->data.n);
-		if (s[i + 1] && all->data.n)
-			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s)
-						- i - 1, all), all);
+		tmp = gc_substr_env(s, 0, i, all);
+		if (is_alpha_str(tmp) == 0)
+			print_and_null(all, tmp);
 		else
+			all->data.n = gc_strdup_env(tmp, all);
+		if (s[i + 1] && all->data.n)
+			all->data.val = gc_strdup_env(gc_substr_env(s, i + 1, ft_strlen(s) - i - 1, all), all);
+		else if (all->data.n)
 			all->data.val = gc_strdup_env("", all);
 	}
 }

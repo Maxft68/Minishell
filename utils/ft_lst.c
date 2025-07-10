@@ -41,13 +41,13 @@ void	print_node(t_token *token)
 		printf("not tkn type\n");
 	if (!token->str)
 		printf("no token str\n");
-	printf("\n");
+	//testerprintf("\n");
 	while (token && token->type && token->str)
 	{
-		printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
+		//testerprintf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
 		token = token->next;
 	}
-	printf("\n");
+	//testerprintf("\n");
 }
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
@@ -119,8 +119,6 @@ t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 	t_env	*new;
 
 	new = gc_malloc_env(all, sizeof(t_env));
-	if (!new)
-		ft_exit("Cannot allocate memory18\n", all, 12);
 	new->name = name;
 	new->value = value;
 	new->next = NULL;

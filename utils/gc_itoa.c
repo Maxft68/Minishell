@@ -8,14 +8,10 @@ static char	*special_n(t_all *all, int n)
 	if (n == -2147483648)
 	{
 		s = gc_malloc(all, 12 * sizeof(char));
-		if (!s)
-			ft_exit("Cannot allocate memory\n", all, 12);
 		ft_strlcpy(s, "-2147483648", 12);
 		return (s);
 	}
 	s = gc_malloc(all, 2 * sizeof(char));
-	if (!s)
-		ft_exit("Cannot allocate memory\n", all, 12);
 	ft_strlcpy(s, "0", 2);
 	return (s);
 }

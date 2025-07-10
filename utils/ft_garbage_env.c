@@ -9,8 +9,6 @@ char	*gc_strdup_env(char *s, t_all *all)
 		return (NULL);
 	l = ft_strlen(s);
 	alloc = gc_malloc_env(all, (l + 1) * sizeof(char));
-	if (!alloc)
-		ft_exit("Cannot allocate memory11\n", all, 12);
 	ft_strlcpy(alloc, s, l + 1);
 	return (alloc);
 }
@@ -26,8 +24,6 @@ char	*gc_substr_env(char *s, unsigned int start, size_t len, t_all *all)
 	if (len > (ft_strlen(s) - start))
 		len = (ft_strlen(s) - start);
 	alloc = gc_malloc_env(all, (len + 1) * sizeof(char));
-	if (!alloc)
-		ft_exit("Cannot allocate memory12\n", all, 12);
 	ft_strlcpy(alloc, &s[start], len + 1);
 	return (alloc);
 }
@@ -39,12 +35,12 @@ void	*gc_malloc_env(t_all *all, size_t size)
 
 	alloc = malloc(size);
 	if (!alloc)
-		ft_exit("Cannot allocate memory13\n", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	new = ft_lstnew(all, alloc);
 	if (!new)
 	{
 		free(alloc);
-		ft_exit("Cannot allocate memory14\n", all, 12);
+		ft_exit("Cannot allocate memory\n", all, 12);
 	}
 	ft_lstadd_front_gc_env(&(all->garbage_env), new);
 	return (alloc);

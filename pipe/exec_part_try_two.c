@@ -70,7 +70,7 @@ int	do_redir_fd(t_all *all)
 	temp = all->rdir_tkn;
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
-	printf("last heredoc :%s dans pipe : %d\n", find_last_hd(all->pipe.pipe, all), all->pipe.pipe); // a suppr !!
+	//testerprintf("last heredoc :%s dans pipe : %d\n", find_last_hd(all->pipe.pipe, all), all->pipe.pipe); // a suppr !!
 	do_hd_fd(all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
@@ -113,7 +113,7 @@ int	do_redir_no_pipe(t_all *all)
 	temp = all->rdir_tkn;
 	while(temp && temp->pipe != all->pipe.pipe)
 		temp = temp->next;
-	printf("heredoc ----:%s\n", find_last_hd(all->pipe.pipe, all));
+	//testerprintf("heredoc ----:%s\n", find_last_hd(all->pipe.pipe, all));
 	do_hd_fd_no_pipe(all);
 	while(temp && temp->pipe == all->pipe.pipe)
 	{
@@ -167,6 +167,7 @@ int	do_no_pipe(t_all *all)
 		return(1);
 	}
 	do_built_in(all);
+	// all->error_code = do_built_in(all);
 	fd_back_to_original(all, stdout_original, stdin_original);
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
@@ -187,40 +188,40 @@ void	do_pipe(t_all *all)
 		ft_exit("fork failed", all, 1);
 	if (all->pipe.pid[all->pipe.pipe] == 0)
 	{
-		ft_putstr_fd("\n----------------------Pipeline ", 2);
-		ft_putnbr_fd(all->pipe.pipe, 2);
-		ft_putstr_fd(" ------------------ do pipe\n", 2);
-
+		//testerft_putstr_fd("\n----------------------Pipeline ", 2);
+		//testerft_putnbr_fd(all->pipe.pipe, 2);
+		//testerft_putstr_fd(" ------------------ do pipe\n", 2);
+		set_up_sig_exec();
 		if (find_last_hd(all->pipe.pipe, all))
 		{
 			if(dup2(all->pipe.heredoc_fd[all->pipe.pipe][0], STDIN_FILENO) == -1)
 				error_dup2(all, all->pipe.heredoc_fd[all->pipe.pipe][0], "dup2");
-			close(all->pipe.heredoc_fd[all->pipe.pipe][0]);
+			ft_close(all, &all->pipe.heredoc_fd[all->pipe.pipe][0]);
 		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && !find_last_hd(all->pipe.pipe, all))//|| search_pipe_redir(all->pipe.pipe, HEREDOC, all)
 		{
-			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
+			//testerft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION IN\n", 2);
 			if (do_redir_fd(all) == -1)
 				ft_exit("", all, 1);
 		}
 		else if (!search_pipe_redir(all->pipe.pipe, REDIRECT_IN, all) && all->pipe.pipe != 0)
 		{
-			ft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
+			//testerft_putstr_fd("REDIRECTION IN du pipe precedent\n", 2);
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe - 1][0], STDIN_FILENO) == -1)
 				error_msg(all, "dup2 stdin");
 		}
 		if (search_pipe_redir(all->pipe.pipe, REDIRECT_OUT, all) || 
 			search_pipe_redir(all->pipe.pipe, APPEND_OUT, all))
 		{
-			ft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION OUT\n", 2);
+			//testerft_putstr_fd("RENTRE ICI PLZ IL Y A REDIRECTION OUT\n", 2);
 			if (do_redir_fd(all) == -1)
 				ft_exit("", all, 1);
 		}
 		else if (all->pipe.pipe < all->pipe.nb_pipe)
 		{
-			ft_putstr_fd("REDIRECTION OUT dans pipe depuis le pipeline numero ", 2);
-			ft_putnbr_fd(all->pipe.pipe, 2);
-			ft_putstr_fd(" derniere commande\n", 2);
+			//testerft_putstr_fd("REDIRECTION OUT dans pipe depuis le pipeline numero ", 2);
+			//testerft_putnbr_fd(all->pipe.pipe, 2);
+			//testerft_putstr_fd(" derniere commande\n", 2);
 			if (dup2(all->pipe.pipe_fd[all->pipe.pipe][1], STDOUT_FILENO) == -1)
 				error_msg(all, "dup2 stdout");
 		}
@@ -238,6 +239,22 @@ void	do_pipe(t_all *all)
 		//ft_putstr_fd("JAI PAS EXECVE\n", 2);
 		ft_exit("", all, 0);
 	}
+	//signals_swing();
+}
+
+static void	get_code_error(t_all *all, int n)
+{
+	all->error_code = n + 128;
+}
+
+static void	update_minishell_code(t_all *all, int n)
+{
+	if (n >= 0 && n < 256)
+		all->error_code = n;
+	else if (n >= 256)
+		all->error_code = n % 256;
+	else
+		all->error_code = (n % 256) + 256;
 }
 
 void	close_fd_and_hd_fd(t_all *all, int i)
@@ -272,9 +289,9 @@ int	exec_part(t_all *all)
 	{
 		if (all->pipe.nb_pipe < 1 && (is_built_in(all) == 0 || !all->pipe.cmd_args[0][0]))
 		{
-			ft_putstr_fd("je rentre dans no pipe, pipeline =", 2);
-			ft_putnbr_fd(all->pipe.pipe, 2);
-			ft_putstr_fd(" \n", 2);
+			//testerft_putstr_fd("je rentre dans no pipe, pipeline =", 2);
+			//testerft_putnbr_fd(all->pipe.pipe, 2);
+			//testerft_putstr_fd(" \n", 2);
 			if (do_no_pipe(all) == 1)
 				return(1);
 			return(0);
@@ -289,12 +306,15 @@ int	exec_part(t_all *all)
 	all->pipe.pipe = 0;
 	while (i < all->pipe.nb_pipe + 1)
 	{
-		if (waitpid(all->pipe.pid[i], &status, 0) == -1) //&status pour le code erreur a rajouter plus tard
-			ft_exit("WAITPID", all, 1);
-		// if (i == all->pipe.nb_pipe - 1)
-		// 	//signaux(status ...)
-		// else
-		// 	//signaux(status.....)
+		waitpid(all->pipe.pid[i], &status, 0); //&status pour le code erreur a rajouter plus tard
+		if (WIFEXITED(status))
+			update_minishell_code(all, WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == 2)
+				printf("\n");
+			get_code_error(all, WTERMSIG(status));
+		}
 		i++;
 	}
 	all->pipe.i = 0;

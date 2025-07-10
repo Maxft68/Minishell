@@ -21,12 +21,14 @@ char	*find_path_cmd(t_all *all, char **env)
 	{
 		ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2);
 		ft_putstr_fd(": command not found\n", 2);
+		ft_exit("", all, 127);
+		//all->error_code = 127;
 		return (NULL);
 	}
 	return(path);
 }
 
-int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
+int	exec_cmd(t_all *all) // DANS ENFANT
 {
 	char **env = do_char_env(all);
 	char **cmd = NULL;
@@ -34,8 +36,8 @@ int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 
 	if (!all->pipe.cmd_args || !all->pipe.cmd_args[all->pipe.pipe] || !all->pipe.cmd_args[all->pipe.pipe][0])
 	{
-		printf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
-		ft_exit("jfais quoi", all, 1);
+		//testerprintf("-----------REGIS TU MAS PAS DONNER DE CMD :O JE FAIS QUOI ?oO---------------------"); // cas possible si pas de cmd donc pas de ft_exit a faire. a enlever plus tard
+		ft_exit("jfais quoi", all, 0);
 	}
 	cmd = all->pipe.cmd_args[all->pipe.pipe];
 	if (cmd && cmd[0] && ft_strchr(cmd[0], '/'))
@@ -44,11 +46,12 @@ int	exec_cmd(t_all *all) // DANS ENFANT CAR EXIT
 		path = find_path_cmd(all, env);
 	if (!path)
 		return(ft_exit("",all, 127), 1);
-	execve(path, cmd, env); //return si echoue ??
+	execve(path, cmd, env);
 	ft_putstr_fd("WriteOnMe: ", 2);
 	perror(cmd[0]);
-	printf("-=-=-=-execve fail-=-=--\n");
-	exit(127); // exit(126) ??
+	//testerprintf("-=-=-=-execve fail-=-=--\n");
+	ft_exit("", all, 127);
+	return(1);
 }
 
 
