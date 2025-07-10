@@ -47,9 +47,9 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
     char *line;
     char *new_str;
 
+    signal(SIGINT, &sigint_hd);
     while (1)
     {
-        signal(SIGINT, &sigint_hd);
         if (g_sigint_flag == 1)// && escape_hd(line))
         {
             printf("premier_catch");
@@ -57,7 +57,7 @@ static char *process_input_lines(char *str, char *hd_eof, t_all *all)
             continue; // Quitte la boucle si Ctrl-C est pressé
         }
         line = readline("> ");
-        if (line == NULL)
+        if (line == NULL || g_sigint_flag == 1)
             break;
         // if (g_sigint_flag == 1)// && escape_hd(line))
         // {
