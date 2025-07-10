@@ -166,7 +166,7 @@ int	do_no_pipe(t_all *all)
 		fd_back_to_original(all, stdout_original, stdin_original);
 		return(1);
 	}
-	do_built_in(all);
+	all->error_code = do_built_in(all);
 	fd_back_to_original(all, stdout_original, stdin_original);
 	//printf("j'exit apres mon built in / PAS DE PIPE \n");
 	return(0);
@@ -291,6 +291,7 @@ int	exec_part(t_all *all)
 	{
 		if (waitpid(all->pipe.pid[i], &status, 0) == -1) //&status pour le code erreur a rajouter plus tard
 			ft_exit("WAITPID", all, 1);
+		if (WIFEXITED(status))
 		// if (i == all->pipe.nb_pipe - 1)
 		// 	//signaux(status ...)
 		// else
