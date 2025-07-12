@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/10 23:58:43 by rbier            ###   ########.fr       */
+/*   Updated: 2025/07/12 15:05:38 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	test_the_path(t_all *all, char *s)
 	if (s)
 	{
 		str = ft_pwd(all);
-		if (!str || s[0] == '\0')
+		if (!str || s[0] == '\0'	)
 			return ;
 		if (s[0] == '/' && chdir(s) == 0)
 		{

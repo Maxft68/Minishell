@@ -7,19 +7,24 @@ void	initialize_data(t_all *all, char *old)
 	all->data.tmp = gc_malloc(all, ft_strlen(old) + 1);
 }
 
-void	do_dollar_interrogation(t_all *all)
+void	do_dollar_interrogation(t_all *all)//, char *str, char *tmp, int index)
 {
 	char	*error_str;
 
 	error_str = gc_itoa(all, all->error_code);
 	if (!all->data.new)
 		all->data.new = gc_strdup(error_str, all);
+	// if (!str)
+	// 	str = gc_strdup(error_str, all);
 	else
 	{
 		all->data.temp = gc_strjoin(all, all->data.new, error_str);
 		all->data.new = all->data.temp;
+		// tmp = gc_strjoin(all, str, error_str);
+		// str = tmp;
 	}
 	all->data.z++;
+	// index++;
 	return ;
 }
 
@@ -35,7 +40,7 @@ void	part_one(t_all *all, char *old, char *val)
 	all->data.t = 0;
 	if (old[all->data.z] == '?')
 	{
-		do_dollar_interrogation(all);
+		do_dollar_interrogation(all);//, all->data.new, all->data.temp, all->data.z);
 		return;
 	}
 	if (old[all->data.z] == '"')
