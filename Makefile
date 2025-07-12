@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbier <rbier@student.42.fr>                +#+  +:+       +#+         #
+#    By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 13:52:45 by mdsiurds          #+#    #+#              #
-#    Updated: 2025/07/08 16:43:45 by rbier            ###   ########.fr        #
+#    Updated: 2025/07/12 14:59:26 by maxoph           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,15 @@ SRC =	mandatory/minishell.c \
 		built_in/env/do_env.c \
 		built_in/env/do_env_utils.c \
 		pipe/pipe.c\
-		pipe/exec_part_try_two.c\
+		pipe/do_pipe.c\
+		pipe/do_no_pipe.c\
+		pipe/begin_exec.c\
 		pipe/alloc.c\
 		pipe/error.c\
+		pipe/fd_back.c\
+		pipe/exec_utils.c\
 		parsing/expand.c\
+		parsing/expand_utils.c\
 		parsing/lex_pars.c\
 		parsing/lexer_utils.c\
 		parsing/parsing_utils.c\
@@ -49,7 +54,8 @@ SRC =	mandatory/minishell.c \
 		utils/gc_strjoin.c\
 		utils/ft_strcmp.c\
 		signals/signals.c\
-		built_in/exit/do_exit.c
+		built_in/exit/do_exit.c\
+		built_in/exit/exit_utils.c
 
 
 

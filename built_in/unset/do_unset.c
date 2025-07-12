@@ -1,11 +1,11 @@
 
 #include "minishell.h"
 
-static	void	suppr_env(t_all *all, char *name)
+static void	suppr_env(t_all *all, char *name)
 {
 	t_env	*current;
 
-	if (!all->env) 
+	if (!all->env)
 		return ;
 	current = all->env;
 	if (ft_strcmp(current->name, name) == 0)
@@ -13,7 +13,7 @@ static	void	suppr_env(t_all *all, char *name)
 		current = current->next;
 		all->env = current;
 		all->env_export.nb_line_env--;
-		return;
+		return ;
 	}
 	while (current->next)
 	{
@@ -22,7 +22,7 @@ static	void	suppr_env(t_all *all, char *name)
 			if (!current->next->next)
 			{
 				current->next = NULL;
-				return;
+				return ;
 			}
 			current->next = current->next->next;
 		}

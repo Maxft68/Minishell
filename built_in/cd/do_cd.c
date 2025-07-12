@@ -6,11 +6,12 @@
 /*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/08 22:19:29 by maxoph           ###   ########.fr       */
+/*   Updated: 2025/07/12 13:52:42 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 void	do_cd_home(t_all *all, char *s)
 {
 	if (find_the_value(all, "HOME"))
@@ -73,7 +74,7 @@ void	do_cd_minus(t_all *all)
 	sort_list(all);
 }
 
-char *do_valid_s(t_all *all, char *s)
+char	*do_valid_s(t_all *all, char *s)
 {
 	size_t	i;
 	char	*temp;
@@ -85,7 +86,7 @@ char *do_valid_s(t_all *all, char *s)
 		s = temp;
 		i--;
 	}
-	return(s);
+	return (s);
 }
 
 void	do_cd(t_all *all)
@@ -102,7 +103,6 @@ void	do_cd(t_all *all)
 	}
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1])
 		s = do_valid_s(all, all->pipe.cmd_args[all->pipe.nb_pipe][1]);
-	//printf("nouveau s = %s\n", s);
 	if (!s || ft_strcmp(s, "~") == 0)
 		do_cd_home(all, s);
 	else if (ft_strcmp(s, "-") == 0)
@@ -112,4 +112,3 @@ void	do_cd(t_all *all)
 	else
 		test_the_path(all, s);
 }
-

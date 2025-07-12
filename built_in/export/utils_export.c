@@ -16,7 +16,7 @@ int	search_env(t_all *all, char *name)
 	{
 		if (ft_strcmp(current->name, name) == 0)
 		{
-			return(0);
+			return (0);
 		}
 		current = current->next;
 	}
@@ -29,6 +29,7 @@ If the node with the same name exist, replace the value
 int	replace_env(t_all *all, char *name, char *value)
 {
 	t_env	*current;
+
 	if (!all->env || !name)
 		return (0);
 	current = all->env;
@@ -36,14 +37,14 @@ int	replace_env(t_all *all, char *name, char *value)
 	{
 		if (!current->name || !current->value)
 		{
-			while(current && (!current->name || !current->value))
+			while (current && (!current->name || !current->value))
 				current = current->next;
 			if (!current)
-				break;
+				break ;
 		}
 		if (ft_strcmp(current->name, name) == 0)
 		{
-			if(value)
+			if (value)
 				current->value = gc_strdup_env(value, all);
 			else
 				current->value = gc_strdup_env("", all);
@@ -52,7 +53,7 @@ int	replace_env(t_all *all, char *name, char *value)
 		if (current)
 			current = current->next;
 	}
-	return(0);
+	return (0);
 }
 
 /******************************************************************************
@@ -67,11 +68,11 @@ void	replace_or_add_env(t_all *all, char *name, char *value)
 /******************************************************************************
 The first carac need to be alpha or '_' the next could be numeric too
 ******************************************************************************/
-int	is_alpha_str(char *str) // 1 quand cest valide
+int	is_alpha_str(char *str)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	
 	if (!str || !str[0])
 		return (0);
 	if (str[i] == '_')

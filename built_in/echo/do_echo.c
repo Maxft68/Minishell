@@ -6,7 +6,7 @@
 /*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/10 11:48:56 by maxoph           ###   ########.fr       */
+/*   Updated: 2025/07/10 21:47:05 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	write_all(t_all *all, int pipe)
 
 int	do_echo(t_all *all, char ***args, int pipe)
 {
+	all->built_in.n = 0;
 	all->built_in.j = 1;
 	if (!args[pipe] || !args[pipe][all->built_in.j])
 		return (ft_putchar('\n'), 1);
@@ -48,7 +49,10 @@ int	do_echo(t_all *all, char ***args, int pipe)
 		if (args[pipe][all->built_in.j][all->built_in.i] == '\0')
 			all->built_in.j++;
 		else
+		{
+			all->built_in.n = 0;
 			break ;
+		}
 	}
 	while (args[pipe][all->built_in.j])
 		write_all(all, pipe);

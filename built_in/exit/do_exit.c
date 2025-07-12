@@ -5,18 +5,17 @@
 static int	part_two_long(t_all *all, char *str)
 {
 	all->exit.end = all->exit.i;
-	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 &&
-		str[all->exit.i] <= 13))
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9
+			&& str[all->exit.i] <= 13))
 		all->exit.i++;
 	if (all->exit.start != all->exit.end)
 	{
-		ft_memmove(str, str + (all->exit.start - all->exit.negative), all->exit.end
-		- (all->exit.start - all->exit.negative));
-		str[all->exit.end - (all->exit.start- all->exit.negative)] = '\0';
+		ft_memmove(str, str + (all->exit.start - all->exit.negative),
+			all->exit.end - (all->exit.start - all->exit.negative));
+		str[all->exit.end - (all->exit.start - all->exit.negative)] = '\0';
 		if (all->exit.negative == 1)
 			str[0] = '-';
 	}
-	//printf("str:%s\n", str);
 	if ((all->exit.end - all->exit.start) > 19)
 		return (1);
 	if ((all->exit.end - all->exit.start) < 19)
@@ -26,16 +25,15 @@ static int	part_two_long(t_all *all, char *str)
 	if (ft_strcmp(str, "9223372036854775809") >= 0 && all->exit.negative == 1)
 		return (1);
 	else
-		return(0);
+		return (0);
 }
-
 
 static int	is_long_long(t_all *all, char *str)
 {
 	all->exit.i = 0;
 	all->exit.negative = 0;
-	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9 &&
-		str[all->exit.i] <= 13))
+	while (str[all->exit.i] == ' ' || (str[all->exit.i] >= 9
+			&& str[all->exit.i] <= 13))
 		all->exit.i++;
 	if (str[all->exit.i] == '-' || str[all->exit.i] == '+')
 	{
@@ -53,42 +51,9 @@ static int	is_long_long(t_all *all, char *str)
 	while (str[all->exit.i] == '0')
 		all->exit.i++;
 	all->exit.start = all->exit.i;
-	while(str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
+	while (str[all->exit.i] >= '0' && str[all->exit.i] <= '9')
 		all->exit.i++;
 	return (part_two_long(all, str));
-}
-
-// 0 = digit
-static int	ft_str_digit(char *str)
-{
-	if (!str)
-		return(-1);
-	int i;
-	i = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if (str[i] < '0' || str[i] > '9')
-		return(-1);
-	while(str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			i++;
-		else
-			return (-1);
-	}
-	return (0);
-}
-
-/*******************************************************************************
-Only if i'm not a child write exit before exit.
-*******************************************************************************/
-static void	im_a_child(t_all *all)
-{
-	if (all->pipe.nb_pipe != 0)
-		return;
-	ft_putstr_fd("exit\n", 2);
 }
 
 /*******************************************************************************
@@ -105,15 +70,15 @@ static void	exit_args(t_all *all)
 			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][1], 2);
 			ft_exit(": numeric argument required\n", all, 2);
 		}
-		else// digit valide
+		else
 		{
 			im_a_child(all);
 			ft_putstr_fd("WriteOnMe: exit: too many arguments\n", 2);
 			all->error_code = 1;
 			return ;
 		}
-	} 
-	else // 2ARGS pas digit
+	}
+	else
 	{
 		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
@@ -151,18 +116,18 @@ static long long int	ft_atolli(char *s)
 
 int	do_exit(t_all *all)
 {
-	int long long arg1;
-	char **arg = all->pipe.cmd_args[all->pipe.pipe];
+	int long long	arg1;
+	char			**arg;
 
-	if (!arg[1] && all->pipe.nb_pipe == 0) //EXIT dans parent
+	arg = all->pipe.cmd_args[all->pipe.pipe];
+	if (!arg[1] && all->pipe.nb_pipe == 0)
 	{
-		//ft_putstr_fd("JE SUIS LA \n", 2);
-		return(ft_putstr_fd("exit\n", 2), ft_exit("", all, all->error_code),
-		all->error_code);
+		return (ft_putstr_fd("exit\n", 2), ft_exit("", all, all->error_code),
+			all->error_code);
 	}
-	if (!arg[1] && all->pipe.nb_pipe != 0) // EXIT DANS ENFANT
-		return(ft_exit("", all, all->error_code), all->error_code);
-	if (is_long_long(all, arg[1]) != 0 || ft_str_digit(arg[1]) != 0)
+	if (!arg[1] && all->pipe.nb_pipe != 0)
+		return (ft_exit("", all, all->error_code), all->error_code);
+	if (ft_str_digit(arg[1]) != 0 || is_long_long(all, arg[1]) != 0)
 	{
 		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
@@ -170,9 +135,9 @@ int	do_exit(t_all *all)
 		ft_exit(": numeric argument required\n", all, 2);
 	}
 	if (arg[1] && arg[2])
-		return(exit_args(all), 1);
+		return (exit_args(all), 1);
 	arg1 = ft_atolli(arg[1]);
 	im_a_child(all);
 	ft_exit("", all, (arg1 % 256));
-	return(1);
+	return (1);
 }

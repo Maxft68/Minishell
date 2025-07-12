@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-
 void	del_export(t_export **export)
 {
 	t_export	*temp;
@@ -17,7 +16,7 @@ void	del_export(t_export **export)
 			free((*export)->value);
 		free(*export);
 		*export = temp;
-	}	
+	}
 }
 
 void	copy_list(t_all *all)
@@ -25,8 +24,6 @@ void	copy_list(t_all *all)
 	t_env		*current;
 	t_export	*curr;
 
-	// del_export(&all->export);
-	// all->export = NULL; // test pour ne pas creer des lst export a la pelle
 	if (!(all)->env)
 		return ;
 	current = all->env;
@@ -57,11 +54,9 @@ void	ft_lstadd_back_export(t_export **export, t_export *new)
 	return ;
 }
 
-
 /*******************************************************************************
 Check if export is: with = / += / without =
 *******************************************************************************/
-
 void	export_arg(t_all *all, char *s)
 {
 	if (ft_strnstr(s, "+=", ft_strlen(s)))
@@ -82,7 +77,7 @@ void	export_arg(t_all *all, char *s)
 	{
 		if (all->data.egal == 1 && search_env(all, all->data.n) == 0)
 			replace_env(all, all->data.n, all->data.val);
-		else if (search_env(all, all->data.n) == 1) //si le node nexiste pas deja
+		else if (search_env(all, all->data.n) == 1)
 			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n,
 					all->data.val));
 	}
@@ -105,46 +100,3 @@ void	do_add_env(t_all *all)
 		x++;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-																			//OLDPW
-
-
-
-
-
-
-																			//PWD
-
-
-

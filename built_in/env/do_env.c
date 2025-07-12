@@ -27,22 +27,21 @@ void	split_env(t_all *all, char *env)
 
 void	minimal_env(t_all *all)
 {
-	char *path;
+	char	*path;
 
 	path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 	all->data.name = gc_malloc_env(all, (all->data.len_name + 1));
 	all->data.value = gc_malloc_env(all, (all->data.len_value + 1));
 	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PATH", path));
 	all->env_export.nb_line_env = 1;
-	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PWD", ft_pwd(all))); // a verifier pwd
+	ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, "PWD", ft_pwd(all)));
 	all->env_export.nb_line_env = 2;
-	
 }
 
 void	normal_env(t_all *all, char **env)
 {
-	int j;
-	int i;
+	int	j;
+	int	i;
 
 	i = 0;
 	while (env[i])
@@ -65,17 +64,15 @@ void	normal_env(t_all *all, char **env)
 
 void	change_shlvl(t_all *all)
 {
-	int	old_shlvl;
-	char *new_shlvl;
-	char *shlvl;
+	int		old_shlvl;
+	char	*new_shlvl;
+	char	*shlvl;
 
 	new_shlvl = NULL;
 	old_shlvl = 0;
 	shlvl = find_the_value(all, "SHLVL");
-	// printf("shvalue= %s\n", shlvl);
-	// printf("len = %zu\n", ft_strlen(find_the_value(all, "SHLVL")));
-	// printf("atoi = %d\n",ft_atoi(find_the_value(all, "SHLVL")));
-	if(!shlvl  || ft_strlen(shlvl) > 3 || ft_atoi(shlvl) <= 0 || ft_atoi(shlvl) >= 999)
+	if (!shlvl || ft_strlen(shlvl) > 3 || ft_atoi(shlvl) <= 0
+		|| ft_atoi(shlvl) >= 999)
 		replace_env(all, "SHLVL", "1");
 	else
 	{
@@ -84,7 +81,7 @@ void	change_shlvl(t_all *all)
 			replace_env(all, "SHLVL", "1");
 		else
 		{
-			old_shlvl ++;
+			old_shlvl++;
 			new_shlvl = gc_itoa(all, old_shlvl);
 			replace_env(all, "SHLVL", new_shlvl);
 		}
@@ -93,7 +90,7 @@ void	change_shlvl(t_all *all)
 
 void	do_env(t_all *all, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!env[i])
