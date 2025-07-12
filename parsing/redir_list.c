@@ -14,10 +14,10 @@ t_token *copy_token(t_token *tokn, t_all *all)
 }
 
 /******************************************************************************
-If you give me a int pipe and a token_type
+If you give me a int pipe and a t_token_type
 I will return the char * of the redirection
 ******************************************************************************/
-char	*search_pipe_redir(int pipe, token_type type, t_all *all)
+char	*search_pipe_redir(int pipe, t_token_type type, t_all *all)
 {
 	t_token *tmp;
 	char    *redir;

@@ -57,7 +57,7 @@ int	create_lexer(char *input, t_all *all)
 	return (0);
 }
 
-int new_tkn_char(token_type type, t_all *all)
+int new_tkn_char(t_token_type type, t_all *all)
 {
     char    c;
 

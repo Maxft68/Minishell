@@ -2,7 +2,7 @@
 
 #include "../mandatory/minishell.h"
 
-const char	*get_token_type_name(token_type type)
+const char	*get_t_token_type_name(t_token_type type)
 {
 	if (type == COMMAND)
 		return ("COMMAND");
@@ -43,7 +43,7 @@ void	print_node(t_token *token)
 	//testerprintf("\n");
 	while (token && token->type && token->str)
 	{
-		//printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
+		//printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_t_token_type_name(token->type), token->str, token->pipe);
 		token = token->next;
 	}
 	//printf("\n");

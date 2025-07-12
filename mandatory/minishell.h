@@ -74,7 +74,7 @@ typedef struct s_lexer
 	int							redir;
 }								t_lexer;
 
-typedef enum token_type
+typedef enum s_token_type
 {
 	WTF = 0,
 	REDIR_FILE = 1,
@@ -89,13 +89,13 @@ typedef enum token_type
 	APPEND_OUT = 10,
 	HEREDOC = 11,
 	ILLEGAL = 12,
-}								token_type;
+}								t_token_type;
 
 //
 
 typedef struct s_token
 {
-	token_type					type;
+	t_token_type					type;
 	char						*str;
 	int							pipe;
 	struct s_token				*next;
@@ -221,16 +221,16 @@ char							*gc_itoa(t_all *all, int n);
 /* **********Lexing parsing************************************************** */
 int								create_lexer(char *input, t_all *all);
 int								pars_to_exec(t_all *all);
-char							*pick_char(char *str, token_type type,
+char							*pick_char(char *str, t_token_type type,
 									t_all *all);
 void							check_quotes(char c, t_all *all);
 void							reset_quotes(t_all *all);
 int								verif_quoted(char *input, t_all *all);
-void							create_token(token_type type, char *str,
+void							create_token(t_token_type type, char *str,
 									t_all *all);
 void							advance_char(t_lexer *lexr);
 void							skip_whitespace(t_lexer *lexr);
-int								new_tkn_char(token_type type, t_all *all);
+int								new_tkn_char(t_token_type type, t_all *all);
 void							ft_tknadd_back(t_token **lst, t_token *tkn);
 t_token							*ft_tknlast(t_token *lst);
 int								check_tkn_lst(t_all *all);
@@ -239,14 +239,14 @@ void							initialize_hd_data(char *old, t_all *all);
 void							handle_hd_expand(char *old, t_all *all);
 void							create_redir_lst(t_all *all);
 char							*find_last_hd(int pipe, t_all *all);
-char							*search_pipe_redir(int pipe, token_type type,
+char							*search_pipe_redir(int pipe, t_token_type type,
 									t_all *all);
 void							print_node(t_token *token); //-------------------------debug
 void							list_to_tab(t_all *all);
 void							initialize_data(t_all *all, char *old);
 void							handle_expand(char *old, t_all *all);
 void							join_to_new(t_all *all, char *val);
-char							*search_pipe_redir(int pipe, token_type type,
+char							*search_pipe_redir(int pipe, t_token_type type,
 									t_all *all);
 /* **********Exec functions************************************************** */
 void							do_pipe(t_all *all);

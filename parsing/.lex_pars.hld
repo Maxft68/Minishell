@@ -21,11 +21,11 @@ typedef enum
     VARIABLE,
     STRING,
     ILLEGAL,
-}       token_type;
+}       t_token_type;
 
 typedef struct  s_token
 {
-    token_type      type;
+    t_token_type      type;
     char            *str;
     int             index;
     struct s_token  *next;
@@ -39,7 +39,7 @@ typedef struct s_lexer
     bool        cmd;
 }       t_lexer;
 
-t_token *create_token(token_type type, const char *str);
+t_token *create_token(t_token_type type, const char *str);
 void    free_token(t_token *tokn);
 t_lexer *create_lexer(const char *input);
 void    free_lexer(t_lexer *lexr);
