@@ -9,10 +9,37 @@ void	initialize_hd_data(char *old, t_all *all)
 	all->hd_data.hd_escape = false;
 }
 
+
+void	hd_do_dollar_question(t_all *all)//, char *str, char *tmp, int index)
+{
+	char	*error_str;
+
+	error_str = gc_itoa(all, all->error_code);
+	if (!all->hd_data.new)
+		all->hd_data.new = gc_strdup(error_str, all);
+	// if (!str)
+	// 	str = gc_strdup(error_str, all);
+	else
+	{
+		all->hd_data.tmp = gc_strjoin(all, all->hd_data.new, error_str);
+		all->hd_data.new = all->hd_data.tmp;
+		// tmp = gc_strjoin(all, str, error_str);
+		// str = tmp;
+	}
+	all->hd_data.i++;
+	// index++;
+	return ;
+}
+
 void	expand_hd(t_all *all, char *old, char *val)
 {
 	all->hd_data.i++;
 	all->hd_data.j = 0;
+	if (old[all->hd_data.i] == '?')
+	{
+		hd_do_dollar_question(all);
+		return;
+	}
 	if ((ft_isdigit(old[all->hd_data.i]) || !ft_isalpha(old[all->hd_data.i]))
 		&& old[all->hd_data.i] != '_')
 	{
@@ -62,7 +89,8 @@ void	handle_hd_expand(char *old, t_all *all)
 	{
 		check_quotes(old[all->hd_data.i], all);
 		if (old[all->hd_data.i] == '$' && 
-			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && !all->data.s_quote)
+			(old[all->hd_data.i + 1] != ' ' && old[all->hd_data.i + 1]) && 
+			!all->data.s_quote && !as_quotes(old))
 		{
 			expand_hd(all, old, val);
 			reset_quotes(all);

@@ -1,4 +1,5 @@
 #include "../mandatory/minishell.h"
+#include <stdbool.h>
 
 // char    *find_last_hd(int pipe, t_all *all)
 // {
@@ -15,6 +16,20 @@
 //     }
 //     return (str);
 // }
+
+bool	as_quotes(char *str)
+{
+	bool	quote;
+
+	quote = false;
+	while (str && *str)
+	{
+		if (*str == 34 || *str == 39)
+			quote = true;
+		str++;
+	}
+	return (quote);
+}
 
 char	*find_last_hd(int pipe, t_all *all)
 {

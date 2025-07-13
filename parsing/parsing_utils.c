@@ -1,13 +1,15 @@
 
 #include "../mandatory/minishell.h"
 
-char	*ad_char(t_all *all, char* str)
+// char	*ad_char(t_all *all, char* str)
+char	*ad_char(t_all *all, char c, char* str)
 {
 	size_t	i;
 
 	i = ft_strlen(str);
 	str = (char*)gc_realloc(all, str, i + 2);
-	str[i] = all->lexer->c;
+	// str[i] = all->lexer->c;
+	str[i] = c;
 	str[i + 1] = '\0';
 	return (str);
 }
@@ -31,7 +33,8 @@ char	*pick_char(char *str, token_type type, t_all *all)
 		if (c == 34 || c == 39)
 			check_quotes(c, all);
         if ((c != 34 && c != 39 ) || (c == 34 && all->data.s_quote) || (c == 39 && all->data.d_quote))
-			str = ad_char(all, str);
+			// str = ad_char(all, str);
+			str = ad_char(all, c, str);
         advance_char(all->lexer);
     }
 	// if (all->lexer->s_quote || all->lexer->d_quote)

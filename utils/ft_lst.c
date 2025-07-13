@@ -49,7 +49,8 @@ void	print_node(t_token *token)
 		token = token->next;
 	}
 	//tester
-	printf("\n");
+	// printf("\n");
+	// printf("--------------------------------------");
 }
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)

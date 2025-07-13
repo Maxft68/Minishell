@@ -11,6 +11,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+#include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -227,6 +228,7 @@ int			create_lexer(char *input, t_all *all);
 int			pars_to_exec(t_all *all);
 char		*pick_char(char *str, token_type type, t_all *all);
 void		check_quotes(char c, t_all *all);
+bool		as_quotes(char *str);
 void    	reset_quotes(t_all *all);
 int			verif_quoted(char *input, t_all *all);
 void		create_token(token_type type, char *str, t_all *all);

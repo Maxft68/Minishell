@@ -43,19 +43,20 @@ void	part_one(t_all *all, char *old, char *val)
 		do_dollar_interrogation(all);//, all->data.new, all->data.temp, all->data.z);
 		return;
 	}
-	if (old[all->data.z] == '"')
-	{
-		all->data.d_quote = true;
-		all->data.z++;
-		return ;
-	}
+	// if (old[all->data.z] == '"')
+	// {
+	// 	// all->data.d_quote = true;
+	// 	all->data.z++;
+	// 	return ;
+	// }
 	if ((ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z])) && old[all->data.z] != '_')
 		{
-			if (old[all->data.z] != 39)
+			if (old[all->data.z] != 39 && old[all->data.z] != 34)
 				all->data.z++;
 			return ;
 		}
 	while (ft_isalnum(old[all->data.z]) == 1 || old[all->data.z] == '_')
+	// while (ft_isprint(old[all->data.z]) == 1 || old[all->data.z] == '_')
 		all->data.tmp[all->data.t++] = old[all->data.z++];
 	all->data.tmp[all->data.t] = '\0';
 	val = find_the_value(all, all->data.tmp);
@@ -100,7 +101,7 @@ void	handle_expand(char *old, t_all *all)
 	{
 		check_quotes(old[all->data.z], all);
 		if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' ' && 
-			old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39 &&
+			// old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39 &&
 		old[all->data.z + 1]) && !all->data.s_quote)
 		{
 			//printf("part_one et data.z = %c\n",old[all->data.z]);
