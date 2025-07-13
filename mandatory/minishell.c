@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		// 
-		//signals_swing();
+		signals_swing();
 		char *firstinput = readline("WriteOnMe ");
 		if (!firstinput)
 			break;
