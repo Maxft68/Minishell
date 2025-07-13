@@ -6,18 +6,11 @@
 /*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/10 21:47:05 by maxoph           ###   ########.fr       */
+/*   Updated: 2025/07/13 18:19:47 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	ft_putchar_fd(char c, int fd)
-// {
-// 	if (fd < 0)
-// 		return ;
-// 	write(fd, &c, 1);
-// }
 
 void	write_all(t_all *all, int pipe)
 {
@@ -29,7 +22,7 @@ void	write_all(t_all *all, int pipe)
 		ft_putchar(args[pipe][all->built_in.j][all->built_in.i++]);
 	all->built_in.j++;
 	if (all->built_in.j > 1 && args[pipe][all->built_in.j] != NULL
-		&& args[pipe][all->built_in.j - 1][0] != '\0')
+		&& args[pipe][all->built_in.j - 1])	
 		ft_putchar(' ');
 }
 
@@ -60,3 +53,4 @@ int	do_echo(t_all *all, char ***args, int pipe)
 		ft_putchar('\n');
 	return (0);
 }
+
