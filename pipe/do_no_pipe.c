@@ -82,7 +82,10 @@ int	do_no_pipe(t_all *all)
 		error_msg_no_pipe(all, "dup stdout");
 	stdin_original = dup(STDIN_FILENO);
 	if (stdin_original == -1)
+	{
+		fd_back_origin(all, stdout_original, stdin_original);
 		error_msg_no_pipe(all, "dup stdin");
+	}
 	if (do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
 	{
 		fd_back_origin(all, stdout_original, stdin_original);

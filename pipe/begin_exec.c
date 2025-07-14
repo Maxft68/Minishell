@@ -29,18 +29,19 @@ static int	pipe_or_not_pipe(t_all *all)
 	return (0);
 }
 
-static void	waiting_zzz(t_all *all, int i, int status)
+static void	waiting_zzz(t_all *all, int i, int *status)
 {
-	waitpid(all->pipe.pid[i], &status, 0);
-	if (WIFEXITED(status))
-		update_minishell_code(all, WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
+	waitpid(all->pipe.pid[i], status, 0);
+	if (WIFEXITED(*status))
+		update_minishell_code(all, WEXITSTATUS(*status));
+	else if (WIFSIGNALED(*status))
 	{
-		if (WTERMSIG(status) == 2)
+		if (WTERMSIG(*status) == 2)
 			printf("\n");
-		get_code_error(all, WTERMSIG(status));
+		get_code_error(all, WTERMSIG(*status));
 	}
 }
+
 int	exec_part(t_all *all)
 {
 	int	status;
@@ -49,6 +50,7 @@ int	exec_part(t_all *all)
 	i = 0;
 	status = 0;
 	all->pipe.pid = gc_malloc(all, sizeof(pid_t) * (all->pipe.nb_pipe + 1));
+	memset(all->pipe.pid, 0, sizeof(pid_t) * (all->pipe.nb_pipe + 1));
 	alloc_my_pipe_fd(all);
 	alloc_my_herdoc_fd(all);
 	while (i < all->pipe.nb_pipe + 1)
@@ -61,7 +63,7 @@ int	exec_part(t_all *all)
 	i = 0;
 	all->pipe.pipe = 0;
 	while (i < all->pipe.nb_pipe + 1)
-		waiting_zzz(all, i++, status);
+		waiting_zzz(all, i++, &status);
 	all->pipe.i = 0;
 	all->pipe.pipe = 0;
 	all->pipe.nb_pipe = 0;

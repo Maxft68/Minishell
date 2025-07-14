@@ -129,6 +129,7 @@ int	do_exit(t_all *all)
 		return (ft_exit("", all, all->error_code), all->error_code);
 	if (ft_str_digit(arg[1]) != 0 || is_long_long(all, arg[1]) != 0)
 	{
+		ft_putstr_fd("JE DOIS ETRE LA OMG\n", 2);////////
 		im_a_child(all);
 		ft_putstr_fd("WriteOnMe: exit: ", 2);
 		ft_putstr_fd(arg[1], 2);

@@ -26,6 +26,9 @@ void	initialise_exec(t_all *all)
 
 void	alloc_my_herdoc_fd(t_all *all)
 {
+	if (!find_last_hd(all->exec.j, all) && all->pipe.nb_pipe == 0)
+		return;
+	ft_putstr_fd("je rentre ici une seule fois jespere\n", 2);
 	initialise_exec(all);
 	all->pipe.heredoc_fd = (int **)gc_malloc(all, sizeof(int *)
 			* (all->pipe.nb_pipe + 1));
