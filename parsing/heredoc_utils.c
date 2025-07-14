@@ -1,21 +1,19 @@
 #include "../mandatory/minishell.h"
 #include <stdbool.h>
 
-// char    *find_last_hd(int pipe, t_all *all)
-// {
-//     t_token *tmp;
-//     char    *str;
+void	initialize_hd_data(char *old, t_all *all)
+{
+	all->hd_data.i = 0;
+	all->hd_data.new = NULL;
+	all->hd_data.tmp2 = gc_malloc(all, ft_strlen(old) + 1);
+	all->hd_data.hd_escape = false;
+}
 
-//     str = NULL;
-//     tmp = all->rdir_tkn;
-//     while (tmp->pipe == pipe && tmp->next)
-//     {
-//         if (tmp->type == HEREDOC)
-//             str = tmp->next->str;
-//         tmp = tmp->next;
-//     }
-//     return (str);
-// }
+void	hd_join_to_new(t_all *all, char *val)
+{
+	all->hd_data.tmp = gc_strjoin(all, all->hd_data.new, val);
+	all->hd_data.new = all->hd_data.tmp;
+}
 
 bool	as_quotes(char *str)
 {
@@ -33,27 +31,23 @@ bool	as_quotes(char *str)
 
 char	*find_last_hd(int pipe, t_all *all)
 {
-	t_token *tmp;
-	char    *redir;
+	t_token	*tmp;
+	char	*redir;
 
 	tmp = all->rdir_tkn;
 	redir = NULL;
 	while (tmp && tmp->pipe != pipe)
-			tmp = tmp->next;
+		tmp = tmp->next;
 	if (tmp && tmp->pipe == pipe)
 	{
 		while (tmp->next && tmp->next->pipe == pipe)
 		{
 			if (tmp->type == HEREDOC && tmp->next)
-			{
-				if (tmp->next->str == NULL)
-					ft_putstr_fd("Error: NULL string in HEREDOC\n", 2); // a suppr
 				redir = tmp->next->str;
-			}
 			if (tmp->type == REDIRECT_IN)
 				redir = NULL;
 			tmp = tmp->next;
-		}  
+		}
 	}
 	return (redir);
 }

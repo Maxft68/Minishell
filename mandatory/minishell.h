@@ -240,6 +240,7 @@ t_token		*ft_tknlast(t_token *lst);
 int 		check_tkn_lst(t_all *all);
 void    	catch_heredoc(t_all *all);
 void		initialize_hd_data(char *old, t_all *all);
+void		hd_join_to_new(t_all *all, char *val);
 void		handle_hd_expand(char *old, t_all *all);
 void    	create_redir_lst(t_all *all);
 char    	*find_last_hd(int pipe, t_all *all);

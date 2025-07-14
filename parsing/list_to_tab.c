@@ -4,6 +4,7 @@ char	*gc_strdup_input(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;
+
 	if (!s)
 		return (NULL);
 	l = ft_strlen(s);
@@ -17,6 +18,7 @@ char	*gc_strdup(char *s, t_all *all)
 {
 	char	*alloc;
 	size_t	l;
+
 	if (!s)
 		return (NULL);
 	l = ft_strlen(s);
@@ -25,11 +27,11 @@ char	*gc_strdup(char *s, t_all *all)
 	return (alloc);
 }
 
-void    alloc_tab_star_star(t_all *all)
+void	alloc_tab_star_star(t_all *all)
 {
-	int     i;
-	int     j;
-	t_token *tmp;
+	int		i;
+	int		j;
+	t_token	*tmp;
 
 	tmp = all->token;
 	i = 0;
@@ -40,7 +42,7 @@ void    alloc_tab_star_star(t_all *all)
 			j++;
 		if (tmp->type == PIPE || tmp->next == NULL)
 		{
-			all->pipe.cmd_args[i] = gc_malloc(all, (sizeof(char*) * (j + 1)));
+			all->pipe.cmd_args[i] = gc_malloc(all, (sizeof(char *) * (j + 1)));
 			all->pipe.cmd_args[i][j] = NULL;
 			i++;
 			j = 0;
@@ -49,10 +51,10 @@ void    alloc_tab_star_star(t_all *all)
 	}
 }
 
-void    alloc_tab_star_star_star(t_all *all)
+void	alloc_tab_star_star_star(t_all *all)
 {
-	int     i;
-	t_token *tmp;
+	int		i;
+	t_token	*tmp;
 
 	i = 0;
 	tmp = all->token;
@@ -62,20 +64,19 @@ void    alloc_tab_star_star_star(t_all *all)
 			i++;
 		tmp = tmp->next;
 	}
-	all->pipe.cmd_args = gc_malloc(all, (sizeof(char**) * (i + 2))); //si 1pipe = 2 parties
+	all->pipe.cmd_args = gc_malloc(all, (sizeof(char **) * (i + 2)));
 	all->pipe.cmd_args[i + 1] = NULL;
 	alloc_tab_star_star(all);
 }
 
-void    list_to_tab(t_all *all)
+void	list_to_tab(t_all *all)
 {
-	int     i;
-	int     j;
-	t_token *tmp;
+	int		i;
+	int		j;
+	t_token	*tmp;
 
 	i = 0;
 	j = 0;
-
 	tmp = all->token;
 	alloc_tab_star_star_star(all);
 	while (tmp)
@@ -88,15 +89,10 @@ void    list_to_tab(t_all *all)
 		}
 		if (tmp && tmp->type > 2 && tmp->type < 7)
 		{
-			// printf("%s %d %d\n", tmp->str, i , j);  <---------------------------------------------------------printf
 			all->pipe.cmd_args[i][j] = gc_strdup(tmp->str, all);
-			//tester
-			//printf("pipe: %d tab %d str |%s|\n", i, j, tmp->str); //<---------------------------------------------------------printf
 			j++;
 		}
 		tmp = tmp->next;
 	}
 	all->pipe.cmd_args[i][j] = NULL;
-	//testerprintf("\n");  // <---------------------------------------------------------printf
 }
-
