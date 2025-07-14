@@ -19,12 +19,12 @@ void	free_array(char **array)
 	return ;
 } 
 
-void	close_all_pipe_exit(t_all *all) // close des pipes
+void	close_all_pipe_exit(t_all *all)
 {
 	int i;
 
 	i = 0;
-	while (i < all->pipe.nb_pipe) // quand pipe 4++ fermer pipe 1-2++
+	while (i < all->pipe.nb_pipe)
 	{
 		if (all->pipe.heredoc_fd && all->pipe.heredoc_fd[i])
 		{
@@ -49,23 +49,12 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	close_all_pipe_exit(all);
 	if (error)
 		ft_putstr_fd(error, 2);
-	if (error_code) // useless ??
+	if (error_code)
 		all->error_code = error_code;
 	if (all->garbage)
 		free_garbage_collect(&all->garbage);
-	// if (all->token)
-		//ft_lstclear(&all->token);
-	// if (all->rdir_tkn)
-	// 	ft_lstclear(&all->rdir_tkn);
 	if (all->garbage_env)
 		free_garbage_env(&all->garbage_env);
 	rl_clear_history();
 	exit(error_code);
 }
-
-//echo 123$USER,$PWD,456
-//echo 123$USER,$USER456,$USER coucou$
-//echo 123$USERy,$USER456
-
-
-

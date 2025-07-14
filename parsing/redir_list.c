@@ -5,7 +5,7 @@ t_token	*copy_token(t_token *tokn, t_all *all)
 	t_token	*new;
 
 	new = NULL;
-	new = (t_token *)gc_malloc(all, sizeof(t_token));
+	new = (t_token*)gc_malloc(all, sizeof(t_token));
 	new->str = gc_strdup(tokn->str, all);
 	new->type = tokn->type;
 	new->pipe = tokn->pipe;
@@ -13,15 +13,19 @@ t_token	*copy_token(t_token *tokn, t_all *all)
 	return (new);
 }
 
-char	*search_pipe_redir(int pipe, token_type type, t_all *all)
+/******************************************************************************
+If you give me a int pipe and a t_token_type
+I will return the char * of the redirection
+******************************************************************************/
+char	*search_pipe_redir(int pipe, t_token_type type, t_all *all)
 {
-	t_token	*tmp;
-	char	*redir;
+	t_token *tmp;
+	char    *redir;
 
 	tmp = all->rdir_tkn;
 	redir = NULL;
 	while (tmp && tmp->pipe != pipe)
-		tmp = tmp->next;
+			tmp = tmp->next;
 	if (tmp && tmp->pipe == pipe)
 	{
 		while (tmp->next && tmp->next->pipe == pipe)
@@ -29,10 +33,11 @@ char	*search_pipe_redir(int pipe, token_type type, t_all *all)
 			if (tmp->type == type && tmp->next)
 				redir = tmp->next->str;
 			tmp = tmp->next;
-		}
+		}  
 	}
 	return (redir);
 }
+
 
 void	create_redir_lst(t_all *all)
 {

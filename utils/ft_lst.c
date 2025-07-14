@@ -2,35 +2,34 @@
 
 #include "../mandatory/minishell.h"
 
-const char *get_token_type_name(token_type type)
+const char	*get_t_token_type_name(t_token_type type)
 {
-    if (type == COMMAND)
-        return "COMMAND";
-    if (type == ARG)
-        return "ARG";
-    if (type == SQ_STRING)
-        return "SQ_STRING";
-    if (type == DQ_STRING)
-        return "DQ_STRING";
-    if (type == PIPE)
-        return "PIPE";
-    if (type == REDIRECT_OUT)
-        return "REDIRECT_OUT";
-    if (type == REDIRECT_IN)
-        return "REDIRECT_IN";
-    if (type == APPEND_OUT)
-        return "APPEND_OUT";
-    if (type == HEREDOC)
-		return "HEREDOC";
+	if (type == COMMAND)
+		return ("COMMAND");
+	if (type == ARG)
+		return ("ARG");
+	if (type == SQ_STRING)
+		return ("SQ_STRING");
+	if (type == DQ_STRING)
+		return ("DQ_STRING");
+	if (type == PIPE)
+		return ("PIPE");
+	if (type == REDIRECT_OUT)
+		return ("REDIRECT_OUT");
+	if (type == REDIRECT_IN)
+		return ("REDIRECT_IN");
+	if (type == APPEND_OUT)
+		return ("APPEND_OUT");
+	if (type == HEREDOC)
+		return ("HEREDOC");
 	if (type == REDIR_FILE)
-		return "REDIR_FILE";
-    if (type == HD_EOF)
-        return "HD_EOF";
-    if (type == ILLEGAL)
-        return "ILLEGAL";
-    return "UNKNOWN";
+		return ("REDIR_FILE");
+	if (type == HD_EOF)
+		return ("HD_EOF");
+	if (type == ILLEGAL)
+		return ("ILLEGAL");
+	return ("UNKNOWN");
 }
-
 
 void	print_node(t_token *token)
 {
@@ -44,13 +43,10 @@ void	print_node(t_token *token)
 	//testerprintf("\n");
 	while (token && (token->type || token->str))
 	{
-		//tester
-		printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_token_type_name(token->type), token->str, token->pipe);
+		//printf("Type: %u, (%s), str: %s, pipe: %d\n", token->type,get_t_token_type_name(token->type), token->str, token->pipe);
 		token = token->next;
 	}
-	//tester
-	// printf("\n");
-	// printf("--------------------------------------");
+	//printf("\n");
 }
 
 void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
@@ -68,22 +64,6 @@ void	ft_lstadd_front(t_garbage **garbage, t_garbage *new)
 	return ;
 }
 
-// static void	ft_lstadd_back(t_token **token, t_token *new)
-// {
-// 	t_token	*current;
-
-// 	if (!*token)
-// 	{
-// 		*token = new;
-// 		return ;
-// 	}
-// 	current = *token;
-// 	while (current->next)
-// 		current = current->next;
-// 	current->next = new;
-// 	return ;
-// }
-
 void	ft_lstadd_back_env(t_all *all, t_env **env, t_env *new)
 {
 	t_env	*current;
@@ -92,7 +72,6 @@ void	ft_lstadd_back_env(t_all *all, t_env **env, t_env *new)
 	{
 		*env = new;
 		all->env_export.nb_line_env++;
-		//printf("jai %d variables dans env(addback env env inexistant)\n", all->env_export.nb_line_env);
 		return ;
 	}
 	current = *env;
@@ -100,22 +79,8 @@ void	ft_lstadd_back_env(t_all *all, t_env **env, t_env *new)
 		current = current->next;
 	current->next = new;
 	all->env_export.nb_line_env++;
-	//printf("jai %d variables dans env(addback ajout a la fin)\n", all->env_export.nb_line_env);
 	return ;
 }
-
-// static t_token	*ft_lstnew(t_all *all, char *name)
-// {
-// 	t_token	*new;
-
-// 	new = NULL;
-// 	new = gc_malloc(all, sizeof(t_token));
-// 	if (!new)
-// 		ft_exit("malloc error", all, 1);
-// 	new->name = name;
-// 	new->next = NULL;
-// 	return (new);
-// }
 
 t_env	*ft_lstnew_env(t_all *all, char *name, char *value)
 {

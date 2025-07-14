@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:02:40 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/13 17:18:19 by rbier            ###   ########.fr       */
+/*   Updated: 2025/07/14 16:44:19 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	write_all(t_all *all, int pipe)
 
 int	do_echo(t_all *all, char ***args, int pipe)
 {
+	all->built_in.n = 0;
 	all->built_in.j = 1;
 	if (!args[pipe] || !args[pipe][all->built_in.j])
 		return (ft_putchar('\n'), 1);

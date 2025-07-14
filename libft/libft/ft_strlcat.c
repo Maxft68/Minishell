@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maxoph <maxoph@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:29:10 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/06/22 17:53:56 by rbier            ###   ########.fr       */
+/*   Updated: 2025/07/12 14:39:18 by maxoph           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,12 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 
 	i = 0;
 	j = 0;
-	// if (dst == NULL && size == 0)
-	// 	return (ft_strlen(src));
-	
-	// Vérifier que src n'est pas NULL
-    if (src == NULL)
-        return (0);
-
-    // Si dst est NULL, se comporter comme si size était 0
-    if (dst == NULL)
-    {
-        return (ft_strlen(src));
-    }
+	if (src == NULL)
+		return (0);
+	if (dst == NULL)
+	{
+		return (ft_strlen(src));
+	}
 	while (dst[i] && i < size)
 		i++;
 	k = i;

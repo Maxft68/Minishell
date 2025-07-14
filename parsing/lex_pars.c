@@ -2,9 +2,9 @@
 #include "../mandatory/minishell.h"
 #include <string.h>
 
-token_type	def_redir(t_all *all)
+t_token_type	def_redir(t_all *all)
 {
-	token_type	type;
+	t_token_type	type;
 
 	if (all->lexer->redir == 2)
 		type = HD_EOF;
@@ -17,7 +17,7 @@ token_type	def_redir(t_all *all)
 void	create_word_token(t_all *all)
 {
 	char		*str;
-	token_type	type;
+	t_token_type	type;
 
 	if (all->lexer->cmd && !all->lexer->redir)
 	{
@@ -42,7 +42,7 @@ void	create_word_token(t_all *all)
 	create_token(type, str, all);
 }
 
-void	create_operator_token(token_type type, char *str, t_all *all)
+void	create_operator_token(t_token_type type, char *str, t_all *all)
 {
 	advance_char(all->lexer);
 	if (type == PIPE)
