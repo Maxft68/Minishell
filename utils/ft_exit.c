@@ -47,6 +47,7 @@ void	close_all_pipe_exit(t_all *all)
 void	ft_exit(char *error, t_all *all, int error_code)
 {
 	close_all_pipe_exit(all);
+	//fd_back_origin(all, &all->data.stdout_original, &all->data.stdin_original);
 	if (error)
 		ft_putstr_fd(error, 2);
 	if (error_code)

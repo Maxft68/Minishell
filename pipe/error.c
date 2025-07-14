@@ -2,7 +2,7 @@
 
 int	ft_close(t_all *all, int *fd)
 {
-	if (*fd >= 0)
+	if (*fd != -1)
 	{
 		if (close(*fd) == -1)
 		{

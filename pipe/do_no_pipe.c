@@ -74,24 +74,24 @@ No forks we are in the parent process
 ******************************************************************************/
 int	do_no_pipe(t_all *all)
 {
-	int	stdout_original;
-	int	stdin_original;
+	all->data.stdout_original = -1;
+	all->data.stdin_original = -1;
 
-	stdout_original = dup(STDOUT_FILENO);
-	if (stdout_original == -1)
+	all->data.stdout_original = dup(STDOUT_FILENO);
+	if (all->data.stdout_original == -1)
 		error_msg_no_pipe(all, "dup stdout");
-	stdin_original = dup(STDIN_FILENO);
-	if (stdin_original == -1)
+	all->data.stdin_original = dup(STDIN_FILENO);
+	if (all->data.stdin_original == -1)
 	{
-		fd_back_origin(all, stdout_original, stdin_original);
+		fd_back_origin(all, &all->data.stdout_original, &all->data.stdin_original);
 		error_msg_no_pipe(all, "dup stdin");
 	}
 	if (do_redir_no_pipe(all) == 1 || !all->pipe.cmd_args[0][0])
 	{
-		fd_back_origin(all, stdout_original, stdin_original);
+		fd_back_origin(all, &all->data.stdout_original, &all->data.stdin_original);
 		return (1);
 	}
 	do_built_in(all);
-	fd_back_origin(all, stdout_original, stdin_original);
+	fd_back_origin(all, &all->data.stdout_original, &all->data.stdin_original);
 	return (0);
 }

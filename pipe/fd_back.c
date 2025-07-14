@@ -3,22 +3,22 @@
 /******************************************************************************
 Set stdout and stdin back to original file descriptors
 ******************************************************************************/
-void	fd_back_origin(t_all *all, int stdout_original, int stdin_original)
+void	fd_back_origin(t_all *all, int *stdout_original, int *stdin_original)
 {
-	if (stdout_original != -1)
-		if (dup2(stdout_original, STDOUT_FILENO) == -1)
+	if (*stdout_original != -1)
+		if (dup2(*stdout_original, STDOUT_FILENO) == -1)
 		{
-			ft_close(all, &stdout_original);
-			ft_close(all, &stdin_original);
-			error_dup2(all, stdout_original, "dup2");
+			ft_close(all, stdout_original);
+			ft_close(all, stdin_original);
+			error_dup2(all, *stdout_original, "dup2");
 		}
-	if (stdin_original != -1)
-		if (dup2(stdin_original, STDIN_FILENO) == -1)
+	if (*stdin_original != -1)
+		if (dup2(*stdin_original, STDIN_FILENO) == -1)
 		{
-			ft_close(all, &stdout_original);
-			ft_close(all, &stdin_original);
-			error_dup2(all, stdin_original, "dup2");
+			ft_close(all, stdout_original);
+			ft_close(all, stdin_original);
+			error_dup2(all, *stdin_original, "dup2");
 		}
-	ft_close(all, &stdout_original);
-	ft_close(all, &stdin_original);
+	ft_close(all, stdout_original);
+	ft_close(all, stdin_original);
 }

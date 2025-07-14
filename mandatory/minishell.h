@@ -135,6 +135,8 @@ typedef struct s_data
 	char						*temp;
 	bool						s_quote;
 	bool						d_quote;
+	int							stdout_original;
+	int							stdin_original;
 }								t_data;
 
 typedef struct s_hd_data
@@ -252,8 +254,8 @@ char							*search_pipe_redir(int pipe, token_type type,
 void							do_pipe(t_all *all);
 int								do_no_pipe(t_all *all);
 int								do_redir_fd(t_all *all);
-void							fd_back_origin(t_all *all, int stdout_original,
-									int stdin_original);
+void							fd_back_origin(t_all *all, int *stdout_original,
+									int *stdin_original);
 void							close_fd_and_hd_fd(t_all *all, int i);
 int								exec_cmd(t_all *all);
 char							*search_good_path(char **paths, t_all *all);
