@@ -1,10 +1,7 @@
 #include "../mandatory/minishell.h"
 
-// volatile sig_atomic_t g_sigint_flag = 0;
-
 void	sig_handler(int signal)
 {
-	// t_all   all;
 	if (signal == SIGINT)
 	{
 		g_sigint_flag = 1;
@@ -13,12 +10,6 @@ void	sig_handler(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	// if (signal == SIGQUIT)
-	//{
-	//	rl_replace_line("WriteToMe   ", 12);
-	//	rl_redisplay();
-	//	return ;
-	//}
 }
 
 void	signals_swing(void)

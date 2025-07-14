@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../mandatory/minishell.h"
 
 char	*gc_strdup_env(char *s, t_all *all)
 {

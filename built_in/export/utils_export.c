@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../../mandatory/minishell.h"
 
 /******************************************************************************
 Check if the node with the same name exist

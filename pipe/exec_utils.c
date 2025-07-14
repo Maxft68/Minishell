@@ -27,7 +27,7 @@ int	do_redir_in(t_all *all, char *redir)
 	return (0);
 }
 
-int	do_redir_out(t_all *all, char *temp, token_type type)
+int	do_redir_out(t_all *all, char *temp, t_token_type type)
 {
 	if (type == REDIRECT_OUT)
 		all->pipe.fd_outfile = open(temp, O_WRONLY | O_CREAT | O_TRUNC, 0644);

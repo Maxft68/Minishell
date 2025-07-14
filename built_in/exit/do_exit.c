@@ -1,6 +1,6 @@
 
 
-#include "minishell.h"
+#include "../../mandatory/minishell.h"
 
 static int	part_two_long(t_all *all, char *str)
 {

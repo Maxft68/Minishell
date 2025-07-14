@@ -37,3 +37,4 @@ int	main(int argc, char **argv, char **env)
 	ft_exit("exit\n", &all, all.error_code);
 	(void)argv;
 }
+
