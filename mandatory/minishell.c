@@ -14,7 +14,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		// 
-		//signals_swing();
+		signals_swing();
 		// char *firstinput = readline("WriteOnMe "); //a remettre apres mpanic tester
 		// if (!firstinput)
 		// 	break;
@@ -36,4 +36,3 @@ int	main(int argc, char **argv, char **env)
 	ft_exit("exit\n", &all, all.error_code);
 	(void)argv;
 }
-//194/388

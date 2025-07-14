@@ -267,6 +267,7 @@ int								error_msg_no_pipe(t_all *all, char *s);
 void							error_msg(t_all *all, char *s);
 /* **********Signal functions************************************************ */
 void							set_up_sig_exec(void);
+void							signals_swing(void);
 /* **********Built_in functions********************************************** */
 int								is_built_in(t_all *all);
 int								do_built_in(t_all *all);

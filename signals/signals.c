@@ -21,14 +21,14 @@ void	sig_handler(int signal)
 	//}
 }
 
-// void	signals_swing(void)
-// {
-// 	struct sigaction	act;
+void	signals_swing(void)
+{
+	struct sigaction	act;
 
-// 	ft_bzero(&act, sizeof(act));
-// 	act.sa_handler = &sig_handler;
-// 	sigaction(SIGINT, &act, NULL);
-// }
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = &sig_handler;
+	sigaction(SIGINT, &act, NULL);
+}
 
 void	set_up_sig_exec(void)
 {
