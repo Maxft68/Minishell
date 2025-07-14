@@ -88,7 +88,11 @@ int	do_no_pipe(t_all *all)
 		fd_back_origin(all, stdout_original, stdin_original);
 		return (1);
 	}
-	do_built_in(all);
+	if (do_built_in(all) == 1)
+	{	
+		fd_back_origin(all, stdout_original, stdin_original);
+		return (1);
+	}
 	fd_back_origin(all, stdout_original, stdin_original);
 	return (0);
 }

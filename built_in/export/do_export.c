@@ -27,7 +27,7 @@ void	add_env(t_all *all, char *name, char *value)
 /******************************************************************************
 If we have '+='
 ******************************************************************************/
-void	add_value_env(t_all *all, char *s)
+int	add_value_env(t_all *all, char *s)
 {
 	int		i;
 	char	*tmp;
@@ -41,7 +41,7 @@ void	add_value_env(t_all *all, char *s)
 		all->data.egal = 1;
 		tmp = gc_substr_env(s, 0, i - 1, all);
 		if (is_alpha_str(tmp) == 0)
-			print_and_null(all, s);
+			return (print_and_null(all, s), 1);
 		else
 			all->data.n = gc_strdup_env(tmp, all);
 		if (s[i + 1] && all->data.n)
@@ -58,12 +58,13 @@ void	add_value_env(t_all *all, char *s)
 			ft_lstadd_back_env(all, &all->env, ft_lstnew_env(all, all->data.n,
 					all->data.val));
 	}
+	return (0);
 }
 
 /******************************************************************************
 If we have just '='
 ******************************************************************************/
-void	do_add_env_next(t_all *all, char *s)
+int	do_add_env_next(t_all *all, char *s)
 {
 	int		i;
 	char	*tmp;
@@ -73,13 +74,13 @@ void	do_add_env_next(t_all *all, char *s)
 	while (s[i] && s[i] != '=')
 		i++;
 	if (i == 0)
-		print_and_null(all, s);
+		return (print_and_null(all, s), 1);
 	else if (s[i] == '=' && i > 0)
 	{
 		all->data.egal = 1;
 		tmp = gc_substr_env(s, 0, i, all);
 		if (is_alpha_str(tmp) == 0)
-			print_and_null(all, s);
+			return (print_and_null(all, s), 1);
 		else
 			all->data.n = gc_strdup_env(tmp, all);
 		if (s[i + 1] && all->data.n)
@@ -88,6 +89,7 @@ void	do_add_env_next(t_all *all, char *s)
 		else if (all->data.n)
 			all->data.val = gc_strdup_env("", all);
 	}
+	return (0);
 }
 
 /******************************************************************************

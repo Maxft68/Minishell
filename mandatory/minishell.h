@@ -280,7 +280,7 @@ char							**do_char_env(t_all *all);
 void							print_node_env(t_all *all, t_env *env);
 void							free_env(t_env **env);
 void							do_export(t_all *all);
-void							do_add_env_next(t_all *all, char *s);
+int								do_add_env_next(t_all *all, char *s);
 void							do_add_env(t_all *all);
 int								do_exit(t_all *all);
 void							im_a_child(t_all *all);
@@ -297,7 +297,7 @@ void							replace_or_add_env(t_all *all, char *name,
 									char *value);
 int								is_alpha_str(char *str);
 void							sort_list(t_all *all);
-void							add_value_env(t_all *all, char *s);
+int								add_value_env(t_all *all, char *s);
 void							print_and_null(t_all *all, char *s);
 void							do_unset(t_all *all);
 void							do_pwd(t_all *all);

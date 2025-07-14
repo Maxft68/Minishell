@@ -15,7 +15,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		// 
 		signals_swing();
-		// char *firstinput = readline("WriteOnMe "); //a remettre apres mpanic tester
+		// char *firstinput = readline("minishell "); //a remettre apres mpanic tester
 		// if (!firstinput)
 		// 	break;
 		char *firstinput = readline("minishell $");
@@ -27,7 +27,8 @@ int	main(int argc, char **argv, char **env)
 		}
 		char *input = gc_strdup_input(firstinput, &all);
 		if (create_lexer(input, &all) != -1)
-			if (pars_to_exec(&all) != 0)
+			all.error_code = pars_to_exec(&all);
+		//printf("error_code = %d\n", all.error_code);
 		free_garbage_collect(&all.garbage);
 		all.garbage = NULL;
 		all.token = NULL;

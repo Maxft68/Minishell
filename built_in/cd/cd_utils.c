@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 10:40:24 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/14 16:42:44 by rbier            ###   ########.fr       */
+/*   Updated: 2025/07/14 18:23:11 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	test_the_path_mini(t_all *all, char *s)
 	}
 	if (chdir(s) == -1)
 	{
-		str = gc_strjoin(all, "WriteOnMe: cd:", s);
+		str = gc_strjoin(all, "minishell: cd:", s);
 		perror(str);
 		all->error_code = 1;
 	}
@@ -37,7 +37,7 @@ void	test_the_path_mini(t_all *all, char *s)
 
 static void	chdir_null(t_all *all, char *str, char *s)
 {
-	str = gc_strjoin(all, "WriteOnMe: cd: ", s);
+	str = gc_strjoin(all, "minishell: cd: ", s);
 	perror(str);
 	all->error_code = 1;
 }

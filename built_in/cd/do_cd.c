@@ -6,7 +6,7 @@
 /*   By: rbier <rbier@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:07 by mdsiurds          #+#    #+#             */
-/*   Updated: 2025/07/14 16:43:38 by rbier            ###   ########.fr       */
+/*   Updated: 2025/07/14 18:23:11 by rbier            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	do_cd_home(t_all *all, char *s)
 	}
 	else
 	{
-		ft_putstr_fd("WriteOnMe: cd: HOME not set\n", 2);
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		s = NULL;
 	}
 	if (s)
@@ -54,7 +54,7 @@ void	do_cd_minus(t_all *all)
 
 	if (!find_the_value(all, "OLDPWD"))
 	{
-		ft_putstr_fd("WriteOnMe: cd: OLDPWD not set\n", 2);
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		if (search_env(all, "OLDPWD"))
 		{
 			replace_or_add_env(all, "OLDPWD", ft_pwd(all));
@@ -97,7 +97,7 @@ void	do_cd(t_all *all)
 	if (all->pipe.cmd_args[all->pipe.nb_pipe][1]
 		&& all->pipe.cmd_args[all->pipe.nb_pipe][2])
 	{
-		ft_putstr_fd("WriteOnMe: cd: too many arguments\n", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		all->error_code = 1;
 		return ;
 	}

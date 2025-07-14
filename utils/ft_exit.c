@@ -56,5 +56,13 @@ void	ft_exit(char *error, t_all *all, int error_code)
 	if (all->garbage_env)
 		free_garbage_env(&all->garbage_env);
 	rl_clear_history();
+	ft_putstr_fd("error_code:", 2);//-----------------------------------debug
+	ft_putstr_fd(ft_itoa(error_code), 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("all->error_code", 2);//-----------------------------------debug
+	ft_putstr_fd(ft_itoa(all->error_code), 2);
+	ft_putstr_fd("\n", 2);
+	// printf("error_code:%d\n", error_code);//-----------------------------------debug
+	// printf("all->error_code:%d\n", all->error_code);//-----------------------------------debug
 	exit(error_code);
 }

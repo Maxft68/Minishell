@@ -13,9 +13,9 @@ char	*find_path_cmd(t_all *all, char **env)
 	while (env && env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (!env[i])
-		return (ft_putstr_fd("WriteOnMe: ", 2), all->error_code = 127,
+		return (ft_putstr_fd("minishell: ", 2), all->error_code = 127,
 			ft_putstr_fd(all->pipe.cmd_args[all->pipe.pipe][0], 2),
-			ft_putstr_fd(": No such file or directory\n", 2), NULL);
+			ft_exit(": No such file or directory\n",all, 2), NULL);//----------------------------------modif
 	path_to_search = gc_split(all, env[i] + 5, ':');
 	path = search_good_path(path_to_search, all);
 	if (!path)
@@ -47,7 +47,7 @@ int	exec_cmd(t_all *all)
 	if (!path)
 		return (ft_exit("", all, 127), 1);
 	execve(path, cmd, env);
-	ft_putstr_fd("WriteOnMe: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	perror(cmd[0]);
 	ft_exit("", all, 127);
 	return (1);
