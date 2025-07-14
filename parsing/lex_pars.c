@@ -16,7 +16,7 @@ t_token_type	def_redir(t_all *all)
 
 void	create_word_token(t_all *all)
 {
-	char		*str;
+	char			*str;
 	t_token_type	type;
 
 	if (all->lexer->cmd && !all->lexer->redir)

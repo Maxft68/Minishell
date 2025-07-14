@@ -92,7 +92,7 @@ void	catch_heredoc(t_all *all)
 			if (g_sigint_flag == 1)
 			{
 				tmp->next->str = NULL;
-				all->hd_data.hd_escape = true;
+				// all->hd_data.hd_escape = true;
 				g_sigint_flag = 0;
 			}
 			if (!str)

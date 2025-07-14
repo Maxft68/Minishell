@@ -30,7 +30,7 @@ char	*pick_char(char *str, t_token_type type, t_all *all)
 	return (str);
 }
 
-void   create_token(t_token_type type, char *str, t_all *all)
+void	create_token(t_token_type type, char *str, t_all *all)
 {
 	t_token	*tokn;
 

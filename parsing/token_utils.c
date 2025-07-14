@@ -30,7 +30,7 @@ t_token	*ft_tknlast(t_token *lst)
 
 void	syntax_error(char *str, t_all *all)
 {
-	ft_putstr_fd("WriteOneMe: syntax error near unexpected token `", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("'\n", 2);
 	free_garbage_collect(&all->garbage);
