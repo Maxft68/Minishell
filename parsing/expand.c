@@ -22,12 +22,12 @@ int	part_one(t_all *all, char *old, char *val)
 	all->data.t = 0;
 	if (old[all->data.z] == '?')
 		return (do_dollar_interrogation(all), 0);
-	if (old[all->data.z] == '"')
-		return (all->data.d_quote = true, all->data.z++, 0);
+	// if (old[all->data.z] == '"')
+	// 	return (all->data.d_quote = true, all->data.z++, 0);
 	if ((ft_isdigit(old[all->data.z]) || !ft_isalpha(old[all->data.z]))
 		&& old[all->data.z] != '_')
 	{
-		if (old[all->data.z] != 39)
+		if (old[all->data.z] != 39 && old[all->data.z] != 34)
 			all->data.z++;
 		return (0);
 	}
@@ -71,7 +71,7 @@ void	handle_expand(char *old, t_all *all)
 	{
 		check_quotes(old[all->data.z], all);
 		if (old[all->data.z] == '$' && (old[all->data.z + 1] != ' '
-				&& old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39
+				// && old[all->data.z + 1] != 34 && old[all->data.z + 1] != 39
 				&& old[all->data.z + 1]) && !all->data.s_quote)
 		{
 			part_one(all, old, val);
